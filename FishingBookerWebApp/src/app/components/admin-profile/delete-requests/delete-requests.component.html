@@ -1,0 +1,118 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="container">
+  <div class="row mx-auto" style="margin-top: 5rem">
+    <div class="col-12 mx-auto">
+      <div class="card shadow-sm" style="height: 600px">
+        <div class="row my-5">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <h4 class="card-title" style="font-weight: bold">
+                Delete Account Requests
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="height: 400px">
+          <div class="col-11 mx-auto">
+            <div style="height: 350px; overflow: auto">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let request of requests"
+                    (click)="selectRequest(request)"
+                    [ngClass]="
+                      selectedRequest == request ? 'selected' : 'notSelected'
+                    "
+                  >
+                    <td>{{ request.user.firstName }}</td>
+                    <td>{{ request.user.lastName }}</td>
+                    <td>{{ request.user.email }}</td>
+                    <td>{{ request.user.role.name }}</td>
+                    <td>{{ request.reason }}</td>
+                    <td>{{ request.requestedDate | date: "dd.MM.yyyy" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <button
+                type="button"
+                class="btn btn-outline-success me-3"
+                [disabled]="selectedRequest == undefined"
+                (click)="approveRequest()"
+              >
+                Approve
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-danger ms-3"
+                data-bs-toggle="modal"
+                data-bs-target="#declineModal"
+                [disabled]="selectedRequest == undefined"
+              >
+                Decline
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="declineModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Write Your Reason For Declining</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="denialReason"
+          required
+          style="width: 100%; height: 10rem"
+        />
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-bs-dismiss="modal"
+          (click)="rejectRequest()"
+          [disabled]="denialReason == undefined || denialReason == ''"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+.login-btn {
+    text-align: center;
+    background: #009961;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 25px 9px 25px;
+    white-space: nowrap;
+    transition: 0.3s;
+    font-size: 14px;
+    display: inline-block;
+  }
+  
+  .login-btn:hover {
+    background: #00b371;
+    color: #fff;
+  }
+  
+  .logo {
+    font-size: 28px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+  }
+  
+  .navbar {
+    padding: 0;
+  }
+  
+  .navbar .menu ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+  
+  .navbar > .menu > ul > li {
+    position: relative;
+    white-space: nowrap;
+  }
+  
+  .navbar .menu a,
+  .navbar .menu a:focus {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 3px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(46, 46, 46, 0.7);
+    white-space: nowrap;
+    transition: 0.3s;
+    position: relative;
+  }
+  
+  .navbar .menu .active,
+  .navbar .menu .active:focus {
+    cursor: pointer;
+    color: #00b371;
+  }
+  
+  .navbar a:hover {
+    cursor: pointer;
+    color: #00b371;
+  }
+  
+  .mobile-nav-toggle {
+    color: #00b371;
+    font-size: 28px;
+    cursor: pointer;
+    display: none;
+    line-height: 0;
+    transition: 0.5s;
+  }
+  
+  .navbar-toggler {
+    border: none;
+  }
+  
+  @media (max-width: 992px) {
+    .mobile-nav-toggle {
+      display: block;
+    }
+  
+    .navbar ul {
+      display: none;
+    }
+  
+    .login-btn {
+      margin-bottom: 2rem;
+    }
+  }

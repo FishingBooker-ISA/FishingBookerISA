@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>
+  {{ title }}
+</h1>
+
+<div mat-dialog-content>
+  <p>{{ message }}</p>
+</div>
+
+<div mat-dialog-actions class="justify-content-center align-items-center">
+  <button class="btn" (click)="onConfirm()">Yes</button>
+  <button class="btn me-2" (click)="onDismiss()" style="background: #f59494">No</button>
+</div>

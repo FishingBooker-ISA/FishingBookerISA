@@ -1,0 +1,130 @@
+<div class="bg-light d-flex justify-content-center mainContainer">
+  <div class="container row align-items-center">
+    <!-- TITLE AND LOCATION -->
+    <div class="col-md-3">
+      <div class="title-wrapper">
+        <h3 class="propertyTitle">{{ estate.name }}</h3>
+      </div>
+      <div class="propertyLocation">
+        <a href="#">
+          {{ estate.address.street }} {{ estate.address.number }}, <br />
+          {{ estate.address.city }}
+          {{ estate.address.postcode }}, <br />{{ estate.address.country }}
+        </a>
+      </div>
+      <div class="propertyLocation">
+        <button class="btn btn-primary">Add photos</button>
+      </div>
+    </div>
+    <!-- END OF TITLE AND LOCATION -->
+
+    <div class="col-md-2 emptyColumn"></div>
+
+    <!-- PROPERTY INFO EDIT FORM -->
+    <div class="col-md-7">
+      <div class="title-wrapper justify-content-center">
+        <h3 class="propertyTitle" style="margin-left: 12%">
+          Edit property information
+        </h3>
+      </div>
+      <div class="row d-flex justify-content-end mt-4">
+        <table class="table-responsive addItemTable">
+          <colgroup>
+            <col span="1" style="width: 30%" />
+            <col span="1" style="width: 80%" />
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td>
+                <input class="text-start" type="text" name="name" [(ngModel)]="estate.name" />
+              </td>
+            </tr>
+            <tr>
+              <td>Price</td>
+              <td>
+                <input class="text-start" type="number" name="price" [(ngModel)]="estate.pricePerDay" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" [(ngModel)]="estate.percentageTakenFromCanceledReservations" />
+              </td>
+              <td>
+                <label for="checkid" style="word-wrap: break-word">Charge cancelled reservations?
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td class="label" [ngClass]="{
+                  faded: !estate.percentageTakenFromCanceledReservations
+                }">
+                Take percentage
+              </td>
+              <td>
+                <input class="text-start" type="number" name="percent" [ngClass]="{
+                    faded: !estate.percentageTakenFromCanceledReservations
+                  }" [disabled]="!estate.percentageTakenFromCanceledReservations"
+                  [(ngModel)]="estate.percentageToTake" />
+              </td>
+            </tr>
+            <tr>
+              <td>Capacity</td>
+              <td>
+                <input class="text-start" type="number" name="capacity" [(ngModel)]="estate.capacity" />
+              </td>
+            </tr>
+            <tr>
+              <td>Number of rooms</td>
+              <td>
+                <input class="text-start" type="number" name="numberOfRooms" [(ngModel)]="estate.numOfRooms" />
+              </td>
+            </tr>
+            <tr>
+              <td>Number of beds</td>
+              <td>
+                <input class="text-start" type="number" name="numberOfBeds" [(ngModel)]="estate.numOfBeds" />
+              </td>
+            </tr>
+            <tr>
+              <td>Description</td>
+              <td>
+                <textarea class="text-start" name="description" [(ngModel)]="estate.description">
+                </textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>Terms of use</td>
+              <td>
+                <textarea class="text-start" name="termsOfUse" [(ngModel)]="estate.termsOfUse">
+                </textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>Additional equipment</td>
+              <td>
+                <textarea class="text-start" name="additionalEquipment" [(ngModel)]="estate.additionalEquipment">
+                </textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-2" style="margin: auto; width: 50%">
+        <mat-error *ngIf="hasErrors()">Field can't be empty! </mat-error>
+        <div>
+          <div class="col mt-1 d-inline-flex justify-content-center">
+            <button type="button" class="btn me-4" (click)="saveChanges()">
+              Save
+            </button>
+            <button type="button" class="btn" style="background: #ecbeb1" (click)="cancelEditing()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END OF PROPERTY INFO EDIT FORM -->
+  </div>
+</div>

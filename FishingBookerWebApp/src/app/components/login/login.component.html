@@ -1,0 +1,69 @@
+<!-- BACKGROUND PHOTO -->
+<div class="overlay">
+  <section id="photo" class="d-flex flex-column justify-content-center">
+    <div class="container"></div>
+  </section>
+</div>
+<!-- END OF BACKGROUND -->
+
+<!-- LOGIN -->
+<div class="center">
+  <div class="content mt-3">
+    <h1>Welcome</h1>
+    <div class="unregistered">
+      <!-- <i class="bi bi-arrow-right me-1"></i> -->
+      <a href="#">Continue without signing in</a>
+    </div>
+    <div class="row">
+      <div class="textField mt-4">
+        <input
+          type="text"
+          name="email"
+          required
+          [(ngModel)]="email"
+          [formControl]="checkEmail"
+        />
+        <span></span>
+        <label>Email</label>
+      </div>
+      <mat-error
+        *ngIf="checkEmail.invalid && (checkEmail.dirty || checkEmail.touched)"
+        >{{ getErrorMessage() }}
+      </mat-error>
+      <div class="textField" style="margin-top: 30px">
+        <input
+          type="password"
+          name="pass"
+          required
+          [(ngModel)]="password"
+          [formControl]="checkPassword"
+        />
+        <span></span>
+        <label>Password</label>
+      </div>
+      <mat-error
+        *ngIf="
+          checkPassword.invalid &&
+          (checkPassword.dirty || checkPassword.touched)
+        "
+      >
+        {{ getPassErrorMessage() }}
+      </mat-error>
+      <div class="row justify-content-center">
+        <mat-error style="text-align: center">
+          {{ errorMessage }}
+        </mat-error>
+      </div>
+      <button
+        class="login mt-4"
+        (click)="logIn()"
+        [disabled]="isButtonDisabled()"
+      >
+        Log In
+      </button>
+      <div class="signupLink">Not a member? <a href="/signup">Sign up</a><div class=""><a href="/signup/owners">Sign up as owner</a></div></div>
+      
+    </div>
+  </div>
+</div>
+<!-- END OF LOGIN -->

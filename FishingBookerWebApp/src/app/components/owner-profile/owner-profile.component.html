@@ -1,0 +1,120 @@
+<app-estate-owner-navbar></app-estate-owner-navbar>
+<div class="bg-light d-flex justify-content-center mainContainer">
+  <div class="container row">
+    <!-- TITLE AND LOCATION -->
+    <div class="col-md-3" style="margin: auto; height:30%">
+      <div class="title-wrapper">
+        <h3 class="propertyTitle"> {{currentUser.firstName}} <span class="ms-2">{{currentUser.lastName}}</span></h3>
+      </div>
+      <div class="propertyLocation">
+        <a href="#">
+          {{currentUser.address.street}} {{currentUser.address.number}} , <br />
+          {{currentUser.address.city}}
+          {{currentUser.address.postcode}} , <br /> {{currentUser.address.country}}
+        </a>
+      </div>
+      <button class="btn mt-3">
+        <i class="bi bi-pencil me-3"></i>Edit
+      </button>
+    </div>
+    <!-- END OF TITLE AND LOCATION -->
+
+    <div class="col-md-2 emptyColumn"></div>
+
+    <!-- PROPERTY INFO EDIT FORM -->
+    <div class="col-md-7">
+      <div class="title-wrapper justify-content-center mt-4" style="display: inline-flex;">
+        <img style="width: 120px; height: 120px;" src="../../../assets/img/userIcon2.png">
+        <h1 class="propertyTitle" style="margin-left: 15%; margin-top: 30%; font-weight: bold;">
+          Profile
+        </h1>
+      </div>
+      <div class="row d-flex justify-content-end mt-4">
+        <table class="table-responsive addItemTable">
+          <colgroup>
+            <col span="1" style="width: 30%" />
+            <col span="1" style="width: 80%" />
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>First Name</td>
+              <td>
+                <div class="textField">
+                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.firstName" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td>
+                <div class="textField">
+                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.lastName" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Street
+              </td>
+              <td>
+                <div class="textField">
+                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.street" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Number</td>
+              <td>
+                <div class="textField">
+                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.number" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>City</td>
+              <td>
+                <div class="textField">
+                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.city" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Country</td>
+              <td>
+                <div class="textField">
+                  <input readonly class="text-start" type="text" name="name"
+                    [(ngModel)]="currentUser.address.country" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Phone Number</td>
+              <td>
+                <div class="textField">
+                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.phoneNumber" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>
+                <div class="textField">
+                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.email" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td>
+                <button class="btn mt-2">
+                  Change password
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- END OF PROPERTY INFO EDIT FORM -->
+  </div>
+</div>

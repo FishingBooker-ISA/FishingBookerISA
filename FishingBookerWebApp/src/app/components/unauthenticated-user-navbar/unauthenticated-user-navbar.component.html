@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg order-last order-lg-0 navbar-light">
+    <div class="container">
+      <p  onclick="location.href='/';" style="cursor: pointer;" class="logo navbar-brand">FishingBooker</p>
+      
+      <div
+        class="menu"
+        id="navmenu"
+      >
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a [matMenuTriggerFor]="explore" exact class="nav-link me-3"> Explore </a>
+            <mat-menu #explore="matMenu">
+                <button mat-menu-item [routerLink]="['/estates']">Estates</button>
+                <button mat-menu-item [routerLink]="['/boats']">Boats</button>
+                <button mat-menu-item [routerLink]="['/fishing-instructors']">Adventures</button>
+            </mat-menu>
+          </li>
+          <li><button [routerLink]="['/login']" class="login-btn ms-lg-5">Log in</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  

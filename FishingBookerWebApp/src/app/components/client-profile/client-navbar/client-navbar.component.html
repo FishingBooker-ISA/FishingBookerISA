@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg order-last order-lg-0 navbar-light">
+    <div class="container">
+        <p class="logo navbar-brand"  onclick="location.href='/';" style="cursor: pointer;" >FishingBooker</p>
+
+        <div class="menu" id="navmenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a [matMenuTriggerFor]="explore" exact class="nav-link me-3"> Explore </a>
+                    <mat-menu #explore="matMenu">
+                        <button mat-menu-item [routerLink]="['/estates']">Estates</button>
+                        <button mat-menu-item [routerLink]="['/boats']">Boats</button>
+                        <button mat-menu-item [routerLink]="['/fishing-instructors']">Adventures</button>
+                    </mat-menu>
+                </li>
+                <li class="nav-item">
+                    <a [matMenuTriggerFor]="reservations" exact class="nav-link me-3"> Reservations </a>
+                    <mat-menu #reservations="matMenu">
+                        <button mat-menu-item [routerLink]="['/client/upcomingReservations']">Upcoming reservations</button>
+                        <button mat-menu-item [matMenuTriggerFor]="history">Reservation history</button>
+                    </mat-menu>
+                    <mat-menu #history="matMenu">
+                        <button mat-menu-item [routerLink]="['/client/reservationHistory/estate']">Estates</button>
+                        <button mat-menu-item [routerLink]="['/']">Boats</button>
+                        <button mat-menu-item [routerLink]="['/']">Instructions</button>
+                    </mat-menu>
+                </li>
+                <li class="nav-item">
+                    <a  [routerLink]="['/client/subscriptions']"  exact class="nav-link me-3"> Subscriptions </a>
+                </li>
+                <li class="nav-item">
+                    <a exact class="nav-link me-3" [routerLink]="['/']" > Profile </a>
+                </li>
+                <li><button [routerLink]="['/login']" class="login-btn ms-lg-5">Log out</button></li>
+            </ul>
+        </div>
+    </div>
+</nav>

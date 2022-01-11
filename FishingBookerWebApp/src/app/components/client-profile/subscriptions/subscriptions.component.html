@@ -1,0 +1,54 @@
+<app-client-navbar></app-client-navbar>
+
+<div class="bg-ghostwhite">
+    <div class="overlay">
+        <section id="photo" class="d-flex flex-column justify-content-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 ">
+                        <h1 style="filter: brightness(100%);">Subscriptions</h1><br><br><br>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <section class="cards my-5">
+        <div class="container w-75">
+
+            <div class="section-title mb-3 ms-3">
+                <h2>Your subscriptions</h2>
+            </div>
+
+            <!-- vikenice - isto i za camce i za avanture--> 
+            <div class="row">
+                <div *ngFor="let estate of estates" class=" d-flex align-items-stretch mt-4 box">
+                    <div class="" style=" margin-right: 30px;">
+                        <img style="width: 400px;"
+                            src="https://www.kucastil.rs/uploads/ck_editor/images/clanci/KU%C4%86A/Moderna%20rusti%C4%8Dna%20vikendica%20na%20jezeru/Moderna%20rusti%C4%8Dna%20vikendica%20na%20jezeru%20(11).jpg">
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5%;"><a>{{estate.name}}</a></h4>
+                        <h5 style="margin-bottom: 3.5%;"><a>{{estate.rating}} &starf;</a></h5>
+                        <div class="d-flex">
+                            <img style="width: 15px;" src="../../../assets/img/pin.png">
+                            <p style="padding-left: 1%;"> {{estate.address.street}} {{estate.address.number}},
+                                {{estate.address.city}}, {{estate.address.country}}</p>
+                        </div>
+                        <p style="margin-top: 1%;">{{estate.description}}</p>
+                        <p style="margin-top: 1%;">{{estate.pricePerDay}} din / per day</p>
+                        <button mat-button style="margin-top: 5%; ">
+                            Unsubscribe
+                        </button>
+
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </section>
+</div>
