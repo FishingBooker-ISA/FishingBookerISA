@@ -4,14 +4,12 @@ import app.domain.BookingService;
 import app.domain.Estate;
 import app.domain.Image;
 import app.domain.User;
-import app.dto.ImageDTO;
 import app.dto.NewEstateDTO;
 import app.repository.EstateRepository;
 import app.repository.ImageRepository;
 import app.repository.ReservationRepository;
 import app.repository.ServiceRepository;
 import app.service.ManagingEstateService;
-import app.service.ManipulatingImagesService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.parsing.Problem;
@@ -40,8 +38,6 @@ public class EstateManagmentController {
     private EstateRepository estateRepository;
     @Autowired
     private ServiceRepository serviceRepository;
-    @Autowired
-    private ManipulatingImagesService imagesService;
 
     @GetMapping(value = "/getEstatesForOwner", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
@@ -149,29 +145,6 @@ public class EstateManagmentController {
         }
 
         return foundEstates;
-    }
-
-    @PostMapping(value = "/addImages", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public ResponseEntity<String> addImagesToService(@RequestBody ImageDTO imageDto, Principal user) {
-        User currentUser = this.userService.findByEmail(user.getName());
-        BookingService existingService = serviceRepository.getById(imageDto.getServiceId());
-
-        if (existingService == null) {
-            return new ResponseEntity<>("Entity doesn't exist!", HttpStatus.BAD_REQUEST);
-        }
-
-        if (existingService.getOwner().getId() != currentUser.getId()){
-            return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
-        }
-
-        try {
-            imagesService.AddImage(imageDto);
-            return new ResponseEntity<>("Added images to estate!", HttpStatus.OK);
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 }
 
