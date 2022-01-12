@@ -16,12 +16,10 @@ import java.util.List;
 @RequestMapping(value = "api/accounts")
 @CrossOrigin
 public class AccountController {
-    private UserService userService;
     private AccountRequestService accountRequestService;
 
     @Autowired
-    public AccountController(UserService userService, AccountRequestService accountRequestService) {
-        this.userService = userService;
+    public AccountController(AccountRequestService accountRequestService) {
         this.accountRequestService = accountRequestService;
     }
 

@@ -74,7 +74,7 @@ public class AdventuresController {
 
         try {
             User currentUser = userService.findByEmail(user.getName());
-            BookingService estate = managingAdventuresService.createNewAdventure(newAdventureDTO, currentUser);
+            managingAdventuresService.createNewAdventure(newAdventureDTO, currentUser);
             return new ResponseEntity<>("Adventure created!", HttpStatus.CREATED);
         }
         catch (Exception e) {
