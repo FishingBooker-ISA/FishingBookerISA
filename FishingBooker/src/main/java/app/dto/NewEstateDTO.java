@@ -1,7 +1,5 @@
 package app.dto;
 
-import app.domain.Address;
-
 import java.util.Date;
 
 public class NewEstateDTO {

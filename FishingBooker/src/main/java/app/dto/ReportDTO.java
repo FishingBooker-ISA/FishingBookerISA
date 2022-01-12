@@ -1,7 +1,5 @@
 package app.dto;
 
-import app.domain.Reservation;
-
 import java.util.Date;
 
 public class ReportDTO {

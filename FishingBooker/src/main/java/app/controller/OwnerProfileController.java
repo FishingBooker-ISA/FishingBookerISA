@@ -11,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.security.Principal;
 
 @RestController
@@ -24,10 +22,6 @@ public class OwnerProfileController {
     private OwnerProfileService ownerProfileService;
     @Autowired
     private UserService userService;
-
-    @Autowired
-    public OwnerProfileController() {
-    }
 
     @PutMapping(value = "/updateProfile", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")

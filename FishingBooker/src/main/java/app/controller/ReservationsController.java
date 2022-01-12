@@ -2,15 +2,15 @@ package app.controller;
 
 import app.domain.BookingService;
 import app.domain.Reservation;
-import app.domain.Role;
 import app.domain.User;
 import app.dto.ReportDTO;
 import app.dto.ReservationDTO;
-import app.repository.EstateRepository;
 import app.repository.ReservationRepository;
 import app.repository.ServiceRepository;
 import app.repository.UserRepository;
-import app.service.*;
+import app.service.ManagingReservationsService;
+import app.service.ReportService;
+import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Book;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -51,13 +50,10 @@ public class ReservationsController {
         if (lastingReservation == null)
             return new ResponseEntity<>("Client doesn't have any lasting reservations!", HttpStatus.BAD_REQUEST);
 
-        if (service == null)
-            return new ResponseEntity<>("The service you're trying to book doesn't exist!", HttpStatus.BAD_REQUEST);
-
-        if (currentUser.getId() != service.getOwner().getId())
+        if (!currentUser.getId().equals(service.getOwner().getId()))
             return new ResponseEntity<>("Logged in user isn't the owner of estate!", HttpStatus.UNAUTHORIZED);
 
-        if (client == null || !client.getRole().getName().equals("ROLE_CLIENT"))
+        if (!client.getRole().getName().equals("ROLE_CLIENT"))
             return new ResponseEntity<>("User must be a client!", HttpStatus.BAD_REQUEST);
 
         try {
@@ -90,7 +86,7 @@ public class ReservationsController {
         if (reservation.getReservationEnd().compareTo(new Date()) >= 0)
             return new ResponseEntity<>("Reservation isn't finished!", HttpStatus.BAD_REQUEST);
 
-        if (currentUser.getId() != service.getOwner().getId())
+        if (!currentUser.getId().equals(service.getOwner().getId()))
             return new ResponseEntity<>("Unauthorized access!", HttpStatus.UNAUTHORIZED);
 
         try {
@@ -107,10 +103,7 @@ public class ReservationsController {
         User currentUser = userService.findByEmail(user.getName());
         Reservation reservation = reservationRepository.getById(reservationId);
 
-        if (reservation == null)
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-
-        if (reservation.getBookingService().getOwner().getId() != currentUser.getId())
+        if (!reservation.getBookingService().getOwner().getId().equals(currentUser.getId()))
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
         if (reservation.getUser() == null)

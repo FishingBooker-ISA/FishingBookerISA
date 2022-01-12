@@ -1,9 +1,5 @@
 package app.dto;
 
-import app.domain.Role;
-
-import java.util.List;
-
 public class AccountRequestForOwners {
     private String email;
     private String password;

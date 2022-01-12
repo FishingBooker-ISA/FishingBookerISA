@@ -2,30 +2,22 @@ package app.controller;
 
 import app.domain.BookingService;
 import app.domain.Estate;
-import app.domain.Image;
 import app.domain.User;
 import app.dto.NewEstateDTO;
 import app.repository.EstateRepository;
-import app.repository.ImageRepository;
-import app.repository.ReservationRepository;
 import app.repository.ServiceRepository;
 import app.service.ManagingEstateService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-import javax.websocket.server.PathParam;
-import java.awt.print.Book;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @RestController
 @RequestMapping(value = "api/estates")
@@ -85,11 +77,7 @@ public class EstateManagmentController {
         User currentUser = userService.findByEmail(user.getName());
         Estate existingEstate = estateRepository.getById(estateDTO.getId());
 
-        if (existingEstate == null) {
-            return new ResponseEntity<>("Entity doesn't exist!", HttpStatus.BAD_REQUEST);
-        }
-
-        if (existingEstate.getOwner().getId() != currentUser.getId()){
+        if (!existingEstate.getOwner().getId().equals(currentUser.getId())){
             return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
         }
 
@@ -112,11 +100,7 @@ public class EstateManagmentController {
         User currentUser = userService.findByEmail(user.getName());
         Estate existingEstate = estateRepository.getById(id);
 
-        if (existingEstate == null) {
-            return new ResponseEntity<>("Entity doesn't exist!", HttpStatus.BAD_REQUEST);
-        }
-
-        if (existingEstate.getOwner().getId() != currentUser.getId()){
+        if (!existingEstate.getOwner().getId().equals(currentUser.getId())){
             return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
         }
 

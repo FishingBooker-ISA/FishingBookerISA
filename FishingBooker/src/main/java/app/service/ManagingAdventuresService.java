@@ -46,7 +46,7 @@ public class ManagingAdventuresService {
             newAddress = addressAlreadyExists(address);
 
         Adventure adventure = new Adventure(
-                ServiceType.Adventure, newAdventureDTO.getName(), newAdventureDTO.getPricePerDay(), newAdventureDTO.getDescription(),
+                ServiceType.ADVENTURE, newAdventureDTO.getName(), newAdventureDTO.getPricePerDay(), newAdventureDTO.getDescription(),
                 newAdventureDTO.getTermsOfUse(), newAdventureDTO.getAdditionalEquipment(), null,
                 null, newAdventureDTO.getCapacity(), newAdventureDTO.getIsPercentageTakenFromCanceledReservations(),
                 newAdventureDTO.getPercentageToTake(), currentUser, newAddress, newAdventureDTO.getInstructorBio()
@@ -96,14 +96,12 @@ public class ManagingAdventuresService {
         List<Reservation> reservations = new ArrayList<>();
 
         for ( Reservation r : reservationRepository.findAll()){
-            if (r.getBookingService().getId() == adventure.getId())
+            if (r.getBookingService().getId().equals(adventure.getId()))
                 reservations.add(r);
         }
 
-        if (reservations.isEmpty())
-            return false;
-        else
-            return true;
+        return reservations.isEmpty();
+
     }
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,

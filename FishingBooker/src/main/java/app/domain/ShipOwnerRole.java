@@ -1,6 +1,6 @@
 package app.domain;
 
 public enum ShipOwnerRole {
-    Captain,
-    FirstAssistant
+    CAPTAIN,
+    FIRST_ASSISTANT
 }

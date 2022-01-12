@@ -3,7 +3,9 @@ package app.controller;
 import app.domain.User;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
@@ -19,8 +21,7 @@ public class UserController {
 
     @GetMapping("/whoami")
     public User user(Principal user) {
-        User u = this.userService.findByEmail(user.getName());
-        return u;
+        return this.userService.findByEmail(user.getName());
     }
 
 }

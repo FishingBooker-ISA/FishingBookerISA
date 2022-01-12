@@ -2,7 +2,6 @@ package app.controller;
 
 import app.domain.Adventure;
 import app.domain.BookingService;
-import app.domain.Estate;
 import app.domain.User;
 import app.dto.NewAdventureDTO;
 import app.repository.AdventureRepository;
@@ -93,7 +92,7 @@ public class AdventuresController {
             return new ResponseEntity<>("Entity doesn't exist!", HttpStatus.BAD_REQUEST);
         }
 
-        if (existingAdventure.getOwner().getId() != currentUser.getId()){
+        if (!existingAdventure.getOwner().getId().equals(currentUser.getId())){
             return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
         }
 
@@ -116,7 +115,7 @@ public class AdventuresController {
             return new ResponseEntity<>("Entity doesn't exist!", HttpStatus.BAD_REQUEST);
         }
 
-        if (existingAdventure.getOwner().getId() != currentUser.getId()){
+        if (!existingAdventure.getOwner().getId().equals(currentUser.getId())){
             return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
         }
 

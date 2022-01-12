@@ -5,7 +5,8 @@ import app.dto.NewEstateDTO;
 import app.repository.AddressRepository;
 import app.repository.EstateRepository;
 import app.repository.ReservationRepository;
-import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -14,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 @Transactional
@@ -51,7 +50,7 @@ public class ManagingEstateService {
             newAddress = addressAlreadyExists(address);
 
         Estate estate = new Estate(
-                ServiceType.Estate, newEstate.getName(), newEstate.getPricePerDay(), newEstate.getDescription(),
+                ServiceType.ESTATE, newEstate.getName(), newEstate.getPricePerDay(), newEstate.getDescription(),
                 newEstate.getTermsOfUse(), newEstate.getAdditionalEquipment(), newEstate.getAvailableFrom(),
                 newEstate.getAvailableTo(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
                 newEstate.getPercentageToTake(), user, newAddress, newEstate.getNumOfBeds(), newEstate.getNumOfRooms()
@@ -107,14 +106,11 @@ public class ManagingEstateService {
         List<Reservation> reservations = new ArrayList<>();
 
         for ( Reservation r : reservationRepository.findAll()){
-            if (r.getBookingService().getId() == estate.getId())
+            if (r.getBookingService().getId().equals(estate.getId()))
                 reservations.add(r);
         }
 
-        if (reservations.isEmpty())
-            return false;
-        else
-            return true;
+        return reservations.isEmpty();
     }
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
