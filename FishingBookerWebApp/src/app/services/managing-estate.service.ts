@@ -116,7 +116,8 @@ export class ManagingEstateService {
       availableTo: date,
       address: address,
       rating: 4.37,
-    }];
+    }];}
+
     deleteEstate(id: number) {
       this.http.delete(`${environment.baseUrl}` + 'api/estates/deleteEstate/' + id).subscribe();
     }

@@ -1,0 +1,91 @@
+<app-instructor-navbar></app-instructor-navbar>
+<div class="homepage">
+  <div class="overlay">
+    <section id="photo" class="d-flex flex-column justify-content-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-8">
+            <h1>FishingBooker</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="cards homepage">
+    <div class="container my-5">
+      <div
+        class="section-title mb-3 ms-3"
+        style="display: inline-flex; width: 100%"
+      >
+        <h2>My Adventures</h2>
+        <div class="textField" style="margin-left: auto; margin-right: 3%">
+          <input
+            type="search"
+            placeholder="search..."
+            [(ngModel)]="searchAdventures"
+            (input)="searchAdventuresByName()"
+          />
+        </div>
+      </div>
+
+      <div class="row mt-2 g-4">
+        <div
+          class="col-lg-4 col-md-6 d-flex align-items-stretch"
+          *ngFor="let adventure of myAdventures"
+        >
+          <div class="box card">
+            <div class="cover">
+              <img
+                src="../../../assets/img/background1.jpg"
+                alt="Property photo"
+                class="img-responsive cover"
+              />
+            </div>
+            <div class="propertyInfo">
+              <h4 class="row">
+                <div class="col-md-9" style="text-align: start">
+                  <h4 id="propertyName">{{ adventure.name }}</h4>
+                </div>
+                <div class="price col-md-3" style="text-align: end">
+                  <span> €{{ adventure.pricePerDay }}</span>
+                </div>
+              </h4>
+              <div class="row">
+                <div class="col-md-11" style="text-align: start">
+                  <span>{{ adventure.description }}</span>
+                </div>
+              </div>
+              <span></span>
+              <br />
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <span
+                    ><b>{{ adventure.capacity }} </b> people</span
+                  >
+                </div>
+                <div class="col-md-6" style="text-align: end">
+                  <span
+                    *ngIf="
+                      adventure.percentageTakenFromCanceledReservations == true
+                    "
+                    ><b style="color: #8b0000">Not Free cancellation </b></span
+                  >
+                  <span
+                    *ngIf="
+                      adventure.percentageTakenFromCanceledReservations == false
+                    "
+                    ><b b style="color: #009961">Free cancellation </b></span
+                  >
+                </div>
+              </div>
+            </div>
+            <a class="stretched-link" (click)="showAdventure(adventure.id)"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>
