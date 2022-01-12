@@ -1,8 +1,6 @@
 package app.service;
 
-import app.domain.AccountRequest;
 import app.domain.Rating;
-import app.domain.User;
 import app.dto.RatingReviewDTO;
 import app.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,7 @@ public class RatingsService {
     public void reviewRating(RatingReviewDTO request) throws InterruptedException {
         Rating foundRating = this.ratingRepository.getById(request.getRatingId());
         foundRating.setIsApproved(request.getIsApproved());
-        foundRating.setIsReviwed(true);
+        foundRating.setIsReviewed(true);
         this.ratingRepository.save(foundRating);
         if(request.getIsApproved())
             notifyOwner(foundRating);

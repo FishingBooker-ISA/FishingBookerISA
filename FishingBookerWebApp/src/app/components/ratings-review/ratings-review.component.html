@@ -1,0 +1,47 @@
+<div class="row my-3" style="margin-top: 5rem">
+  <div class="col-11" style="text-align: center">
+    <h4>Ratings</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-10 mx-auto">
+    <div class="card shadow-sm">
+      <div *ngFor="let rating of ratings">
+        <hr />
+        <div class="row mx-5 my-2">
+          <div class="col-8">
+            <h3>
+              {{ rating.user.firstName }} {{ rating.user.lastName }} (
+              {{ rating.givenMark }}
+              <span class="material-icons" style="color: yellow">star</span> )
+            </h3>
+          </div>
+        </div>
+        <div class="row mx-5 my-3">
+          <div class="col-8">
+            <h6>{{ rating.description }}</h6>
+          </div>
+        </div>
+        <div
+          class="d-flex justify-content-end my-3 me-5"
+          *ngIf="rating.isReviewed === false"
+        >
+          <button
+            class="btn-success me-2"
+            style="border-radius: 100%"
+            (click)="approveRating(rating.id)"
+          >
+            <span class="material-icons">done</span>
+          </button>
+          <button
+            class="btn-danger"
+            style="border-radius: 100%"
+            (click)="rejectRating(rating.id)"
+          >
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,7 +13,7 @@ public class Rating {
     @Column(nullable = false)
     private String description;
     @Column(nullable = false)
-    private boolean isReviwed;
+    private boolean isReviewed;
     @Column(nullable = false)
     private boolean isApproved;
 
@@ -60,12 +60,12 @@ public class Rating {
     }
 
 
-    public boolean getIsReviwed() {
-        return isReviwed;
+    public boolean getIsReviewed() {
+        return isReviewed;
     }
 
-    public void setIsReviwed(boolean reviwed) {
-        isReviwed = reviwed;
+    public void setIsReviewed(boolean reviewed) {
+        isReviewed = reviewed;
     }
 
     public BookingService getBookingService() {
