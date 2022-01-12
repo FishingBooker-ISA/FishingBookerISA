@@ -1,0 +1,204 @@
+<h1 mat-dialog-title class="mt-3">Add New Adventure</h1>
+
+<div mat-dialog-content class="row d-flex justify-content-center g-4">
+  <div class="col-md">
+    <table class="table-responsive mt-4 addItemTable">
+      <colgroup>
+        <col span="1" style="width: 45%" />
+        <col span="1" style="width: 55%" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td class="label">Name</td>
+          <td>
+            <input
+              class="text-start"
+              type="text"
+              name="name"
+              [(ngModel)]="adventure.name"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Price</td>
+          <td>
+            <input
+              class="text-start"
+              type="number"
+              name="price"
+              [(ngModel)]="adventure.pricePerDay"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Street</td>
+          <td>
+            <input
+              class="text-start"
+              type="text"
+              name="street"
+              [(ngModel)]="adventure.street"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Street number</td>
+          <td>
+            <input
+              class="text-start"
+              type="number"
+              name="number"
+              [(ngModel)]="adventure.number"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="label">City</td>
+          <td>
+            <input
+              class="text-start"
+              type="text"
+              name="city"
+              [(ngModel)]="adventure.city"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Postcode</td>
+          <td>
+            <input
+              class="text-start"
+              type="number"
+              name="postcode"
+              [(ngModel)]="adventure.postcode"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Country</td>
+          <td>
+            <input
+              class="text-start"
+              type="text"
+              name="country"
+              [(ngModel)]="adventure.country"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Capacity</td>
+          <td>
+            <input
+              class="text-start"
+              type="number"
+              name="capacity"
+              [(ngModel)]="adventure.capacity"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md">
+    <table class="table-responsive mt-4 addItemTable">
+      <colgroup>
+        <col span="1" style="width: 35%" />
+        <col span="1" style="width: 65%" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              id="checkid"
+              type="checkbox"
+              value="test"
+              [(ngModel)]="adventure.percentageTakenFromCanceledReservations"
+            />
+          </td>
+          <td>
+            <label for="checkid" style="word-wrap: break-word"
+              >Charge cancelled reservations?
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td
+            class="label"
+            [ngClass]="{
+              faded: !adventure.percentageTakenFromCanceledReservations
+            }"
+          >
+            Take percentage
+          </td>
+          <td>
+            <input
+              class="text-start"
+              type="number"
+              name="percent"
+              [disabled]="!adventure.percentageTakenFromCanceledReservations"
+              [(ngModel)]="adventure.percentageToTake"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Description</td>
+          <td>
+            <textarea
+              class="text-start"
+              name="description"
+              [(ngModel)]="adventure.description"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Terms of use</td>
+          <td>
+            <textarea
+              class="text-start"
+              name="termsOfUse"
+              [(ngModel)]="adventure.termsOfUse"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Additional equipment</td>
+          <td>
+            <textarea
+              class="text-start"
+              name="additionalEquipment"
+              [(ngModel)]="adventure.additionalEquipment"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">My biography:</td>
+          <td>
+            <textarea
+              class="text-start"
+              name="additionalEquipment"
+              [(ngModel)]="adventure.instructorBio"
+            >
+            </textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row d-flex justify-content-center" style="text-align: center">
+  <mat-error *ngIf="hasErrors()">Fields can't be empty! </mat-error>
+</div>
+
+<div mat-dialog-actions class="justify-content-center align-items-center mt-1">
+  <button (click)="onConfirm()" class="btn me-2" [disabled]="hasErrors()">
+    Save
+  </button>
+  <button (click)="onDismiss()" class="btn" style="background: #f59494">
+    Cancel
+  </button>
+</div>

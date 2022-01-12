@@ -1,0 +1,167 @@
+<app-instructor-navbar></app-instructor-navbar>
+<app-edit-adventure
+  *ngIf="editingMode"
+  [editingMode]="editingMode"
+  [adventure]="adventure"
+></app-edit-adventure>
+<div class="bg-light" *ngIf="!editingMode">
+  <!-- Carousel -->
+  <div
+    id="carouselHome"
+    class="carousel slide carousel-fade"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div
+          class="overlay-image"
+          style="background-image: url(../../../assets/img/background.jpg)"
+        ></div>
+      </div>
+      <div class="carousel-item">
+        <div
+          class="overlay-image"
+          style="background-image: url(../../../assets/img/background1.jpg)"
+        ></div>
+      </div>
+      <div class="carousel-item">
+        <div
+          class="overlay-image"
+          style="background-image: url(../../../assets/img/background.jpg)"
+        ></div>
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselHome"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselHome"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <!-- End of carousel -->
+
+  <!-- GENERAL INFO  -->
+  <div class="container mt-3 bg-light">
+    <div class="propertyDetailHeader">
+      <div class="row propertyInformation">
+        <div class="col-md-4 left">
+          <div class="title-wrapper">
+            <h3 class="propertyTitle">{{ adventure.name }}</h3>
+          </div>
+          <div class="propertyLocation">
+            <a href="#"
+              >{{ adventure.address.street }} {{ adventure.address.number }},
+              <br />
+              {{ adventure.address.city }}
+              {{ adventure.address.postcode }}, <br />{{
+                adventure.address.country
+              }}</a
+            >
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-5 mt-2 right">
+          <div class="row">
+            <div class="col-md propertyPrice mt-1 text-end">
+              <span class="suffix">€</span>
+              <span class="price-text">{{ adventure.pricePerDay }}</span>
+            </div>
+            <div class="col-md buttons d-flex">
+              <button class="btn me-1" (click)="editAdventure()">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn me-1" (click)="deleteAdventure()">
+                <i class="bi bi-trash"></i>
+              </button>
+              <button class="btn me-1">
+                <i class="bi bi-percent"></i>
+              </button>
+              <button class="btn">
+                <i class="bi bi-calendar-week"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="additionalInfo mt-5">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row description d-flex">
+            <div class="col-md align-items-center">
+              <p
+                style="
+                  color: #006a70;
+                  font-size: larger;
+                  font-style: italic;
+                  text-align: center;
+                "
+              >
+                "{{ adventure.description }}"
+              </p>
+            </div>
+          </div>
+          <div class="row description d-flex">
+            <div class="col-md align-items-center">
+              <h4><b>About instructor:</b></h4>
+              <p>{{ adventure.instructorBio }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 termsAndServices">
+          <h4><b>Terms of use:</b></h4>
+          <h6>
+            {{ adventure.termsOfUse }}
+          </h6>
+
+          <h4 class="mt-4"><b>Additional services:</b></h4>
+          <h6 style="border-bottom: 1px solid #c7c7c7; padding-bottom: 30px">
+            {{ adventure.additionalEquipment }}
+          </h6>
+
+          <div class="propertyDetails">
+            <h5 class="mt-4"><b>Details</b></h5>
+            <table style="width: 100%">
+              <colgroup>
+                <col span="1" style="width: 25%" />
+              </colgroup>
+
+              <tbody>
+                <tr>
+                  <td>Capacity:</td>
+                  <td>{{ adventure.capacity }}</td>
+                </tr>
+                <tr>
+                  <td>Cancellation fee:</td>
+                  <td *ngIf="adventure.percentageTakenFromCanceledReservations">
+                    {{ adventure.percentageToTake }}%
+                  </td>
+                  <td
+                    *ngIf="
+                      adventure.percentageTakenFromCanceledReservations == false
+                    "
+                  >
+                    Free Cancellation
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END OF GENERAL INFO -->
+</div>

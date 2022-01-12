@@ -1,6 +1,5 @@
 package app.config;
 
-import app.domain.User;
 import app.security.RestAuthenticationEntryPoint;
 import app.security.TokenAuthenticationFilter;
 import app.service.UserService;

@@ -1,19 +1,20 @@
 package app.service;
 
-import app.domain.*;
+import app.domain.BookingService;
+import app.domain.PromoAction;
+import app.domain.Reservation;
+import app.domain.User;
 import app.dto.ReservationDTO;
-import app.repository.*;
-import org.hibernate.mapping.Any;
+import app.repository.EstateRepository;
+import app.repository.ReservationRepository;
+import app.repository.ServiceRepository;
+import app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,14 +39,13 @@ public class ManagingReservationsService {
     @Autowired
     EstateRepository estateRepository;
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public List<Reservation> getReservationHistory(int serviceId) {
         BookingService bookingService = serviceRepository.getById(serviceId);
         List<Reservation> existingReservations = new ArrayList<>();
 
         for (Reservation res : reservationRepository.findAll()) {
-            if (res.getBookingService().getId() == bookingService.getId())
+            if (res.getBookingService().getId().equals(bookingService.getId()))
                 existingReservations.add(res);
         }
 
@@ -88,7 +88,7 @@ public class ManagingReservationsService {
         List<Reservation> existingReservations = getReservationHistory(serviceId);
 
         for (Reservation res : existingReservations) {
-            if (res.getUser().getId() == user.getId() &&
+            if (res.getUser().getId().equals(user.getId()) &&
                     checkIfReservationIsLasting(res.getReservationStart(), res.getReservationEnd())) {
                 return res;
             }
@@ -98,15 +98,12 @@ public class ManagingReservationsService {
     }
 
     private boolean checkIfReservationIsLasting(Date start, Date end) {
-        if (start.compareTo(new Date()) <= 0 && new Date().compareTo(end) <= 0)
-            return true;
-
-        return false;
+        return  (start.compareTo(new Date()) <= 0 && new Date().compareTo(end) <= 0);
     }
 
     private boolean checkIfReservationsOverlap(Date start, Date end, List<Reservation> existingReservations) {
         for (Reservation reservation : existingReservations) {
-            if (dateRangeService.DatesOverlap(reservation.getReservationStart(), reservation.getReservationEnd(), start, end)) {
+            if (dateRangeService.datesOverlap(reservation.getReservationStart(), reservation.getReservationEnd(), start, end)) {
                 return true;
             }
         }
@@ -133,7 +130,7 @@ public class ManagingReservationsService {
 
         List<PromoAction> existingActions = promoActionService.getAllActions(serviceId);
         for (PromoAction action : existingActions) {
-            if (dateRangeService.DatesOverlap(action.getStartDate(), action.getEndDate(), start, end))
+            if (dateRangeService.datesOverlap(action.getStartDate(), action.getEndDate(), start, end))
                 return false;
         }
 

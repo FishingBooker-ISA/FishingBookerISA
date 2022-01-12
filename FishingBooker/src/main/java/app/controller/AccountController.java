@@ -2,16 +2,13 @@ package app.controller;
 
 import app.domain.AccountDeletionRequest;
 import app.domain.AccountRequest;
-import app.dto.AccountRequestForOwners;
 import app.dto.AccountRequestReviewDTO;
 import app.service.AccountRequestService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -19,12 +16,10 @@ import java.util.List;
 @RequestMapping(value = "api/accounts")
 @CrossOrigin
 public class AccountController {
-    private UserService userService;
     private AccountRequestService accountRequestService;
 
     @Autowired
-    public AccountController(UserService userService, AccountRequestService accountRequestService) {
-        this.userService = userService;
+    public AccountController(AccountRequestService accountRequestService) {
         this.accountRequestService = accountRequestService;
     }
 

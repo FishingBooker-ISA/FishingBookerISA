@@ -1,6 +1,5 @@
 package app.dto;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 public class DeletionRequestDTO {

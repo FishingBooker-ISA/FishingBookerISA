@@ -15,6 +15,8 @@ import { EstateProfileComponent } from './components/estate-profile/estate-profi
 import { EstatesComponent } from './components/estates/estates.component';
 import { FishingInstructorsComponent } from './components/fishing-instructors/fishing-instructors.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
+import { AdventureProfileComponent } from './components/instructor-components/adventure-profile/adventure-profile.component';
+import { InstructorAdventuresComponent } from './components/instructor-components/instructor-adventures/instructor-adventures.component';
 import { LoginComponent } from './components/login/login.component';
 import { OwnerProfileComponent } from './components/owner-profile/owner-profile.component';
 import { SignupOwnersComponent } from './components/signup-owners/signup-owners.component';
@@ -41,6 +43,8 @@ const routes: Routes = [
   { path: 'boats', component: BoatsComponent },
   { path: 'fishing-instructors', component: FishingInstructorsComponent },
   { path: 'edit', component: EditEstateComponent },
+  { path: 'instructor/home', component: InstructorAdventuresComponent },
+  { path: 'adventure/:id', component: AdventureProfileComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'profile', component: OwnerProfileComponent }
 ];

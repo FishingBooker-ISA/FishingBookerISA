@@ -45,6 +45,11 @@ import { SubscriptionsComponent } from './components/client-profile/subscription
 import { ViewProfileComponent } from './components/client-profile/view-profile/view-profile.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { OwnerProfileComponent } from './components/owner-profile/owner-profile.component';
+import { InstructorNavbarComponent } from './components/instructor-components/instructor-navbar/instructor-navbar.component';
+import { AdventureProfileComponent } from './components/instructor-components/adventure-profile/adventure-profile.component';
+import { InstructorAdventuresComponent } from './components/instructor-components/instructor-adventures/instructor-adventures.component';
+import { NewAdventureComponent } from './components/instructor-components/new-adventure/new-adventure.component';
+import { EditAdventureComponent } from './components/instructor-components/adventure-profile/edit-adventure/edit-adventure.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +82,11 @@ import { OwnerProfileComponent } from './components/owner-profile/owner-profile.
     ViewProfileComponent,
     ConfirmDialogComponent,
     OwnerProfileComponent,
+    InstructorNavbarComponent,
+    AdventureProfileComponent,
+    InstructorAdventuresComponent,
+    NewAdventureComponent,
+    EditAdventureComponent,
   ],
   imports: [
     BrowserModule,

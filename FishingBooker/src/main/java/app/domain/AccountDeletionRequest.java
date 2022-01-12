@@ -23,8 +23,7 @@ public class AccountDeletionRequest {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public AccountDeletionRequest() {
-    }
+    public AccountDeletionRequest() {}
 
     public Integer getId() {
         return id;
