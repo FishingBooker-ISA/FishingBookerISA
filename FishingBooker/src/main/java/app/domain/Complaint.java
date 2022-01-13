@@ -10,8 +10,16 @@ public class Complaint {
     private int id;
     @Column(nullable = false)
     private String reason;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date createdDate;
+    @Column(nullable = true)
+    private boolean isReviewed;
+    @Column(nullable = true)
+    private String responseForClient;
+    @Column(nullable = true)
+    private String responseForOwner;
+    @Column(nullable = true)
+    private boolean isComplaintOnOwner;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -62,5 +70,37 @@ public class Complaint {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public boolean getIsReviewed() {
+        return isReviewed;
+    }
+
+    public void setIsReviewed(boolean reviewed) {
+        isReviewed = reviewed;
+    }
+
+    public String getResponseForClient() {
+        return responseForClient;
+    }
+
+    public void setResponseForClient(String responseForClient) {
+        this.responseForClient = responseForClient;
+    }
+
+    public String getResponseForOwner() {
+        return responseForOwner;
+    }
+
+    public void setResponseForOwner(String responseForOwner) {
+        this.responseForOwner = responseForOwner;
+    }
+
+    public boolean getIsComplaintOnOwner() {
+        return isComplaintOnOwner;
+    }
+
+    public void setIsComplaintOnOwner(boolean complaintOnOwner) {
+        isComplaintOnOwner = complaintOnOwner;
     }
 }
