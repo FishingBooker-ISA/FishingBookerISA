@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.domain.Adventure;
-import app.domain.BookingService;
 import app.domain.User;
 import app.dto.NewAdventureDTO;
 import app.repository.AdventureRepository;
