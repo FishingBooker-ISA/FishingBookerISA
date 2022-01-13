@@ -1,48 +1,29 @@
-package app.domain;
+package app.dto;
 
-import javax.persistence.*;
+import app.domain.BookingService;
+
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
-@Entity
-public class PromoAction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(nullable = false)
+public class PromoActionDTO {
+    private int id;
     private double pricePerDay;
-    @Column(nullable = false)
     private int durationInDays;
-    @Column(nullable = false)
     private boolean isTaken;
-    @Column(nullable = false)
     private int capacity;
-    @Column(nullable = false)
     private String additional;
-    @Column(nullable = false)
     private Date startDate;
-    @Column(nullable = false)
     private Date endDate;
+    private int bookingServiceId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "service_id")
-    private BookingService bookingService;
-
-    public PromoAction() {
-    }
-
-    public int getDurationInDays() {
-        return durationInDays;
-    }
-
-    public void setDurationInDays(int durationInDays) {
-        this.durationInDays = durationInDays;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,6 +33,14 @@ public class PromoAction {
 
     public void setPricePerDay(double pricePerDay) {
         this.pricePerDay = pricePerDay;
+    }
+
+    public int getDurationInDays() {
+        return durationInDays;
+    }
+
+    public void setDurationInDays(int durationInDays) {
+        this.durationInDays = durationInDays;
     }
 
     public boolean isTaken() {
@@ -94,11 +83,11 @@ public class PromoAction {
         this.endDate = endDate;
     }
 
-    public BookingService getBookingService() {
-        return bookingService;
+    public int getBookingServiceId() {
+        return bookingServiceId;
     }
 
-    public void setBookingService(BookingService bookingService) {
-        this.bookingService = bookingService;
+    public void setBookingServiceId(int bookingServiceId) {
+        this.bookingServiceId = bookingServiceId;
     }
 }

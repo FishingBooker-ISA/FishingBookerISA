@@ -21,10 +21,10 @@ public class Ship extends BookingService {
     }
 
     public Ship (ServiceType type, String name, double pricePerDay, String description, String termsOfUse,
-                String additionalEquipment, Date availableFrom, Date availableTo, int capacity,
+                String additionalEquipment, int capacity,
                 boolean isPercentageTakenFromCanceledReservations, double percentageToTake, User owner,
                 Address address, double length, int numOfEngines, double powerOfEngines, double maxSpeed, ShipType type1) {
-        super(type, name, pricePerDay, description, termsOfUse, additionalEquipment, availableFrom, availableTo,
+        super(type, name, pricePerDay, description, termsOfUse, additionalEquipment,
                 capacity, isPercentageTakenFromCanceledReservations, percentageToTake, owner, address);
         this.length = length;
         this.numOfEngines = numOfEngines;

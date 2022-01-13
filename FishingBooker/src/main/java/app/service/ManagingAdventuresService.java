@@ -46,9 +46,10 @@ public class ManagingAdventuresService {
             newAddress = addressAlreadyExists(address);
 
         Adventure adventure = new Adventure(
-                ServiceType.ADVENTURE, newAdventureDTO.getName(), newAdventureDTO.getPricePerDay(), newAdventureDTO.getDescription(),
-                newAdventureDTO.getTermsOfUse(), newAdventureDTO.getAdditionalEquipment(), null,
-                null, newAdventureDTO.getCapacity(), newAdventureDTO.getIsPercentageTakenFromCanceledReservations(),
+                ServiceType.ADVENTURE, newAdventureDTO.getName(), newAdventureDTO.getPricePerDay(),
+                newAdventureDTO.getDescription(),
+                newAdventureDTO.getTermsOfUse(), newAdventureDTO.getAdditionalEquipment(),
+                newAdventureDTO.getCapacity(), newAdventureDTO.getIsPercentageTakenFromCanceledReservations(),
                 newAdventureDTO.getPercentageToTake(), currentUser, newAddress, newAdventureDTO.getInstructorBio()
         );
 

@@ -1,6 +1,9 @@
 package app.dto;
 
+import app.domain.UnavailablePeriod;
+
 import java.util.Date;
+import java.util.List;
 
 public class NewEstateDTO {
     private int id;
@@ -9,8 +12,6 @@ public class NewEstateDTO {
     private String description;
     private String termsOfUse;
     private String additionalEquipment;
-    private Date availableFrom;
-    private Date availableTo;
     private int capacity;
     private String street;
     private int number;
@@ -56,22 +57,6 @@ public class NewEstateDTO {
 
     public void setTermsOfUse(String termsOfUse) {
         this.termsOfUse = termsOfUse;
-    }
-
-    public Date getAvailableFrom() {
-        return availableFrom;
-    }
-
-    public void setAvailableFrom(Date availableFrom) {
-        this.availableFrom = availableFrom;
-    }
-
-    public Date getAvailableTo() {
-        return availableTo;
-    }
-
-    public void setAvailableTo(Date availableTo) {
-        this.availableTo = availableTo;
     }
 
     public int getCapacity() {

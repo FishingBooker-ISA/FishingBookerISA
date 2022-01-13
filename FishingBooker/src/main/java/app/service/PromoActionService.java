@@ -1,18 +1,111 @@
 package app.service;
 
-import app.domain.PromoAction;
-import app.repository.PromoActionRepository;
+import app.domain.*;
+import app.dto.PromoActionDTO;
+import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class PromoActionService {
     @Autowired
-    PromoActionRepository actionRepository;
+    private PromoActionRepository promoActionRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
+    @Autowired
+    private DateRangeService dateRangeService;
+    @Autowired
+    private EmailService emailService;
 
-    public List<PromoAction> getAllActions(int serviceId) {
-        return actionRepository.getAllByBookingServiceId(serviceId);
+    public List<PromoAction> getAllActions() {
+        return promoActionRepository.findAll();
+    }
+
+    public PromoAction createNewPromoAction(PromoActionDTO actionDTO) {
+        if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate())) {
+            return null;
+        }
+
+        PromoAction newAction = create(new PromoAction(), actionDTO);
+        promoActionRepository.save(newAction);
+        return newAction;
+    }
+
+    public PromoAction updateAction(PromoActionDTO actionDTO) {
+        PromoAction existingAction = promoActionRepository.getById(actionDTO.getId());
+
+        if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate())) {
+            return null;
+        }
+
+        PromoAction updatedAction = create(existingAction, actionDTO);
+        promoActionRepository.save(updatedAction);
+        return updatedAction;
+    }
+
+    public void NotifySubscribers(PromoAction action) throws InterruptedException {
+        List<Subscription> subscriptionsForService = subscriptionRepository.findAllByBookingServiceId(action.getBookingService().getId());
+        List<User> users = new ArrayList<>();
+
+        for (Subscription sub : subscriptionsForService) {
+            users.add(sub.getClient());
+        }
+
+        for (User user : users) {
+            String mailSubject = "New promo action for " + action.getBookingService().getName();
+            String mailContent;
+            mailContent = "New promo action for " + action.getBookingService().getName() + " has been added!\n"
+                    + "Promo action details: \n"
+                    + "Price per day: " + action.getPricePerDay() + "\n"
+                    + "Capacity: " + action.getCapacity() + "\n"
+                    + "Start: " + action.getStartDate() + "\n"
+                    + "End: " + action.getEndDate() + "\n"
+                    + "The action will last for: " + action.getDurationInDays() + " days\n\n"
+                    + "For more details please refer to our profile on FishingBooker!";
+            this.emailService.sendMail(user, mailSubject, mailContent);
+        }
+
+    }
+
+    private PromoAction create(PromoAction action, PromoActionDTO actionDTO) {
+        BookingService service = serviceRepository.getById(actionDTO.getBookingServiceId());
+        action.setPricePerDay(actionDTO.getPricePerDay());
+        action.setDurationInDays(actionDTO.getDurationInDays());
+        action.setBookingService(service);
+        action.setAdditional(actionDTO.getAdditional());
+        action.setStartDate(actionDTO.getStartDate());
+        action.setEndDate(actionDTO.getEndDate());
+        action.setTaken(false);
+        promoActionRepository.save(action);
+        return action;
+    }
+
+    public boolean checkIfDatesOverlap(Date start, Date end) {
+        List<Reservation> existingReservations = reservationRepository.findAll();
+        List<PromoAction> existingActions = promoActionRepository.findAll();
+
+        for (Reservation reservation : existingReservations) {
+            if (dateRangeService.datesOverlap(reservation.getReservationStart(), reservation.getReservationEnd(), start, end)) {
+                return true;
+            }
+        }
+
+        for (PromoAction action : existingActions) {
+            if (dateRangeService.datesOverlap(action.getStartDate(), action.getEndDate(), start, end)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

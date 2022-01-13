@@ -4,9 +4,11 @@ import app.domain.BookingService;
 import app.domain.Estate;
 import app.domain.User;
 import app.dto.NewEstateDTO;
+import app.dto.UnavailablePeriodDTO;
 import app.repository.EstateRepository;
 import app.repository.ServiceRepository;
 import app.service.ManagingEstateService;
+import app.service.ManagingReservationsService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +31,7 @@ public class EstateManagmentController {
     @Autowired
     private EstateRepository estateRepository;
     @Autowired
-    private ServiceRepository serviceRepository;
+    private ManagingReservationsService reservationsService;
 
     @GetMapping(value = "/getEstatesForOwner", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
@@ -129,6 +131,27 @@ public class EstateManagmentController {
         }
 
         return foundEstates;
+    }
+
+    @PostMapping(value = "/addUnavailablePeriod", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    public ResponseEntity<String> addUnavailablePeriod(@RequestBody UnavailablePeriodDTO dto, Principal user) {
+        User currentUser = this.userService.findByEmail(user.getName());
+        Estate estate = estateRepository.getById(dto.getServiceId());
+
+        if(!estate.getOwner().getId().equals(currentUser.getId())) {
+            return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            if (reservationsService.addUnavailablePeriod(dto) != null)
+                return new ResponseEntity<>("New unavailable period created!", HttpStatus.OK);
+            else
+                return new ResponseEntity<>("Entered dates overlap with existing reservation!", HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
 
