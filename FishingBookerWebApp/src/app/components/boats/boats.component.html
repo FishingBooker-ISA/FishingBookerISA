@@ -1,4 +1,5 @@
-<app-unauthenticated-user-navbar></app-unauthenticated-user-navbar>
+<app-client-navbar *ngIf="isClient"></app-client-navbar>
+<app-unauthenticated-user-navbar *ngIf="!isClient"></app-unauthenticated-user-navbar>
 
 <div class="bg-ghostwhite">
     <div class="overlay">
