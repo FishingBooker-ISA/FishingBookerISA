@@ -26,6 +26,8 @@ public class RatingsService {
         for (Rating rating: this.ratingRepository.findAll()
              ) {
                 if(rating.getBookingService().getId().equals(id))
+                    if (!rating.getIsApproved() && rating.getIsReviewed())
+                        continue;
                     foundRatings.add(rating);
         }
         return foundRatings;

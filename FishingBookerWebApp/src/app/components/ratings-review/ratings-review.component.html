@@ -1,13 +1,11 @@
-<div class="row my-3" style="margin-top: 5rem">
-  <div class="col-11" style="text-align: center">
-    <h4>Ratings</h4>
-  </div>
-</div>
-<div class="row">
+<div class="row mt-5">
   <div class="col-10 mx-auto">
     <div class="card shadow-sm">
+      <h1 class="my-3" style="text-align: center">Ratings</h1>
       <div *ngFor="let rating of ratings">
-        <hr />
+        <div class="px-3">
+          <hr />
+        </div>
         <div class="row mx-5 my-2">
           <div class="col-8">
             <h3>
@@ -27,18 +25,17 @@
           *ngIf="rating.isReviewed === false"
         >
           <button
-            class="btn-success me-2"
-            style="border-radius: 100%"
+            class="me-2"
+            style="border-radius: 100%; border: none; background: #6eb1dd"
             (click)="approveRating(rating.id)"
           >
-            <span class="material-icons">done</span>
+            <span class="material-icons mt-1">done</span>
           </button>
           <button
-            class="btn-danger"
-            style="border-radius: 100%"
+            style="border-radius: 100%; border: none; background: #f59494"
             (click)="rejectRating(rating.id)"
           >
-            <span class="material-icons">close</span>
+            <span class="material-icons mt-1">close</span>
           </button>
         </div>
       </div>
