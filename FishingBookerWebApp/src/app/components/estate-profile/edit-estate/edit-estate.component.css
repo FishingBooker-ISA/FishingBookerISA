@@ -21,6 +21,16 @@ textarea {
   outline: none;
 }
 
+[type="file"] {
+  width: 90%;
+  height: 35px;
+  font-size: 16px;
+  border: 1px solid rgb(162, 164, 165);
+  border-radius: 6px;
+  background: none;
+  outline: none;
+}
+
 textarea {
   height: 70px;
   white-space: normal;
@@ -54,7 +64,6 @@ a {
 }
 
 .btn {
-  width: 100px;
   text-align: center;
   background: #6eb1dd;
   color: #fff;
