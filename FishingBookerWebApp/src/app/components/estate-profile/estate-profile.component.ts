@@ -1,11 +1,13 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Estate } from 'src/app/model/estate';
+import { Image } from 'src/app/model/image';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { ManagingImagesService } from 'src/app/services/managing-images.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
+import { ImagesDialogModel, ShowImagesComponent } from '../show-images/show-images.component';
 
 @Component({
   selector: 'app-estate-profile',
@@ -16,8 +18,9 @@ export class EstateProfileComponent implements OnInit {
 
   estateId!: number;
   editingMode!: boolean;
-  images = [] as any
+  images = [] as SafeResourceUrl[]
   estate!: Estate;
+  imgSrc!: any
 
   constructor(private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
     public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer) {
@@ -61,13 +64,39 @@ export class EstateProfileComponent implements OnInit {
   }
 
   imageFromDatabase() {
+    console.log("ucitavam slike")
+    this.images = []
     this.managingImages.getImages(this.estateId).toPromise().then(
       (result) => {
 
         for (let r of result) {
-          this.images.push(this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + r))
+          let img: Image = {
+            id: r.id,
+            bytes: this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + r.bytes)
+          }
+          this.images.push(img.bytes)
         }
       });
+  }
+
+  isFirst(img: SafeResourceUrl) {
+    if (this.images.indexOf(img) === 0)
+      return true;
+
+    return false;
+  }
+
+  viewImages(): void {
+    const dialogData = new ImagesDialogModel(
+      this.estate
+    );
+
+    const dialogRef = this.dialog.open(ShowImagesComponent, {
+      width: '900px',
+      height: '720px',
+      data: dialogData,
+      panelClass: 'my-dialog'
+    });
   }
 
 }

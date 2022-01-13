@@ -61,16 +61,6 @@ export class EditEstateComponent implements OnInit {
       data: dialogData,
       panelClass: 'my-dialog'
     });
-
-    // dialogRef.afterClosed().subscribe((dialogResult) => {
-    //   this.createModalResult = dialogResult
-
-    //   if (this.createModalResult) {
-    //     setTimeout(() => {
-    //       this.router.navigate(['/estateOwner/home']);
-    //     }, 500);
-    //   }
-    // });
   }
 
 }
