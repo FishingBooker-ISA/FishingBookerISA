@@ -71,6 +71,20 @@ public class AuthenticationController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+    @PostMapping("/signupForClients")
+    public ResponseEntity<User> addClient(@RequestBody ClientDTO newClient, UriComponentsBuilder ucBuilder) throws InterruptedException {
+
+        User existUser = this.userService.findByEmail(newClient.getEmail());
+
+        if (existUser != null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        User user = this.userService.addClient(newClient);
+
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
     @PostMapping(value = "/addAdmin", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> addAdmin(@RequestBody NewAdminDTO adminRequest, UriComponentsBuilder ucBuilder) {
 

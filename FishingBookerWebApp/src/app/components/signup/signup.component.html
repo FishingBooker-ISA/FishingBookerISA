@@ -8,7 +8,180 @@
 <!-- END OF BACKGROUND -->
 
 <!-- LOGIN -->
-<div class="center justify-content-center" style="height: 460px;">
+
+
+<div class="center justify-content-center">
+  <div class="content">
+    <h1>Welcome</h1>
+
+    <div>
+      <div class="row">
+        <div class="col-md-4 py-0">
+          <div class="textField">
+            <input
+              type="text"
+              required
+              [(ngModel)]="firstName"
+              [formControl]="fieldRequired"
+            />
+            <span></span>
+            <label>First Name</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="textField">
+            <input
+              type="text"
+              required
+              [(ngModel)]="lastName"
+              [formControl]="fieldRequired"
+            />
+            <span></span>
+            <label>Last Name</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="textField">
+            <input
+              type="text"
+              required
+              [(ngModel)]="phoneNumber"
+              [formControl]="fieldRequired"
+            />
+            <span></span>
+            <label>Phone number</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 pe-1">
+          <div class="textField">
+            <input
+              type="text"
+              required
+              [(ngModel)]="street"
+              [formControl]="fieldRequired"
+            />
+            <span></span>
+            <label>Street and number</label>
+          </div>
+        </div>
+        <div class="col-md-1 ps-0" style="padding-right: 12px">
+          <div class="textField">
+            <input
+              type="number"
+              required
+              [(ngModel)]="number"
+              [formControl]="fieldRequired"
+            />
+            <span></span>
+            <label></label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="textField">
+            <input
+              type="text"
+              required
+              [(ngModel)]="city"
+              [formControl]="fieldRequired"
+            />
+            <label>City</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="textField">
+            <input
+              type="text"
+              required
+              [(ngModel)]="country"
+              [formControl]="fieldRequired"
+            />
+            <span></span>
+            <label>Country</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="textField">
+            <input
+              type="text"
+              required
+              [(ngModel)]="email"
+              [formControl]="checkEmail"
+            />
+            <span></span>
+            <label>Email</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="textField">
+            <input
+              type="password"
+              [(ngModel)]="password"
+              required
+              [formControl]="checkPassword"
+            />
+            <span></span>
+            <label>Password</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="textField">
+            <input
+              type="password"
+              required
+              [(ngModel)]="repeatPassword"
+              [formControl]="checkPassword"
+            />
+            <span></span>
+            <label>Repeat Password</label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row justify-content-center">
+        <mat-error
+          style="text-align: center"
+          *ngIf="
+            (checkIfFieldsWereTouched() && checkIfFieldsAreInvalid()) ||
+            (checkEmail.invalid && (checkEmail.dirty || checkEmail.touched)) ||
+            !checkIfPasswordsMatch()
+          "
+        >
+          {{ getErrorMessage() }} {{ getEmailErrorMessage() }}
+          {{ getPasswordErrorMessage() }}
+        </mat-error>
+      </div>
+      <div class="row justify-content-center">
+        <mat-error style="text-align: center">
+          {{ signupOwnerService.errorMessage }}
+        </mat-error>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 mt-2">
+          <button
+            class="login"
+            (click)="signUp()"
+            [disabled]="isButtonDisabled()"
+          >
+            Sign Up
+          </button>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- END OF LOGIN -->
+
+<!--div class="center justify-content-center" style="height: 460px;">
   <div class="content mt-3">
     <h1>Welcome</h1>
 
@@ -69,5 +242,4 @@
       </div>
     </div>
   </div>
-</div>
-<!-- END OF LOGIN -->
+</div-->

@@ -1,15 +1,10 @@
 package app.service;
 
-import app.domain.AccountRequest;
-import app.domain.Address;
-import app.domain.Role;
-import app.domain.User;
+import app.domain.*;
 import app.dto.AccountRequestForOwners;
+import app.dto.ClientDTO;
 import app.dto.NewAdminDTO;
-import app.repository.AddressRepository;
-import app.repository.RegistrationReasonRepository;
-import app.repository.RoleRepository;
-import app.repository.UserRepository;
+import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
+    private ClientRepository clientRepository;
     private AddressRepository addressRepository;
     private PasswordEncoder passwordEncoder;
     private RegistrationReasonRepository registrationReasonRepository;
@@ -28,14 +24,16 @@ public class UserService implements UserDetailsService {
     private EmailService emailService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+    public UserService(UserRepository userRepository,ClientRepository clientRepository, PasswordEncoder passwordEncoder,
                        AddressRepository addressRepository, RegistrationReasonRepository registrationReasonRepository,
-                       RoleRepository roleRepository) {
+                       RoleRepository roleRepository, EmailService emailService) {
         this.userRepository = userRepository;
+        this.clientRepository = clientRepository;
         this.passwordEncoder = passwordEncoder;
         this.addressRepository = addressRepository;
         this.registrationReasonRepository = registrationReasonRepository;
         this.roleRepository = roleRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -108,5 +106,47 @@ public class UserService implements UserDetailsService {
         User newUser = this.userRepository.save(user);
 
         return newUser;
+    }
+
+    public User addClient(ClientDTO userRequest) throws InterruptedException {
+        Client client = new Client();
+        Address address = new Address();
+        AccountRequest request = new AccountRequest();
+
+        address.setStreet(userRequest.getStreet());
+        address.setNumber(userRequest.getNumber());
+        address.setCity(userRequest.getCity());
+        address.setCountry(userRequest.getCountry());
+        address.setPostcode(userRequest.getPostcode());
+
+        Address addedAddress = this.addressRepository.save(address);
+        Role role = roleRepository.findByName("ROLE_CLIENT");
+
+        client.setEmail(userRequest.getEmail());
+        client.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        client.setFirstName(userRequest.getFirstName());
+        client.setLastName(userRequest.getLastName());
+        client.setAddress(addedAddress);
+        client.setVerified(true);
+        client.setRole(role);
+        client.setPhoneNumber(userRequest.getPhoneNumber());
+        client.setPoints(0);
+        client.setNumOfPenalties(0);
+        client.setVerificationCode("tralala");
+        client.setDeleted(false);
+        Client addedClient = this.userRepository.save(client);
+
+        //this.sendVerificationEmail(addedClient.getId());
+
+        return addedClient;
+    }
+
+    private void sendVerificationEmail(int clientId) {
+        Client client = this.clientRepository.getById(clientId);
+        String mailSubject = "FishingBooker registration";
+        String mailContent;
+        mailContent = "Hello,\n\nThank you for your registration. Click on the the link below to activate your account.\n <a href='https://www.goodreads.com/'>Complete registration</a>\n\n Fishing Booker";
+
+        this.emailService.sendMail(client, mailSubject, mailContent);
     }
 }
