@@ -19,6 +19,7 @@ import { AdventureProfileComponent } from './components/instructor-components/ad
 import { InstructorAdventuresComponent } from './components/instructor-components/instructor-adventures/instructor-adventures.component';
 import { LoginComponent } from './components/login/login.component';
 import { OwnerProfileComponent } from './components/owner-profile/owner-profile.component';
+import { RatingsReviewComponent } from './components/ratings-review/ratings-review.component';
 import { SignupOwnersComponent } from './components/signup-owners/signup-owners.component';
 import { SignupComponent } from './components/signup/signup.component';
 
@@ -28,6 +29,7 @@ const routes: Routes = [
     component: HomepageComponent,
   },
   { path: 'login', component: LoginComponent },
+  { path: 'admin/ratings', component: RatingsReviewComponent },
   { path: 'admin/accountRequests', component: AccountRequestsComponent },
   { path: 'admin/deleteRequests', component: DeleteRequestsComponent },
   { path: 'admin/allUsers', component: UsersTableComponent },

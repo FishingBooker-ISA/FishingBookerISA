@@ -12,6 +12,10 @@ public class Rating {
     private double givenMark;
     @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
+    private boolean isReviewed;
+    @Column(nullable = false)
+    private boolean isApproved;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -55,11 +59,28 @@ public class Rating {
         this.user = user;
     }
 
-    public BookingService getService() {
+
+    public boolean getIsReviewed() {
+        return isReviewed;
+    }
+
+    public void setIsReviewed(boolean reviewed) {
+        isReviewed = reviewed;
+    }
+
+    public BookingService getBookingService() {
         return bookingService;
     }
 
-    public void setService(BookingService bookingService) {
+    public void setBookingService(BookingService bookingService) {
         this.bookingService = bookingService;
+    }
+
+    public boolean getIsApproved() {
+        return isApproved;
+    }
+
+    public void setIsApproved(boolean approved) {
+        isApproved = approved;
     }
 }

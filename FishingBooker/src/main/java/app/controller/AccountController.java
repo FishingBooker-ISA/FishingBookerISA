@@ -4,7 +4,6 @@ import app.domain.AccountDeletionRequest;
 import app.domain.AccountRequest;
 import app.dto.AccountRequestReviewDTO;
 import app.service.AccountRequestService;
-import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,7 +1,5 @@
 package app.repository;
 
-import app.domain.BookingService;
-import app.domain.Complaint;
 import app.domain.Estate;
 import org.springframework.data.jpa.repository.JpaRepository;
 

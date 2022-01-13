@@ -50,6 +50,7 @@ import { AdventureProfileComponent } from './components/instructor-components/ad
 import { InstructorAdventuresComponent } from './components/instructor-components/instructor-adventures/instructor-adventures.component';
 import { NewAdventureComponent } from './components/instructor-components/new-adventure/new-adventure.component';
 import { EditAdventureComponent } from './components/instructor-components/adventure-profile/edit-adventure/edit-adventure.component';
+import { RatingsReviewComponent } from './components/ratings-review/ratings-review.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { EditAdventureComponent } from './components/instructor-components/adven
     InstructorAdventuresComponent,
     NewAdventureComponent,
     EditAdventureComponent,
+    RatingsReviewComponent,
   ],
   imports: [
     BrowserModule,
