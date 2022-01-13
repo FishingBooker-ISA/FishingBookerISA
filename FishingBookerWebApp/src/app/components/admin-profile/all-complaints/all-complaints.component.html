@@ -70,12 +70,73 @@
         >
           <button
             class="btn me-2"
-            style="border-radius: 10%; background: #6eb1dd"
-            (click)="sendComplaintReview(complaint)"
+            data-bs-toggle="modal"
+            data-bs-target="#reviewModal"
+            (click)="selectedComplaint = complaint"
           >
             Review
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="reviewModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Write Your Review</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row my-3">
+          <div class="col-11 mx-auto">
+            <h6>Response For Client:</h6>
+            <input
+              type="text"
+              class="form-control bg-light"
+              [(ngModel)]="responseForClient"
+              required
+              style="width: 100%; height: 6rem"
+            />
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-11 mx-auto">
+            <h6>Response For Owner:</h6>
+            <input
+              type="text"
+              class="form-control bg-light"
+              [(ngModel)]="responseForOwner"
+              required
+              style="width: 100%; height: 6rem"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+        <button
+          type="button"
+          class="btn"
+          style="background: #f59494"
+          data-bs-dismiss="modal"
+          (click)="sendComplaintReview()"
+          [disabled]="
+            responseForClient == undefined ||
+            responseForClient == '' ||
+            responseForOwner == undefined ||
+            responseForOwner == ''
+          "
+        >
+          Submit
+        </button>
       </div>
     </div>
   </div>

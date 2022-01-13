@@ -9,6 +9,7 @@ import { ComplaintsService } from 'src/app/services/complaints.service';
 })
 export class AllComplaintsComponent implements OnInit {
   allComplaints! : Complaint[];
+  selectedComplaint! : Complaint;
   responseForClient! : string;
   responseForOwner! : string;
 
@@ -19,11 +20,11 @@ export class AllComplaintsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  sendComplaintReview(complaint : Complaint)
+  sendComplaintReview()
   {
     let review = new ComplaintReviewDTO();
     review = {
-      id: complaint.id,
+      id: this.selectedComplaint.id,
       responseForClient: this.responseForClient,
       responseForOwner: this.responseForOwner
     }
