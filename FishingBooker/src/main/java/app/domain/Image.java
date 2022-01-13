@@ -14,8 +14,7 @@ public class Image {
     @JoinColumn(name = "service_id")
     private BookingService bookingService;
 
-    public Image() {
-    }
+    public Image() {}
 
     public Integer getId() {
         return id;

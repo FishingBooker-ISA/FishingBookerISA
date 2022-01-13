@@ -4,6 +4,7 @@ import app.domain.BookingService;
 import app.domain.Image;
 import app.domain.User;
 import app.dto.ImageDTO;
+import app.repository.ImageRepository;
 import app.repository.ServiceRepository;
 import app.service.ManipulatingImagesService;
 import app.service.UserService;
@@ -28,6 +29,8 @@ public class ImageController {
     private UserService userService;
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private ImageRepository imageRepository;
 
     @PostMapping(value = "/addImages", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
@@ -50,15 +53,14 @@ public class ImageController {
 
     @GetMapping(value = "/getImages", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public List<String> getImagesForService(int serviceId) {
-        List<Image> found = imagesService.getImagesByService(serviceId);
-        List<String> codes = new ArrayList<>();
+    public List<Image> getImagesForService(int serviceId) {
+        return imagesService.getImagesByService(serviceId);
+    }
 
-        for (Image img : found) {
-            String base = Base64.getEncoder().encodeToString(img.getBytes());
-            codes.add(base);
-        }
-
-        return codes;
+    @PostMapping(value = "/deleteImages", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    public void deleteSelectedImages(@RequestBody List<Integer> ids) {
+        List<Image> images = imageRepository.findAllById(ids);
+        imageRepository.deleteAll(images);
     }
 }
