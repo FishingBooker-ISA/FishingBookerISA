@@ -13,7 +13,12 @@
         </a>
       </div>
       <div class="propertyLocation">
-        <button class="btn btn-primary">Add photos</button>
+        <input type="file" multiple class="form-control my-3" (change)="getImage($event)">
+        <button class="btn btn-primary" (click)="addImage()">Add photos</button>
+        <div *ngFor="let img of foundImages">
+          <img [src]="img">
+        </div>
+
       </div>
     </div>
     <!-- END OF TITLE AND LOCATION -->

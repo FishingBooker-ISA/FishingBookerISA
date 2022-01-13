@@ -1,51 +1,18 @@
 <app-estate-owner-navbar></app-estate-owner-navbar>
-<app-edit-estate
-  *ngIf="editingMode"
-  [editingMode]="editingMode"
-  [estate]="estate"
-></app-edit-estate>
+<app-edit-estate *ngIf="editingMode" [editingMode]="editingMode" [estate]="estate"></app-edit-estate>
 <div class="bg-light" *ngIf="!editingMode">
   <!-- Carousel -->
-  <div
-    id="carouselHome"
-    class="carousel slide carousel-fade"
-    data-bs-ride="carousel"
-  >
+  <div id="carouselHome" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div
-          class="overlay-image"
-          style="background-image: url(../../../assets/img/background.jpg)"
-        ></div>
-      </div>
-      <div class="carousel-item">
-        <div
-          class="overlay-image"
-          style="background-image: url(../../../assets/img/background1.jpg)"
-        ></div>
-      </div>
-      <div class="carousel-item">
-        <div
-          class="overlay-image"
-          style="background-image: url(../../../assets/img/background.jpg)"
-        ></div>
+      <div class="carousel-item active" *ngFor="let img of images">
+        <div class="overlay-image" [ngStyle]="{'background': 'url(' + img + ') no-repeat 0 0 / cover'}"></div>
       </div>
     </div>
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselHome"
-      data-bs-slide="prev"
-    >
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselHome"
-      data-bs-slide="next"
-    >
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -61,13 +28,11 @@
             <h3 class="propertyTitle">{{ estate.name }}</h3>
           </div>
           <div class="propertyLocation">
-            <a href="#"
-              >{{ estate.address.street }} {{ estate.address.number }}, <br />
+            <a href="#">{{ estate.address.street }} {{ estate.address.number }}, <br />
               {{ estate.address.city }}
               {{ estate.address.postcode }}, <br />{{
                 estate.address.country
-              }}</a
-            >
+              }}</a>
           </div>
         </div>
         <div class="col-md-3"></div>
@@ -103,14 +68,10 @@
               <p>{{ estate.description }}</p>
               <div class="row" style="padding: 15px">
                 <div class="numbers mb-2">
-                  <span style="color: rgb(216, 93, 93)"
-                    >Number of rooms: {{ estate.numOfRooms }}</span
-                  >
+                  <span style="color: rgb(216, 93, 93)">Number of rooms: {{ estate.numOfRooms }}</span>
                 </div>
                 <div class="numbers">
-                  <span style="color: rgb(216, 93, 93)"
-                    >Number of beds: {{ estate.numOfBeds }}</span
-                  >
+                  <span style="color: rgb(216, 93, 93)">Number of beds: {{ estate.numOfBeds }}</span>
                 </div>
               </div>
             </div>
