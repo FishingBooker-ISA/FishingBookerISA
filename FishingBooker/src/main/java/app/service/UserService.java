@@ -141,7 +141,7 @@ public class UserService implements UserDetailsService {
         return addedClient;
     }
 
-    private void sendVerificationEmail(int clientId) {
+    private void sendVerificationEmail(int clientId) throws InterruptedException {
         Client client = this.clientRepository.getById(clientId);
         String mailSubject = "FishingBooker registration";
         String mailContent;
