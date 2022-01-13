@@ -5,9 +5,6 @@ public class ComplaintReviewDTO {
     private String responseForClient;
     private String responseForOwner;
 
-    public ComplaintReviewDTO() {
-    }
-
     public int getId() {
         return id;
     }
