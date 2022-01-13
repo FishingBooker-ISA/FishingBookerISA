@@ -4,6 +4,8 @@ import app.domain.*;
 import app.dto.PromoActionDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,20 +21,20 @@ public class PromoActionService {
     @Autowired
     private ServiceRepository serviceRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private SubscriptionRepository subscriptionRepository;
+    @Autowired
+    private UnavailablePeriodRepository unavailablePeriodRepository;
     @Autowired
     private DateRangeService dateRangeService;
     @Autowired
     private EmailService emailService;
 
-    public List<PromoAction> getAllActions() {
-        return promoActionRepository.findAll();
+    public List<PromoAction> getAllActions(int serviceId) {
+        return promoActionRepository.getAllByBookingServiceId(serviceId);
     }
 
     public PromoAction createNewPromoAction(PromoActionDTO actionDTO) {
-        if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate())) {
+        if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate(), actionDTO.getBookingServiceId())) {
             return null;
         }
 
@@ -44,8 +46,12 @@ public class PromoActionService {
     public PromoAction updateAction(PromoActionDTO actionDTO) {
         PromoAction existingAction = promoActionRepository.getById(actionDTO.getId());
 
-        if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate())) {
-            return null;
+        if (existingAction.getStartDate().compareTo(actionDTO.getStartDate()) != 0
+                || existingAction.getEndDate().compareTo(actionDTO.getEndDate()) != 0) {
+
+            if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate(), actionDTO.getBookingServiceId())) {
+                return null;
+            }
         }
 
         PromoAction updatedAction = create(existingAction, actionDTO);
@@ -90,9 +96,10 @@ public class PromoActionService {
         return action;
     }
 
-    public boolean checkIfDatesOverlap(Date start, Date end) {
-        List<Reservation> existingReservations = reservationRepository.findAll();
-        List<PromoAction> existingActions = promoActionRepository.findAll();
+    public boolean checkIfDatesOverlap(Date start, Date end, int serviceId) {
+        List<Reservation> existingReservations = reservationRepository.getByBookingServiceId(serviceId);
+        List<PromoAction> existingActions = promoActionRepository.getAllByBookingServiceId(serviceId);
+        List<UnavailablePeriod> unavailablePeriods = unavailablePeriodRepository.findAllByServiceId(serviceId);
 
         for (Reservation reservation : existingReservations) {
             if (dateRangeService.datesOverlap(reservation.getReservationStart(), reservation.getReservationEnd(), start, end)) {
@@ -102,6 +109,13 @@ public class PromoActionService {
 
         for (PromoAction action : existingActions) {
             if (dateRangeService.datesOverlap(action.getStartDate(), action.getEndDate(), start, end)) {
+                return true;
+            }
+        }
+
+        for (UnavailablePeriod period : unavailablePeriods) {
+            if (dateRangeService.datesOverlap(period.getStartDate(), period.getEndDate(),
+                    start, end)) {
                 return true;
             }
         }

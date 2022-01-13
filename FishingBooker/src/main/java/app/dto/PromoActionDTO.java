@@ -1,11 +1,5 @@
 package app.dto;
 
-import app.domain.BookingService;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
 public class PromoActionDTO {

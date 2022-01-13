@@ -6,7 +6,6 @@ import app.domain.User;
 import app.dto.NewEstateDTO;
 import app.dto.UnavailablePeriodDTO;
 import app.repository.EstateRepository;
-import app.repository.ServiceRepository;
 import app.service.ManagingEstateService;
 import app.service.ManagingReservationsService;
 import app.service.UserService;

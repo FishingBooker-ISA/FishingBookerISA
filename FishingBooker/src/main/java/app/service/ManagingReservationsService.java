@@ -1,9 +1,6 @@
 package app.service;
 
-import app.domain.BookingService;
-import app.domain.Reservation;
-import app.domain.UnavailablePeriod;
-import app.domain.User;
+import app.domain.*;
 import app.dto.ReservationDTO;
 import app.dto.UnavailablePeriodDTO;
 import app.repository.*;
@@ -104,7 +101,7 @@ public class ManagingReservationsService {
         BookingService service = serviceRepository.getById(dto.getServiceId());
 
         if (!checkIfPeriodIsAvailable(dto.getStart(), dto.getEnd(), dto.getServiceId()) ||
-            dto.getStart().before(new Date())) {
+            dto.getStart().before(new Date()) || !checkIfActionsOverlap(dto.getStart(), dto.getEnd(), dto.getServiceId())) {
             return null;
         }
 
@@ -153,6 +150,16 @@ public class ManagingReservationsService {
             }
         }
 
+        return true;
+    }
+
+    private boolean checkIfActionsOverlap(Date start, Date end, int serviceId) {
+        List<PromoAction> existingActions = promoActionService.getAllActions(serviceId);
+        for (PromoAction action : existingActions) {
+            if (dateRangeService.datesOverlap(action.getStartDate(), action.getEndDate(), start, end)) {
+                return false;
+            }
+        }
         return true;
     }
 }
