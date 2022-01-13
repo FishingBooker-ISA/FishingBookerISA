@@ -72,11 +72,11 @@ public class Complaint {
         this.owner = owner;
     }
 
-    public boolean isReviewed() {
+    public boolean getIsReviewed() {
         return isReviewed;
     }
 
-    public void setReviewed(boolean reviewed) {
+    public void setIsReviewed(boolean reviewed) {
         isReviewed = reviewed;
     }
 
@@ -96,7 +96,7 @@ public class Complaint {
         this.responseForOwner = responseForOwner;
     }
 
-    public boolean geIsComplaintOnOwner() {
+    public boolean getIsComplaintOnOwner() {
         return isComplaintOnOwner;
     }
 

@@ -27,5 +27,8 @@ INSERT INTO rating (
     id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
 VALUES (2, 'Great service. See you again soon. :)', 5, true, false, 1, 1);
 
-INSERT INTO complaint (id, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
-VALUES (1, true, false, 'He was never on time.', 5, 5);
+INSERT INTO complaint (id, created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
+VALUES (1, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);
+
+INSERT INTO complaint (id, created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
+VALUES (2, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);

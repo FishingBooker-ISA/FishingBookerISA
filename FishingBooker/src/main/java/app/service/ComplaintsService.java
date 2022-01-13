@@ -19,7 +19,7 @@ public class ComplaintsService {
 
     public void reviewComplaint(ComplaintReviewDTO review) throws InterruptedException {
         Complaint foundComplaint = this.complaintRepository.getById(review.getId());
-        foundComplaint.setReviewed(true);
+        foundComplaint.setIsReviewed(true);
         foundComplaint.setResponseForClient(review.getResponseForClient());
         foundComplaint.setResponseForOwner(review.getResponseForOwner());
         this.complaintRepository.save(foundComplaint);

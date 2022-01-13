@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountRequestsComponent } from './components/admin-profile/account-requests/account-requests.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
+import { AllComplaintsComponent } from './components/admin-profile/all-complaints/all-complaints.component';
 import { DeleteRequestsComponent } from './components/admin-profile/delete-requests/delete-requests.component';
 import { NewAdminFormComponent } from './components/admin-profile/new-admin-form/new-admin-form.component';
 import { UsersTableComponent } from './components/admin-profile/users-table/users-table.component';
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'admin/deleteRequests', component: DeleteRequestsComponent },
   { path: 'admin/allUsers', component: UsersTableComponent },
   { path: 'admin/addNewAdmin', component: NewAdminFormComponent },
+  { path: 'admin/allComplaints', component: AllComplaintsComponent },
   { path: 'client/reservationHistory/estate', component: EstateReservationHistoryComponent },
   { path: 'client/upcomingReservations', component: UpcomingReservationsComponent },
   { path: 'client/subscriptions', component: SubscriptionsComponent },
