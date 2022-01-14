@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AccountRequest } from '../model/account-request';
 import { RequestReview } from '../model/request-review';
 import { DeleteAccountRequest } from '../model/delete-account-request';
+import { User } from '../model/user';
 
 
 @Injectable({
@@ -43,6 +44,24 @@ export class AdminRequestsService {
       .post(
         `${environment.baseUrl}` + 'api/accounts/reviewDeleteRequest',
        review
+      )
+      .subscribe((response) => {
+        console.log('response received');
+      },
+      (error) => {
+        console.error('error caught in component');
+      });
+  }
+
+  public getAllUsers() : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.baseUrl}` + 'api/users/getAllUsers');
+  }
+
+  deleteUser(id: number) {
+    return this.http
+      .post(
+        `${environment.baseUrl}` + 'api/users/deleteUser',
+       id
       )
       .subscribe((response) => {
         console.log('response received');

@@ -51,7 +51,7 @@
             <div class="d-flex justify-content-center">
               <button
                 type="button"
-                class="btn btn-outline-success me-3"
+                class="btn me-3"
                 [disabled]="selectedRequest == undefined"
                 (click)="approveRequest()"
               >
@@ -59,7 +59,8 @@
               </button>
               <button
                 type="button"
-                class="btn btn-outline-danger ms-3"
+                class="btn ms-3"
+                style="background: #f59494"
                 data-bs-toggle="modal"
                 data-bs-target="#declineModal"
                 [disabled]="selectedRequest == undefined"

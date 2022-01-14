@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -147,5 +149,22 @@ public class UserService implements UserDetailsService {
         mailContent = "Hello "+ client.getFirstName() +",\n\nThank you for your registration. Click on the the link below to activate your account.\nhttp://localhost:4200/verifyClient/"+client.getVerificationCode()+" \n\n Fishing Booker";
 
         this.emailService.sendMail(client, mailSubject, mailContent);
+    public List<User> getAllUsers() {
+        List<User> allUsers = this.userRepository.findAll();
+        List<User> validUsers = new ArrayList<>();
+        for (User u: allUsers
+        ) {
+            if(u.isVerified() && !u.isDeleted())
+                validUsers.add(u);
+        }
+
+        return validUsers;
+    }
+
+    public void deleteUser(int userId) {
+        User user = this.userRepository.getById(userId);
+        user.setDeleted(true);
+        user.setVerified(false);
+        this.userRepository.save(user);
     }
 }
