@@ -106,9 +106,7 @@ public class UserService implements UserDetailsService {
         user.setVerified(true);
         user.setRole(role);
         user.setPhoneNumber(adminRequest.getPhoneNumber());
-        User newUser = this.userRepository.save(user);
-
-        return newUser;
+        return this.userRepository.save(user);
     }
 
     public User addClient(ClientDTO userRequest) throws InterruptedException {

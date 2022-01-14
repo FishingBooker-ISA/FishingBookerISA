@@ -3,9 +3,7 @@ package app.dto;
 public class RatingReviewDTO {
     private int ratingId;
     private boolean isApproved;
-
-    public RatingReviewDTO(){}
-
+    
     public int getRatingId() {
         return ratingId;
     }

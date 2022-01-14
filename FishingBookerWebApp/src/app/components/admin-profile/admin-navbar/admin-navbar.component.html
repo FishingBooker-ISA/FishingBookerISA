@@ -24,8 +24,18 @@
           >
             <ul class="navbar-nav ms-auto">
               <li><a class="nav-link active" href="/home">Home</a></li>
-              <li><a class="nav-link" href="#">Reservations</a></li>
-              <li><a class="nav-link" href="#">Reviews</a></li>
+              <li>
+                <a class="nav-link" href="/admin/allComplaints">Complaints</a>
+              </li>
+              <li>
+                <a
+                  class="nav-link"
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loyaltyModal"
+                  >Loyalty</a
+                >
+              </li>
               <li class="dropdown">
                 <a
                   ><span>Users</span> <i class="bi bi-chevron-down ms-1"></i
@@ -48,3 +58,147 @@
     </div>
   </div>
 </header>
+
+<div class="modal fade" tabindex="-1" id="loyaltyModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Our Loyalty Program</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row my-3">
+          <div class="col-6">
+            <div class="d-inline-flex">
+              <span class="material-icons mt-3 me-2" style="color: brown"
+                >star</span
+              >
+              <form class="form-floating">
+                <input
+                  type="number"
+                  class="form-control bg-light"
+                  name="pointsB"
+                  [(ngModel)]="loyaltyProgram.pointsForBronze"
+                  (input)="error = ''"
+                />
+                <label for="floatingInputValue">Points</label>
+              </form>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-inline-flex">
+              <form class="form-floating">
+                <input
+                  type="number"
+                  class="form-control bg-light"
+                  name="percentB"
+                  [(ngModel)]="loyaltyProgram.percentForBronze"
+                  (input)="error = ''"
+                />
+                <label for="floatingInputValue">Discount</label>
+              </form>
+              <h5 class="mt-3 ms-1">%</h5>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-6">
+            <div class="d-inline-flex">
+              <span class="material-icons mt-3 me-2" style="color: silver"
+                >star</span
+              >
+              <form class="form-floating">
+                <input
+                  type="number"
+                  name="pointsS"
+                  class="form-control bg-light"
+                  id="floatingInputValue"
+                  [(ngModel)]="loyaltyProgram.pointsForSilver"
+                  (input)="error = ''"
+                />
+                <label for="floatingInputValue">Points</label>
+              </form>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-inline-flex">
+              <form class="form-floating">
+                <input
+                  type="number"
+                  name="percentS"
+                  class="form-control bg-light"
+                  [(ngModel)]="loyaltyProgram.percentForSilver"
+                  (input)="error = ''"
+                />
+                <label for="floatingInputValue">Discount</label>
+              </form>
+              <h5 class="mt-3 ms-1">%</h5>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-6">
+            <div class="d-inline-flex">
+              <span class="material-icons mt-3 me-2" style="color: gold"
+                >star</span
+              >
+              <form class="form-floating">
+                <input
+                  type="number"
+                  class="form-control bg-light"
+                  name="pointsG"
+                  [(ngModel)]="loyaltyProgram.pointsForGold"
+                  (input)="error = ''"
+                />
+                <label for="floatingInputValue">Points</label>
+              </form>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-inline-flex">
+              <form class="form-floating">
+                <input
+                  type="number"
+                  class="form-control bg-light"
+                  name="percentG"
+                  [(ngModel)]="loyaltyProgram.percentForGold"
+                  (input)="error = ''"
+                />
+                <label for="floatingInputValue">Discount</label>
+              </form>
+              <h5 class="mt-3 ms-1">%</h5>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-11" style="text-align: center">
+            <h6 style="color: red">{{ error }}</h6>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn"
+          data-bs-dismiss="modal"
+          (click)="close()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn"
+          style="background: #f59494"
+          (click)="save()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

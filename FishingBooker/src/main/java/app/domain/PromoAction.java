@@ -11,11 +11,13 @@ public class PromoAction {
     @Column(nullable = false)
     private double pricePerDay;
     @Column(nullable = false)
+    private int durationInDays;
+    @Column(nullable = false)
     private boolean isTaken;
     @Column(nullable = false)
     private int capacity;
     @Column(nullable = false)
-    private String additional; // nesto
+    private String additional;
     @Column(nullable = false)
     private Date startDate;
     @Column(nullable = false)
@@ -26,6 +28,22 @@ public class PromoAction {
     private BookingService bookingService;
 
     public PromoAction() {
+    }
+
+    public PromoAction(Integer id, double pricePerDay, int durationInDays, boolean isTaken, int capacity) {
+        this.id = id;
+        this.pricePerDay = pricePerDay;
+        this.durationInDays = durationInDays;
+        this.isTaken = isTaken;
+        this.capacity = capacity;
+    }
+
+    public int getDurationInDays() {
+        return durationInDays;
+    }
+
+    public void setDurationInDays(int durationInDays) {
+        this.durationInDays = durationInDays;
     }
 
     public Integer getId() {
@@ -84,11 +102,11 @@ public class PromoAction {
         this.endDate = endDate;
     }
 
-    public BookingService getService() {
+    public BookingService getBookingService() {
         return bookingService;
     }
 
-    public void setService(BookingService bookingService) {
+    public void setBookingService(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 }

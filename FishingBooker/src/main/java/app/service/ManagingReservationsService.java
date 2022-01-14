@@ -1,14 +1,9 @@
 package app.service;
 
-import app.domain.BookingService;
-import app.domain.PromoAction;
-import app.domain.Reservation;
-import app.domain.User;
+import app.domain.*;
 import app.dto.ReservationDTO;
-import app.repository.EstateRepository;
-import app.repository.ReservationRepository;
-import app.repository.ServiceRepository;
-import app.repository.UserRepository;
+import app.dto.UnavailablePeriodDTO;
+import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -38,7 +33,8 @@ public class ManagingReservationsService {
     UserRepository userRepository;
     @Autowired
     EstateRepository estateRepository;
-
+    @Autowired
+    UnavailablePeriodRepository unavailablePeriodRepository;
 
     public List<Reservation> getReservationHistory(int serviceId) {
         BookingService bookingService = serviceRepository.getById(serviceId);
@@ -61,12 +57,15 @@ public class ManagingReservationsService {
         if (lastingReservation == null)
             return null;
 
-        List<Reservation> existingReservations = getReservationHistory(reservationDTO.getServiceId());
-        if (checkIfReservationsOverlap(reservationDTO.getReservationStart(), reservationDTO.getReservationEnd(),
-                existingReservations)) {
+        if (!checkIfPeriodIsAvailable(reservationDTO.getReservationStart(), reservationDTO.getReservationEnd(),
+                reservationDTO.getServiceId())) {
             return null;
         }
 
+        return getReservation(reservationDTO);
+    }
+
+    private Reservation getReservation(ReservationDTO reservationDTO) throws InterruptedException {
         Reservation newReservation = new Reservation();
         newReservation.setReservationStart(reservationDTO.getReservationStart());
         newReservation.setReservationEnd(reservationDTO.getReservationEnd());
@@ -97,8 +96,24 @@ public class ManagingReservationsService {
         return null;
     }
 
+    public UnavailablePeriod addUnavailablePeriod(UnavailablePeriodDTO dto) {
+        UnavailablePeriod unavailable = new UnavailablePeriod();
+        BookingService service = serviceRepository.getById(dto.getServiceId());
+
+        if (!checkIfPeriodIsAvailable(dto.getStart(), dto.getEnd(), dto.getServiceId()) ||
+            dto.getStart().before(new Date()) || !checkIfActionsOverlap(dto.getStart(), dto.getEnd(), dto.getServiceId())) {
+            return null;
+        }
+
+        unavailable.setStartDate(dto.getStart());
+        unavailable.setEndDate(dto.getEnd());
+        unavailable.setService(service);
+        unavailablePeriodRepository.save(unavailable);
+        return unavailable;
+    }
+
     private boolean checkIfReservationIsLasting(Date start, Date end) {
-        return  (start.compareTo(new Date()) <= 0 && new Date().compareTo(end) <= 0);
+        return (start.compareTo(new Date()) <= 0 && new Date().compareTo(end) <= 0);
     }
 
     private boolean checkIfReservationsOverlap(Date start, Date end, List<Reservation> existingReservations) {
@@ -128,12 +143,23 @@ public class ManagingReservationsService {
             return false;
         }
 
-        List<PromoAction> existingActions = promoActionService.getAllActions(serviceId);
-        for (PromoAction action : existingActions) {
-            if (dateRangeService.datesOverlap(action.getStartDate(), action.getEndDate(), start, end))
+        List<UnavailablePeriod> unavailablePeriods = unavailablePeriodRepository.findAllByServiceId(serviceId);
+        for (UnavailablePeriod period : unavailablePeriods) {
+            if (dateRangeService.datesOverlap(period.getStartDate(), period.getEndDate(), start, end)) {
                 return false;
+            }
         }
 
+        return true;
+    }
+
+    private boolean checkIfActionsOverlap(Date start, Date end, int serviceId) {
+        List<PromoAction> existingActions = promoActionService.getAllActions(serviceId);
+        for (PromoAction action : existingActions) {
+            if (dateRangeService.datesOverlap(action.getStartDate(), action.getEndDate(), start, end)) {
+                return false;
+            }
+        }
         return true;
     }
 }

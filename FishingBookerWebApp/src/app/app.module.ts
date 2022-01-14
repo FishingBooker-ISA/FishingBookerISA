@@ -53,6 +53,8 @@ import { NewAdventureComponent } from './components/instructor-components/new-ad
 import { EditAdventureComponent } from './components/instructor-components/adventure-profile/edit-adventure/edit-adventure.component';
 import { RatingsReviewComponent } from './components/ratings-review/ratings-review.component';
 import { DeletionRequestComponent } from './components/deletion-request/deletion-request.component';
+import { AllComplaintsComponent } from './components/admin-profile/all-complaints/all-complaints.component';
+import { ShowImagesComponent } from './components/show-images/show-images.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,8 @@ import { DeletionRequestComponent } from './components/deletion-request/deletion
     EditAdventureComponent,
     RatingsReviewComponent,
     DeletionRequestComponent,
+    AllComplaintsComponent,
+    ShowImagesComponent,
   ],
   imports: [
     BrowserModule,

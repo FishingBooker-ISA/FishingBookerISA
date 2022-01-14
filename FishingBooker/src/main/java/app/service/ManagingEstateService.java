@@ -5,8 +5,7 @@ import app.dto.NewEstateDTO;
 import app.repository.AddressRepository;
 import app.repository.EstateRepository;
 import app.repository.ReservationRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import app.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -19,19 +18,14 @@ import java.util.List;
 @Service
 @Transactional
 public class ManagingEstateService {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-    AddressRepository addressRepository;
-    EstateRepository estateRepository;
-    ReservationRepository reservationRepository;
-
     @Autowired
-    public ManagingEstateService(AddressRepository addressRepository, EstateRepository estateRepository,
-                                 ReservationRepository reservationRepository)
-    {
-        this.addressRepository = addressRepository;
-        this.estateRepository = estateRepository;
-        this.reservationRepository = reservationRepository;
-    }
+    AddressRepository addressRepository;
+    @Autowired
+    EstateRepository estateRepository;
+    @Autowired
+    ReservationRepository reservationRepository;
+    @Autowired
+    ServiceRepository serviceRepository;
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
@@ -62,33 +56,36 @@ public class ManagingEstateService {
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public void updateExistingEstate(NewEstateDTO estateDTO, Estate existingEstate) {
+        create(existingEstate, estateDTO, existingEstate.getOwner());
+        estateRepository.save(existingEstate);
+    }
+
+    private Estate create(Estate estate, NewEstateDTO dto, User owner) {
         Address address = new Address(
-                estateDTO.getStreet(), estateDTO.getNumber(), estateDTO.getCity(), estateDTO.getCountry(),
-                estateDTO.getPostcode(), 0, 0
+                dto.getStreet(), dto.getNumber(), dto.getCity(), dto.getCountry(),
+                dto.getPostcode(), 0, 0
         );
 
         if (addressAlreadyExists(address) == null) {
             Address updated = addressRepository.save(address);
-            existingEstate.setAddress(updated);
+            estate.setAddress(updated);
         }
         else
-            existingEstate.setAddress(addressAlreadyExists(address));
+            estate.setAddress(addressAlreadyExists(address));
 
-        existingEstate.setName(estateDTO.getName());
-        existingEstate.setPricePerDay(estateDTO.getPricePerDay());
-        existingEstate.setDescription(estateDTO.getDescription());
-        existingEstate.setTermsOfUse(estateDTO.getTermsOfUse());
-        existingEstate.setAdditionalEquipment(estateDTO.getAdditionalEquipment());
-        existingEstate.setAvailableFrom(estateDTO.getAvailableFrom());
-        existingEstate.setAvailableTo(estateDTO.getAvailableTo());
-        existingEstate.setCapacity(estateDTO.getCapacity());
-        existingEstate.setPercentageTakenFromCanceledReservations(estateDTO.getIsPercentageTakenFromCanceledReservations());
-        existingEstate.setPercentageToTake(estateDTO.getPercentageToTake());
-
-        existingEstate.setNumOfRooms(estateDTO.getNumOfRooms());
-        existingEstate.setNumOfBeds(estateDTO.getNumOfBeds());
-
-        estateRepository.save(existingEstate);
+        estate.setName(dto.getName());
+        estate.setType(ServiceType.ESTATE);
+        estate.setPricePerDay(dto.getPricePerDay());
+        estate.setDescription(dto.getDescription());
+        estate.setTermsOfUse(dto.getTermsOfUse());
+        estate.setAdditionalEquipment(dto.getAdditionalEquipment());
+        estate.setCapacity(dto.getCapacity());
+        estate.setPercentageTakenFromCanceledReservations(dto.getIsPercentageTakenFromCanceledReservations());
+        estate.setPercentageToTake(dto.getPercentageToTake());
+        estate.setOwner(owner);
+        estate.setNumOfRooms(dto.getNumOfRooms());
+        estate.setNumOfBeds(dto.getNumOfBeds());
+        return estate;
     }
 
     public Address addressAlreadyExists(Address updatedAddress) {
@@ -119,17 +116,3 @@ public class ManagingEstateService {
         estateRepository.deleteById(estate.getId());
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

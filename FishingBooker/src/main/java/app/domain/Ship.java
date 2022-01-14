@@ -1,7 +1,7 @@
 package app.domain;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity
 public class Ship extends BookingService {
@@ -20,17 +20,9 @@ public class Ship extends BookingService {
     public Ship() {
     }
 
-    public Ship (ServiceType type, String name, double pricePerDay, String description, String termsOfUse,
-                String additionalEquipment, Date availableFrom, Date availableTo, int capacity,
-                boolean isPercentageTakenFromCanceledReservations, double percentageToTake, User owner,
-                Address address, double length, int numOfEngines, double powerOfEngines, double maxSpeed, ShipType type1) {
-        super(type, name, pricePerDay, description, termsOfUse, additionalEquipment, availableFrom, availableTo,
-                capacity, isPercentageTakenFromCanceledReservations, percentageToTake, owner, address);
+    public Ship(double length, int numOfEngines) {
         this.length = length;
         this.numOfEngines = numOfEngines;
-        this.powerOfEngines = powerOfEngines;
-        this.maxSpeed = maxSpeed;
-        this.type = type1;
     }
 
     public double getLength() {

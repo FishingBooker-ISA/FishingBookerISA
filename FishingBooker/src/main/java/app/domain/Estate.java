@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.util.Date;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -18,10 +17,10 @@ public class Estate extends BookingService {
     }
 
     public Estate (ServiceType type, String name, double pricePerDay, String description, String termsOfUse,
-                  String additionalEquipment, Date availableFrom, Date availableTo, int capacity,
+                  String additionalEquipment, int capacity,
                   boolean isPercentageTakenFromCanceledReservations, double percentageToTake, User owner, Address address,
                   int numOfBeds, int numOfRooms) {
-        super(type, name, pricePerDay, description, termsOfUse, additionalEquipment, availableFrom, availableTo,
+        super(type, name, pricePerDay, description, termsOfUse, additionalEquipment,
                 capacity, isPercentageTakenFromCanceledReservations, percentageToTake, owner, address);
         this.numOfBeds = numOfBeds;
         this.numOfRooms = numOfRooms;
