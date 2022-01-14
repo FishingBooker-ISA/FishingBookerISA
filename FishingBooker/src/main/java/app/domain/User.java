@@ -43,6 +43,8 @@ public class User implements UserDetails{
     private int points;
     @Column(nullable = true)
     private UserType userType;
+    @Column(nullable = true)
+    private boolean firstTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
@@ -196,5 +198,13 @@ public class User implements UserDetails{
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public boolean isFirstTime() {
+        return firstTime;
+    }
+
+    public void setFirstTime(boolean firstTime) {
+        this.firstTime = firstTime;
     }
 }

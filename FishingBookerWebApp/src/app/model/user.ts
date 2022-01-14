@@ -10,6 +10,7 @@ export class User {
     role!: Role;
     address!: Address;
     password!: string
+    firstTime!: boolean;
 
     constructor(){
         this.address = new Address();
@@ -43,3 +44,4 @@ export class NewAdminDTO {
     country!: string;
     postcode!: number;
 }
+

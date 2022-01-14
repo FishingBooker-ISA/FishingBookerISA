@@ -107,6 +107,7 @@ public class UserService implements UserDetailsService {
         user.setVerified(true);
         user.setRole(role);
         user.setPhoneNumber(adminRequest.getPhoneNumber());
+        user.setFirstTime(true);
         return this.userRepository.save(user);
     }
 
@@ -165,6 +166,13 @@ public class UserService implements UserDetailsService {
         User user = this.userRepository.getById(userId);
         user.setDeleted(true);
         user.setVerified(false);
+        this.userRepository.save(user);
+    }
+
+    public void changePasswordForAdmin(String password, int id) {
+        User user = this.userRepository.getById(id);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setFirstTime(false);
         this.userRepository.save(user);
     }
 }
