@@ -5,13 +5,15 @@ import { Observable } from 'rxjs';
 import { AccountRequest } from '../model/account-request';
 import { RequestReview } from '../model/request-review';
 import { DeleteAccountRequest } from '../model/delete-account-request';
-import { User } from '../model/user';
+import { NewAdminDTO, User } from '../model/user';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminRequestsService {
+  public errorMessage!: string;
+
 
   constructor(private http: HttpClient) { }
   
@@ -69,5 +71,19 @@ export class AdminRequestsService {
       (error) => {
         console.error('error caught in component');
       });
+  }
+
+  public addNewAdmin(request: NewAdminDTO) {
+    this.http
+      .post(`${environment.baseUrl}` + 'auth/addAdmin', request)
+      .subscribe(
+        (response) => {
+          console.log('response received');
+        },
+        (error) => {
+          this.errorMessage = 'Account with this email already exists!';
+          console.error('error caught in component');
+        }
+      );
   }
 }

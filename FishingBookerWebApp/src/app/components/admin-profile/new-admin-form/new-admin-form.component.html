@@ -9,17 +9,32 @@
           <div class="row g-5 justify-content-center">
             <div class="col-md-4">
               <div class="textField">
-                <input type="text" required />
+                <input
+                  type="text"
+                  required
+                  [(ngModel)]="firstName"
+                  [formControl]="fieldRequired"
+                />
                 <span></span>
                 <label>First Name</label>
               </div>
               <div class="textField">
-                <input type="text" required />
+                <input
+                  type="text"
+                  required
+                  [(ngModel)]="street"
+                  [formControl]="fieldRequired"
+                />
                 <span></span>
                 <label>Street</label>
               </div>
               <div class="textField">
-                <input type="number" required />
+                <input
+                  type="text"
+                  required
+                  [(ngModel)]="country"
+                  [formControl]="fieldRequired"
+                />
                 <span></span>
                 <label>Country</label>
               </div>
@@ -27,40 +42,90 @@
 
             <div class="col-md-4">
               <div class="textField">
-                <input type="text" required />
+                <input
+                  type="text"
+                  required
+                  [(ngModel)]="lastName"
+                  [formControl]="fieldRequired"
+                />
                 <span></span>
                 <label>Last Name</label>
               </div>
               <div class="textField">
-                <input type="text" required />
+                <input
+                  type="number"
+                  required
+                  [(ngModel)]="number"
+                  [formControl]="fieldRequired"
+                />
                 <span></span>
                 <label>Street Number</label>
               </div>
               <div class="textField mb-5">
-                <input type="text" required />
+                <input
+                  type="number"
+                  required
+                  [(ngModel)]="postcode"
+                  [formControl]="fieldRequired"
+                />
                 <span></span>
                 <label>Postcode</label>
               </div>
-              <button class="login my-3">Submit</button>
+              <button
+                class="login my-3"
+                (click)="addAdmin()"
+                [disabled]="isButtonDisabled()"
+              >
+                Submit
+              </button>
             </div>
 
             <div class="col-md-4">
               <div class="textField">
-                <input type="text" required />
+                <input
+                  type="email"
+                  required
+                  [(ngModel)]="email"
+                  [formControl]="checkEmail"
+                />
                 <span></span>
                 <label>Email</label>
               </div>
               <div class="textField">
-                <input type="text" required />
+                <input
+                  type="text"
+                  required
+                  [(ngModel)]="city"
+                  [formControl]="fieldRequired"
+                />
                 <span></span>
                 <label>City</label>
               </div>
               <div class="textField mb-5">
-                <input type="text" required />
+                <input
+                  type="text"
+                  required
+                  [(ngModel)]="phoneNumber"
+                  [formControl]="fieldRequired"
+                />
                 <span></span>
                 <label>Phone Number</label>
               </div>
             </div>
+          </div>
+          <div class="row justify-content-center">
+            <mat-error
+              style="text-align: center"
+              *ngIf="
+                (checkIfFieldsWereTouched() && checkIfFieldsAreInvalid()) ||
+                (checkEmail.invalid && (checkEmail.dirty || checkEmail.touched))
+              "
+            >
+              {{ getErrorMessage() }} {{ getEmailErrorMessage() }}
+            </mat-error>
+          </div>
+          <div class="row justify-content-center">
+            <mat-error style="text-align: center"> </mat-error>
           </div>
         </div>
       </div>

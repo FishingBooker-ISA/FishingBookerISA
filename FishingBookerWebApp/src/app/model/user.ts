@@ -31,3 +31,15 @@ export class User {
         this.role = {id:0, name:""};
     }
 }
+
+export class NewAdminDTO {
+    email!: string;
+    firstName!: string;
+    lastName!: string;
+    phoneNumber!: string;
+    street!: string;
+    number!: number;
+    city!: string;
+    country!: string;
+    postcode!: number;
+}
