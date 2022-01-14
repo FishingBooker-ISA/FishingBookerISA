@@ -42,7 +42,7 @@ public class PromoActionService {
         return newAction;
     }
 
-    public PromoAction updateAction(PromoActionDTO actionDTO) throws InterruptedException {
+    public PromoAction updateAction(PromoActionDTO actionDTO) throws Exception {
         PromoAction existingAction = promoActionRepository.getById(actionDTO.getId());
 
         if ((existingAction.getStartDate().compareTo(actionDTO.getStartDate()) != 0
