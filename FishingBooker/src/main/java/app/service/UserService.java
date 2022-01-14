@@ -111,7 +111,7 @@ public class UserService implements UserDetailsService {
         return newUser;
     }
 
-    public User addClient(ClientDTO userRequest) {
+    public User addClient(ClientDTO userRequest) throws InterruptedException {
         Client client = new Client();
         Address address = new Address();
         AccountRequest request = new AccountRequest();
@@ -138,11 +138,7 @@ public class UserService implements UserDetailsService {
         client.setVerificationCode(UUID.randomUUID().toString());
         client.setDeleted(false);
         Client addedClient = this.userRepository.save(client);
-        try {
-            this.sendVerificationEmail(addedClient.getId());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        this.sendVerificationEmail(addedClient.getId());
 
 
         return addedClient;

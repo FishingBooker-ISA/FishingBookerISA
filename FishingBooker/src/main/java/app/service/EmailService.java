@@ -6,12 +6,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
@@ -25,10 +22,9 @@ public class EmailService {
     }
 
     @Async
-    public void sendMail(User user, String subject, String text) throws MailException, InterruptedException {
+    public void sendMail(User user, String subject, String text) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
-        //mail.setTo("grahovac.ana99@gmail.com");
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject(subject);
         mail.setText(text);

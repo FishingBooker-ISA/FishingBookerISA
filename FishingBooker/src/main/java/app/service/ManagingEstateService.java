@@ -35,7 +35,7 @@ public class ManagingEstateService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void createNewEstate(NewEstateDTO newEstate, User user) throws Exception {
+    public void createNewEstate(NewEstateDTO newEstate, User user) {
         Address address = new Address(
                 newEstate.getStreet(), newEstate.getNumber(),
                 newEstate.getCity(), newEstate.getCountry(),

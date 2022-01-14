@@ -54,7 +54,7 @@ public class ManagingReservationsService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public Reservation createReservationForUser(ReservationDTO reservationDTO) throws Exception {
+    public Reservation createReservationForUser(ReservationDTO reservationDTO) throws InterruptedException {
         User client = userRepository.getById(reservationDTO.getUserId());
         Reservation lastingReservation = getLastingReservationForUser(client, reservationDTO.getServiceId());
 

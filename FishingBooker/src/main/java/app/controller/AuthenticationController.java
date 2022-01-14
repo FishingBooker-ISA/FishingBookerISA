@@ -1,6 +1,5 @@
 package app.controller;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
 import app.domain.User;

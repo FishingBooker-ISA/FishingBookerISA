@@ -37,7 +37,7 @@ public class OwnerProfileService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void updateUserProfile(UserDTO userDTO, Principal user) throws Exception {
+    public void updateUserProfile(UserDTO userDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
 
         Address address = new Address(
@@ -62,7 +62,7 @@ public class OwnerProfileService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void changePassword(PasswordChangeDTO passwordChangeDTO, Principal user) throws Exception {
+    public void changePassword(PasswordChangeDTO passwordChangeDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         currentUser.setPassword(passwordEncoder.encode(passwordChangeDTO.getNewPassword()));
         userRepository.save(currentUser);
@@ -74,7 +74,7 @@ public class OwnerProfileService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void sendAccountDeletionRequest(DeletionRequestDTO requestDTO, User currentUser) throws Exception {
+    public void sendAccountDeletionRequest(DeletionRequestDTO requestDTO, User currentUser) {
         AccountDeletionRequest request = new AccountDeletionRequest();
         request.setUser(currentUser);
         request.setReason(requestDTO.getReason());

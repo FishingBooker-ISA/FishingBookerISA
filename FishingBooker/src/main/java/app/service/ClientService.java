@@ -1,7 +1,6 @@
 package app.service;
 
 import app.domain.*;
-import app.dto.ClientDTO;
 import app.dto.DeletionRequestDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.security.Principal;
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -35,7 +31,7 @@ public class ClientService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public boolean VerifyClient(String code){
+    public boolean verifyClient(String code){
         Client client = clientRepository.findClientByVerificationCode(code);
         if(client == null)
             return false;
@@ -46,7 +42,7 @@ public class ClientService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void sendAccountDeletionRequest(DeletionRequestDTO requestDTO) throws Exception {
+    public void sendAccountDeletionRequest(DeletionRequestDTO requestDTO) {
         if (this.checkIfRequestExists(requestDTO.getUserId()))
             return;
         User currentUser = clientRepository.getById(requestDTO.getUserId());
@@ -62,9 +58,7 @@ public class ClientService {
     public boolean checkIfRequestExists(int id) {
         User currentUser = clientRepository.getById(id);
         AccountDeletionRequest existingRequest = deletionRequestRepository.findByUser(currentUser);
-        if (existingRequest != null)
-            return true;
-        return false;
+        return (existingRequest != null);
     }
 
 
