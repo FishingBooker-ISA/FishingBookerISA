@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Address } from 'src/app/model/address';
 import { DeletionRequestDTO } from 'src/app/model/delete-account-request';
 import { User } from 'src/app/model/user';
 import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { DeletionRequestComponent } from '../../deletion-request/deletion-request.component';
 
 @Component({
   selector: 'app-view-profile',
@@ -25,8 +27,7 @@ export class ViewProfileComponent implements OnInit {
   request!: DeletionRequestDTO;
   reason: string = "";
 
-
-  constructor(public signupService: SignupOwnersService, private _clientProfileService: ClientProfileService) { }
+  constructor(public signupService: SignupOwnersService, private _clientProfileService: ClientProfileService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -93,7 +94,18 @@ export class ViewProfileComponent implements OnInit {
   }
 
   openDeleteDialog(): void{
+    const dialogRef = this.dialog.open(DeletionRequestComponent, {
+      width: '450px',
+      data: { reason: this.reason},
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.reason = result;
+      if (this.reason){
+        this.sendDeletionRequest();
+      }
+    });
   }
 
   sendDeletionRequest(){

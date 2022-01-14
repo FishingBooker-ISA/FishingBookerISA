@@ -52,6 +52,7 @@ import { InstructorAdventuresComponent } from './components/instructor-component
 import { NewAdventureComponent } from './components/instructor-components/new-adventure/new-adventure.component';
 import { EditAdventureComponent } from './components/instructor-components/adventure-profile/edit-adventure/edit-adventure.component';
 import { RatingsReviewComponent } from './components/ratings-review/ratings-review.component';
+import { DeletionRequestComponent } from './components/deletion-request/deletion-request.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { RatingsReviewComponent } from './components/ratings-review/ratings-revi
     NewAdventureComponent,
     EditAdventureComponent,
     RatingsReviewComponent,
+    DeletionRequestComponent,
   ],
   imports: [
     BrowserModule,
