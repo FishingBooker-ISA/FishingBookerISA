@@ -16,6 +16,12 @@ public class Image {
 
     public Image() {}
 
+    public Image(Integer id, byte[] bytes, BookingService bookingService) {
+        this.id = id;
+        this.bytes = bytes;
+        this.bookingService = bookingService;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -25,6 +25,16 @@ public class AccountDeletionRequest {
 
     public AccountDeletionRequest() {}
 
+    public AccountDeletionRequest(Integer id, Date requestedDate, String reason, boolean isReviewed, boolean isDenied, String denialReason, User user) {
+        this.id = id;
+        this.requestedDate = requestedDate;
+        this.reason = reason;
+        this.isReviewed = isReviewed;
+        this.isDenied = isDenied;
+        this.denialReason = denialReason;
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }

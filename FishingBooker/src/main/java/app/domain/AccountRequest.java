@@ -21,6 +21,15 @@ public class AccountRequest {
     public AccountRequest() {
     }
 
+    public AccountRequest(Integer id, String reason, boolean isDenied, String denialReason, boolean isReviewed, User user) {
+        this.id = id;
+        this.reason = reason;
+        this.isDenied = isDenied;
+        this.denialReason = denialReason;
+        this.isReviewed = isReviewed;
+        this.user = user;
+    }
+
     public boolean isDenied() {
         return isDenied;
     }

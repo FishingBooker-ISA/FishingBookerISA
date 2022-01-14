@@ -19,6 +19,13 @@ public class UnavailablePeriod {
 
     public UnavailablePeriod() {}
 
+    public UnavailablePeriod(int id, Date startDate, Date endDate, BookingService service) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.service = service;
+    }
+
     public int getId() {
         return id;
     }

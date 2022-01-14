@@ -17,26 +17,6 @@ public class NewAdventureDTO {
     private double percentageToTake;
     private String instructorBio;
 
-    public NewAdventureDTO(){}
-
-    public NewAdventureDTO(int id, String name, double pricePerDay, String description, String termsOfUse, String additionalEquipment, int capacity, String street, int number, String city, String country, int postcode, boolean isPercentageTakenFromCanceledReservations, double percentageToTake, String instructorBio) {
-        this.id = id;
-        this.name = name;
-        this.pricePerDay = pricePerDay;
-        this.description = description;
-        this.termsOfUse = termsOfUse;
-        this.additionalEquipment = additionalEquipment;
-        this.capacity = capacity;
-        this.street = street;
-        this.number = number;
-        this.city = city;
-        this.country = country;
-        this.postcode = postcode;
-        this.isPercentageTakenFromCanceledReservations = isPercentageTakenFromCanceledReservations;
-        this.percentageToTake = percentageToTake;
-        this.instructorBio = instructorBio;
-    }
-
     public String getName() {
         return name;
     }

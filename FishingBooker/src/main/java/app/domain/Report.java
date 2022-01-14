@@ -26,6 +26,12 @@ public class Report {
     public Report() {
     }
 
+    public Report(Integer id, String text, Date createdOn) {
+        this.id = id;
+        this.text = text;
+        this.createdOn = createdOn;
+    }
+
     public boolean getVerified() {
         return isVerified;
     }

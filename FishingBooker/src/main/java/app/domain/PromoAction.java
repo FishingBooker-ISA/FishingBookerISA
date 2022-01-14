@@ -30,6 +30,14 @@ public class PromoAction {
     public PromoAction() {
     }
 
+    public PromoAction(Integer id, double pricePerDay, int durationInDays, boolean isTaken, int capacity) {
+        this.id = id;
+        this.pricePerDay = pricePerDay;
+        this.durationInDays = durationInDays;
+        this.isTaken = isTaken;
+        this.capacity = capacity;
+    }
+
     public int getDurationInDays() {
         return durationInDays;
     }
