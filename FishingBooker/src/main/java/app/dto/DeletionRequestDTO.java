@@ -8,6 +8,11 @@ public class DeletionRequestDTO {
     private Date requestedDate;
     @NotNull(message = "There must be a reason for account deleting!")
     private String reason;
+    private int userId;
+
+    public int getUserId() { return userId; }
+
+    public void setUserId(int userId) { this.userId = userId; }
 
     public Date getRequestedDate() {
         return requestedDate;

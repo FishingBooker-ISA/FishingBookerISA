@@ -7,9 +7,11 @@ import { DeleteRequestsComponent } from './components/admin-profile/delete-reque
 import { NewAdminFormComponent } from './components/admin-profile/new-admin-form/new-admin-form.component';
 import { UsersTableComponent } from './components/admin-profile/users-table/users-table.component';
 import { BoatsComponent } from './components/boats/boats.component';
+import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
 import { EstateReservationHistoryComponent } from './components/client-profile/estate-reservation-history/estate-reservation-history.component';
 import { SubscriptionsComponent } from './components/client-profile/subscriptions/subscriptions.component';
 import { UpcomingReservationsComponent } from './components/client-profile/upcoming-reservations/upcoming-reservations.component';
+import { ViewProfileComponent } from './components/client-profile/view-profile/view-profile.component';
 import { EstateOwnerHomepageComponent } from './components/estate-owner-homepage/estate-owner-homepage.component';
 import { EditEstateComponent } from './components/estate-profile/edit-estate/edit-estate.component';
 import { EstateProfileComponent } from './components/estate-profile/estate-profile.component';
@@ -39,6 +41,8 @@ const routes: Routes = [
   { path: 'client/reservationHistory/estate', component: EstateReservationHistoryComponent },
   { path: 'client/upcomingReservations', component: UpcomingReservationsComponent },
   { path: 'client/subscriptions', component: SubscriptionsComponent },
+  { path: 'client/profile', component: ViewProfileComponent },
+  { path: 'verifyClient/:code', component: ClientVerificationComponent },
   { path: 'signup/owners', component: SignupOwnersComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'estateOwner/home', component: EstateOwnerHomepageComponent },

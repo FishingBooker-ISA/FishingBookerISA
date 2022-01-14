@@ -29,8 +29,26 @@ public class ManagingEstateService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void createNewEstate(NewEstateDTO newEstate, User user) throws Exception {
-        Estate estate = create(new Estate(), newEstate, user);
+    public void createNewEstate(NewEstateDTO newEstate, User user) {
+        Address address = new Address(
+                newEstate.getStreet(), newEstate.getNumber(),
+                newEstate.getCity(), newEstate.getCountry(),
+                newEstate.getPostcode(), 0, 0
+        );
+
+        Address newAddress;
+        if (addressAlreadyExists(address) == null) {
+            newAddress = addressRepository.save(address);
+        }
+        else
+            newAddress = addressAlreadyExists(address);
+
+        Estate estate = new Estate(
+                ServiceType.ESTATE, newEstate.getName(), newEstate.getPricePerDay(), newEstate.getDescription(),
+                newEstate.getTermsOfUse(), newEstate.getAdditionalEquipment(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
+                newEstate.getPercentageToTake(), user, newAddress, newEstate.getNumOfBeds(), newEstate.getNumOfRooms()
+        );
+
         estateRepository.save(estate);
     }
 
@@ -97,17 +115,3 @@ public class ManagingEstateService {
         estateRepository.deleteById(estate.getId());
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

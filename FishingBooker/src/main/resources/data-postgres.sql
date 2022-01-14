@@ -21,10 +21,10 @@ VALUES (2, 'baits', 10, 'Fun fishing experience for beginners', false, 'Professi
 
 INSERT INTO rating (
     id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES (1, 'Great service. See you again soon. :)', 5, false, false, 1, 1);
+VALUES (1, 'Great service. See you again soon. :)', 5, false, false, 1, 2);
 
 INSERT INTO rating (
-    id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
+    id, description, given_mark, is_approved, is_reviewed, service_id, user_
 VALUES (2, 'Great service. See you again soon. :)', 5, true, false, 1, 1);
 
 INSERT INTO complaint (id, created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)

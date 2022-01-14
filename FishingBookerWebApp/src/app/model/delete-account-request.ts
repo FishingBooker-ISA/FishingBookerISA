@@ -6,3 +6,8 @@ export class DeleteAccountRequest {
     user!: User;
     requestedDate!: Date;
 }
+
+export class DeletionRequestDTO {
+    reason!: string;
+    userId!: number;
+}

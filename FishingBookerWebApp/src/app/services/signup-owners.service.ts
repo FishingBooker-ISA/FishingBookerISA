@@ -11,11 +11,13 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 import { User } from '../model/user';
+import { ClientRegistrationDTO } from '../model/client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignupOwnersService {
+
   public errorMessage!: string;
   public currentUser!: User;
   private access_token = null
@@ -42,9 +44,27 @@ export class SignupOwnersService {
       );
   }
 
+  public logOut(): void {
+    localStorage.removeItem('jwt');
+  }
+
   public sendSignupRequest(request: RegistrationRequest) {
     this.http
       .post(`${environment.baseUrl}` + 'auth/signupForOwners', request)
+      .subscribe(
+        (response) => {
+          console.log('response received');
+        },
+        (error) => {
+          this.errorMessage = 'Account with this email already exists!';
+          console.error('error caught in component');
+        }
+      );
+  }
+
+  public sendSignupClient(client: ClientRegistrationDTO) {
+    this.http
+      .post(`${environment.baseUrl}` + 'auth/signupForClients', client)
       .subscribe(
         (response) => {
           console.log('response received');
@@ -71,6 +91,10 @@ export class SignupOwnersService {
 
   getToken() {
     return this.access_token;
+  }
+
+  verifyClient(c: string): Observable<boolean> {
+    return this.http.put<any>(`${environment.baseUrl}` + 'api/client/verify/'+ c, null);
   }
 
 }

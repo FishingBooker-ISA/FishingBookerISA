@@ -1,5 +1,5 @@
-<app-client-navbar></app-client-navbar>
-
+<app-client-navbar *ngIf="isClient"></app-client-navbar>
+<app-unauthenticated-user-navbar *ngIf="!isClient"></app-unauthenticated-user-navbar>
 
 <div class="overlay">
   <section id="photo" class="d-flex flex-column justify-content-center">

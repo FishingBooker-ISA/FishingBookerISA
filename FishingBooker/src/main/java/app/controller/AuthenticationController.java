@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import app.domain.User;
 import app.dto.*;
+import app.service.ClientService;
+import app.service.EmailService;
 import app.service.UserService;
 import app.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -26,12 +25,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AuthenticationController {
     @Autowired
     private TokenUtils tokenUtils;
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private EmailService emailService;
 
 
     // Prvi endpoint koji pogadja korisnik kada se loguje.
@@ -71,6 +72,20 @@ public class AuthenticationController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+    @PostMapping("/signupForClients")
+    public ResponseEntity<User> addClient(@RequestBody ClientDTO newClient, UriComponentsBuilder ucBuilder) throws InterruptedException {
+
+        User existUser = this.userService.findByEmail(newClient.getEmail());
+
+        if (existUser != null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        User user = this.userService.addClient(newClient);
+
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
     @PostMapping(value = "/addAdmin", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> addAdmin(@RequestBody NewAdminDTO adminRequest, UriComponentsBuilder ucBuilder) {
 
@@ -84,4 +99,5 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
 }
