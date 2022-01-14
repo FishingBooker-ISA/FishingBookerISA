@@ -3,7 +3,6 @@ package app.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Date;
 
 import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
@@ -28,10 +27,6 @@ public abstract class BookingService {
     private String termsOfUse;
     @Column(nullable = false)
     private String additionalEquipment;
-    @Column(nullable = true)
-    private Date availableFrom;
-    @Column(nullable = true)
-    private Date availableTo;
     @Column(nullable = false)
     private int capacity;
     @Column(nullable = false)
@@ -46,11 +41,11 @@ public abstract class BookingService {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public BookingService() {
+    protected BookingService() {
     }
 
-    public BookingService(ServiceType type, String name, double pricePerDay, String description,
-                          String termsOfUse, String additionalEquipment, Date availableFrom, Date availableTo,
+    protected BookingService(ServiceType type, String name, double pricePerDay, String description,
+                          String termsOfUse, String additionalEquipment,
                           int capacity, boolean isPercentageTakenFromCanceledReservations, double percentageToTake,
                           User owner, Address address) {
         this.type = type;
@@ -59,8 +54,6 @@ public abstract class BookingService {
         this.description = description;
         this.termsOfUse = termsOfUse;
         this.additionalEquipment = additionalEquipment;
-        this.availableFrom = availableFrom;
-        this.availableTo = availableTo;
         this.capacity = capacity;
         this.isPercentageTakenFromCanceledReservations = isPercentageTakenFromCanceledReservations;
         this.percentageToTake = percentageToTake;
@@ -122,22 +115,6 @@ public abstract class BookingService {
 
     public void setAdditionalEquipment(String additionalEquipment) {
         this.additionalEquipment = additionalEquipment;
-    }
-
-    public Date getAvailableFrom() {
-        return availableFrom;
-    }
-
-    public void setAvailableFrom(Date availableFrom) {
-        this.availableFrom = availableFrom;
-    }
-
-    public Date getAvailableTo() {
-        return availableTo;
-    }
-
-    public void setAvailableTo(Date availableTo) {
-        this.availableTo = availableTo;
     }
 
     public int getCapacity() {

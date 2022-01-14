@@ -1,48 +1,33 @@
-package app.domain;
+package app.dto;
 
-import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Entity
-public class PromoAction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(nullable = false)
+public class PromoActionDTO {
+    private int id;
+    @NotNull @Min(value = 1, message = "Price must be larger than 0!")
     private double pricePerDay;
-    @Column(nullable = false)
+    @NotNull @Min(value = 1, message = "Duration must be larger than 0!")
     private int durationInDays;
-    @Column(nullable = false)
     private boolean isTaken;
-    @Column(nullable = false)
+    @NotNull @Min(value = 1, message = "Capacity must be larger than 0!")
     private int capacity;
-    @Column(nullable = false)
     private String additional;
-    @Column(nullable = false)
+    @NotNull @FutureOrPresent(message = "Start date must be in the present or future!")
     private Date startDate;
-    @Column(nullable = false)
+    @NotNull @Future(message = "End date must be in the future!")
     private Date endDate;
+    @NotNull
+    private int bookingServiceId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "service_id")
-    private BookingService bookingService;
-
-    public PromoAction() {
-    }
-
-    public int getDurationInDays() {
-        return durationInDays;
-    }
-
-    public void setDurationInDays(int durationInDays) {
-        this.durationInDays = durationInDays;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,6 +37,14 @@ public class PromoAction {
 
     public void setPricePerDay(double pricePerDay) {
         this.pricePerDay = pricePerDay;
+    }
+
+    public int getDurationInDays() {
+        return durationInDays;
+    }
+
+    public void setDurationInDays(int durationInDays) {
+        this.durationInDays = durationInDays;
     }
 
     public boolean isTaken() {
@@ -94,11 +87,11 @@ public class PromoAction {
         this.endDate = endDate;
     }
 
-    public BookingService getBookingService() {
-        return bookingService;
+    public int getBookingServiceId() {
+        return bookingServiceId;
     }
 
-    public void setBookingService(BookingService bookingService) {
-        this.bookingService = bookingService;
+    public void setBookingServiceId(int bookingServiceId) {
+        this.bookingServiceId = bookingServiceId;
     }
 }

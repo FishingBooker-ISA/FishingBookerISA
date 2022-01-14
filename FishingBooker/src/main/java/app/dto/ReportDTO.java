@@ -1,11 +1,15 @@
 package app.dto;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class ReportDTO {
     int reportId;
+    @NotNull
     Date createdOn;
+    @NotNull(message = "Report must have text!")
     String reportText;
+    @NotNull(message = "Report must be assigned to a reservation!")
     int reservationId;
     boolean clientDidntShowUp;
     boolean sanctionClient;

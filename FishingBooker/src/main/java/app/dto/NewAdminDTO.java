@@ -1,7 +1,5 @@
 package app.dto;
 
-import app.domain.Role;
-
 public class NewAdminDTO {
     private String email;
     private String firstName;
