@@ -22,7 +22,7 @@ public class EmailService {
     }
 
     @Async
-    public void sendMail(User user, String subject, String text) throws MailException {
+    public void sendMail(User user, String subject, String text) throws MailException, InterruptedException {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));

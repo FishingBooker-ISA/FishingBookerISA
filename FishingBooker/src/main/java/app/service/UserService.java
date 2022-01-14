@@ -112,7 +112,6 @@ public class UserService implements UserDetailsService {
     public User addClient(ClientDTO userRequest) throws InterruptedException {
         Client client = new Client();
         Address address = new Address();
-        AccountRequest request = new AccountRequest();
 
         address.setStreet(userRequest.getStreet());
         address.setNumber(userRequest.getNumber());

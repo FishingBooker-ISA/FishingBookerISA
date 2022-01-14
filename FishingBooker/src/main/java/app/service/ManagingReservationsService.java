@@ -62,10 +62,13 @@ public class ManagingReservationsService {
             return null;
         }
 
-        return getReservation(reservationDTO);
+        Reservation newReservation = getReservation(reservationDTO);
+        reservationRepository.save(newReservation);
+        sendConfirmationMail(newReservation);
+        return newReservation;
     }
 
-    private Reservation getReservation(ReservationDTO reservationDTO) throws InterruptedException {
+    private Reservation getReservation(ReservationDTO reservationDTO) {
         Reservation newReservation = new Reservation();
         newReservation.setReservationStart(reservationDTO.getReservationStart());
         newReservation.setReservationEnd(reservationDTO.getReservationEnd());
@@ -78,8 +81,6 @@ public class ManagingReservationsService {
         newReservation.setReservedDate(new Date());
         User user = userRepository.getById(reservationDTO.getUserId());
         newReservation.setUser(user);
-        reservationRepository.save(newReservation);
-        sendConfirmationMail(newReservation);
         return newReservation;
     }
 

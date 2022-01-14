@@ -8,8 +8,6 @@ public class PasswordChangeDTO {
     @NotNull(message = "New password must be entered!")
     private String newPassword;
 
-    public PasswordChangeDTO() {}
-
     public String getOldPassword() {
         return oldPassword;
     }

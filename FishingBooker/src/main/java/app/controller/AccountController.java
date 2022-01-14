@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/accounts")
-@CrossOrigin
 public class AccountController {
     private AccountRequestService accountRequestService;
 

@@ -31,7 +31,7 @@ public class PromoActionService {
         return promoActionRepository.getAllByBookingServiceId(serviceId);
     }
 
-    public PromoAction createNewPromoAction(PromoActionDTO actionDTO) throws Exception {
+    public PromoAction createNewPromoAction(PromoActionDTO actionDTO) throws InterruptedException {
         if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate(), actionDTO.getBookingServiceId())) {
             return null;
         }
@@ -57,7 +57,7 @@ public class PromoActionService {
         return updatedAction;
     }
 
-    public void notifySubscribers(PromoAction action) throws Exception {
+    public void notifySubscribers(PromoAction action) throws InterruptedException {
         List<Subscription> subscriptionsForService = subscriptionRepository.findAllByBookingServiceId(action.getBookingService().getId());
         List<User> users = new ArrayList<>();
 
