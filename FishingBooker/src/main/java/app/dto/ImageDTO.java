@@ -1,7 +1,11 @@
 package app.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class ImageDTO {
+    @NotNull(message = "Image must be assigned to a service!")
     int serviceId;
+    @NotNull(message = "Image must have content!")
     String base64;
 
     public int getServiceId() {

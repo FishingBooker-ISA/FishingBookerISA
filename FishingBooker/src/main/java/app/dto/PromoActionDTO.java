@@ -1,16 +1,26 @@
 package app.dto;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class PromoActionDTO {
     private int id;
+    @NotNull @Min(value = 1, message = "Price must be larger than 0!")
     private double pricePerDay;
+    @NotNull @Min(value = 1, message = "Duration must be larger than 0!")
     private int durationInDays;
     private boolean isTaken;
+    @NotNull @Min(value = 1, message = "Capacity must be larger than 0!")
     private int capacity;
     private String additional;
+    @NotNull @FutureOrPresent(message = "Start date must be in the present or future!")
     private Date startDate;
+    @NotNull @Future(message = "End date must be in the future!")
     private Date endDate;
+    @NotNull
     private int bookingServiceId;
 
     public int getId() {

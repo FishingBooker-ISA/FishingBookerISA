@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class PromoActionController {
 
     @PostMapping(value = "/addPromoAction", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')")
-    public ResponseEntity<String> createNewPromoAction(@RequestBody PromoActionDTO dto, Principal user) {
+    public ResponseEntity<String> createNewPromoAction(@Valid @RequestBody PromoActionDTO dto, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         BookingService service = serviceRepository.getById(dto.getBookingServiceId());
 
@@ -69,7 +70,7 @@ public class PromoActionController {
 
     @PutMapping(value = "/updatePromoAction", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')")
-    public ResponseEntity<String> updatePromoAction(@RequestBody PromoActionDTO dto, Principal user) {
+    public ResponseEntity<String> updatePromoAction(@Valid @RequestBody PromoActionDTO dto, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         BookingService service = serviceRepository.getById(dto.getBookingServiceId());
 

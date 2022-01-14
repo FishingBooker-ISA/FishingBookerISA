@@ -1,9 +1,12 @@
 package app.dto;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class DeletionRequestDTO {
+    @NotNull
     private Date requestedDate;
+    @NotNull(message = "There must be a reason for account deleting!")
     private String reason;
 
     public Date getRequestedDate() {

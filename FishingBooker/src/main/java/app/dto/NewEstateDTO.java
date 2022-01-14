@@ -1,26 +1,38 @@
 package app.dto;
 
-import app.domain.UnavailablePeriod;
+import org.hibernate.validator.constraints.Range;
 
-import java.util.Date;
-import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class NewEstateDTO {
     private int id;
+    @NotNull(message = "Estate must have a name!")
     private String name;
+    @NotNull(message = "Estate must have a defined price!") @Min(value = 1, message = "Price must be larger than 0!")
     private double pricePerDay;
+    @NotNull(message = "Description is required!")
     private String description;
     private String termsOfUse;
     private String additionalEquipment;
+    @NotNull(message = "Estate must have a defined capacity!") @Min(value = 1, message = "Price must be larger than 0!")
     private int capacity;
+    @NotNull(message = "Estate must have a defined street!")
     private String street;
+    @NotNull(message = "Estate must have a defined street number!")
     private int number;
+    @NotNull(message = "Estate must have a defined city!")
     private String city;
+    @NotNull(message = "Estate must have a defined country!")
     private String country;
+    @NotNull(message = "Estate must have a defined postcode!")
     private int postcode;
+    @NotNull(message = "Estate must have a defined number of rooms!") @Min(value = 1, message = "Number of rooms must be larger than 0!")
     private int numOfRooms;
+    @NotNull(message = "Estate must have a defined number of beds!") @Min(value = 1, message = "Number of beds must be larger than 0!")
     private int numOfBeds;
     private boolean isPercentageTakenFromCanceledReservations;
+    @Range(min = 0, max = 100, message = "Percentage must range from 0 to 100!")
     private double percentageToTake;
 
     public int getId() {

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ImageController {
 
     @PostMapping(value = "/addImages", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public ResponseEntity<String> addImagesToService(@RequestBody ImageDTO imageDto, Principal user) {
+    public ResponseEntity<String> addImagesToService(@Valid  @RequestBody ImageDTO imageDto, Principal user) {
         User currentUser = this.userService.findByEmail(user.getName());
         BookingService existingService = serviceRepository.getById(imageDto.getServiceId());
 

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class EstateManagmentController {
 
     @PostMapping(value = "/createEstate")
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public ResponseEntity<String> createEstate(@RequestBody NewEstateDTO newEstateDTO, Principal user) {
+    public ResponseEntity<String> createEstate(@Valid @RequestBody NewEstateDTO newEstateDTO, Principal user) {
         Estate existingEstate = estateRepository.findEstateByName(newEstateDTO.getName());
 
         if (existingEstate != null) {
@@ -74,7 +75,7 @@ public class EstateManagmentController {
 
     @PostMapping(value = "/updateEstate")
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public ResponseEntity<String> updateEstate(@RequestBody NewEstateDTO estateDTO, Principal user) {
+    public ResponseEntity<String> updateEstate(@Valid @RequestBody NewEstateDTO estateDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         Estate existingEstate = estateRepository.getById(estateDTO.getId());
 
