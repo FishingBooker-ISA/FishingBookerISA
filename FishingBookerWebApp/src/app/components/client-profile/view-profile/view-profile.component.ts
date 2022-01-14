@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Address } from 'src/app/model/address';
+import { DeletionRequestDTO } from 'src/app/model/delete-account-request';
 import { User } from 'src/app/model/user';
+import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
 @Component({
@@ -19,9 +21,12 @@ export class ViewProfileComponent implements OnInit {
   newPassword2: string = "";
   oldPassword: string = "";
   errorMessage: string = "";
+  isDeletionRequestSent = false;
+  request!: DeletionRequestDTO;
+  reason: string = "";
 
 
-  constructor(public signupService: SignupOwnersService) { }
+  constructor(public signupService: SignupOwnersService, private _clientProfileService: ClientProfileService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -37,9 +42,12 @@ export class ViewProfileComponent implements OnInit {
       if (this.currentUser.role.name == "ROLE_CLIENT") {
         this.isClient = true;
       }
+      this._clientProfileService.deletionRequestExists(this.currentUser.id).subscribe((res) => { 
+        this.isDeletionRequestSent = res;
+      })
 
     });
-    this.currentUser = this.signupService.currentUser;
+    //this.currentUser = this.signupService.currentUser;
   }
 
   editProfile() {
@@ -82,6 +90,16 @@ export class ViewProfileComponent implements OnInit {
     // poziv beku, ako vrati gresku this.errorMessage = "Old password is incorrect.", ako sve prodje kako treba this.errorMessage = "";
 
     this.isChangingPassword = false;
+  }
+
+  openDeleteDialog(): void{
+
+  }
+
+  sendDeletionRequest(){
+    this.isDeletionRequestSent = true;
+    this.request = {reason: this.reason, userId: this.currentUser.id};
+    this._clientProfileService.sendDeletionRequest(this.request);
   }
 
 }

@@ -125,8 +125,12 @@
                     <button class="btn mt-5 mx-5" (click)="isEditing = true">
                         Edit profile
                     </button>
-                    <button class="btn-reverse mt-5">
+                    <button class="btn-reverse mt-5" *ngIf="!isDeletionRequestSent" (click)="sendDeletionRequest()"> <!--(click)="openDeleteDialog()"> -->
                         Delete profile
+                    </button>
+                    
+                    <button disabled class="btn-reverse mt-5" *ngIf="isDeletionRequestSent">
+                        Profile deletion requested
                     </button>
                 </div>
                 <div class="d-flex flex-row" *ngIf="isEditing">

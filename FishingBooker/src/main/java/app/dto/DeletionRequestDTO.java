@@ -5,6 +5,11 @@ import java.util.Date;
 public class DeletionRequestDTO {
     private Date requestedDate;
     private String reason;
+    private int userId;
+
+    public int getUserId() { return userId; }
+
+    public void setUserId(int userId) { this.userId = userId; }
 
     public Date getRequestedDate() {
         return requestedDate;

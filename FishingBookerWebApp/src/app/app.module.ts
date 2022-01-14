@@ -52,7 +52,6 @@ import { InstructorAdventuresComponent } from './components/instructor-component
 import { NewAdventureComponent } from './components/instructor-components/new-adventure/new-adventure.component';
 import { EditAdventureComponent } from './components/instructor-components/adventure-profile/edit-adventure/edit-adventure.component';
 import { RatingsReviewComponent } from './components/ratings-review/ratings-review.component';
-import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +90,6 @@ import { ClientVerificationComponent } from './components/client-profile/client-
     NewAdventureComponent,
     EditAdventureComponent,
     RatingsReviewComponent,
-    ClientVerificationComponent,
   ],
   imports: [
     BrowserModule,

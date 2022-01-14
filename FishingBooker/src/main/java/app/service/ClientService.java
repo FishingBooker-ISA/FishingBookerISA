@@ -2,6 +2,7 @@ package app.service;
 
 import app.domain.*;
 import app.dto.ClientDTO;
+import app.dto.DeletionRequestDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,6 +42,29 @@ public class ClientService {
         client.setVerified(true);
         clientRepository.save(client);
         return true;
+    }
+
+    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
+            propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    public void sendAccountDeletionRequest(DeletionRequestDTO requestDTO) throws Exception {
+        if (this.checkIfRequestExists(requestDTO.getUserId()))
+            return;
+        User currentUser = clientRepository.getById(requestDTO.getUserId());
+        AccountDeletionRequest request = new AccountDeletionRequest();
+        request.setUser(currentUser);
+        request.setReason(requestDTO.getReason());
+        request.setReviewed(false);
+        request.setDenied(false);
+        request.setRequestedDate(new Date());
+        deletionRequestRepository.save(request);
+    }
+
+    public boolean checkIfRequestExists(int id) {
+        User currentUser = clientRepository.getById(id);
+        AccountDeletionRequest existingRequest = deletionRequestRepository.findByUser(currentUser);
+        if (existingRequest != null)
+            return true;
+        return false;
     }
 
 
