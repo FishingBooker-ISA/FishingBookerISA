@@ -1,6 +1,7 @@
 package app.service;
 
 import app.domain.LoyaltyProgram;
+import app.dto.LoyaltyProgramDTO;
 import app.repository.LoyaltyProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,14 @@ public class LoyaltyProgramService {
         this.loyaltyProgramRepository = loyaltyProgramRepository;
     }
 
-    public void updateLoyaltyProgram(LoyaltyProgram program){
-        this.loyaltyProgramRepository.save(program);
+    public void updateLoyaltyProgram(LoyaltyProgramDTO program){
+        LoyaltyProgram existingLoyaltyProgram = this.loyaltyProgramRepository.findAll().get(0);
+        existingLoyaltyProgram.setPointsForBronze(program.getPointsForBronze());
+        existingLoyaltyProgram.setPercentForBronze(program.getPercentForBronze());
+        existingLoyaltyProgram.setPointsForSilver(program.getPointsForSilver());
+        existingLoyaltyProgram.setPercentForSilver(program.getPercentForSilver());
+        existingLoyaltyProgram.setPointsForGold(program.getPointsForGold());
+        existingLoyaltyProgram.setPercentForGold(program.getPercentForGold());
+        this.loyaltyProgramRepository.save(existingLoyaltyProgram);
     }
 }

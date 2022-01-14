@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.domain.LoyaltyProgram;
+import app.dto.LoyaltyProgramDTO;
 import app.repository.LoyaltyProgramRepository;
 import app.service.LoyaltyProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class LoyaltyProgramController {
 
     @PostMapping(value = "/updateLoyaltyProgram", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> updateLoyalty(@RequestBody LoyaltyProgram program){
+    public ResponseEntity<String> updateLoyalty(@RequestBody LoyaltyProgramDTO program){
 
         if(program.getPercentForBronze() < 0 || program.getPercentForBronze() > 100 ||
             program.getPercentForSilver() < 0 || program.getPercentForSilver() > 100 ||

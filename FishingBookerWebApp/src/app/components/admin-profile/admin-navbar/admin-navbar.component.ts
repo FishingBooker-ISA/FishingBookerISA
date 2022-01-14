@@ -19,7 +19,7 @@ export class AdminNavbarComponent implements OnInit {
   }
 
   save(){
-    if(this.loyaltyProgram.pointsForBronze < 0 || this.loyaltyProgram.pointsForSilver < 0 || this.loyaltyProgram.pointsForSilver < 0)
+    if(this.loyaltyProgram.pointsForBronze < 0 || this.loyaltyProgram.pointsForSilver < 0 || this.loyaltyProgram.pointsForGold < 0)
       this.error = 'Points must be greater than 0.';
     else if (this.loyaltyProgram.percentForBronze < 0 || this.loyaltyProgram.percentForSilver < 0|| this.loyaltyProgram.percentForGold < 0)
       this.error = 'Percentage must be greater than 0.';
