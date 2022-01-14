@@ -16,6 +16,11 @@ public class Client extends User {
     public Client() {
     }
 
+    public Client(int numOfPenalties, String verificationCode) {
+        this.numOfPenalties = numOfPenalties;
+        this.verificationCode = verificationCode;
+    }
+
     public String getVerificationCode() {
         return verificationCode;
     }

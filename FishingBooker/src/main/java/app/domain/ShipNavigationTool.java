@@ -19,6 +19,13 @@ public class ShipNavigationTool {
     public ShipNavigationTool() {
     }
 
+    public ShipNavigationTool(Integer id, String name, String description, Ship ship) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.ship = ship;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,7 +1,5 @@
 package app.dto;
 
-import javax.persistence.Column;
-
 public class LoyaltyProgramDTO {
     private int id;
     private double pointsForBronze;

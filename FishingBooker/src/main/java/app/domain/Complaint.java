@@ -32,6 +32,14 @@ public class Complaint {
     public Complaint() {
     }
 
+    public Complaint(int id, String reason, Date createdDate, boolean isReviewed, String responseForClient) {
+        this.id = id;
+        this.reason = reason;
+        this.createdDate = createdDate;
+        this.isReviewed = isReviewed;
+        this.responseForClient = responseForClient;
+    }
+
     public int getId() {
         return id;
     }

@@ -22,6 +22,15 @@ public class LoyaltyProgram {
 
     public LoyaltyProgram(){}
 
+    public LoyaltyProgram(double pointsForBronze, double percentForBronze, double pointsForSilver, double percentForSilver, double pointsForGold, double percentForGold) {
+        this.pointsForBronze = pointsForBronze;
+        this.percentForBronze = percentForBronze;
+        this.pointsForSilver = pointsForSilver;
+        this.percentForSilver = percentForSilver;
+        this.pointsForGold = pointsForGold;
+        this.percentForGold = percentForGold;
+    }
+
     public int getId() {
         return id;
     }

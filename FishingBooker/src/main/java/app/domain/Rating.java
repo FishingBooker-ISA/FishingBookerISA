@@ -27,6 +27,16 @@ public class Rating {
     public Rating() {
     }
 
+    public Rating(Integer id, double givenMark, String description, boolean isReviewed, boolean isApproved, User user, BookingService bookingService) {
+        this.id = id;
+        this.givenMark = givenMark;
+        this.description = description;
+        this.isReviewed = isReviewed;
+        this.isApproved = isApproved;
+        this.user = user;
+        this.bookingService = bookingService;
+    }
+
     public Integer getId() {
         return id;
     }
