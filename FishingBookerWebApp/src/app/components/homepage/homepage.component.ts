@@ -16,11 +16,11 @@ export class HomepageComponent implements OnInit {
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
       this.currentUser = data;
+      this.currentUser = this.signupService.currentUser;
       if(this.currentUser.role.name == "ROLE_CLIENT"){
         this.isClient = true;
       }
 
     });
-    this.currentUser = this.signupService.currentUser;
   }
 }

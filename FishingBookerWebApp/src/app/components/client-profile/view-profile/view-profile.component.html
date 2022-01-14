@@ -1,1 +1,154 @@
-<p>view-profile works!</p>
+<app-client-navbar></app-client-navbar>
+<div class="bg-light d-flex justify-content-center mainContainer" style="background: ghostwhite;">
+    <div class="container row">
+
+        <!-- PROPERTY INFO EDIT FORM -->
+        <div style="margin-inline: 15%;">
+            <div class="title-wrapper justify-content-center mt-4" style="display: inline-flex;">
+                <img style="width: 120px; height: 120px;" src="../../../assets/img/userIcon2.png">
+                <h1 class="propertyTitle" style="margin-left: 15%; margin-top: 30%; font-weight: bold;">
+                    Profile
+                </h1>
+            </div>
+            <div class="row d-flex justify-content-end mt-4">
+                <table class="table-responsive addItemTable">
+                    <colgroup>
+                        <col span="1" style="width: 30%" />
+                        <col span="1" style="width: 80%" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td>First Name</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name"
+                                        [(ngModel)]="currentUser.firstName" [disabled]="!isEditing" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Last Name</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.lastName"
+                                        [disabled]="!isEditing" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Street
+                            </td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name"
+                                        [(ngModel)]="currentUser.address.street" [disabled]="!isEditing" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Number</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="number" name="name"
+                                        [(ngModel)]="currentUser.address.number" [disabled]="!isEditing" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>City</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name"
+                                        [(ngModel)]="currentUser.address.city" [disabled]="!isEditing" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Country</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name"
+                                        [(ngModel)]="currentUser.address.country" [disabled]="!isEditing" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name"
+                                        [(ngModel)]="currentUser.phoneNumber" [disabled]="!isEditing" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.email"
+                                        disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="isChangingPassword">
+                            <td>Old password</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name"
+                                        [(ngModel)]="oldPassword" />
+                                </div>
+                            </td>
+                        </tr> <tr *ngIf="isChangingPassword">
+                            <td>New password</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name"
+                                        [(ngModel)]="newPassword1" />
+                                </div>
+                            </td>
+                        </tr> <tr *ngIf="isChangingPassword">
+                            <td>Repeat password</td>
+                            <td>
+                                <div class="textField">
+                                    <input class="text-start" type="text" name="name"
+                                        [(ngModel)]="newPassword2"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex flex-row" *ngIf="!isEditing && !isChangingPassword">
+                    <button class="btn mt-5 " (click)="isChangingPassword = true">
+                        Change password
+                    </button>
+                    <button class="btn mt-5 mx-5" (click)="isEditing = true">
+                        Edit profile
+                    </button>
+                    <button class="btn-reverse mt-5">
+                        Delete profile
+                    </button>
+                </div>
+                <div class="d-flex flex-row" *ngIf="isEditing">
+                    <button class="btn mt-5 mx-5" (click)="editProfile()">
+                        Save changes
+                    </button>
+                    <button class="btn mt-5" (click)="restore()">
+                        Cancel
+                    </button>
+                </div>
+                <div class="d-flex flex-row" *ngIf="isChangingPassword">
+                    <button class="btn mt-5 mx-5" (click)="changePassword()">
+                        Save changes
+                    </button>
+                    <button class="btn mt-5" (click)="isChangingPassword = false; errorMessage = ''">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- END OF PROPERTY INFO EDIT FORM -->
+
+
+    </div>
+</div>
