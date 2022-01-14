@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { ClientRegistrationDTO } from 'src/app/model/client';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service'; 
 //^^^^^^
@@ -28,7 +30,7 @@ export class SignupComponent implements OnInit {
   fieldRequired = new FormControl('', [Validators.required]);
   errorMessage = '';
 
-  constructor(public signupOwnerService: SignupOwnersService) { }
+  constructor(public signupOwnerService: SignupOwnersService, private _toast: MatSnackBar,private _router: Router) { }
 
   ngOnInit(): void {
   }
@@ -50,6 +52,11 @@ export class SignupComponent implements OnInit {
     };
 
     this.signupOwnerService.sendSignupClient(client);
+    this._toast.openFromComponent(SignUpToast, {
+      duration: 2000,
+    });
+    
+    this._router.navigate(['/login']);
   }
 
   getErrorMessage() {
@@ -120,5 +127,12 @@ export class SignupComponent implements OnInit {
     return false;
   }
 }
+
+
+@Component({
+  selector: 'signup-toast',
+  templateUrl: 'signup-toast.html',
+})
+export class SignUpToast {}
 
 

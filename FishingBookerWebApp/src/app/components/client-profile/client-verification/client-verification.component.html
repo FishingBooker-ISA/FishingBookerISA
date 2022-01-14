@@ -1,0 +1,19 @@
+
+<div style="margin: 10%;" *ngIf="isSuccess">
+    <h1>
+        Congratulations!
+    </h1>
+    <h2>
+        You have successfully activated your account. Proceed to Log In <a href="http://localhost:4200/login">here</a>.
+    </h2>
+</div>
+
+
+<div style="margin: 10%;" *ngIf="!isSuccess">
+    <h1>
+        No account has been found
+    </h1>
+    <h2>
+        Register <a href="http://localhost:4200/signup">here</a>.
+    </h2>
+</div>

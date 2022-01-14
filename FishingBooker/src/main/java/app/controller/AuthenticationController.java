@@ -1,9 +1,12 @@
 package app.controller;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
 import app.domain.User;
 import app.dto.*;
+import app.service.ClientService;
+import app.service.EmailService;
 import app.service.UserService;
 import app.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -26,12 +26,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AuthenticationController {
     @Autowired
     private TokenUtils tokenUtils;
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private EmailService emailService;
 
 
     // Prvi endpoint koji pogadja korisnik kada se loguje.
@@ -98,4 +100,13 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
+
+
+
+    /*@PostMapping("/sendMail2")
+    public void mail2() throws MessagingException {
+        this.emailService.sendMailWithResouces1();
+        return;
+    }*/
 }

@@ -18,6 +18,7 @@ import { SignupOwnersComponent } from './components/signup-owners/signup-owners.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
@@ -51,6 +52,7 @@ import { InstructorAdventuresComponent } from './components/instructor-component
 import { NewAdventureComponent } from './components/instructor-components/new-adventure/new-adventure.component';
 import { EditAdventureComponent } from './components/instructor-components/adventure-profile/edit-adventure/edit-adventure.component';
 import { RatingsReviewComponent } from './components/ratings-review/ratings-review.component';
+import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +91,7 @@ import { RatingsReviewComponent } from './components/ratings-review/ratings-revi
     NewAdventureComponent,
     EditAdventureComponent,
     RatingsReviewComponent,
+    ClientVerificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,7 +106,8 @@ import { RatingsReviewComponent } from './components/ratings-review/ratings-revi
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule, 
+    MatSnackBarModule
   ],
   providers: [
     {

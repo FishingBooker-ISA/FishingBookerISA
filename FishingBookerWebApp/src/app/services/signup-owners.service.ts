@@ -17,6 +17,7 @@ import { ClientRegistrationDTO } from '../model/client';
   providedIn: 'root',
 })
 export class SignupOwnersService {
+
   public errorMessage!: string;
   public currentUser!: User;
   private access_token = null
@@ -41,6 +42,10 @@ export class SignupOwnersService {
           console.log(res.accessToken);
         })
       );
+  }
+
+  public logOut(): void {
+    localStorage.removeItem('jwt');
   }
 
   public sendSignupRequest(request: RegistrationRequest) {
@@ -86,6 +91,10 @@ export class SignupOwnersService {
 
   getToken() {
     return this.access_token;
+  }
+
+  verifyClient(c: string): Observable<boolean> {
+    return this.http.put<any>(`${environment.baseUrl}` + 'api/client/verify/'+ c, null);
   }
 
 }

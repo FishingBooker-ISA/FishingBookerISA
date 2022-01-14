@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.util.UUID;
+
 @Service
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
@@ -108,7 +111,7 @@ public class UserService implements UserDetailsService {
         return newUser;
     }
 
-    public User addClient(ClientDTO userRequest) throws InterruptedException {
+    public User addClient(ClientDTO userRequest) {
         Client client = new Client();
         Address address = new Address();
         AccountRequest request = new AccountRequest();
@@ -127,16 +130,20 @@ public class UserService implements UserDetailsService {
         client.setFirstName(userRequest.getFirstName());
         client.setLastName(userRequest.getLastName());
         client.setAddress(addedAddress);
-        client.setVerified(true);
+        client.setVerified(false);
         client.setRole(role);
         client.setPhoneNumber(userRequest.getPhoneNumber());
         client.setPoints(0);
         client.setNumOfPenalties(0);
-        client.setVerificationCode("tralala");
+        client.setVerificationCode(UUID.randomUUID().toString());
         client.setDeleted(false);
         Client addedClient = this.userRepository.save(client);
+        try {
+            this.sendVerificationEmail(addedClient.getId());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        //this.sendVerificationEmail(addedClient.getId());
 
         return addedClient;
     }
@@ -145,7 +152,7 @@ public class UserService implements UserDetailsService {
         Client client = this.clientRepository.getById(clientId);
         String mailSubject = "FishingBooker registration";
         String mailContent;
-        mailContent = "Hello,\n\nThank you for your registration. Click on the the link below to activate your account.\n <a href='https://www.goodreads.com/'>Complete registration</a>\n\n Fishing Booker";
+        mailContent = "Hello "+ client.getFirstName() +",\n\nThank you for your registration. Click on the the link below to activate your account.\nhttp://localhost:4200/verifyClient/"+client.getVerificationCode()+" \n\n Fishing Booker";
 
         this.emailService.sendMail(client, mailSubject, mailContent);
     }
