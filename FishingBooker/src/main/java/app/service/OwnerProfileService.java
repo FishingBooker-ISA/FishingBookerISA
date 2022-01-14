@@ -87,9 +87,6 @@ public class OwnerProfileService {
     public boolean checkIfRequestExists(User currentUser) {
         AccountDeletionRequest existingRequest = deletionRequestRepository.findByUser(currentUser);
 
-        if (existingRequest != null)
-            return true;
-
-        return false;
+        return existingRequest != null;
     }
 }

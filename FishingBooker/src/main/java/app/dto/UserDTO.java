@@ -11,21 +11,6 @@ public class UserDTO {
     private int postcode;
     private String phoneNumber;
 
-    public UserDTO() {}
-
-    public UserDTO(String email, String firstName, String lastName, String street, int number, String city,
-                   String country, int postcode, String phoneNumber) {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.street = street;
-        this.number = number;
-        this.city = city;
-        this.country = country;
-        this.postcode = postcode;
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getEmail() {
         return email;
     }

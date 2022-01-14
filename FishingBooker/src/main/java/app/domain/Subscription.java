@@ -19,6 +19,12 @@ public class Subscription {
     public Subscription() {
     }
 
+    public Subscription(Integer id, User client, BookingService bookingService) {
+        this.id = id;
+        this.client = client;
+        this.bookingService = bookingService;
+    }
+
     public Integer getId() {
         return id;
     }

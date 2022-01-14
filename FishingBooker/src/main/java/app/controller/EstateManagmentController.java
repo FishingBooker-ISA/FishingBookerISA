@@ -4,9 +4,10 @@ import app.domain.BookingService;
 import app.domain.Estate;
 import app.domain.User;
 import app.dto.NewEstateDTO;
+import app.dto.UnavailablePeriodDTO;
 import app.repository.EstateRepository;
-import app.repository.ServiceRepository;
 import app.service.ManagingEstateService;
+import app.service.ManagingReservationsService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,9 @@ public class EstateManagmentController {
     @Autowired
     private EstateRepository estateRepository;
     @Autowired
-    private ServiceRepository serviceRepository;
+    private ManagingReservationsService reservationsService;
+
+    private static final String UNAUTHORIZED = "Unauthorized access!";
 
     @GetMapping(value = "/getEstatesForOwner", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
@@ -54,7 +58,7 @@ public class EstateManagmentController {
 
     @PostMapping(value = "/createEstate")
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public ResponseEntity<String> createEstate(@RequestBody NewEstateDTO newEstateDTO, Principal user) {
+    public ResponseEntity<String> createEstate(@Valid @RequestBody NewEstateDTO newEstateDTO, Principal user) {
         Estate existingEstate = estateRepository.findEstateByName(newEstateDTO.getName());
 
         if (existingEstate != null) {
@@ -73,12 +77,12 @@ public class EstateManagmentController {
 
     @PostMapping(value = "/updateEstate")
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public ResponseEntity<String> updateEstate(@RequestBody NewEstateDTO estateDTO, Principal user) {
+    public ResponseEntity<String> updateEstate(@Valid @RequestBody NewEstateDTO estateDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         Estate existingEstate = estateRepository.getById(estateDTO.getId());
 
         if (!existingEstate.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         if(managingEstateService.hasAnyReservations(existingEstate)) {
@@ -101,7 +105,7 @@ public class EstateManagmentController {
         Estate existingEstate = estateRepository.getById(id);
 
         if (!existingEstate.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         if(managingEstateService.hasAnyReservations(existingEstate)) {
@@ -129,6 +133,27 @@ public class EstateManagmentController {
         }
 
         return foundEstates;
+    }
+
+    @PostMapping(value = "/addUnavailablePeriod", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    public ResponseEntity<String> addUnavailablePeriod(@RequestBody UnavailablePeriodDTO dto, Principal user) {
+        User currentUser = this.userService.findByEmail(user.getName());
+        Estate estate = estateRepository.getById(dto.getServiceId());
+
+        if(!estate.getOwner().getId().equals(currentUser.getId())) {
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            if (reservationsService.addUnavailablePeriod(dto) != null)
+                return new ResponseEntity<>("New unavailable period created!", HttpStatus.OK);
+            else
+                return new ResponseEntity<>("Entered dates overlap with existing reservation!", HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
 

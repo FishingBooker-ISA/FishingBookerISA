@@ -1,7 +1,12 @@
+import { toBase64String } from '@angular/compiler/src/output/source_map';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Estate } from 'src/app/model/estate';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
+import { ManagingImagesService } from 'src/app/services/managing-images.service';
+import { ImagesDialogModel, ShowImagesComponent } from '../../show-images/show-images.component';
 
 @Component({
   selector: 'app-edit-estate',
@@ -14,9 +19,13 @@ export class EditEstateComponent implements OnInit {
   estate!: Estate
   @Input()
   editingMode!: boolean
+  imgSrc!: any
+  fileToUpload: File | null = null;
+  foundImages = [] as any
+  uploadedImgs = [] as any
 
-  checkField = new FormControl('', [Validators.required]);
-  constructor(public managingEstateService: ManagingEstateService) { }
+  constructor(public managingEstateService: ManagingEstateService, public managingImages: ManagingImagesService,
+    private sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +48,19 @@ export class EditEstateComponent implements OnInit {
   saveChanges() {
     this.managingEstateService.editEstate(this.estate);
     window.location.reload()
+  }
+
+  viewImages(): void {
+    const dialogData = new ImagesDialogModel(
+      this.estate
+    );
+
+    const dialogRef = this.dialog.open(ShowImagesComponent, {
+      width: '900px',
+      height: '720px',
+      data: dialogData,
+      panelClass: 'my-dialog'
+    });
   }
 
 }

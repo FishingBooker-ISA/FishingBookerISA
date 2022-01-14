@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,7 @@ public class ReservationsController {
 
     @PostMapping(value = "/createReservation", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public ResponseEntity<String> createReservation(@RequestBody ReservationDTO reservationDTO, Principal user) {
+    public ResponseEntity<String> createReservation(@Valid @RequestBody ReservationDTO reservationDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         User client = userRepository.getById(reservationDTO.getUserId());
         BookingService service = serviceRepository.getById(reservationDTO.getServiceId());
@@ -74,7 +75,7 @@ public class ReservationsController {
 
     @PostMapping(value = "/createReport", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
-    public ResponseEntity<String> submitReport(@RequestBody ReportDTO reportDTO, Principal user) {
+    public ResponseEntity<String> submitReport(@Valid @RequestBody ReportDTO reportDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         Reservation reservation = reservationRepository.getById(reportDTO.getReservationId());
         BookingService service = reservation.getBookingService();
@@ -104,10 +105,10 @@ public class ReservationsController {
         Reservation reservation = reservationRepository.getById(reservationId);
 
         if (!reservation.getBookingService().getOwner().getId().equals(currentUser.getId()))
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         if (reservation.getUser() == null)
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(reservation.getUser(), HttpStatus.OK);
     }

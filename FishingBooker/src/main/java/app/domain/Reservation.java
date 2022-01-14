@@ -38,6 +38,11 @@ public class Reservation {
     public Reservation() {
     }
 
+    public Reservation(Integer id, Date reservedDate) {
+        this.id = id;
+        this.reservedDate = reservedDate;
+    }
+
     public Date getReservationStart() {
         return reservationStart;
     }
