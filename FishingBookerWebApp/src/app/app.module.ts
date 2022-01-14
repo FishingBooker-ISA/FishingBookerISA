@@ -55,6 +55,8 @@ import { RatingsReviewComponent } from './components/ratings-review/ratings-revi
 import { DeletionRequestComponent } from './components/deletion-request/deletion-request.component';
 import { AllComplaintsComponent } from './components/admin-profile/all-complaints/all-complaints.component';
 import { ShowImagesComponent } from './components/show-images/show-images.component';
+import { EditProfileComponent } from './components/owner-profile/edit-profile/edit-profile.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +98,8 @@ import { ShowImagesComponent } from './components/show-images/show-images.compon
     DeletionRequestComponent,
     AllComplaintsComponent,
     ShowImagesComponent,
+    EditProfileComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
