@@ -101,12 +101,4 @@ public class AuthenticationController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-
-
-
-    /*@PostMapping("/sendMail2")
-    public void mail2() throws MessagingException {
-        this.emailService.sendMailWithResouces1();
-        return;
-    }*/
 }
