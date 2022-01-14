@@ -31,17 +31,18 @@ public class PromoActionService {
         return promoActionRepository.getAllByBookingServiceId(serviceId);
     }
 
-    public PromoAction createNewPromoAction(PromoActionDTO actionDTO) {
+    public PromoAction createNewPromoAction(PromoActionDTO actionDTO) throws InterruptedException {
         if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate(), actionDTO.getBookingServiceId())) {
             return null;
         }
 
         PromoAction newAction = create(new PromoAction(), actionDTO);
         promoActionRepository.save(newAction);
+        notifySubscribers(newAction);
         return newAction;
     }
 
-    public PromoAction updateAction(PromoActionDTO actionDTO) {
+    public PromoAction updateAction(PromoActionDTO actionDTO) throws InterruptedException {
         PromoAction existingAction = promoActionRepository.getById(actionDTO.getId());
 
         if ((existingAction.getStartDate().compareTo(actionDTO.getStartDate()) != 0
@@ -52,6 +53,7 @@ public class PromoActionService {
 
         PromoAction updatedAction = create(existingAction, actionDTO);
         promoActionRepository.save(updatedAction);
+        notifySubscribers(updatedAction);
         return updatedAction;
     }
 
