@@ -39,6 +39,10 @@ public class User implements UserDetails{
     private  boolean isVerified;
     @Column(name = "last_password_reset_date", nullable = true)
     private Timestamp lastPasswordResetDate;
+    @Column(nullable = true)
+    private int points;
+    @Column(nullable = true)
+    private UserType userType;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
@@ -171,5 +175,21 @@ public class User implements UserDetails{
 
     public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
         this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 }

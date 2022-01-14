@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 @DiscriminatorValue("CLIENT")
 public class Client extends User {
     @Column(nullable = true)
-    private int points;
-    @Column(nullable = true)
     private int numOfPenalties;
     @Column(nullable = true)
     private String verificationCode;
@@ -24,14 +22,6 @@ public class Client extends User {
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
     }
 
     public int getNumOfPenalties() {
