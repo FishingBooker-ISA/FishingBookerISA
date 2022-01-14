@@ -45,8 +45,7 @@ public class ManagingEstateService {
 
         Estate estate = new Estate(
                 ServiceType.ESTATE, newEstate.getName(), newEstate.getPricePerDay(), newEstate.getDescription(),
-                newEstate.getTermsOfUse(), newEstate.getAdditionalEquipment(), newEstate.getAvailableFrom(),
-                newEstate.getAvailableTo(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
+                newEstate.getTermsOfUse(), newEstate.getAdditionalEquipment(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
                 newEstate.getPercentageToTake(), user, newAddress, newEstate.getNumOfBeds(), newEstate.getNumOfRooms()
         );
 
