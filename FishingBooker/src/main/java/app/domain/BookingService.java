@@ -41,10 +41,10 @@ public abstract class BookingService {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public BookingService() {
+    protected BookingService() {
     }
 
-    public BookingService(ServiceType type, String name, double pricePerDay, String description,
+    protected BookingService(ServiceType type, String name, double pricePerDay, String description,
                           String termsOfUse, String additionalEquipment,
                           int capacity, boolean isPercentageTakenFromCanceledReservations, double percentageToTake,
                           User owner, Address address) {

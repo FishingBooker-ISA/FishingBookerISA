@@ -1,7 +1,7 @@
 package app.domain;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.util.Date;
 
 @Entity
 public class Adventure extends BookingService {

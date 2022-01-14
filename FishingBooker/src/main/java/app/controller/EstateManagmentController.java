@@ -33,6 +33,8 @@ public class EstateManagmentController {
     @Autowired
     private ManagingReservationsService reservationsService;
 
+    private static final String UNAUTHORIZED = "Unauthorized access!";
+
     @GetMapping(value = "/getEstatesForOwner", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
     public List<Estate> getEstatesByOwner(Principal user){
@@ -80,7 +82,7 @@ public class EstateManagmentController {
         Estate existingEstate = estateRepository.getById(estateDTO.getId());
 
         if (!existingEstate.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         if(managingEstateService.hasAnyReservations(existingEstate)) {
@@ -103,7 +105,7 @@ public class EstateManagmentController {
         Estate existingEstate = estateRepository.getById(id);
 
         if (!existingEstate.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         if(managingEstateService.hasAnyReservations(existingEstate)) {
@@ -140,7 +142,7 @@ public class EstateManagmentController {
         Estate estate = estateRepository.getById(dto.getServiceId());
 
         if(!estate.getOwner().getId().equals(currentUser.getId())) {
-            return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         try {

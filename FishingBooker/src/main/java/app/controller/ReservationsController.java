@@ -105,10 +105,10 @@ public class ReservationsController {
         Reservation reservation = reservationRepository.getById(reservationId);
 
         if (!reservation.getBookingService().getOwner().getId().equals(currentUser.getId()))
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         if (reservation.getUser() == null)
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(reservation.getUser(), HttpStatus.OK);
     }

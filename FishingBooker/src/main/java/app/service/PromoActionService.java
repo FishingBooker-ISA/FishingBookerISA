@@ -4,8 +4,6 @@ import app.domain.*;
 import app.dto.PromoActionDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,12 +44,10 @@ public class PromoActionService {
     public PromoAction updateAction(PromoActionDTO actionDTO) {
         PromoAction existingAction = promoActionRepository.getById(actionDTO.getId());
 
-        if (existingAction.getStartDate().compareTo(actionDTO.getStartDate()) != 0
-                || existingAction.getEndDate().compareTo(actionDTO.getEndDate()) != 0) {
-
-            if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate(), actionDTO.getBookingServiceId())) {
-                return null;
-            }
+        if ((existingAction.getStartDate().compareTo(actionDTO.getStartDate()) != 0
+                || existingAction.getEndDate().compareTo(actionDTO.getEndDate()) != 0)
+                && checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate(), actionDTO.getBookingServiceId())) {
+            return null;
         }
 
         PromoAction updatedAction = create(existingAction, actionDTO);
@@ -59,7 +55,7 @@ public class PromoActionService {
         return updatedAction;
     }
 
-    public void NotifySubscribers(PromoAction action) throws InterruptedException {
+    public void notifySubscribers(PromoAction action) throws InterruptedException {
         List<Subscription> subscriptionsForService = subscriptionRepository.findAllByBookingServiceId(action.getBookingService().getId());
         List<User> users = new ArrayList<>();
 

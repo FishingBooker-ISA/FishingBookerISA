@@ -57,7 +57,7 @@ public class PromoActionController {
         try {
             PromoAction newAction = promoActionService.createNewPromoAction(dto);
             if (newAction != null) {
-                promoActionService.NotifySubscribers(newAction);
+                promoActionService.notifySubscribers(newAction);
                 return new ResponseEntity<>("New promo action created!", HttpStatus.OK);
             }
             else
@@ -81,7 +81,7 @@ public class PromoActionController {
         try {
             PromoAction newAction = promoActionService.updateAction(dto);
             if (newAction != null) {
-                promoActionService.NotifySubscribers(newAction);
+                promoActionService.notifySubscribers(newAction);
                 return new ResponseEntity<>("Promo action updated!", HttpStatus.OK);
             }
             else

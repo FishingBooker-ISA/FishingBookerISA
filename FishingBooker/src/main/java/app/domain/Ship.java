@@ -1,7 +1,7 @@
 package app.domain;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity
 public class Ship extends BookingService {

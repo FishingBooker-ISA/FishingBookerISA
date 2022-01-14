@@ -2,20 +2,16 @@ package app.service;
 
 import app.domain.*;
 import app.dto.NewEstateDTO;
-import app.dto.UnavailablePeriodDTO;
 import app.repository.AddressRepository;
 import app.repository.EstateRepository;
 import app.repository.ReservationRepository;
 import app.repository.ServiceRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
