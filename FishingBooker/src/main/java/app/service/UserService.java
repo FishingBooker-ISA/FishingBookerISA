@@ -111,7 +111,7 @@ public class UserService implements UserDetailsService {
         return this.userRepository.save(user);
     }
 
-    public User addClient(ClientDTO userRequest) throws InterruptedException {
+    public User addClient(ClientDTO userRequest) {
         Client client = new Client();
         Address address = new Address();
 
@@ -150,6 +150,8 @@ public class UserService implements UserDetailsService {
         mailContent = "Hello "+ client.getFirstName() +",\n\nThank you for your registration. Click on the the link below to activate your account.\nhttp://localhost:4200/verifyClient/"+client.getVerificationCode()+" \n\n Fishing Booker";
 
         this.emailService.sendMail(client, mailSubject, mailContent);
+    }
+
     public List<User> getAllUsers() {
         List<User> allUsers = this.userRepository.findAll();
         List<User> validUsers = new ArrayList<>();
@@ -169,14 +171,14 @@ public class UserService implements UserDetailsService {
         this.userRepository.save(user);
     }
 
-    public void changePasswordForAdmin(String password, int id) throws InterruptedException {
+    public void changePasswordForAdmin(String password, int id) {
         User user = this.userRepository.getById(id);
         user.setPassword(passwordEncoder.encode(password));
         user.setFirstTime(false);
         this.userRepository.save(user);
         this.notifyUser(user);
     }
-    private void notifyUser(User user) throws InterruptedException {
+    private void notifyUser(User user) {
         String mailSubject = "New Account";
         String mailContent = "Hello,\nNew account for you has been made. To login use password 'admin' and your mail. " +
                 "\nFishing Booker";
