@@ -2,7 +2,6 @@ package app.controller;
 
 import app.domain.Rating;
 import app.dto.RatingReviewDTO;
-import app.repository.RatingRepository;
 import app.service.RatingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,8 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "api/ratings")
 public class RatingsController {
-    @Autowired
-    private RatingRepository ratingRepository;
     @Autowired
     private RatingsService ratingsService;
 

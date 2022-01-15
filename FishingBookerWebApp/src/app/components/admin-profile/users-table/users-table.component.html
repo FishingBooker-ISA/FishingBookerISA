@@ -14,10 +14,16 @@
         </div>
         <div class="row my-2 ms-5">
           <div class="col-sm-6 col-lg-3 col-md-4">
-            <select class="form-select">
-              <option value="users">Users</option>
-              <option value="boats">Boats</option>
-              <option value="estates">Estates</option>
+            <select
+              class="form-select"
+              [(ngModel)]="userType"
+              (change)="filterUsers()"
+            >
+              <option value="users">Clients</option>
+              <option value="admins">Admins</option>
+              <option value="instructors">Instructors</option>
+              <option value="estate">Estate Owners</option>
+              <option value="ship">Ship Owners</option>
             </select>
           </div>
         </div>
@@ -26,27 +32,25 @@
             <div style="height: 250px; overflow: auto">
               <table class="table table-hover">
                 <thead>
-                  <tr *ngIf="filter === 'users'">
+                  <tr>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Role</th>
                     <th scope="col">Phone Number</th>
-                  </tr>
-                  <tr *ngIf="filter != 'users'">
-                    <th scope="col">Name</th>
-                    <th scope="col">Owner</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Rating</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Petra</td>
-                    <td>Jovic</td>
-                    <td>pex@gmail.com</td>
-                    <td>Estate Owner</td>
-                    <td>6472682692</td>
+                  <tr
+                    *ngFor="let user of filteredUseres"
+                    [ngClass]="
+                      selectedUser == user ? 'selected' : 'notSelected'
+                    "
+                    (click)="selectUser(user)"
+                  >
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phoneNumber }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -56,7 +60,12 @@
         <div class="row my-3">
           <div class="col-12">
             <div class="d-flex justify-content-center">
-              <button type="button" class="btn btn-outline-danger">
+              <button
+                type="button"
+                class="btn"
+                [disabled]="selectedUser == undefined"
+                (click)="deleteUser()"
+              >
                 Delete Entity
               </button>
             </div>

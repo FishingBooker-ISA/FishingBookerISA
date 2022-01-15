@@ -57,6 +57,7 @@ import { AllComplaintsComponent } from './components/admin-profile/all-complaint
 import { ShowImagesComponent } from './components/show-images/show-images.component';
 import { EditProfileComponent } from './components/owner-profile/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     ShowImagesComponent,
     EditProfileComponent,
     ChangePasswordComponent,
+    NewAdminLoginComponent,
   ],
   imports: [
     BrowserModule,

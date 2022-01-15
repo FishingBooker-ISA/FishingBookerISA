@@ -5,6 +5,7 @@ import { AdminProfileComponent } from './components/admin-profile/admin-profile.
 import { AllComplaintsComponent } from './components/admin-profile/all-complaints/all-complaints.component';
 import { DeleteRequestsComponent } from './components/admin-profile/delete-requests/delete-requests.component';
 import { NewAdminFormComponent } from './components/admin-profile/new-admin-form/new-admin-form.component';
+import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
 import { UsersTableComponent } from './components/admin-profile/users-table/users-table.component';
 import { BoatsComponent } from './components/boats/boats.component';
 import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'admin/allUsers', component: UsersTableComponent },
   { path: 'admin/addNewAdmin', component: NewAdminFormComponent },
   { path: 'admin/allComplaints', component: AllComplaintsComponent },
+  { path: 'admin/changePassword', component: NewAdminLoginComponent },
   { path: 'client/reservationHistory/estate', component: EstateReservationHistoryComponent },
   { path: 'client/upcomingReservations', component: UpcomingReservationsComponent },
   { path: 'client/subscriptions', component: SubscriptionsComponent },

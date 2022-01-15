@@ -29,7 +29,7 @@ public class AccountController {
 
     @PostMapping(value = "/reviewRequest", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public void reviewRequest(@RequestBody AccountRequestReviewDTO request) throws InterruptedException {
+    public void reviewRequest(@RequestBody AccountRequestReviewDTO request) {
         this.accountRequestService.reviewRequest(request);
     }
 
@@ -41,7 +41,7 @@ public class AccountController {
 
     @PostMapping(value = "/reviewDeleteRequest", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public void reviewDeleteRequest(@RequestBody AccountRequestReviewDTO request) throws InterruptedException {
+    public void reviewDeleteRequest(@RequestBody AccountRequestReviewDTO request){
         this.accountRequestService.reviewDeleteRequest(request);
     }
 }

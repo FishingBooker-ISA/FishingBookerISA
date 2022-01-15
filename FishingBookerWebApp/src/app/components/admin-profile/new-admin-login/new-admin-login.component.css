@@ -1,0 +1,42 @@
+.btn {
+  width: 180px;
+  text-align: center;
+  background: #6eb1dd;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 25px 9px 25px;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 14px;
+  display: inline-block;
+}
+.overlay {
+  background: rgba(5, 5, 5, 0.925);
+}
+
+#photo {
+  width: 100%;
+  height: 100vh;
+  background: url("../../../../assets/img/login-bg.jpg") top center;
+  background-size: cover;
+  opacity: 0.65;
+  position: relative;
+}
+
+#photo .container {
+  padding-top: 70px;
+  position: relative;
+  text-align: center;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background: #faf9f9;
+  border-radius: 10%;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
+}

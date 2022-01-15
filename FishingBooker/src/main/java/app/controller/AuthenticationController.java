@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,25 +42,20 @@ public class AuthenticationController {
     public ResponseEntity<UserTokenState> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
 
-        // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
-        // AuthenticationException
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
-        // kontekst
         User user = (User) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(user.getEmail());
         int expiresIn = tokenUtils.getExpiredIn();
 
-        // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
     @PostMapping("/signupForOwners")
-    public ResponseEntity<User> addOwner(@RequestBody AccountRequestForOwners userRequest, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<User> addOwner(@RequestBody AccountRequestForOwners userRequest) {
 
         User existUser = this.userService.findByEmail(userRequest.getEmail());
 
@@ -73,7 +69,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signupForClients")
-    public ResponseEntity<User> addClient(@RequestBody ClientDTO newClient, UriComponentsBuilder ucBuilder) throws InterruptedException {
+    public ResponseEntity<User> addClient(@RequestBody ClientDTO newClient) {
 
         User existUser = this.userService.findByEmail(newClient.getEmail());
 
@@ -87,7 +83,8 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/addAdmin", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> addAdmin(@RequestBody NewAdminDTO adminRequest, UriComponentsBuilder ucBuilder) {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<User> addAdmin(@RequestBody NewAdminDTO adminRequest) {
 
         User existUser = this.userService.findByEmail(adminRequest.getEmail());
 
