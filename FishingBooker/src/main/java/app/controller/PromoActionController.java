@@ -4,7 +4,6 @@ import app.domain.BookingService;
 import app.domain.PromoAction;
 import app.domain.User;
 import app.dto.PromoActionDTO;
-import app.repository.PromoActionRepository;
 import app.repository.ServiceRepository;
 import app.service.PromoActionService;
 import app.service.UserService;
@@ -24,8 +23,6 @@ import java.util.List;
 public class PromoActionController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private PromoActionRepository promoActionRepository;
     @Autowired
     private PromoActionService promoActionService;
     @Autowired
