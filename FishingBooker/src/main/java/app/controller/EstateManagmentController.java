@@ -4,10 +4,12 @@ import app.domain.BookingService;
 import app.domain.Estate;
 import app.domain.User;
 import app.dto.NewEstateDTO;
+import app.dto.ServiceWithRatingDTO;
 import app.dto.UnavailablePeriodDTO;
 import app.repository.EstateRepository;
 import app.service.ManagingEstateService;
 import app.service.ManagingReservationsService;
+import app.service.RatingsService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,8 +34,12 @@ public class EstateManagmentController {
     private EstateRepository estateRepository;
     @Autowired
     private ManagingReservationsService reservationsService;
+    @Autowired
+    private RatingsService ratingService;
 
     private static final String UNAUTHORIZED = "Unauthorized access!";
+
+
 
     @GetMapping(value = "/getEstatesForOwner", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
@@ -155,6 +161,44 @@ public class EstateManagmentController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ServiceWithRatingDTO> getAll(){
+        List<Estate> allEstates = managingEstateService.getAll();
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Estate estate : allEstates) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
+            System.out.println();
+            result.add(service);
+        }
+        return result;
+    }
+
+    @GetMapping(value = "/search/name/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ServiceWithRatingDTO> searchEstatesByName(@PathVariable String input) {
+        List<Estate> allEstates = this.managingEstateService.searchByName(input);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Estate estate : allEstates) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
+            System.out.println();
+            result.add(service);
+        }
+        return result;
+    }
+
+    @GetMapping(value = "/search/city/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //@PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<ServiceWithRatingDTO> searchEstatesByCity(@PathVariable String input) {
+        List<Estate> allEstates = this.managingEstateService.searchByCity(input);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Estate estate : allEstates) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
+            System.out.println();
+            result.add(service);
+        }
+        return result;
+    }
+
 }
 
 

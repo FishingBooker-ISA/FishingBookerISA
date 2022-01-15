@@ -32,6 +32,31 @@ public class RatingsService {
         return foundRatings;
     }
 
+    public double getAvgRatingForBookingService(int serviceId) {
+        List<Rating> foundRatings = new ArrayList<>();
+        double avg = 0;
+        int num = 0;
+        for (Rating rating: this.ratingRepository.findAll()) {
+            if(rating.getBookingService().getId().equals(serviceId) && rating.getIsApproved()){
+                num++;
+                avg += rating.getGivenMark();
+            }
+        }
+        if(num == 0)
+            return 0;
+        return avg/num;
+    }
+
+    public int getNumberOfRatingsForBookingService(int serviceId) {
+        List<Rating> foundRatings = new ArrayList<>();
+        int num = 0;
+        for (Rating rating: this.ratingRepository.findAll()) {
+            if(rating.getBookingService().getId().equals(serviceId) && rating.getIsApproved())
+                num++;
+        }
+        return num;
+    }
+
     public void reviewRating(RatingReviewDTO request) {
         Rating foundRating = this.ratingRepository.getById(request.getRatingId());
         foundRating.setIsApproved(request.getIsApproved());

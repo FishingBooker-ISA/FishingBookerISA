@@ -60,6 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests().antMatchers("/auth/**").permitAll()		// /auth/**
                 .antMatchers("/api/client/verify/**").permitAll()		// /verify/**
+                .antMatchers("/api/estates/search/**").permitAll()		// /estates/search/**
+                .antMatchers("/api/estates/all").permitAll()		// /estates/all
                 .antMatchers("/h2-console/**").permitAll()	// /h2-console/** ako se koristi H2 baza)
                 .antMatchers("/api/foo").permitAll()		// /api/foo
                 .antMatchers("/api/users/**").permitAll()

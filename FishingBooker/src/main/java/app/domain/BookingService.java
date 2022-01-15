@@ -12,7 +12,7 @@ import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class BookingService {
     @Id
-    @SequenceGenerator(name = "mySeqGenV1", sequenceName = "mySeqV1", initialValue = 3, allocationSize = 1)
+    @SequenceGenerator(name = "mySeqGenV1", sequenceName = "mySeqV1", initialValue = 11, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGenV1")
     private Integer id;
     @Column(nullable = false)

@@ -131,5 +131,17 @@ public class AdventuresController {
         }
     }
 
+    @GetMapping(value = "/search/name/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<Adventure> searchAdventureByName(@PathVariable String input) {
+        return this.managingAdventuresService.searchByName(input);
+    }
+
+    @GetMapping(value = "/search/city/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<Adventure> searchAdventureByCity(@PathVariable String input) {
+        return this.managingAdventuresService.searchByCity(input);
+    }
+
 }
 

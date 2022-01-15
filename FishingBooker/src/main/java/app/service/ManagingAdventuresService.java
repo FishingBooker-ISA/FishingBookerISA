@@ -110,4 +110,34 @@ public class ManagingAdventuresService {
     public void deleteEstate(Adventure adventure) {
         adventureRepository.deleteById(adventure.getId());
     }
+
+    public List<Adventure> searchByName(String input){
+        List<Adventure> foundAdventures = new ArrayList<>();
+        List<Adventure> allAdventures =  adventureRepository.findAll();
+        for (Adventure adventure : allAdventures) {
+            if(adventure.getName().toLowerCase().contains(input.toLowerCase()))
+                foundAdventures.add(adventure);
+        }
+        return foundAdventures;
+    }
+
+    public List<Adventure> searchByCity(String input){
+        List<Adventure> foundAdventures = new ArrayList<>();
+        List<Adventure> allAdventures =  adventureRepository.findAll();
+        for (Adventure adventure : allAdventures) {
+            if(adventure.getAddress().getCity().toLowerCase().contains(input.toLowerCase()))
+                foundAdventures.add(adventure);
+        }
+        return foundAdventures;
+    }
+
+    public List<Adventure> searchByCapacity(int requestedCapacity){
+        List<Adventure> foundAdventures = new ArrayList<>();
+        List<Adventure> allAdventures =  adventureRepository.findAll();
+        for (Adventure adventure : allAdventures) {
+            if(adventure.getCapacity() <= requestedCapacity)
+                foundAdventures.add(adventure);
+        }
+        return foundAdventures;
+    }
 }
