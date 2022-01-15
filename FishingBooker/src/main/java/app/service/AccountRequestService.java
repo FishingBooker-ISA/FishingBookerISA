@@ -39,7 +39,7 @@ public class AccountRequestService {
         return notReviewed;
     }
 
-    public void reviewRequest(AccountRequestReviewDTO review) throws InterruptedException {
+    public void reviewRequest(AccountRequestReviewDTO review){
         AccountRequest request = this.registrationReasonRepository.getById(review.getId());
         request.setDenied(review.getIsDenied());
         request.setDenialReason(review.getDenialReason());
@@ -48,7 +48,7 @@ public class AccountRequestService {
         notifyUser(request.getUser().getId(), request);
     }
 
-    private void notifyUser(int userId,AccountRequest request) throws InterruptedException {
+    private void notifyUser(int userId,AccountRequest request) {
         User user = this.userRepository.getById(userId);
         String mailSubject = "Account Verification";
         String mailContent;
@@ -73,7 +73,7 @@ public class AccountRequestService {
         return notReviewed;
     }
 
-    public void reviewDeleteRequest(AccountRequestReviewDTO review) throws InterruptedException {
+    public void reviewDeleteRequest(AccountRequestReviewDTO review){
         AccountDeletionRequest request = this.accountDeletionRequestRepository.getById(review.getId());
         request.setDenied(review.getIsDenied());
         request.setDenialReason(review.getDenialReason());
@@ -82,7 +82,7 @@ public class AccountRequestService {
         notifyUserWhenDeleting(request.getUser().getId(), request);
     }
 
-    private void notifyUserWhenDeleting(int userId, AccountDeletionRequest request) throws InterruptedException {
+    private void notifyUserWhenDeleting(int userId, AccountDeletionRequest request) {
         User user = this.userRepository.getById(userId);
         String mailSubject = "Delete My Account Request";
         String mailContent;

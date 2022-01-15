@@ -17,7 +17,7 @@ public class ComplaintsService {
         this.emailService = emailService;
     }
 
-    public void reviewComplaint(ComplaintReviewDTO review) throws InterruptedException {
+    public void reviewComplaint(ComplaintReviewDTO review) {
         Complaint foundComplaint = this.complaintRepository.getById(review.getId());
         foundComplaint.setIsReviewed(true);
         foundComplaint.setResponseForClient(review.getResponseForClient());
@@ -27,7 +27,7 @@ public class ComplaintsService {
         notifyOwner(foundComplaint);
     }
 
-    private void notifyOwner(Complaint complaint) throws InterruptedException {
+    private void notifyOwner(Complaint complaint) {
         String mailSubject = "New Complaint";
         String mailContent = "Hello,\nComplaint from " +
                 complaint.getClient().getFirstName() + " " +  complaint.getClient().getLastName() +
@@ -36,7 +36,7 @@ public class ComplaintsService {
         this.emailService.sendMail(complaint.getOwner(), mailSubject, mailContent);
     }
 
-    private void notifyClient(Complaint complaint) throws InterruptedException {
+    private void notifyClient(Complaint complaint) {
         String mailSubject = "Response On Your Complaint";
         String mailContent = "Hello,\nYour complaint on " +
                 complaint.getOwner().getFirstName() + " " +  complaint.getOwner().getLastName() +

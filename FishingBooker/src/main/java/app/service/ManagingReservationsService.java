@@ -50,7 +50,7 @@ public class ManagingReservationsService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public Reservation createReservationForUser(ReservationDTO reservationDTO) throws InterruptedException {
+    public Reservation createReservationForUser(ReservationDTO reservationDTO) {
         User client = userRepository.getById(reservationDTO.getUserId());
         Reservation lastingReservation = getLastingReservationForUser(client, reservationDTO.getServiceId());
 
@@ -126,7 +126,7 @@ public class ManagingReservationsService {
         return false;
     }
 
-    private void sendConfirmationMail(Reservation reservation) throws InterruptedException {
+    private void sendConfirmationMail(Reservation reservation) {
         String mailSubject = "Confirmation for reservation of " + reservation.getBookingService().getName();
         String mailContent;
         mailContent = "Hello,\nYour reservation for " + reservation.getBookingService().getType().toString().toLowerCase()
