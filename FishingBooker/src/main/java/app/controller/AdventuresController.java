@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.domain.Adventure;
-import app.domain.Estate;
 import app.domain.User;
 import app.dto.NewAdventureDTO;
 import app.dto.ServiceWithRatingDTO;
@@ -142,7 +141,6 @@ public class AdventuresController {
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Adventure adventure : allAdventures) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(adventure, ratingService.getAvgRatingForBookingService(adventure.getId()), ratingService.getNumberOfRatingsForBookingService(adventure.getId()));
-            System.out.println();
             result.add(service);
         }
         return result;
@@ -154,7 +152,6 @@ public class AdventuresController {
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Adventure adventure : foundAdventures) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(adventure, ratingService.getAvgRatingForBookingService(adventure.getId()), ratingService.getNumberOfRatingsForBookingService(adventure.getId()));
-            System.out.println();
             result.add(service);
         }
         return result;
@@ -166,7 +163,6 @@ public class AdventuresController {
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Adventure adventure : foundAdventures) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(adventure, ratingService.getAvgRatingForBookingService(adventure.getId()), ratingService.getNumberOfRatingsForBookingService(adventure.getId()));
-            System.out.println();
             result.add(service);
         }
         return result;

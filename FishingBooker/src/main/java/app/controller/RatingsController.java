@@ -27,7 +27,7 @@ public class RatingsController {
 
     @PostMapping(value = "/reviewRating", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public void reviewRating(@RequestBody RatingReviewDTO request) throws InterruptedException {
+    public void reviewRating(@RequestBody RatingReviewDTO request) {
         this.ratingsService.reviewRating(request);
     }
 

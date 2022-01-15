@@ -168,7 +168,6 @@ public class EstateManagmentController {
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Estate estate : allEstates) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
-            System.out.println();
             result.add(service);
         }
         return result;
@@ -180,7 +179,6 @@ public class EstateManagmentController {
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Estate estate : foundEstates) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
-            System.out.println();
             result.add(service);
         }
         return result;
@@ -193,7 +191,6 @@ public class EstateManagmentController {
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Estate estate : foundEstates) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
-            System.out.println();
             result.add(service);
         }
         return result;

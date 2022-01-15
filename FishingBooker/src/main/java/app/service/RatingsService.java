@@ -33,7 +33,6 @@ public class RatingsService {
     }
 
     public double getAvgRatingForBookingService(int serviceId) {
-        List<Rating> foundRatings = new ArrayList<>();
         double avg = 0;
         int num = 0;
         for (Rating rating: this.ratingRepository.findAll()) {
@@ -48,7 +47,6 @@ public class RatingsService {
     }
 
     public int getNumberOfRatingsForBookingService(int serviceId) {
-        List<Rating> foundRatings = new ArrayList<>();
         int num = 0;
         for (Rating rating: this.ratingRepository.findAll()) {
             if(rating.getBookingService().getId().equals(serviceId) && rating.getIsApproved())
