@@ -32,7 +32,7 @@ public class RatingsService {
         return foundRatings;
     }
 
-    public void reviewRating(RatingReviewDTO request) throws InterruptedException {
+    public void reviewRating(RatingReviewDTO request) {
         Rating foundRating = this.ratingRepository.getById(request.getRatingId());
         foundRating.setIsApproved(request.getIsApproved());
         foundRating.setIsReviewed(true);
@@ -41,7 +41,7 @@ public class RatingsService {
             notifyOwner(foundRating);
     }
 
-    private void notifyOwner(Rating rating) throws InterruptedException {
+    private void notifyOwner(Rating rating) {
         String mailSubject = "New Rating";
         String mailContent = "Hello,\nNew rating for your service has been submitted." +
                                 "\nRating: \""+ rating.getDescription() + "\"(" + rating.getGivenMark() +")\nFishing Booker";

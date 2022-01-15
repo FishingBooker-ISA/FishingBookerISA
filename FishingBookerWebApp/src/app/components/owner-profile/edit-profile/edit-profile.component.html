@@ -1,7 +1,4 @@
-<app-estate-owner-navbar></app-estate-owner-navbar>
-<app-edit-profile *ngIf="editingMode" [editingMode]="editingMode" [currentUser]="currentUser"></app-edit-profile>
-
-<div class="bg-light d-flex justify-content-center mainContainer" *ngIf="!editingMode">
+<div class="bg-light d-flex justify-content-center mainContainer">
   <div class="container row">
     <!-- TITLE AND LOCATION -->
     <div class="col-md-3" style="margin: auto; height:30%">
@@ -15,7 +12,7 @@
           {{currentUser.address.postcode}} , <br /> {{currentUser.address.country}}
         </a>
       </div>
-      <button class="btn mt-3" (click)="editUser()">
+      <button class="btn mt-3">
         <i class="bi bi-pencil me-3"></i>Edit
       </button>
     </div>
@@ -42,7 +39,7 @@
               <td>First Name</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.firstName" />
+                  <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.firstName" />
                 </div>
               </td>
             </tr>
@@ -50,7 +47,7 @@
               <td>Last Name</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.lastName" />
+                  <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.lastName" />
                 </div>
               </td>
             </tr>
@@ -60,7 +57,7 @@
               </td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.street" />
+                  <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.street" />
                 </div>
               </td>
             </tr>
@@ -68,7 +65,7 @@
               <td>Number</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.number" />
+                  <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.number" />
                 </div>
               </td>
             </tr>
@@ -76,7 +73,7 @@
               <td>City</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.city" />
+                  <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.city" />
                 </div>
               </td>
             </tr>
@@ -84,8 +81,7 @@
               <td>Country</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name"
-                    [(ngModel)]="currentUser.address.country" />
+                  <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.country" />
                 </div>
               </td>
             </tr>
@@ -93,28 +89,34 @@
               <td>Phone Number</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.phoneNumber" />
+                  <input class="text-start" type="text" name="name" [(ngModel)]="currentUser.phoneNumber" />
                 </div>
               </td>
             </tr>
             <tr>
-              <td>Email</td>
+              <td class="faded">Email</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.email" />
+                  <input readonly class="text-start faded" type="text" name="name" [(ngModel)]="currentUser.email" />
                 </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Password</td>
-              <td>
-                <button class="btn mt-2" (click)="onChangePassword()">
-                  Change password
-                </button>
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="mt-2" style="margin: auto; width: 50%">
+        <mat-error *ngIf="hasErrors()">Field can't be empty! </mat-error>
+        <div>
+          <div class="col mt-1 d-inline-flex justify-content-center">
+            <button type="button" class="btn me-4" (click)="saveChanges()" [disabled]="hasErrors()">
+              Save
+            </button>
+            <button type="button" class="btn" style="background: #ecbeb1" (click)="cancelEditing()">
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <!-- END OF PROPERTY INFO EDIT FORM -->

@@ -64,7 +64,7 @@ public class AuthenticationController {
         User existUser = this.userService.findByEmail(userRequest.getEmail());
 
         if (existUser != null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         User user = this.userService.addOwner(userRequest);
@@ -78,7 +78,7 @@ public class AuthenticationController {
         User existUser = this.userService.findByEmail(newClient.getEmail());
 
         if (existUser != null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         User user = this.userService.addClient(newClient);
@@ -92,7 +92,7 @@ public class AuthenticationController {
         User existUser = this.userService.findByEmail(adminRequest.getEmail());
 
         if (existUser != null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         User user = this.userService.addAdmin(adminRequest);
