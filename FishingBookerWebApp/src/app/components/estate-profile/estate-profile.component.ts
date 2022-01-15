@@ -18,6 +18,7 @@ export class EstateProfileComponent implements OnInit {
 
   estateId!: number;
   editingMode!: boolean;
+  promoActions!: boolean;
   images = [] as SafeResourceUrl[]
   estate!: Estate;
   imgSrc!: any
@@ -31,12 +32,17 @@ export class EstateProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.editingMode = false
+    this.promoActions = false
     this.managingEstateService.getEstateById(this.estateId).subscribe((data) => this.estate = data);
     this.imageFromDatabase();
   }
 
   editEstate() {
     this.editingMode = true;
+  }
+
+  createAction() {
+    this.promoActions = true;
   }
 
   deleteEstate() {

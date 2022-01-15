@@ -86,6 +86,7 @@ public class PromoActionService {
         action.setPricePerDay(actionDTO.getPricePerDay());
         action.setDurationInDays(actionDTO.getDurationInDays());
         action.setBookingService(service);
+        action.setCapacity(actionDTO.getCapacity());
         action.setAdditional(actionDTO.getAdditional());
         action.setStartDate(actionDTO.getStartDate());
         action.setEndDate(actionDTO.getEndDate());
