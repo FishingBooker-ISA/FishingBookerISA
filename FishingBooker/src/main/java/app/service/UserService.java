@@ -169,10 +169,17 @@ public class UserService implements UserDetailsService {
         this.userRepository.save(user);
     }
 
-    public void changePasswordForAdmin(String password, int id) {
+    public void changePasswordForAdmin(String password, int id) throws InterruptedException {
         User user = this.userRepository.getById(id);
         user.setPassword(passwordEncoder.encode(password));
         user.setFirstTime(false);
         this.userRepository.save(user);
+        this.notifyUser(user);
+    }
+    private void notifyUser(User user) throws InterruptedException {
+        String mailSubject = "New Account";
+        String mailContent = "Hello,\nNew account for you has been made. To login use password 'admin' and your mail. " +
+                "\nFishing Booker";
+        this.emailService.sendMail(user, mailSubject, mailContent);
     }
 }
