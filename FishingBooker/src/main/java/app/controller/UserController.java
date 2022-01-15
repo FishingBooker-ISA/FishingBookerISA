@@ -44,7 +44,7 @@ public class UserController {
 
     @PostMapping(value = "/changePassword")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> changePassword(@RequestBody String newPassword, Principal user) throws InterruptedException {
+    public ResponseEntity<String> changePassword(@RequestBody String newPassword, Principal user) {
 
         User admin = this.userRepository.findByEmail(user.getName());
 
