@@ -114,4 +114,38 @@ public class ManagingEstateService {
     public void deleteEstate(Estate estate) {
         estateRepository.deleteById(estate.getId());
     }
+
+    public List<Estate> getAll(){
+        return estateRepository.findAll();
+    }
+
+    public List<Estate> searchByName(String input){
+        List<Estate> foundEstates = new ArrayList<>();
+        List<Estate> allEstates =  estateRepository.findAll();
+        for (Estate estate : allEstates) {
+            if(estate.getName().toLowerCase().contains(input.toLowerCase()))
+                foundEstates.add(estate);
+        }
+        return foundEstates;
+    }
+
+    public List<Estate> searchByCity(String input){
+        List<Estate> foundEstates = new ArrayList<>();
+        List<Estate> allEstates =  estateRepository.findAll();
+        for (Estate estate : allEstates) {
+            if(estate.getAddress().getCity().toLowerCase().contains(input.toLowerCase()))
+                foundEstates.add(estate);
+        }
+        return foundEstates;
+    }
+
+    public List<Estate> searchByCapacity(int requestedCapacity){
+        List<Estate> foundEstates = new ArrayList<>();
+        List<Estate> allEstates =  estateRepository.findAll();
+        for (Estate estate : allEstates) {
+            if(estate.getCapacity() <= requestedCapacity)
+                foundEstates.add(estate);
+        }
+        return foundEstates;
+    }
 }

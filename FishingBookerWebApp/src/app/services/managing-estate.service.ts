@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DisplayServiceShortDTO } from '../model/display-service-short';
 import { Address, createEstateDTO, DisplayEstateShortDTO, Estate } from '../model/estate';
 
 @Injectable({
@@ -13,6 +14,18 @@ export class ManagingEstateService {
 
   getAllEstatesForOwner(): Observable<Estate[]> {
     return this.http.get<Estate[]>(`${environment.baseUrl}` + 'api/estates/getEstatesForOwner')
+  }
+  
+  getAllEstates(): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/all')
+  }
+
+  getEstatesByName(input: string): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/search/name/'+input);
+  }
+
+  getEstatesByCity(input:string): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/search/city/'+input);
   }
 
   getEstateById(estateId: number): Observable<Estate> {
@@ -29,6 +42,10 @@ export class ManagingEstateService {
         name: name,
       },
     });
+  }
+
+  searchEstatesByName(name: string): Observable<Estate[]> {
+    return this.http.get<Estate[]>(`${environment.baseUrl}` + 'api/estates/search/name/'+name);
   }
 
   editEstate(estate: Estate) {
@@ -122,3 +139,4 @@ export class ManagingEstateService {
       this.http.delete(`${environment.baseUrl}` + 'api/estates/deleteEstate/' + id).subscribe();
     }
   }
+

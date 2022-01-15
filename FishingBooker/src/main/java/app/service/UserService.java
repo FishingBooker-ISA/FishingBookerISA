@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.util.UUID;
 
 @Service
@@ -141,7 +140,7 @@ public class UserService implements UserDetailsService {
         return addedClient;
     }
 
-    private void sendVerificationEmail(int clientId) throws InterruptedException {
+    private void sendVerificationEmail(int clientId) {
         Client client = this.clientRepository.getById(clientId);
         String mailSubject = "FishingBooker registration";
         String mailContent;

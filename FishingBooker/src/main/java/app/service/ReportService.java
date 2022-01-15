@@ -33,7 +33,7 @@ public class ReportService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public Report createReport(ReportDTO reportDTO) throws Exception {
+    public Report createReport(ReportDTO reportDTO){
         Report newReport = new Report();
         Reservation reservation = reservationRepository.getById(reportDTO.getReservationId());
         Client client = clientRepository.getById(reservation.getUser().getId());

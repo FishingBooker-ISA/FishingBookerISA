@@ -27,7 +27,7 @@ public class ComplaintsController {
 
     @PostMapping(value = "/reviewComplaint", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public void reviewComplaint(@RequestBody ComplaintReviewDTO review) throws InterruptedException {
+    public void reviewComplaint(@RequestBody ComplaintReviewDTO review) {
         this.complaintsService.reviewComplaint(review);
     }
 }

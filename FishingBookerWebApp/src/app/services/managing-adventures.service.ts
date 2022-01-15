@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Adventure, createAdventureDTO } from '../model/adventure';
+import { DisplayServiceShortDTO } from '../model/display-service-short';
 
 @Injectable({
   providedIn: 'root'
@@ -75,4 +76,18 @@ export class ManagingAdventuresService {
   deleteAdventure(id: number) {
     this.http.delete(`${environment.baseUrl}` + 'api/adventures/deleteAdventure/' + id).subscribe();
   }
+
+  
+  getAllEstates(): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/all')
+  }
+
+  getEstatesByName(input: string): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/search/name/'+input);
+  }
+
+  getEstatesByCity(input:string): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/search/city/'+input);
+  }
+  
 }
