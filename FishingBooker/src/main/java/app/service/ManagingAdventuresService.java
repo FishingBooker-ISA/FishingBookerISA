@@ -121,6 +121,10 @@ public class ManagingAdventuresService {
         return foundAdventures;
     }
 
+    public List<Adventure> getAll(){
+        return adventureRepository.findAll();
+    }
+
     public List<Adventure> searchByCity(String input){
         List<Adventure> foundAdventures = new ArrayList<>();
         List<Adventure> allAdventures =  adventureRepository.findAll();

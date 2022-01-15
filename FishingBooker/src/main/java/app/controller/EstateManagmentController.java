@@ -176,9 +176,9 @@ public class EstateManagmentController {
 
     @GetMapping(value = "/search/name/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ServiceWithRatingDTO> searchEstatesByName(@PathVariable String input) {
-        List<Estate> allEstates = this.managingEstateService.searchByName(input);
+        List<Estate> foundEstates = this.managingEstateService.searchByName(input);
         List<ServiceWithRatingDTO> result = new ArrayList<>();
-        for (Estate estate : allEstates) {
+        for (Estate estate : foundEstates) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
             System.out.println();
             result.add(service);
@@ -189,9 +189,9 @@ public class EstateManagmentController {
     @GetMapping(value = "/search/city/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
     //@PreAuthorize("hasAuthority('ROLE_CLIENT')")
     public List<ServiceWithRatingDTO> searchEstatesByCity(@PathVariable String input) {
-        List<Estate> allEstates = this.managingEstateService.searchByCity(input);
+        List<Estate> foundEstates = this.managingEstateService.searchByCity(input);
         List<ServiceWithRatingDTO> result = new ArrayList<>();
-        for (Estate estate : allEstates) {
+        for (Estate estate : foundEstates) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
             System.out.println();
             result.add(service);

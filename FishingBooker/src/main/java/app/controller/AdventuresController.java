@@ -1,10 +1,13 @@
 package app.controller;
 
 import app.domain.Adventure;
+import app.domain.Estate;
 import app.domain.User;
 import app.dto.NewAdventureDTO;
+import app.dto.ServiceWithRatingDTO;
 import app.repository.AdventureRepository;
 import app.service.ManagingAdventuresService;
+import app.service.RatingsService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,8 @@ public class AdventuresController {
     private ManagingAdventuresService managingAdventuresService;
     @Autowired
     private AdventureRepository adventuresRepository;
+    @Autowired
+    private RatingsService ratingService;
 
     @GetMapping(value = "/getAdventuresForInstructor", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_INSTRUCTOR')")
@@ -131,16 +136,40 @@ public class AdventuresController {
         }
     }
 
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ServiceWithRatingDTO> getAll(){
+        List<Adventure> allAdventures = managingAdventuresService.getAll();
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Adventure adventure : allAdventures) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(adventure, ratingService.getAvgRatingForBookingService(adventure.getId()), ratingService.getNumberOfRatingsForBookingService(adventure.getId()));
+            System.out.println();
+            result.add(service);
+        }
+        return result;
+    }
+
     @GetMapping(value = "/search/name/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public List<Adventure> searchAdventureByName(@PathVariable String input) {
-        return this.managingAdventuresService.searchByName(input);
+    public List<ServiceWithRatingDTO> searchAdventureByName(@PathVariable String input) {
+        List<Adventure> foundAdventures = this.managingAdventuresService.searchByName(input);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Adventure adventure : foundAdventures) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(adventure, ratingService.getAvgRatingForBookingService(adventure.getId()), ratingService.getNumberOfRatingsForBookingService(adventure.getId()));
+            System.out.println();
+            result.add(service);
+        }
+        return result;
     }
 
     @GetMapping(value = "/search/city/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public List<Adventure> searchAdventureByCity(@PathVariable String input) {
-        return this.managingAdventuresService.searchByCity(input);
+    public List<ServiceWithRatingDTO> searchAdventureByCity(@PathVariable String input) {
+        List<Adventure> foundAdventures = this.managingAdventuresService.searchByCity(input);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Adventure adventure : foundAdventures) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(adventure, ratingService.getAvgRatingForBookingService(adventure.getId()), ratingService.getNumberOfRatingsForBookingService(adventure.getId()));
+            System.out.println();
+            result.add(service);
+        }
+        return result;
     }
 
 }
