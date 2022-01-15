@@ -42,25 +42,20 @@ public class AuthenticationController {
     public ResponseEntity<UserTokenState> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
 
-        // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
-        // AuthenticationException
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
-        // kontekst
         User user = (User) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(user.getEmail());
         int expiresIn = tokenUtils.getExpiredIn();
 
-        // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 
     @PostMapping("/signupForOwners")
-    public ResponseEntity<User> addOwner(@RequestBody AccountRequestForOwners userRequest, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<User> addOwner(@RequestBody AccountRequestForOwners userRequest) {
 
         User existUser = this.userService.findByEmail(userRequest.getEmail());
 
@@ -74,7 +69,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signupForClients")
-    public ResponseEntity<User> addClient(@RequestBody ClientDTO newClient, UriComponentsBuilder ucBuilder) throws InterruptedException {
+    public ResponseEntity<User> addClient(@RequestBody ClientDTO newClient) {
 
         User existUser = this.userService.findByEmail(newClient.getEmail());
 
@@ -89,7 +84,7 @@ public class AuthenticationController {
 
     @PostMapping(value = "/addAdmin", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<User> addAdmin(@RequestBody NewAdminDTO adminRequest, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<User> addAdmin(@RequestBody NewAdminDTO adminRequest) {
 
         User existUser = this.userService.findByEmail(adminRequest.getEmail());
 
