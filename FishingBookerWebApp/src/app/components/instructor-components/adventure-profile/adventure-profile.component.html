@@ -85,7 +85,11 @@
               <button class="btn me-1" (click)="deleteAdventure()">
                 <i class="bi bi-trash"></i>
               </button>
-              <button class="btn me-1">
+              <button
+                class="btn me-1"
+                data-bs-toggle="modal"
+                data-bs-target="#reportModal"
+              >
                 <i class="bi bi-percent"></i>
               </button>
               <button class="btn">
@@ -164,4 +168,84 @@
     </div>
   </div>
   <!-- END OF GENERAL INFO -->
+</div>
+
+<div
+  class="modal fade"
+  id="reportModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Write Your Report</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row my-2">
+          <div class="col-11 mx-auto">
+            <h6>Leave a comment:</h6>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-11 mx-auto">
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="5"
+            ></textarea>
+          </div>
+        </div>
+        <div class="row my-2">
+          <div class="col-11 mx-auto">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck1"
+              />
+              <label class="form-check-label" for="defaultCheck1">
+                Suggest a penalty for client
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row my-2">
+          <div class="col-11 mx-auto">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck1"
+              />
+              <label class="form-check-label" for="defaultCheck1">
+                Client did not show up
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn_modal" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn_modal"
+          style="background-color: #f59494"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
