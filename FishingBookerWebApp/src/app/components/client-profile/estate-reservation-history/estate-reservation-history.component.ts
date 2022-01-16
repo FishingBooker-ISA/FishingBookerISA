@@ -11,7 +11,6 @@ import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 })
 export class EstateReservationHistoryComponent implements OnInit {
 
-  
   public backup: ReservationDisplayDTO[] = [];
   public reservations: ReservationDisplayDTO[] = [];
   
