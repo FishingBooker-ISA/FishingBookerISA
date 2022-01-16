@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccountRequestsComponent } from './components/admin-profile/account-requests/account-requests.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 import { AllComplaintsComponent } from './components/admin-profile/all-complaints/all-complaints.component';
+import { AllReportsComponent } from './components/admin-profile/all-reports/all-reports.component';
 import { DeleteRequestsComponent } from './components/admin-profile/delete-requests/delete-requests.component';
 import { NewAdminFormComponent } from './components/admin-profile/new-admin-form/new-admin-form.component';
 import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'admin/allUsers', component: UsersTableComponent },
   { path: 'admin/addNewAdmin', component: NewAdminFormComponent },
   { path: 'admin/allComplaints', component: AllComplaintsComponent },
+  { path: 'admin/allReports', component: AllReportsComponent },
   { path: 'admin/changePassword', component: NewAdminLoginComponent },
   { path: 'client/reservationHistory/estate', component: EstateReservationHistoryComponent },
   { path: 'client/upcomingReservations', component: UpcomingReservationsComponent },

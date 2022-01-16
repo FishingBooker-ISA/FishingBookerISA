@@ -32,9 +32,6 @@ public class Reservation {
     @JoinColumn(name = "service_id")
     private BookingService bookingService;
 
-    @OneToOne(mappedBy = "reservation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Report report;
-
     public Reservation() {
     }
 
@@ -131,11 +128,4 @@ public class Reservation {
         this.bookingService = bookingService;
     }
 
-    public Report getReport() {
-        return report;
-    }
-
-    public void setReport(Report report) {
-        this.report = report;
-    }
 }

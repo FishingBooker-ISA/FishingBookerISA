@@ -58,6 +58,7 @@ import { ShowImagesComponent } from './components/show-images/show-images.compon
 import { EditProfileComponent } from './components/owner-profile/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
+import { AllReportsComponent } from './components/admin-profile/all-reports/all-reports.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { NewAdminLoginComponent } from './components/admin-profile/new-admin-log
     EditProfileComponent,
     ChangePasswordComponent,
     NewAdminLoginComponent,
+    AllReportsComponent,
   ],
   imports: [
     BrowserModule,

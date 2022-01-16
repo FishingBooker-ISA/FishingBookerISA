@@ -30,11 +30,6 @@ public class ReportService {
     @Autowired
     EmailService emailService;
 
-    public List<Report> getReportsForReservation(int reservationId) {
-        Reservation reservation = reservationRepository.getById(reservationId);
-        return reportRepository.findAllByReservation(reservation);
-    }
-
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Report createReport(ReportDTO reportDTO) {
@@ -42,7 +37,7 @@ public class ReportService {
         Reservation reservation = reservationRepository.getById(reportDTO.getReservationId());
         Client client = clientRepository.getById(reservation.getUser().getId());
 
-        if (reservation.getReport() != null)
+        if (this.reportRepository.getByReservationId(reservation.getId()) != null)
             return null;
 
         newReport.setCreatedOn(reportDTO.getCreatedOn());
