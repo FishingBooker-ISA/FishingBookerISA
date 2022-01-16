@@ -1,9 +1,11 @@
 package app.dto;
 
+import app.domain.AdditionalService;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class NewEstateDTO {
     private int id;
@@ -34,6 +36,15 @@ public class NewEstateDTO {
     private boolean isPercentageTakenFromCanceledReservations;
     @Range(min = 0, max = 100, message = "Percentage must range from 0 to 100!")
     private double percentageToTake;
+    private List<AdditionalEquipmentDTO> additionalServiceList;
+
+    public List<AdditionalEquipmentDTO> getAdditionalServiceList() {
+        return additionalServiceList;
+    }
+
+    public void setAdditionalServiceList(List<AdditionalEquipmentDTO> additionalServiceList) {
+        this.additionalServiceList = additionalServiceList;
+    }
 
     public int getId() {
         return id;

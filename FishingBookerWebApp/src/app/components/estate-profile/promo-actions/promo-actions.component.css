@@ -60,5 +60,14 @@ textarea {
 }
 
 mat-form-field {
-  width: 200px;
+  width: 250px;
+}
+
+.checkbox-column {
+  display: inline-block;
+  width: 25%;
+}
+
+.example-list-section {
+  width: 500px;
 }

@@ -39,8 +39,6 @@ public class EstateManagmentController {
 
     private static final String UNAUTHORIZED = "Unauthorized access!";
 
-
-
     @GetMapping(value = "/getEstatesForOwner", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
     public List<Estate> getEstatesByOwner(Principal user){

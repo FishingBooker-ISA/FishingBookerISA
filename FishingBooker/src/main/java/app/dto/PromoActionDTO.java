@@ -5,6 +5,7 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 public class PromoActionDTO {
     private int id;
@@ -22,6 +23,15 @@ public class PromoActionDTO {
     private Date endDate;
     @NotNull
     private int bookingServiceId;
+    private List<AdditionalEquipmentDTO> additionalServices;
+
+    public List<AdditionalEquipmentDTO> getAdditionalServices() {
+        return additionalServices;
+    }
+
+    public void setAdditionalServiceList(List<AdditionalEquipmentDTO> additionalServices) {
+        this.additionalServices = additionalServices;
+    }
 
     public int getId() {
         return id;

@@ -1,17 +1,16 @@
 package app.service;
 
 import app.domain.*;
+import app.dto.AdditionalEquipmentDTO;
 import app.dto.NewEstateDTO;
-import app.repository.AddressRepository;
-import app.repository.EstateRepository;
-import app.repository.ReservationRepository;
-import app.repository.ServiceRepository;
+import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +25,8 @@ public class ManagingEstateService {
     ReservationRepository reservationRepository;
     @Autowired
     ServiceRepository serviceRepository;
+    @Autowired
+    AdditionalServiceRepository additionalServiceRepository;
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
@@ -48,8 +49,15 @@ public class ManagingEstateService {
                 newEstate.getTermsOfUse(), newEstate.getAdditionalEquipment(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
                 newEstate.getPercentageToTake(), user, newAddress, newEstate.getNumOfBeds(), newEstate.getNumOfRooms()
         );
-
         estateRepository.save(estate);
+
+        for (var a : newEstate.getAdditionalServiceList()) {
+            AdditionalService added = new AdditionalService();
+            added.setPrice(a.getPrice());
+            added.setName(a.getName());
+            added.setBookingService(estate);
+            additionalServiceRepository.save(added);
+        }
     }
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,

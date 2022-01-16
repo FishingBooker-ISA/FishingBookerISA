@@ -2,6 +2,7 @@ package app.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class PromoAction {
@@ -23,6 +24,12 @@ public class PromoAction {
     @Column(nullable = false)
     private Date endDate;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "action_addedservice",
+            joinColumns = @JoinColumn(name = "action_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "additional_id", referencedColumnName = "id"))
+    private List<AdditionalService> additionalServices;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "service_id")
     private BookingService bookingService;
@@ -36,6 +43,14 @@ public class PromoAction {
         this.durationInDays = durationInDays;
         this.isTaken = isTaken;
         this.capacity = capacity;
+    }
+
+    public List<AdditionalService> getAdditionalServices() {
+        return additionalServices;
+    }
+
+    public void setAdditionalServices(List<AdditionalService> additionalServices) {
+        this.additionalServices = additionalServices;
     }
 
     public int getDurationInDays() {

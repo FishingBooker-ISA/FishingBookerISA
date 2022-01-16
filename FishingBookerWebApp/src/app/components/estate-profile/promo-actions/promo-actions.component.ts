@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PromoAction } from 'src/app/model/action';
+import { AdditionalService, AdditionalServiceDTO } from 'src/app/model/additional-service';
 import { Estate } from 'src/app/model/estate';
 import { PromoActionsService } from 'src/app/services/promo-actions.service';
 
@@ -16,6 +17,8 @@ export class PromoActionsComponent implements OnInit {
   promoActions!: boolean
   createMode!: boolean
   actions!: PromoAction[]
+  additional!: AdditionalService[]
+  additionalForPromo = [] as AdditionalServiceDTO[]
   newAction!: PromoAction
   selectedDate!: Date
 
@@ -26,8 +29,10 @@ export class PromoActionsComponent implements OnInit {
     this.actionsService.getAllActionsForService(this.estate.id).subscribe((data) =>
       this.actions = data
     );
+
+    this.actionsService.getAllAdditionalServices(this.estate.id).subscribe((data) => this.additional = data);
     this.newAction = new PromoAction();
-    console.log(this.estate);
+
 
   }
 
@@ -52,9 +57,10 @@ export class PromoActionsComponent implements OnInit {
       additional: this.newAction.additional,
       startDate: this.newAction.startDate,
       endDate: this.newAction.endDate,
-      bookingServiceId: this.estate.id
+      bookingServiceId: this.estate.id,
+      additionalServices: this.additionalForPromo
     }
-
+    console.log(action);
     this.actionsService.addPromoAction(action);
 
     setTimeout(() => {
@@ -62,6 +68,22 @@ export class PromoActionsComponent implements OnInit {
       this.actionsService.getAllActionsForService(this.estate.id).subscribe((data) =>
         this.actions = data)
     }, 500);
+  }
+
+  addToList(added: AdditionalService) {
+    let a: AdditionalServiceDTO = {
+      id: added.id,
+      name: added.name,
+      price: added.price,
+      bookingServiceId: this.estate.id
+    }
+    const index = this.additionalForPromo.indexOf(a);
+
+    if (index > -1)
+      this.additionalForPromo.splice(index, 1);
+    else {
+      this.additionalForPromo.push(a);
+    }
   }
 
 }

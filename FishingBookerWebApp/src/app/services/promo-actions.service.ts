@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PromoAction } from '../model/action';
+import { AdditionalService } from '../model/additional-service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,13 @@ export class PromoActionsService {
 
   addPromoAction(action: PromoAction) {
     this.http.post(`${environment.baseUrl}` + 'api/promoActions/addPromoAction', action).subscribe();
+  }
+
+  getAllAdditionalServices(id: number): Observable<AdditionalService[]> {
+    return this.http.get<AdditionalService[]>(`${environment.baseUrl}` + 'api/additional/getAdditionalForService', {
+      params: {
+        id: id
+      }
+    })
   }
 }

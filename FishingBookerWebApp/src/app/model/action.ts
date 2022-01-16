@@ -1,3 +1,5 @@
+import { AdditionalService } from "./additional-service"
+
 export class PromoAction {
     pricePerDay!: number
     durationInDays!: number
@@ -7,4 +9,5 @@ export class PromoAction {
     startDate!: Date
     endDate!: Date
     bookingServiceId!: number
+    additionalServices!: AdditionalService[]
 }
