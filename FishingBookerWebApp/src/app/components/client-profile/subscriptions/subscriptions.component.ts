@@ -27,6 +27,14 @@ export class SubscriptionsComponent implements OnInit {
     });
   }
 
+  unsubscribe(id:number, serviceId:number){
+    this.subscriptionService.unsubscribe(this.currentUser.id, serviceId);
+    for(let i = 0; i < this.subscriptions.length; i++){
+      if(this.subscriptions[i].id === id)
+      this.subscriptions.splice(i, 1);
+    }
+  }
+
   getAllSubscriptions() {
     this.subscriptionService.getAllSubscriptionsForClient(this.currentUser.id).subscribe((data) => {this.subscriptions = data;})
   }

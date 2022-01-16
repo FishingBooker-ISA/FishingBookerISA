@@ -36,7 +36,7 @@
                         </div>
                         <p style="margin-top: 1%;">{{subscription.description}}</p>
                         <p style="margin-top: 1%;">{{subscription.pricePerDay}} din / per day</p>
-                        <button mat-button style="margin-top: 5%; ">
+                        <button mat-button style="margin-top: 5%; " (click)="unsubscribe(subscription.id, subscription.serviceId)">
                             Unsubscribe
                         </button>
 

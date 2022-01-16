@@ -36,19 +36,19 @@ public class SubscriptionController {
 
     @PostMapping("/new")
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public void subscribe(int serviceId, int userId) {
+    public void subscribe(@RequestParam int serviceId,@RequestParam int userId) {
         this.subscriptionService.subscribe(serviceId, userId);
     }
 
     @DeleteMapping("/delete")
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public void unsubscribe(int serviceId, int userId) {
+    public void unsubscribe(@RequestParam int serviceId, @RequestParam int userId) {
         this.subscriptionService.unsubscribe(serviceId, userId);
     }
 
     @GetMapping("/exists")
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public boolean checkifSubscribed(int serviceId, int userId) {
+    public boolean checkifSubscribed(@RequestParam int serviceId, @RequestParam  int userId) {
         return this.subscriptionService.checkIfSubscribed(serviceId, userId);
     }
 
