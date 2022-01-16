@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SubscriptionRepository  extends JpaRepository<Subscription, Integer> {
     List<Subscription> findAllByBookingServiceId(int id);
+    List<Subscription> findAllByClientId(int id);
 }

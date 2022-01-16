@@ -21,22 +21,22 @@
 
             <!-- vikenice - isto i za camce i za avanture--> 
             <div class="row">
-                <div *ngFor="let estate of estates" class=" d-flex align-items-stretch mt-4 box">
+                <div *ngFor="let subscription of subscriptions" class=" d-flex align-items-stretch mt-4 box">
                     <div class="" style=" margin-right: 30px;">
                         <img style="width: 400px;"
                             src="https://www.kucastil.rs/uploads/ck_editor/images/clanci/KU%C4%86A/Moderna%20rusti%C4%8Dna%20vikendica%20na%20jezeru/Moderna%20rusti%C4%8Dna%20vikendica%20na%20jezeru%20(11).jpg">
                     </div>
-                    <div>
-                        <h4 style="margin-bottom: 0.5%;"><a>{{estate.name}}</a></h4>
-                        <h5 style="margin-bottom: 3.5%;"><a>{{estate.rating}} &starf;</a></h5>
+                    <div style="width: 50%">
+                        <h4 style="margin-bottom: 0.5%;"><a>{{subscription.name}}</a></h4>
+                        <h5 style="margin-bottom: 3.5%;"><a>{{subscription.rating | number:'1.2-2'}} &starf; ({{subscription.reviewsNumber}})</a></h5>
                         <div class="d-flex">
                             <img style="width: 15px;" src="../../../assets/img/pin.png">
-                            <p style="padding-left: 1%;"> {{estate.address.street}} {{estate.address.number}},
-                                {{estate.address.city}}, {{estate.address.country}}</p>
+                            <p style="padding-left: 1%;"> {{subscription.address.street}} {{subscription.address.number}},
+                                {{subscription.address.city}}, {{subscription.address.country}}</p>
                         </div>
-                        <p style="margin-top: 1%;">{{estate.description}}</p>
-                        <p style="margin-top: 1%;">{{estate.pricePerDay}} din / per day</p>
-                        <button mat-button style="margin-top: 5%; ">
+                        <p style="margin-top: 1%;">{{subscription.description}}</p>
+                        <p style="margin-top: 1%;">{{subscription.pricePerDay}} din / per day</p>
+                        <button mat-button style="margin-top: 5%; " (click)="unsubscribe(subscription.id, subscription.serviceId)">
                             Unsubscribe
                         </button>
 
