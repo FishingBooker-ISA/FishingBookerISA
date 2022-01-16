@@ -51,19 +51,29 @@ VALUES (10, 2, 'Lovely cottage for two.', false, 'Coast house', 0, 20, 'Terms of
 
 --ships
 
+--resevations
+INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)
+    VALUES ('service1, service2, service3', false, false, 100, DATE '2021-12-17', DATE '2021-12-27', DATE '2021-11-13', 3, 2);
+INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)
+    VALUES ('service1', true, false, 80, DATE '2021-11-22', DATE '2021-11-25', DATE '2021-11-10', 14, 2);
+INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)
+    VALUES ('service1, service2, service3', false, false, 125, DATE '2022-03-07', DATE '2022-03-08', DATE '2022-01-14', 1, 2);
+INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)
+    VALUES ('service1, service2, service3, service 4', false, false, 125, DATE '2021-06-04', DATE '2021-06-12', DATE '2021-05-23', 10, 2);
+
 --rating
-INSERT INTO rating (id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
-    VALUES (1, 'Great service. See you again soon. :)', 5, false, false, 1, 2);
-INSERT INTO rating (id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
-    VALUES (2, 'Great service. See you again soon. :)', 5, true, true, 2, 3);
-INSERT INTO rating (id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
-    VALUES (3, 'Not impressed.', 3, false, true, 7, 3);
+INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
+VALUES ('Great service. See you again soon. :)', 5, false, false, 1, 2);
+INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
+VALUES ('Great service. See you again soon. :)', 5, true, true, 2, 3);
+INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
+VALUES ('Not impressed.', 3, false, true, 7, 3);
 
 ---complaints
-INSERT INTO complaint (id, created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
-    VALUES (1, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);
-INSERT INTO complaint (id, created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
-    VALUES (2, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);
+INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
+    VALUES (DATE '2021-12-17', true, false, 'He was never on time.', 2, 5);
+INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
+    VALUES (DATE '2021-12-17', true, false, 'He was never on time.', 3, 5);
 
 --loyality program
 INSERT INTO loyalty_program ( percent_for_bronze, percent_for_gold, percent_for_silver, points_for_bronze, points_for_gold, points_for_silver)

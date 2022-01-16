@@ -48,6 +48,26 @@ public class ManagingReservationsService {
         return existingReservations;
     }
 
+    public List<Reservation> getClientReservationHistory(int clientId) {
+        List<Reservation> reservations = new ArrayList<>();
+        Date now = new Date();
+        for (Reservation res : reservationRepository.getByUserId(clientId)) {
+            if(res.getReservationStart().before(now))
+                reservations.add(res);
+        }
+        return reservations;
+    }
+
+    public List<Reservation> getClientUpcomingReservations(int clientId) {
+        List<Reservation> reservations = new ArrayList<>();
+        Date now = new Date();
+        for (Reservation res : reservationRepository.getByUserId(clientId)) {
+            if(res.getReservationStart().after(now))
+                reservations.add(res);
+        }
+        return reservations;
+    }
+
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Reservation createReservationForUser(ReservationDTO reservationDTO) {
