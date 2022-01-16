@@ -1,0 +1,68 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="row" style="margin-top: 5rem">
+  <div class="col-8 mx-auto">
+    <div class="card shadow-sm">
+      <h1 class="my-3" style="text-align: center">Reports To Review</h1>
+      <div *ngFor="let report of allReports">
+        <div class="px-3">
+          <hr />
+        </div>
+        <div class="row mx-5 my-2">
+          <div class="col-11">
+            <div class="d-inline-flex">
+              <h4>Report from:</h4>
+              <h4 style="font-weight: bold; margin-left: 1rem">
+                {{ report.reservation.bookingService.owner.firstName }}
+                {{ report.reservation.bookingService.owner.lastName }}
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-5 my-3 bg-light">
+          <div class="col-11">
+            <div class="d-inline-flex">
+              <h6 style="color: #f59494; margin-right: 1rem">Client:</h6>
+              <h6>
+                {{ report.reservation.user.firstName }}
+                {{ report.reservation.user.lastName }}
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-5 my-3 bg-light">
+          <div class="col-11">
+            <div class="d-inline-flex">
+              <h6 style="color: #f59494; margin-right: 1rem">Date:</h6>
+              <h6>
+                {{ report.createdOn | date: "mediumDate" }}
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-5 my-3 bg-light">
+          <div class="col-11">
+            <div class="d-inline-flex">
+              <h6 style="color: #f59494; margin-right: 1rem">Text:</h6>
+              <h6 style="font-weight: 600">"{{ report.text }}"</h6>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end my-3 me-5">
+          <button
+            class="btn me-2"
+            (click)="sendComplaintReview(report.id, false)"
+          >
+            Decline
+          </button>
+          <button
+            class="btn me-2"
+            (click)="sendComplaintReview(report.id, true)"
+            style="background: #f59494"
+          >
+            Approve
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

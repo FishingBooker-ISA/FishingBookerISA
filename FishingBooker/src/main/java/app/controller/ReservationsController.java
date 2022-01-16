@@ -68,13 +68,13 @@ public class ReservationsController {
     }
 
     @GetMapping(value = "/getReservationHistory", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
     public List<Reservation> getReservationHistory(int id, Principal user) {
         return reservationsService.getReservationHistory(id);
     }
 
     @PostMapping(value = "/createReport", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> submitReport(@Valid @RequestBody ReportDTO reportDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         Reservation reservation = reservationRepository.getById(reportDTO.getReservationId());

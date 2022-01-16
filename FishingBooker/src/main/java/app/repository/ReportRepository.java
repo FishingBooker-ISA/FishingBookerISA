@@ -1,11 +1,8 @@
 package app.repository;
 
 import app.domain.Report;
-import app.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
 public interface ReportRepository  extends JpaRepository<Report, Integer> {
-    List<Report> findAllByReservation(Reservation reservation);
+    Report getByReservationId(int id);
 }
