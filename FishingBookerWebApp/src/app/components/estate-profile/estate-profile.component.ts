@@ -2,11 +2,14 @@ import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdditionalService } from 'src/app/model/additional-service';
 import { Estate } from 'src/app/model/estate';
 import { Image } from 'src/app/model/image';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { ManagingImagesService } from 'src/app/services/managing-images.service';
+import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
+import { EditAdditionalDialogModel, EditAdditionalServicesComponent } from '../edit-additional-services/edit-additional-services.component';
 import { ImagesDialogModel, ShowImagesComponent } from '../show-images/show-images.component';
 
 @Component({
@@ -22,9 +25,11 @@ export class EstateProfileComponent implements OnInit {
   images = [] as SafeResourceUrl[]
   estate!: Estate;
   imgSrc!: any
+  additional!: AdditionalService[]
 
   constructor(private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
-    public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer) {
+    public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
+    public actionsService: PromoActionsService) {
     this.route.params.subscribe((params) => {
       this.estateId = +params['id'];
     });
@@ -34,6 +39,7 @@ export class EstateProfileComponent implements OnInit {
     this.editingMode = false
     this.promoActions = false
     this.managingEstateService.getEstateById(this.estateId).subscribe((data) => this.estate = data);
+    this.actionsService.getAllAdditionalServices(this.estateId).subscribe((data) => this.additional = data);
     this.imageFromDatabase();
   }
 
@@ -105,4 +111,19 @@ export class EstateProfileComponent implements OnInit {
     });
   }
 
+  editAdditional() {
+    const dialogData = new EditAdditionalDialogModel(
+      this.additional, this.estate
+    );
+
+    const dialogRef = this.dialog.open(EditAdditionalServicesComponent, {
+      maxWidth: '800px',
+      width: '430px',
+      data: dialogData,
+    });
+
+    dialogRef.backdropClick().subscribe((dialogResult) => {
+      this.actionsService.getAllAdditionalServices(this.estate.id).subscribe((data) => this.additional = data);
+    });
+  }
 }

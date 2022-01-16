@@ -77,6 +77,19 @@ a {
   height: 40px;
 }
 
+.editAdditional {
+  width: 40px;
+  height: 30px;
+}
+
 i {
   color: #fff;
+}
+
+.additional {
+  background: rgba(220, 226, 228, 0.863);
+  width: 150px;
+  text-align: center;
+  border-radius: 5px;
+  display: inline-block;
 }

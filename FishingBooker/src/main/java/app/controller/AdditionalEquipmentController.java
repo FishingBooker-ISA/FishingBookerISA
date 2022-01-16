@@ -68,6 +68,20 @@ public class AdditionalEquipmentController {
         }
 
         additionalService.deleteAddedServices(dto, existing);
-        return new ResponseEntity<>("Updated additional services!", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("Updated additional services!", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addAdditionalEquipment", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    public ResponseEntity<String> add(@RequestBody AdditionalEquipmentDTO dto, Principal user) {
+        BookingService existing = serviceRepository.getById(dto.getBookingServiceId());
+        User currentUser = userService.findByEmail(user.getName());
+
+        if (!existing.getOwner().getId().equals(currentUser.getId())){
+            return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
+        }
+
+        additionalService.addAdditionalServices(dto, existing);
+        return new ResponseEntity<>("Added new additional services!", HttpStatus.OK);
     }
 }

@@ -5,9 +5,9 @@ export interface AdditionalService {
     bookingServiceId: number
 }
 
-export interface AdditionalServiceDTO {
-    id: number,
-    name: string,
-    price: number,
-    bookingServiceId: number
+export class AdditionalServiceDTO {
+    id!: number;
+    name!: string;
+    price!: number;
+    bookingServiceId!: number
 }

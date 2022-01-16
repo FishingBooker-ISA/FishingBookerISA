@@ -71,8 +71,11 @@ public class EstateManagmentController {
 
         try {
             User currentUser = userService.findByEmail(user.getName());
-            managingEstateService.createNewEstate(newEstateDTO, currentUser);
-            return new ResponseEntity<>("Estate created!", HttpStatus.CREATED);
+            if (managingEstateService.createNewEstate(newEstateDTO, currentUser) == null)
+                return new ResponseEntity<>("You can't add multiple additional services with the same name!!",
+                        HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>("Estate created!", HttpStatus.CREATED);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

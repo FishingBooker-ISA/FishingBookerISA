@@ -12,6 +12,19 @@ public class AdditionalEquipmentService {
     @Autowired
     AdditionalServiceRepository additionalServiceRepository;
 
+    public void addAdditionalServices(AdditionalEquipmentDTO dto, BookingService existing) {
+        AdditionalService existingService = additionalServiceRepository
+                .getByBookingServiceIdAndName(existing.getId(), dto.getName());
+
+        if (existingService == null) {
+            AdditionalService added = new AdditionalService();
+            added.setName(dto.getName());
+            added.setPrice(dto.getPrice());
+            added.setBookingService(existing);
+            additionalServiceRepository.save(added);
+        }
+    }
+
     public void updateAddedServices(AdditionalEquipmentDTO dto, BookingService existing) {
         AdditionalService existingService = additionalServiceRepository
                 .getByBookingServiceIdAndName(existing.getId(), dto.getName());

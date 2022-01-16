@@ -30,7 +30,7 @@ public class ManagingEstateService {
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void createNewEstate(NewEstateDTO newEstate, User user) {
+    public Estate createNewEstate(NewEstateDTO newEstate, User user) {
         Address address = new Address(
                 newEstate.getStreet(), newEstate.getNumber(),
                 newEstate.getCity(), newEstate.getCountry(),
@@ -53,11 +53,21 @@ public class ManagingEstateService {
 
         for (var a : newEstate.getAdditionalServiceList()) {
             AdditionalService added = new AdditionalService();
-            added.setPrice(a.getPrice());
-            added.setName(a.getName());
-            added.setBookingService(estate);
-            additionalServiceRepository.save(added);
+            AdditionalService existingService = additionalServiceRepository
+                    .getByBookingServiceIdAndName(estate.getId(), a.getName());
+
+            if (existingService == null) {
+                added.setPrice(a.getPrice());
+                added.setName(a.getName());
+                added.setBookingService(estate);
+                additionalServiceRepository.save(added);
+            }
+            else {
+                return null;
+            }
         }
+
+        return estate;
     }
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
