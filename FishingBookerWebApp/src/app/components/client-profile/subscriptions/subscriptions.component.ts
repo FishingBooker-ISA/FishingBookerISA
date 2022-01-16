@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DisplayEstateShortDTO } from 'src/app/model/estate';
+import { SubscriptionDTO } from 'src/app/model/subscription';
+import { User } from 'src/app/model/user';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
+import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 
 @Component({
   selector: 'app-subscriptions',
@@ -9,25 +13,22 @@ import { ManagingEstateService } from 'src/app/services/managing-estate.service'
 })
 export class SubscriptionsComponent implements OnInit {
 
-  public estates: DisplayEstateShortDTO[] = [];
+  public subscriptions: SubscriptionDTO[] = [];
   
-  public searchText: string = "";
-  public searchCriteria: string = "name";
-  public ratingFrom = '';
-  public ratingTo = "";
-  public location: string = "";
-  public sortOrder = "asc";
-  public sortCriteria = "";
+  currentUser!: User
   
 
-  constructor(private _estateService : ManagingEstateService) { }
+  constructor(private  subscriptionService: SubscriptionService, private signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
-    this.estates = this.getAllEstates();
+    this.signupService.getUser().subscribe((data) => {
+      this.currentUser = data;
+      this.getAllSubscriptions();
+    });
   }
 
-  getAllEstates(): DisplayEstateShortDTO[]{
-    return this._estateService.getAllEstatesForClient();
+  getAllSubscriptions() {
+    this.subscriptionService.getAllSubscriptionsForClient(this.currentUser.id).subscribe((data) => {this.subscriptions = data;})
   }
 
 }
