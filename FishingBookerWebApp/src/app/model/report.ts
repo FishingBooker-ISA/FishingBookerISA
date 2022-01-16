@@ -14,3 +14,11 @@ export class ReportReviewDTO{
     id!: number
     isSanctioned!: boolean
 }
+
+export class ReportDTO{
+    createdOn!: Date
+    reportText!: string
+    reservationId!: number
+    clientDidntShowUp!: boolean
+    sanctionClient!: boolean
+}
