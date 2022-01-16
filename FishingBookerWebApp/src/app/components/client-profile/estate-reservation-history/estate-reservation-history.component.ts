@@ -19,6 +19,7 @@ export class EstateReservationHistoryComponent implements OnInit {
   public location: string = "";
   public sortOrder = "asc";
   public sortCriteria = "";
+  public serviceType = "ALL";
   
 
   constructor(private _estateService : ManagingEstateService) { }

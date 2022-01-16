@@ -52,18 +52,18 @@ VALUES (10, 2, 'Lovely cottage for two.', false, 'Coast house', 0, 20, 'Terms of
 --ships
 
 --rating
-INSERT INTO rating (
-    id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES (1, 'Great service. See you again soon. :)', 5, false, false, 1, 2);
-INSERT INTO rating (
-    id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
-        VALUES (2, 'Great service. See you again soon. :)', 5, true, false, 1, 3);
+INSERT INTO rating (id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
+    VALUES (1, 'Great service. See you again soon. :)', 5, false, false, 1, 2);
+INSERT INTO rating (id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
+    VALUES (2, 'Great service. See you again soon. :)', 5, true, true, 2, 3);
+INSERT INTO rating (id, description, given_mark, is_approved, is_reviewed, service_id, user_id)
+    VALUES (3, 'Not impressed.', 3, false, true, 7, 3);
 
 ---complaints
 INSERT INTO complaint (id, created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
-VALUES (1, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);
+    VALUES (1, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);
 INSERT INTO complaint (id, created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
-VALUES (2, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);
+    VALUES (2, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);
 
 --loyality program
 INSERT INTO loyalty_program ( percent_for_bronze, percent_for_gold, percent_for_silver, points_for_bronze, points_for_gold, points_for_silver)
@@ -95,4 +95,3 @@ VALUES ('nesto', 5, 10, DATE '2022-01-09', false, 20, DATE '2022-01-01', 6);
 INSERT INTO report (
     client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)
 VALUES (false, DATE '2021-12-17', false, true, 'Left a huge mess.', 1);
-

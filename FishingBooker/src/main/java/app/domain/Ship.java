@@ -73,6 +73,10 @@ public class Ship extends BookingService {
         this.maxSpeed = maxSpeed;
     }
 
+    public ShipType getShipType() {
+        return shipType;
+    }
+
     public void setShipType(ShipType shipType) {
         this.shipType = shipType;
     }

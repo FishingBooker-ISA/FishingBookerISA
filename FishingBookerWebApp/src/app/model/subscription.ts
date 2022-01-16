@@ -3,7 +3,7 @@ import { Address, ServiceType } from "./estate"
 export class SubscriptionDTO {
     id!: number
     serviceId!: number
-    type!: ServiceType
+    type!: string
     name!: string
     pricePerDay!: number
     description!: string

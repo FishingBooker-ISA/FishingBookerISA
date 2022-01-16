@@ -17,7 +17,7 @@
         <div class="container w-75">
 
             <div class="section-title mb-3 ms-3">
-                <h2>Estates reservation history</h2>
+                <h2>Reservation history</h2>
             </div>
 
             <!-- SEARCH -->
@@ -41,6 +41,19 @@
                             <mat-option value="desc">Descending</mat-option>
                         </mat-select>
                     </mat-form-field>
+
+                    <div class="" style="margin-right: 1%; margin-top: 1.5%;">
+                        Show:
+                    </div>
+                    <mat-form-field style="width: 16%; margin-right: 3%;">
+                        <mat-select [(ngModel)]="serviceType">
+                            <mat-option value="ALL">All</mat-option>
+                            <mat-option value="ESTATE">Estates</mat-option>
+                            <mat-option value="SHIP">Ships</mat-option>
+                            <mat-option value="ADVENTURE">Adventure</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
                     <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;">Apply</button>
 
                 </div>
@@ -55,43 +68,16 @@
                     </div>
                     <div>
                         <h4 style="margin-bottom: 1%;"><a>Reserved entity name</a></h4> <!-- {{reservation.estate.name}}  -->
-                        <h6 style="margin-bottom: 4%;">12.12.2021 - 18.12.2021.</h6>
-                        <h6 style="margin-bottom: 10%;">CANCELLED</h6> <!-- *ngIf -->
-                        <h6 style="margin-bottom: 4%;">4 people</h6> 
+                        <h6>12.12.2021 - 18.12.2021.</h6>
+                        <h6 style="margin-top: 4%;">CANCELLED</h6> <!-- *ngIf not canceled-->
+                        <h6 style="margin-bottom: 4%; margin-top: 10%;">4 people</h6> 
                         <h6 style="margin-bottom: 2%;">Included services:</h6> 
-                        <p style="margin-top: 2%; margin-left: 3%;">&bull; service 1</p>
+                        <p style="margin-top: 2%; margin-left: 3%;">&bull; service 1 gyghbm gm vnbvfm n</p>
                         <p style="margin-top: 2%; margin-left: 3%;">&bull; service 2</p>
                         <p style="margin-top: 2%; margin-left: 3%;">&bull; service 3</p>
                         <h5 style="margin-top: 10%;">Price: 50e</h5> 
                     </div>
-                    <div style="margin-left: auto; margin-right: 2%;">
-                        <button mat-button style="margin-top: 5%; ">
-                            Review
-                        </button>
-                        <button mat-button style="margin-top: 5%; ">
-                            Make a complaint
-                        </button>
-                    </div>
-                    <br>
-                </div>
-
-                
-                <div class=" d-flex align-items-stretch mt-4 box"> <!-- *ngFor -->
-                    <div class="" style=" margin-right: 30px;">
-                        <img style="width: 400px;"
-                            src="https://www.kucastil.rs/uploads/ck_editor/images/clanci/KU%C4%86A/Moderna%20rusti%C4%8Dna%20vikendica%20na%20jezeru/Moderna%20rusti%C4%8Dna%20vikendica%20na%20jezeru%20(11).jpg">
-                    </div>
-                    <div>
-                        <h4 style="margin-bottom: 1%;"><a>Reserved entity name</a></h4> <!-- {{reservation.estate.name}}  -->
-                        <h6 style="margin-bottom: 4%;">12.12.2021 - 18.12.2021.</h6>
-                        <h6 style="margin-bottom: 4%;">4 people</h6> 
-                        <h6 style="margin-bottom: 2%;">Included services:</h6> 
-                        <p style="margin-top: 2%; margin-left: 3%;">&bull; service 1</p>
-                        <p style="margin-top: 2%; margin-left: 3%;">&bull; service 2</p>
-                        <p style="margin-top: 2%; margin-left: 3%;">&bull; service 3</p>
-                        <h5 style="margin-top: 10%;">Price: 50e</h5> 
-                    </div>
-                    <div style="margin-left: auto; margin-right: 2%;">
+                    <div style="margin-left: auto; margin-right: 2%;">  <!-- *ngIf not canceled-->
                         <button mat-button style="margin-top: 5%; ">
                             Review
                         </button>

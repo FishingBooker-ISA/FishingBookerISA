@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DisplayEstateShortDTO } from 'src/app/model/estate';
+import { ServiceType } from 'src/app/model/estate';
 import { SubscriptionDTO } from 'src/app/model/subscription';
 import { User } from 'src/app/model/user';
-import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 
