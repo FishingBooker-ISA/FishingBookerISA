@@ -1,7 +1,6 @@
 package app.service;
 
 import app.domain.*;
-import app.dto.AdditionalEquipmentDTO;
 import app.dto.NewEstateDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class ManagingEstateService {
 
         Estate estate = new Estate(
                 ServiceType.ESTATE, newEstate.getName(), newEstate.getPricePerDay(), newEstate.getDescription(),
-                newEstate.getTermsOfUse(), newEstate.getAdditionalEquipment(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
+                newEstate.getTermsOfUse(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
                 newEstate.getPercentageToTake(), user, newAddress, newEstate.getNumOfBeds(), newEstate.getNumOfRooms()
         );
         estateRepository.save(estate);
@@ -95,7 +93,6 @@ public class ManagingEstateService {
         estate.setPricePerDay(dto.getPricePerDay());
         estate.setDescription(dto.getDescription());
         estate.setTermsOfUse(dto.getTermsOfUse());
-        estate.setAdditionalEquipment(dto.getAdditionalEquipment());
         estate.setCapacity(dto.getCapacity());
         estate.setPercentageTakenFromCanceledReservations(dto.getIsPercentageTakenFromCanceledReservations());
         estate.setPercentageToTake(dto.getPercentageToTake());

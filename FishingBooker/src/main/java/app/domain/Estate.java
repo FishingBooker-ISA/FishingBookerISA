@@ -16,11 +16,10 @@ public class Estate extends BookingService {
     public Estate() {
     }
 
-    public Estate (ServiceType type, String name, double pricePerDay, String description, String termsOfUse,
-                  String additionalEquipment, int capacity,
+    public Estate (ServiceType type, String name, double pricePerDay, String description, String termsOfUse, int capacity,
                   boolean isPercentageTakenFromCanceledReservations, double percentageToTake, User owner, Address address,
                   int numOfBeds, int numOfRooms) {
-        super(type, name, pricePerDay, description, termsOfUse, additionalEquipment,
+        super(type, name, pricePerDay, description, termsOfUse,
                 capacity, isPercentageTakenFromCanceledReservations, percentageToTake, owner, address);
         this.numOfBeds = numOfBeds;
         this.numOfRooms = numOfRooms;

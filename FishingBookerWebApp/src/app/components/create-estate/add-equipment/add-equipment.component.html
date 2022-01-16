@@ -1,0 +1,36 @@
+<button class="close" mat-icon-button (click)="onDismiss()">
+  <mat-icon>close</mat-icon>
+</button>
+<h1 mat-dialog-title>Add additional services</h1>
+
+<div mat-dialog-content>
+  <div class="row d-flex justify-content-center">
+    <table class="table table-responsive table-borderless addItemTable">
+      <colgroup>
+        <col span="1" style="width: 70%" />
+        <col span="1" style="width: 30%" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input matInput type="name" [(ngModel)]="newItem.name">
+            </mat-form-field>
+          <td>
+            <mat-form-field>
+              <mat-label>Price</mat-label>
+              <input matInput type="number" [(ngModel)]="newItem.price">
+            </mat-form-field>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div mat-dialog-actions class="justify-content-center">
+  <div class="d-flex">
+    <button class="btn editAdditional ms-2 mt-3" (click)="onAdd()">Add</button>
+  </div>
+</div>

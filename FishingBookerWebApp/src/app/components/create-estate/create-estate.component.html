@@ -115,9 +115,16 @@
           </td>
         </tr>
         <tr>
-          <td class="label">Additional equipment</td>
+          <td class="label">
+            Additional equipment
+            <button class="btn ms-4" style="height: 30px; width: 40px; border-radius: 5px; padding: 0;"
+              (click)="onAdd()">
+              <i class="bi bi-plus mb-1"></i>
+            </button>
+          </td>
           <td>
-            <textarea class="text-start" name="additionalEquipment" [(ngModel)]="estate.additionalEquipment">
+            <textarea class="text-start" name="additionalEquipment" readonly>
+              {{additionalEquipment}}
             </textarea>
           </td>
         </tr>
@@ -127,11 +134,12 @@
 </div>
 
 <div class="row d-flex justify-content-center" style="text-align: center">
-  <mat-error *ngIf="hasErrors()">Fields can't be empty! </mat-error>
+  <mat-error *ngIf="hasErrors()">Fields can't stay empty!</mat-error>
+  <mat-error>{{errorMessage}}</mat-error>
 </div>
 
 <div mat-dialog-actions class="justify-content-center align-items-center mt-1">
-  <button (click)="onConfirm()" class="btn me-2" disabled="hasErrors()">
+  <button (click)="onConfirm()" class="btn me-2" [disabled]="hasErrors() || found">
     Save
   </button>
   <button (click)="onDismiss()" class="btn" style="background: #f59494">

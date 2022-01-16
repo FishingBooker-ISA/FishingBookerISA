@@ -1,5 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdditionalService } from 'src/app/model/additional-service';
@@ -29,7 +30,7 @@ export class EstateProfileComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
     public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
-    public actionsService: PromoActionsService) {
+    public actionsService: PromoActionsService, private _snackBar: MatSnackBar) {
     this.route.params.subscribe((params) => {
       this.estateId = +params['id'];
     });
@@ -66,12 +67,22 @@ export class EstateProfileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult) {
-        this.managingEstateService.deleteEstate(this.estateId);
-      }
+        this.managingEstateService.deleteEstate(this.estateId).subscribe(
+          (data) => {
+            this._snackBar.open("Successfully deleted!", 'Dissmiss', {
+              duration: 3000
+            });
 
-      setTimeout(() => {
-        this.router.navigate(['/estateOwner/home']);
-      }, 500);
+            setTimeout(() => {
+              this.router.navigate(['/estateOwner/home']);
+            }, 1000);
+          },
+          (error) => {
+            this._snackBar.open("Estate has reservations and can't be deleted!", 'Dissmiss', {
+              duration: 3000
+            });
+          });;;
+      }
     });
   }
 

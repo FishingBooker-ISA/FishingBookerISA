@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { createEstateDTO, Estate } from 'src/app/model/estate';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
+import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 import { CreateEstateComponent, DetailsDialogModel } from '../create-estate/create-estate.component';
 
 @Component({
@@ -14,7 +15,8 @@ export class EstateOwnerNavbarComponent implements OnInit {
 
   collapsed = false;
   createModalResult!: boolean
-  constructor(public dialog: MatDialog, public managingEstateService: ManagingEstateService, private router: Router) { }
+  constructor(public dialog: MatDialog, public managingEstateService: ManagingEstateService, private router: Router,
+    public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
   }
@@ -29,15 +31,10 @@ export class EstateOwnerNavbarComponent implements OnInit {
       height: '700px',
       data: dialogData
     });
+  }
 
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-      this.createModalResult = dialogResult
-
-      if (this.createModalResult) {
-        setTimeout(() => {
-          this.router.navigate(['/estateOwner/home']);
-        }, 500);
-      }
-    });
+  logOut() {
+    this.signupService.logOut();
+    this.router.navigate(['/login']);
   }
 }

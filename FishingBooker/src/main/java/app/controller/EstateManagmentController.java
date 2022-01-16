@@ -92,7 +92,7 @@ public class EstateManagmentController {
             return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
-        if(managingEstateService.hasAnyReservations(existingEstate)) {
+        if(!managingEstateService.hasAnyReservations(existingEstate)) {
             return new ResponseEntity<>("Estate has reservations and can't be edited!", HttpStatus.BAD_REQUEST);
         }
 
@@ -115,7 +115,7 @@ public class EstateManagmentController {
             return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
-        if(managingEstateService.hasAnyReservations(existingEstate)) {
+        if(!managingEstateService.hasAnyReservations(existingEstate)) {
             return new ResponseEntity<>("Estate has reservations and can't be deleted!", HttpStatus.BAD_REQUEST);
         }
 

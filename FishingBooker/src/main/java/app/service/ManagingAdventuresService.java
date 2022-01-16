@@ -48,7 +48,7 @@ public class ManagingAdventuresService {
         Adventure adventure = new Adventure(
                 ServiceType.ADVENTURE, newAdventureDTO.getName(), newAdventureDTO.getPricePerDay(),
                 newAdventureDTO.getDescription(),
-                newAdventureDTO.getTermsOfUse(), newAdventureDTO.getAdditionalEquipment(),
+                newAdventureDTO.getTermsOfUse(),
                 newAdventureDTO.getCapacity(), newAdventureDTO.getIsPercentageTakenFromCanceledReservations(),
                 newAdventureDTO.getPercentageToTake(), currentUser, newAddress, newAdventureDTO.getInstructorBio()
         );
@@ -85,7 +85,6 @@ public class ManagingAdventuresService {
         existingAdventure.setPricePerDay(adventure.getPricePerDay());
         existingAdventure.setDescription(adventure.getDescription());
         existingAdventure.setTermsOfUse(adventure.getTermsOfUse());
-        existingAdventure.setAdditionalEquipment(adventure.getAdditionalEquipment());
         existingAdventure.setCapacity(adventure.getCapacity());
         existingAdventure.setPercentageTakenFromCanceledReservations(adventure.getIsPercentageTakenFromCanceledReservations());
         existingAdventure.setPercentageToTake(adventure.getPercentageToTake());

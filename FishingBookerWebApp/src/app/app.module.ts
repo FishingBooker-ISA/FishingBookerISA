@@ -65,6 +65,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EditAdditionalServicesComponent } from './components/edit-additional-services/edit-additional-services.component';
+import { AddEquipmentComponent } from './components/create-estate/add-equipment/add-equipment.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { EditAdditionalServicesComponent } from './components/edit-additional-se
     NewReportComponent,
     PromoActionsComponent,
     EditAdditionalServicesComponent,
+    AddEquipmentComponent,
   ],
   imports: [
     BrowserModule,
