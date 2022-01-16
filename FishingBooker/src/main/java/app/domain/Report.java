@@ -17,7 +17,7 @@ public class Report {
     @Column(nullable = false)
     private boolean sanctionClient;
     @Column(nullable = true)
-    private boolean isVerified;
+    private boolean isReviewed;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "reservation_id")
@@ -30,14 +30,6 @@ public class Report {
         this.id = id;
         this.text = text;
         this.createdOn = createdOn;
-    }
-
-    public boolean getVerified() {
-        return isVerified;
-    }
-
-    public void setVerified(boolean verified) {
-        isVerified = verified;
     }
 
     public boolean getSanctionClient() {
@@ -86,5 +78,14 @@ public class Report {
 
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
+    }
+
+
+    public boolean getIsReviewed() {
+        return isReviewed;
+    }
+
+    public void setIsReviewed(boolean reviewed) {
+        isReviewed = reviewed;
     }
 }

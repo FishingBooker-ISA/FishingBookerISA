@@ -67,3 +67,12 @@ VALUES (2, DATE '2021-12-17', true, false, 'He was never on time.', 5, 5);
 --loyality program
 INSERT INTO loyalty_program ( percent_for_bronze, percent_for_gold, percent_for_silver, points_for_bronze, points_for_gold, points_for_silver)
 VALUES (10.0, 30.0, 20.0, 100.0, 300.0, 200.0);
+
+--reservations
+INSERT INTO reservation (
+     id, additional_equipment, is_canceled, is_promo, price, reservation_end, reservation_start, reserved_date, ship_owner_role, service_id, user_id)
+VALUES (1, 'bla bla', false, false, 200.0, DATE '2021-12-17', DATE '2021-12-17', DATE '2021-12-17', 0, 1, 2);
+
+INSERT INTO report (
+    id, client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)
+VALUES (1, false, DATE '2021-12-17', false, true, 'Left a huge mess.', 1);
