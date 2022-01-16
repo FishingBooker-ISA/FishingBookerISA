@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Complaint, ComplaintReviewDTO } from '../model/complaint';
+import { Complaint, ComplaintReviewDTO, NewComplaintDTO } from '../model/complaint';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,10 @@ export class ComplaintsService {
 
   constructor(private http: HttpClient) { }
 
+  sendNewComplaint(complaint: NewComplaintDTO) {
+    throw new Error('Method not implemented.');
+  }
+  
   public getAllComplaints() : Observable<Complaint[]> {
     return this.http.get<Complaint[]>(`${environment.baseUrl}` + 'api/complaints/getComplaints');
   }

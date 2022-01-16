@@ -85,10 +85,10 @@
                             <h5 style="margin-top: 8%;">Price: {{reservation.totalPrice}} EUR</h5>
                         </div>
                         <div style="margin-left: auto; margin-right: 2%;" *ngIf="!reservation.canceled">
-                            <button mat-button style="margin-top: 5%; ">
+                            <button mat-button style="margin-top: 5%; " (click)=openReviewDialog(reservation.serviceId)>
                                 Review
                             </button>
-                            <button mat-button style="margin-top: 5%; ">
+                            <button mat-button style="margin-top: 5%; " (click)=openComplaintDialog(reservation.serviceId)>
                                 Make a complaint
                             </button>
                         </div>

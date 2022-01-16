@@ -1,6 +1,5 @@
 package app.dto;
 
-import app.domain.Address;
 import app.domain.Reservation;
 import app.domain.ServiceType;
 

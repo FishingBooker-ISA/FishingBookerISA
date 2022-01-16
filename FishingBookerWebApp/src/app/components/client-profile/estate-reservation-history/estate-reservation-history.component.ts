@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ReservationDisplayDTO } from 'src/app/model/reservation-display';
 import { User } from 'src/app/model/user';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { CreateComplaintComponent } from '../create-complaint/create-complaint.component';
+import { CreateReviewComponent } from '../create-review/create-review.component';
 
 @Component({
   selector: 'app-estate-reservation-history',
@@ -20,7 +23,7 @@ export class EstateReservationHistoryComponent implements OnInit {
   
   currentUser!: User
 
-  constructor(private reservationService : ReservationService, public signupService: SignupOwnersService) { }
+  constructor(private reservationService : ReservationService, public signupService: SignupOwnersService, public reviewDialog: MatDialog, public complaintDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -35,6 +38,29 @@ export class EstateReservationHistoryComponent implements OnInit {
       this.backup = Array.from(data);
     })
   }
+
+  openReviewDialog(sid:number){
+    const dialogRef = this.reviewDialog.open(CreateReviewComponent, {
+      width: '450px',
+      data: { clientId: this.currentUser.id, serviceId: sid},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openComplaintDialog(sid:number){
+    const dialogRef = this.reviewDialog.open(CreateComplaintComponent, {
+      width: '450px',
+      data: { clientId: this.currentUser.id, serviceId: sid},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
 
   applySort() {
     switch(this.sortCriteria){
