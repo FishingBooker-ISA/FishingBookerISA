@@ -197,20 +197,3 @@ public class EstateManagmentController {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

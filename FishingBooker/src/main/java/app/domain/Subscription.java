@@ -25,6 +25,11 @@ public class Subscription {
         this.bookingService = bookingService;
     }
 
+    public Subscription(User client, BookingService bookingService) {
+        this.client = client;
+        this.bookingService = bookingService;
+    }
+
     public Integer getId() {
         return id;
     }
