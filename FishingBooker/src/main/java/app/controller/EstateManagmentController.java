@@ -39,8 +39,6 @@ public class EstateManagmentController {
 
     private static final String UNAUTHORIZED = "Unauthorized access!";
 
-
-
     @GetMapping(value = "/getEstatesForOwner", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
     public List<Estate> getEstatesByOwner(Principal user){
@@ -73,8 +71,11 @@ public class EstateManagmentController {
 
         try {
             User currentUser = userService.findByEmail(user.getName());
-            managingEstateService.createNewEstate(newEstateDTO, currentUser);
-            return new ResponseEntity<>("Estate created!", HttpStatus.CREATED);
+            if (managingEstateService.createNewEstate(newEstateDTO, currentUser) == null)
+                return new ResponseEntity<>("You can't add multiple additional services with the same name!!",
+                        HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>("Estate created!", HttpStatus.CREATED);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -91,7 +92,7 @@ public class EstateManagmentController {
             return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
-        if(managingEstateService.hasAnyReservations(existingEstate)) {
+        if(!managingEstateService.hasAnyReservations(existingEstate)) {
             return new ResponseEntity<>("Estate has reservations and can't be edited!", HttpStatus.BAD_REQUEST);
         }
 
@@ -114,7 +115,7 @@ public class EstateManagmentController {
             return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
-        if(managingEstateService.hasAnyReservations(existingEstate)) {
+        if(!managingEstateService.hasAnyReservations(existingEstate)) {
             return new ResponseEntity<>("Estate has reservations and can't be deleted!", HttpStatus.BAD_REQUEST);
         }
 

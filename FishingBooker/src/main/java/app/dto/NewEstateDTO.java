@@ -1,21 +1,24 @@
 package app.dto;
 
+import app.domain.AdditionalService;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class NewEstateDTO {
     private int id;
     @NotNull(message = "Estate must have a name!")
     private String name;
-    @NotNull(message = "Estate must have a defined price!") @Min(value = 1, message = "Price must be larger than 0!")
+    @NotNull(message = "Estate must have a defined price!")
+    @Min(value = 1, message = "Price must be larger than 0!")
     private double pricePerDay;
     @NotNull(message = "Description is required!")
     private String description;
     private String termsOfUse;
-    private String additionalEquipment;
-    @NotNull(message = "Estate must have a defined capacity!") @Min(value = 1, message = "Price must be larger than 0!")
+    @NotNull(message = "Estate must have a defined capacity!")
+    @Min(value = 1, message = "Price must be larger than 0!")
     private int capacity;
     @NotNull(message = "Estate must have a defined street!")
     private String street;
@@ -27,13 +30,24 @@ public class NewEstateDTO {
     private String country;
     @NotNull(message = "Estate must have a defined postcode!")
     private int postcode;
-    @NotNull(message = "Estate must have a defined number of rooms!") @Min(value = 1, message = "Number of rooms must be larger than 0!")
+    @NotNull(message = "Estate must have a defined number of rooms!")
+    @Min(value = 1, message = "Number of rooms must be larger than 0!")
     private int numOfRooms;
-    @NotNull(message = "Estate must have a defined number of beds!") @Min(value = 1, message = "Number of beds must be larger than 0!")
+    @NotNull(message = "Estate must have a defined number of beds!")
+    @Min(value = 1, message = "Number of beds must be larger than 0!")
     private int numOfBeds;
     private boolean isPercentageTakenFromCanceledReservations;
     @Range(min = 0, max = 100, message = "Percentage must range from 0 to 100!")
     private double percentageToTake;
+    private List<AdditionalEquipmentDTO> additionalServiceList;
+
+    public List<AdditionalEquipmentDTO> getAdditionalServiceList() {
+        return additionalServiceList;
+    }
+
+    public void setAdditionalServiceList(List<AdditionalEquipmentDTO> additionalServiceList) {
+        this.additionalServiceList = additionalServiceList;
+    }
 
     public int getId() {
         return id;
@@ -151,11 +165,4 @@ public class NewEstateDTO {
         this.percentageToTake = percentageToTake;
     }
 
-    public String getAdditionalEquipment() {
-        return additionalEquipment;
-    }
-
-    public void setAdditionalEquipment(String additionalEquipment) {
-        this.additionalEquipment = additionalEquipment;
-    }
 }

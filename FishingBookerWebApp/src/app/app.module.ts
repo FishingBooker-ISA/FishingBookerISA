@@ -18,7 +18,7 @@ import { SignupOwnersComponent } from './components/signup-owners/signup-owners.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
@@ -60,6 +60,13 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
 import { AllReportsComponent } from './components/admin-profile/all-reports/all-reports.component';
 import { NewReportComponent } from './components/instructor-components/new-report/new-report.component';
+import { PromoActionsComponent } from './components/estate-profile/promo-actions/promo-actions.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { EditAdditionalServicesComponent } from './components/edit-additional-services/edit-additional-services.component';
+import { AddEquipmentComponent } from './components/create-estate/add-equipment/add-equipment.component';
+import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
 
 @NgModule({
   declarations: [
@@ -106,6 +113,9 @@ import { NewReportComponent } from './components/instructor-components/new-repor
     NewAdminLoginComponent,
     AllReportsComponent,
     NewReportComponent,
+    PromoActionsComponent,
+    EditAdditionalServicesComponent,
+    AddEquipmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -120,8 +130,13 @@ import { NewReportComponent } from './components/instructor-components/new-repor
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
-    MatMenuModule, 
-    MatSnackBarModule
+    MatMenuModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCheckboxModule
   ],
   providers: [
     {
@@ -129,8 +144,7 @@ import { NewReportComponent } from './components/instructor-components/new-repor
       useClass: TokenInterceptor,
       multi: true
     },
-    SignupOwnersService,
-    AdminRequestsService
+    EstateOwnerAuthGuard,
   ],
   bootstrap: [AppComponent],
 })

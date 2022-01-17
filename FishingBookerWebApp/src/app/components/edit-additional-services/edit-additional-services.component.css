@@ -1,0 +1,29 @@
+.addItemTable {
+  border: none;
+}
+
+tr {
+  height: 70px;
+}
+
+tr,
+td,
+tbody,
+thead {
+  border: none;
+}
+
+.selected {
+  background-color: #ddd;
+}
+
+.btn {
+  background: #006a70;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  color: white;
+}

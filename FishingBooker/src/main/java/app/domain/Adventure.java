@@ -11,11 +11,10 @@ public class Adventure extends BookingService {
     public Adventure() {
     }
 
-    public Adventure(ServiceType type, String name, double pricePerDay, String description, String termsOfUse,
-                     String additionalEquipment, int capacity,
+    public Adventure(ServiceType type, String name, double pricePerDay, String description, String termsOfUse, int capacity,
                      boolean isPercentageTakenFromCanceledReservations, double percentageToTake, User owner,
                      Address address, String instructorBio) {
-        super(type, name, pricePerDay, description, termsOfUse, additionalEquipment, capacity,
+        super(type, name, pricePerDay, description, termsOfUse, capacity,
                 isPercentageTakenFromCanceledReservations, percentageToTake, owner, address);
         this.instructorBio = instructorBio;
     }

@@ -26,6 +26,8 @@ public class PromoActionService {
     private DateRangeService dateRangeService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private AdditionalServiceRepository additionalServiceRepository;
 
     public List<PromoAction> getAllActions(int serviceId) {
         return promoActionRepository.getAllByBookingServiceId(serviceId);
@@ -86,10 +88,24 @@ public class PromoActionService {
         action.setPricePerDay(actionDTO.getPricePerDay());
         action.setDurationInDays(actionDTO.getDurationInDays());
         action.setBookingService(service);
+        action.setCapacity(actionDTO.getCapacity());
         action.setAdditional(actionDTO.getAdditional());
         action.setStartDate(actionDTO.getStartDate());
         action.setEndDate(actionDTO.getEndDate());
         action.setTaken(false);
+
+        List<AdditionalService> existingServices = additionalServiceRepository
+                .getAllByBookingServiceId(actionDTO.getBookingServiceId());
+        List<AdditionalService> addedServices = new ArrayList<>();
+
+        for (var a : actionDTO.getAdditionalServices()) {
+            for (var existing : existingServices) {
+                if (existing.getId().equals(a.getId()))
+                    addedServices.add(new AdditionalService(a.getId(), a.getName(), a.getPrice(), service));
+            }
+        }
+
+        action.setAdditionalServices(addedServices);
         promoActionRepository.save(action);
         return action;
     }

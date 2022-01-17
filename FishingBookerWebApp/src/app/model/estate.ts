@@ -1,3 +1,6 @@
+import { AdditionalServicesService } from "../services/additional-services.service"
+import { AdditionalServiceDTO } from "./additional-service"
+
 export enum ServiceType {
     Estate,
     Ship,
@@ -38,9 +41,6 @@ export class createEstateDTO {
     pricePerDay!: number
     description!: string
     termsOfUse!: string
-    additionalEquipment!: string
-    availableFrom!: Date
-    availableTo!: Date
     capacity!: number
     percentageTakenFromCanceledReservations!: boolean
     percentageToTake!: number
@@ -51,6 +51,7 @@ export class createEstateDTO {
     city!: string
     country!: string
     postcode!: number
+    additionalServiceList = [] as AdditionalServiceDTO[]
 
 }
 

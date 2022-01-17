@@ -1,0 +1,73 @@
+.tableContainer {
+  margin: auto;
+  width: 80%;
+  border-radius: 15px;
+}
+
+#table::-webkit-scrollbar {
+  width: 10px;
+}
+
+#table::-webkit-scrollbar-track {
+  background-color: #ebebeb;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#table::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #6d6d6d;
+}
+
+.btn {
+  text-align: center;
+  background: #6eb1dd;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.addItemTable {
+  border: none;
+  margin: auto;
+  width: 50%;
+  align-content: center;
+  text-align: start;
+  border-spacing: 0;
+}
+
+label {
+  width: 130px;
+}
+
+div.mat-form-field-infix {
+  padding: 0em 0 !important;
+}
+
+tr,
+td {
+  border: none;
+}
+
+textarea {
+  height: 70px;
+  white-space: normal;
+}
+
+mat-form-field {
+  width: 250px;
+}
+
+.checkbox-column {
+  display: inline-block;
+  width: 25%;
+}
+
+.example-list-section {
+  width: 500px;
+}

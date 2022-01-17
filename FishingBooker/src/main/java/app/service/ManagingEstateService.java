@@ -2,10 +2,7 @@ package app.service;
 
 import app.domain.*;
 import app.dto.NewEstateDTO;
-import app.repository.AddressRepository;
-import app.repository.EstateRepository;
-import app.repository.ReservationRepository;
-import app.repository.ServiceRepository;
+import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -26,10 +23,12 @@ public class ManagingEstateService {
     ReservationRepository reservationRepository;
     @Autowired
     ServiceRepository serviceRepository;
+    @Autowired
+    AdditionalServiceRepository additionalServiceRepository;
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void createNewEstate(NewEstateDTO newEstate, User user) {
+    public Estate createNewEstate(NewEstateDTO newEstate, User user) {
         Address address = new Address(
                 newEstate.getStreet(), newEstate.getNumber(),
                 newEstate.getCity(), newEstate.getCountry(),
@@ -45,11 +44,28 @@ public class ManagingEstateService {
 
         Estate estate = new Estate(
                 ServiceType.ESTATE, newEstate.getName(), newEstate.getPricePerDay(), newEstate.getDescription(),
-                newEstate.getTermsOfUse(), newEstate.getAdditionalEquipment(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
+                newEstate.getTermsOfUse(), newEstate.getCapacity(), newEstate.getIsPercentageTakenFromCanceledReservations(),
                 newEstate.getPercentageToTake(), user, newAddress, newEstate.getNumOfBeds(), newEstate.getNumOfRooms()
         );
-
         estateRepository.save(estate);
+
+        for (var a : newEstate.getAdditionalServiceList()) {
+            AdditionalService added = new AdditionalService();
+            AdditionalService existingService = additionalServiceRepository
+                    .getByBookingServiceIdAndName(estate.getId(), a.getName());
+
+            if (existingService == null) {
+                added.setPrice(a.getPrice());
+                added.setName(a.getName());
+                added.setBookingService(estate);
+                additionalServiceRepository.save(added);
+            }
+            else {
+                return null;
+            }
+        }
+
+        return estate;
     }
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
@@ -77,7 +93,6 @@ public class ManagingEstateService {
         estate.setPricePerDay(dto.getPricePerDay());
         estate.setDescription(dto.getDescription());
         estate.setTermsOfUse(dto.getTermsOfUse());
-        estate.setAdditionalEquipment(dto.getAdditionalEquipment());
         estate.setCapacity(dto.getCapacity());
         estate.setPercentageTakenFromCanceledReservations(dto.getIsPercentageTakenFromCanceledReservations());
         estate.setPercentageToTake(dto.getPercentageToTake());

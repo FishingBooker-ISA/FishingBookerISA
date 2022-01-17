@@ -1,12 +1,16 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdditionalService } from 'src/app/model/additional-service';
 import { Estate } from 'src/app/model/estate';
 import { Image } from 'src/app/model/image';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { ManagingImagesService } from 'src/app/services/managing-images.service';
+import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
+import { EditAdditionalDialogModel, EditAdditionalServicesComponent } from '../edit-additional-services/edit-additional-services.component';
 import { ImagesDialogModel, ShowImagesComponent } from '../show-images/show-images.component';
 
 @Component({
@@ -18,12 +22,15 @@ export class EstateProfileComponent implements OnInit {
 
   estateId!: number;
   editingMode!: boolean;
+  promoActions!: boolean;
   images = [] as SafeResourceUrl[]
   estate!: Estate;
   imgSrc!: any
+  additional!: AdditionalService[]
 
   constructor(private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
-    public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer) {
+    public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
+    public actionsService: PromoActionsService, private _snackBar: MatSnackBar) {
     this.route.params.subscribe((params) => {
       this.estateId = +params['id'];
     });
@@ -31,12 +38,18 @@ export class EstateProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.editingMode = false
+    this.promoActions = false
     this.managingEstateService.getEstateById(this.estateId).subscribe((data) => this.estate = data);
+    this.actionsService.getAllAdditionalServices(this.estateId).subscribe((data) => this.additional = data);
     this.imageFromDatabase();
   }
 
   editEstate() {
     this.editingMode = true;
+  }
+
+  createAction() {
+    this.promoActions = true;
   }
 
   deleteEstate() {
@@ -54,12 +67,22 @@ export class EstateProfileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult) {
-        this.managingEstateService.deleteEstate(this.estateId);
-      }
+        this.managingEstateService.deleteEstate(this.estateId).subscribe(
+          (data) => {
+            this._snackBar.open("Successfully deleted!", 'Dissmiss', {
+              duration: 3000
+            });
 
-      setTimeout(() => {
-        this.router.navigate(['/estateOwner/home']);
-      }, 500);
+            setTimeout(() => {
+              this.router.navigate(['/estateOwner/home']);
+            }, 1000);
+          },
+          (error) => {
+            this._snackBar.open("Estate has reservations and can't be deleted!", 'Dissmiss', {
+              duration: 3000
+            });
+          });;;
+      }
     });
   }
 
@@ -97,6 +120,24 @@ export class EstateProfileComponent implements OnInit {
       data: dialogData,
       panelClass: 'my-dialog'
     });
+
+    dialogRef.afterClosed().subscribe((data) => this.imageFromDatabase())
+    dialogRef.backdropClick().subscribe((data) => this.imageFromDatabase())
   }
 
+  editAdditional() {
+    const dialogData = new EditAdditionalDialogModel(
+      this.additional, this.estate
+    );
+
+    const dialogRef = this.dialog.open(EditAdditionalServicesComponent, {
+      maxWidth: '800px',
+      width: '430px',
+      data: dialogData,
+    });
+
+    dialogRef.backdropClick().subscribe((dialogResult) => {
+      this.actionsService.getAllAdditionalServices(this.estate.id).subscribe((data) => this.additional = data);
+    });
+  }
 }

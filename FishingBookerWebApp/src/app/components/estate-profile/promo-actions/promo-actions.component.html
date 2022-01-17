@@ -1,0 +1,135 @@
+<div class="container bg-light">
+  <div class="row mx-auto mt-5 pb-5">
+    <div class="col-12 mx-auto">
+      <div class="card shadow-sm tableContainer" style="height: 500px">
+        <div class="row mt-3 mb-4">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <h4 class="card-title mt-3" *ngIf="!createMode" style="font-weight: bold">
+                Promo actions
+              </h4>
+              <h4 class="card-title mt-3" *ngIf="createMode" style="font-weight: bold">
+                Add new promo action
+              </h4>
+              <button class="btn ms-3 mt-3" (click)="onClick()" *ngIf="!createMode">Add new action</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="row mt-3" style="height: 400px" *ngIf="!createMode">
+          <div class="col-11 mx-auto">
+            <div style="height: 350px; overflow: auto" id="table">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Start</th>
+                    <th scope="col">End</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Price per day</th>
+                    <th scope="col">Capacity</th>
+                    <th scope="col">Additional</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let action of actions">
+                    <td> {{action.startDate | date: "mediumDate"}} </td>
+                    <td> {{action.endDate | date: "mediumDate"}} </td>
+                    <td> {{action.durationInDays}} days </td>
+                    <td> {{action.pricePerDay}} </td>
+                    <td> {{action.capacity}} </td>
+                    <td>
+                      <ul>
+                        <li *ngFor="let added of action.additionalServices">
+                          {{added.name}} <span class="ms-2"></span> {{added.price}}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- END OF TABLE -->
+
+        <!-- CREATE NEW ACTION FORM -->
+        <div class="row" style="height: 400px" *ngIf="createMode">
+          <div class="col-12 mx-auto">
+            <div style="height: 400px; overflow: none" id="table">
+              <div class="row justify-content-center">
+                <div class="col-md-5 justify-content-center">
+                  <div class="d-inline-flex">
+                    <label for="start" class="mt-3 me-5">Dates</label>
+                    <mat-form-field>
+                      <mat-label>Enter a date range</mat-label>
+                      <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate name="start" [(ngModel)]="newAction.startDate">
+                        <input matEndDate name="end" [(ngModel)]="newAction.endDate">
+                      </mat-date-range-input>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="d-inline-flex">
+                    <label for="start" class="mt-3 me-5">Capacity</label>
+                    <mat-form-field>
+                      <mat-label>Capacity</mat-label>
+                      <input matInput type="number" [(ngModel)]="newAction.capacity">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="d-inline-flex">
+                    <label for="start" class="mt-3 me-5">Price</label>
+                    <mat-form-field>
+                      <mat-label>Price</mat-label>
+                      <input matInput type="number" [(ngModel)]="newAction.pricePerDay">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="d-inline-flex">
+                    <label for="start" class="mt-3 me-5">Additional</label>
+                    <span class="example-list-section">
+                      <div class="checkbox-column" *ngFor="let item of additional">
+                        <mat-checkbox (click)="addToList(item)">
+                          {{item.name}} <span ms-2></span> {{item.price}}e
+                        </mat-checkbox>
+                      </div>
+                    </span>
+                  </div>
+
+                  <div class="d-inline-flex">
+                    <label for="start" class="mt-3 me-5">Action lasts until</label>
+                    <mat-form-field>
+                      <mat-label>Choose a date</mat-label>
+                      <input matInput [matDatepicker]="durationPicker" [(ngModel)]="selectedDate">
+                      <mat-datepicker-toggle matSuffix [for]="durationPicker"></mat-datepicker-toggle>
+                      <mat-datepicker #durationPicker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="mt-2" style="margin: auto; width: 20%">
+                <div>
+                  <div class="col mt-1 d-inline-flex justify-content-center">
+                    <button type="button" class="btn me-4" (click)="saveChanges()">
+                      Save
+                    </button>
+                    <button type="button" class="btn" style="background: #ecbeb1" (click)="cancel()">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END OF NEW ACTION FORM -->
+
+      </div>
+    </div>
+  </div>
+</div>

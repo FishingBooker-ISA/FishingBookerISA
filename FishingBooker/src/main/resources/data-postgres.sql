@@ -22,32 +22,32 @@ INSERT INTO users (type, id, first_name, last_name, email, phone_number, passwor
 
 --adventures
 INSERT INTO adventure (
-    id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (1, 'baits', 5, 'Fun fishing experience for beginners', false, 'Beginners Class', 0, 20, 'Rules', 2, 1, 5, 'Something about instructor');
+    id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
+VALUES (1, 5, 'Fun fishing experience for beginners', false, 'Beginners Class', 0, 20, 'Rules', 2, 1, 5, 'Something about instructor');
 INSERT INTO adventure (
-    id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (2, 'baits', 2, 'Improve your fishing skills guided by the best', false, 'Professional Class', 0, 40, 'Many rules', 2, 2, 5, 'Something about instructor');
+    id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
+VALUES (2, 2, 'Improve your fishing skills guided by the best', false, 'Professional Class', 0, 40, 'Many rules', 2, 2, 5, 'Something about instructor');
 INSERT INTO adventure (
-    id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (3, 'baits', 10, 'Fun fishing experience for larger groups', false, 'Group Class', 0, 10, 'MANY rules', 2, 3, 5, 'Something about instructor');
+    id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
+VALUES (3, 10, 'Fun fishing experience for larger groups', false, 'Group Class', 0, 10, 'MANY rules', 2, 3, 5, 'Something about instructor');
 INSERT INTO adventure (
-    id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (4, 'baits', 15, 'Adventure!', false, 'All day adventure', 0, 50, 'No rules! Only fun!', 2, 4, 5, 'Something about instructor');
+    id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
+VALUES (4, 15, 'Adventure!', false, 'All day adventure', 0, 50, 'No rules! Only fun!', 2, 4, 5, 'Something about instructor');
 INSERT INTO adventure (
-    id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (5, 'baits', 10, 'Fishing adventure', false, 'Fishing adventure', 0, 35, 'Safety rules.', 2, 5, 5, 'Something about instructor');
+    id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
+VALUES (5, 10, 'Fishing adventure', false, 'Fishing adventure', 0, 35, 'Safety rules.', 2, 5, 5, 'Something about instructor');
 
 --estates
-INSERT INTO estate (id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
-VALUES (6, 'wifi', 3, 'Comfortable and modern villa with a view.', false, 'Villa Aurora', 0, 40, 'No smoking indoors.', 0, 2, 4, 3, 2);
-INSERT INTO estate (id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
-VALUES (7, 'air conditioning', 10, 'Spacious villa suitable for groups.', false, 'Villa Safari', 0, 60, 'Terms of use.', 0, 3, 4, 11, 6);
-INSERT INTO estate (id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
-VALUES (8, 'telescope', 4, 'Family cottage you will fall in love with.', false, 'Lakeview cottage', 0, 30, 'Pets are allowed.', 0, 4, 4, 4, 2);
-INSERT INTO estate (id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
-VALUES (9, 'wifi', 5, 'Spacious villa on the edge of the woods.', false, 'Green palace', 0, 60, 'Terms of use.', 0, 5, 4, 5, 3);
-INSERT INTO estate (id, additional_equipment, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
-VALUES (10, 'wifi', 2, 'Lovely cottage for two.', false, 'Coast house', 0, 20, 'Terms of use.', 0, 6, 4, 1, 1);
+INSERT INTO estate (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
+VALUES (6, 3, 'Comfortable and modern villa with a view.', false, 'Villa Aurora', 0, 40, 'No smoking indoors.', 0, 2, 4, 3, 2);
+INSERT INTO estate (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
+VALUES (7, 10, 'Spacious villa suitable for groups.', false, 'Villa Safari', 0, 60, 'Terms of use.', 0, 3, 4, 11, 6);
+INSERT INTO estate (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
+VALUES (8, 4, 'Family cottage you will fall in love with.', false, 'Lakeview cottage', 0, 30, 'Pets are allowed.', 0, 4, 4, 4, 2);
+INSERT INTO estate (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
+VALUES (9, 5, 'Spacious villa on the edge of the woods.', false, 'Green palace', 0, 60, 'Terms of use.', 0, 5, 4, 5, 3);
+INSERT INTO estate (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
+VALUES (10, 2, 'Lovely cottage for two.', false, 'Coast house', 0, 20, 'Terms of use.', 0, 6, 4, 1, 1);
 
 
 --rating

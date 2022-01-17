@@ -1,12 +1,20 @@
 <app-estate-owner-navbar></app-estate-owner-navbar>
 <app-edit-estate *ngIf="editingMode" [editingMode]="editingMode" [estate]="estate"></app-edit-estate>
+
 <div class="bg-light" *ngIf="!editingMode">
   <!-- Carousel -->
   <div id="carouselHome" class="carousel slide carousel-fade" data-bs-ride="carousel">
-    <div class="carousel-inner">
+    <div class="carousel-inner" *ngIf="images.length !== 0">
       <div class="carousel-item" *ngFor="let img of images" [ngClass]="isFirst(img) ? 'active' : 'notActive'">
         <div>
           <img class="overlay-image" [src]=img>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-inner" *ngIf="images.length === 0">
+      <div class="carousel-item active">
+        <div>
+          <img class="overlay-image" src="../../../assets/img/estate3.jpg">
         </div>
       </div>
     </div>
@@ -27,7 +35,7 @@
       <div class="row propertyInformation">
         <div class="col-md-4 left">
           <div class="title-wrapper">
-            <h3 class="propertyTitle">{{ estate.name }}</h3>
+            <a class="propertyTitle h3" href="{{'/estate/' + estate.id}}" style="color: black;">{{ estate.name }}</a>
           </div>
           <div class="propertyLocation">
             <a href="#">{{ estate.address.street }} {{ estate.address.number }}, <br />
@@ -45,16 +53,16 @@
               <span class="price-text">{{ estate.pricePerDay }}</span>
             </div>
             <div class="col-md buttons d-flex">
-              <button class="btn me-1" (click)="editEstate()">
+              <button class="btn me-1" (click)="editEstate()" title="Update information">
                 <i class="bi bi-pencil"></i>
               </button>
-              <button class="btn me-1" (click)="deleteEstate()">
+              <button class="btn me-1" (click)="deleteEstate()" title="Delete property">
                 <i class="bi bi-trash"></i>
               </button>
-              <button class="btn me-1" (click)="viewImages()">
-                <i class="bi bi-card-image"></i>
+              <button class="btn me-1" (click)="viewImages()" title="All property photos">
+                <i class=" bi bi-card-image"></i>
               </button>
-              <button class="btn me-1">
+              <button class="btn me-1" (click)="createAction()" title="Create new promo action">
                 <i class="bi bi-percent"></i>
               </button>
               <button class="btn">
@@ -65,7 +73,8 @@
         </div>
       </div>
     </div>
-    <div class="additionalInfo mt-5">
+
+    <div class="additionalInfo mt-5 bg-light" *ngIf="!promoActions">
       <div class="row">
         <div class="col-md-4">
           <div class="row description d-flex">
@@ -88,10 +97,19 @@
             {{ estate.termsOfUse }}
           </h6>
 
-          <h4 class="mt-4"><b>Additional services:</b></h4>
-          <h6 style="border-bottom: 1px solid #c7c7c7; padding-bottom: 30px">
-            {{ estate.additionalEquipment }}
-          </h6>
+          <div class="d-flex">
+            <h4 class="mt-3"><b>Additional services:</b></h4>
+            <button class="btn editAdditional ms-2 mt-3" (click)="editAdditional()"><i
+                class="bi bi-pencil mb-2"></i></button>
+          </div>
+
+          <div style="border-bottom: 1px solid #c7c7c7; padding-bottom: 30px" class="mt-2">
+            <ul>
+              <li *ngFor="let item of additional" class="additional mb-1 me-1">
+                <b>{{item.name}}</b> <span class="mx-2">:</span> {{item.price}}e
+              </li>
+            </ul>
+          </div>
 
           <div class="propertyDetails">
             <h5 class="mt-4"><b>Details</b></h5>
@@ -113,4 +131,7 @@
     </div>
   </div>
   <!-- END OF GENERAL INFO -->
+
+  <app-promo-actions class="bg-light" *ngIf="promoActions" [estate]="estate" [promoActions]="promoActions">
+  </app-promo-actions>
 </div>

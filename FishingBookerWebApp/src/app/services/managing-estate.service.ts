@@ -15,17 +15,17 @@ export class ManagingEstateService {
   getAllEstatesForOwner(): Observable<Estate[]> {
     return this.http.get<Estate[]>(`${environment.baseUrl}` + 'api/estates/getEstatesForOwner')
   }
-  
+
   getAllEstates(): Observable<DisplayServiceShortDTO[]> {
     return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/all')
   }
 
   getEstatesByName(input: string): Observable<DisplayServiceShortDTO[]> {
-    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/search/name/'+input);
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/search/name/' + input);
   }
 
-  getEstatesByCity(input:string): Observable<DisplayServiceShortDTO[]> {
-    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/search/city/'+input);
+  getEstatesByCity(input: string): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/search/city/' + input);
   }
 
   getEstateById(estateId: number): Observable<Estate> {
@@ -45,7 +45,7 @@ export class ManagingEstateService {
   }
 
   searchEstatesByName(name: string): Observable<Estate[]> {
-    return this.http.get<Estate[]>(`${environment.baseUrl}` + 'api/estates/search/name/'+name);
+    return this.http.get<Estate[]>(`${environment.baseUrl}` + 'api/estates/search/name/' + name);
   }
 
   editEstate(estate: Estate) {
@@ -77,20 +77,11 @@ export class ManagingEstateService {
 
     }
 
-    this.http.post(`${environment.baseUrl}` + 'api/estates/updateEstate', estateDTO, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    }).subscribe();
+    return this.http.post(`${environment.baseUrl}` + 'api/estates/updateEstate', estateDTO, { observe: 'response', responseType: 'text' });
   }
 
   createEstate(estate: createEstateDTO) {
-
-    this.http.post(`${environment.baseUrl}` + 'api/estates/createEstate', estate, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    }).subscribe();
+    return this.http.post(`${environment.baseUrl}` + 'api/estates/createEstate', estate, { observe: 'response', responseType: 'text' });
   }
 
   getAllEstatesForClient(): DisplayEstateShortDTO[] {
@@ -133,10 +124,11 @@ export class ManagingEstateService {
       availableTo: date,
       address: address,
       rating: 4.37,
-    }];}
-
-    deleteEstate(id: number) {
-      this.http.delete(`${environment.baseUrl}` + 'api/estates/deleteEstate/' + id).subscribe();
-    }
+    }];
   }
+
+  deleteEstate(id: number) {
+    return this.http.delete(`${environment.baseUrl}` + 'api/estates/deleteEstate/' + id, { observe: 'response', responseType: 'text' });
+  }
+}
 

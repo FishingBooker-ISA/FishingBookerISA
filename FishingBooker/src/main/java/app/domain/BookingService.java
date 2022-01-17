@@ -26,8 +26,6 @@ public abstract class BookingService {
     @Column(nullable = false)
     private String termsOfUse;
     @Column(nullable = false)
-    private String additionalEquipment;
-    @Column(nullable = false)
     private int capacity;
     @Column(nullable = false)
     private boolean isPercentageTakenFromCanceledReservations;
@@ -45,7 +43,7 @@ public abstract class BookingService {
     }
 
     protected BookingService(ServiceType type, String name, double pricePerDay, String description,
-                          String termsOfUse, String additionalEquipment,
+                          String termsOfUse,
                           int capacity, boolean isPercentageTakenFromCanceledReservations, double percentageToTake,
                           User owner, Address address) {
         this.type = type;
@@ -53,7 +51,6 @@ public abstract class BookingService {
         this.pricePerDay = pricePerDay;
         this.description = description;
         this.termsOfUse = termsOfUse;
-        this.additionalEquipment = additionalEquipment;
         this.capacity = capacity;
         this.isPercentageTakenFromCanceledReservations = isPercentageTakenFromCanceledReservations;
         this.percentageToTake = percentageToTake;
@@ -107,14 +104,6 @@ public abstract class BookingService {
 
     public void setTermsOfUse(String termsOfUse) {
         this.termsOfUse = termsOfUse;
-    }
-
-    public String getAdditionalEquipment() {
-        return additionalEquipment;
-    }
-
-    public void setAdditionalEquipment(String additionalEquipment) {
-        this.additionalEquipment = additionalEquipment;
     }
 
     public int getCapacity() {

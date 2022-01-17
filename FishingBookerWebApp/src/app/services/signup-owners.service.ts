@@ -8,10 +8,11 @@ import {
 import { RegistrationRequest } from '../model/registration-request';
 import { LoginUser } from '../model/login-user';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
 import { User } from '../model/user';
 import { ClientRegistrationDTO } from '../model/client';
+import { LogInData } from '../auth-guard/estate-owner-auth-guard';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +22,11 @@ export class SignupOwnersService {
   public errorMessage!: string;
   public currentUser!: User;
   private access_token = null
+  public currentUserSubject!: BehaviorSubject<LogInData>;
 
   constructor(private http: HttpClient) {
     this.errorMessage = '';
+    this.currentUserSubject = new BehaviorSubject<LogInData>(JSON.parse((localStorage.getItem('currentUser'))!));
   }
 
   public logIn(user: LoginUser): Observable<any> {
@@ -39,13 +42,14 @@ export class SignupOwnersService {
           console.log('Login success');
           this.access_token = res.accessToken;
           localStorage.setItem('jwt', res.accessToken);
-          console.log(res.accessToken);
+          localStorage.setItem('currentUser', JSON.stringify(res));
         })
       );
   }
 
   public logOut(): void {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('currentUser');
   }
 
   public sendSignupRequest(request: RegistrationRequest) {
@@ -94,7 +98,7 @@ export class SignupOwnersService {
   }
 
   verifyClient(c: string): Observable<boolean> {
-    return this.http.put<any>(`${environment.baseUrl}` + 'api/client/verify/'+ c, null);
+    return this.http.put<any>(`${environment.baseUrl}` + 'api/client/verify/' + c, null);
   }
 
 }
