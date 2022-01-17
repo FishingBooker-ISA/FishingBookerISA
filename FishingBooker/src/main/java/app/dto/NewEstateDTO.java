@@ -1,6 +1,5 @@
 package app.dto;
 
-import app.domain.AdditionalService;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
