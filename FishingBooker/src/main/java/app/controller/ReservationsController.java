@@ -7,6 +7,7 @@ import app.dto.ReportDTO;
 import app.dto.ReservationDTO;
 import app.repository.ReservationRepository;
 import app.repository.ServiceRepository;
+import app.repository.UnavailablePeriodRepository;
 import app.repository.UserRepository;
 import app.service.ManagingReservationsService;
 import app.service.ReportService;
@@ -32,6 +33,8 @@ public class ReservationsController {
     private UserRepository userRepository;
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private UnavailablePeriodRepository unavailablePeriodRepository;
     @Autowired
     private ReservationRepository reservationRepository;
     @Autowired

@@ -45,13 +45,13 @@
 
 <div mat-dialog-actions class="justify-content-center">
   <div class="d-flex">
-    <button class="btn editAdditional ms-2 mt-3" [disabled]="selectedItem == null">
-      <i class="bi bi-pencil mb-2" (click)="edit()" *ngIf="!editClicked"></i>
-      <i class="bi bi-check mb-2" (click)="edit()" *ngIf="editClicked"></i>
+    <button class="btn editAdditional ms-2 mt-3" [disabled]="selectedItem == null" (click)="edit()">
+      <i class="bi bi-pencil mb-2" *ngIf="!editClicked"></i>
+      <i class="bi bi-check mb-2" *ngIf="editClicked"></i>
     </button>
-    <button class="btn editAdditional ms-2 mt-3">
-      <i class="bi bi-plus mb-2" (click)="create()" *ngIf="!addNewItem"></i>
-      <i class="bi bi-check mb-2" (click)="create()" *ngIf="addNewItem"></i>
+    <button class="btn editAdditional ms-2 mt-3" (click)="create()">
+      <i class="bi bi-plus mb-2" *ngIf="!addNewItem"></i>
+      <i class="bi bi-check mb-2" *ngIf="addNewItem"></i>
     </button>
     <button class="btn editAdditional ms-2 mt-3" (click)="delete()" [disabled]="selectedItem == null"><i
         class="bi bi-trash mb-2"></i></button>

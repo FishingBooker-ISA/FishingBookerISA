@@ -1,0 +1,11 @@
+.btn {
+  text-align: center;
+  background: #6eb1dd;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 14px;
+  display: inline-block;
+}

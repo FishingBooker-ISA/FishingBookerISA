@@ -2,11 +2,14 @@ package app.controller;
 
 import app.domain.BookingService;
 import app.domain.Estate;
+import app.domain.UnavailablePeriod;
 import app.domain.User;
 import app.dto.NewEstateDTO;
 import app.dto.ServiceWithRatingDTO;
 import app.dto.UnavailablePeriodDTO;
 import app.repository.EstateRepository;
+import app.repository.ServiceRepository;
+import app.repository.UnavailablePeriodRepository;
 import app.service.ManagingEstateService;
 import app.service.ManagingReservationsService;
 import app.service.RatingsService;
@@ -32,6 +35,10 @@ public class EstateManagmentController {
     private ManagingEstateService managingEstateService;
     @Autowired
     private EstateRepository estateRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
+    @Autowired
+    private UnavailablePeriodRepository unavailablePeriodRepository;
     @Autowired
     private ManagingReservationsService reservationsService;
     @Autowired
@@ -142,7 +149,7 @@ public class EstateManagmentController {
         return foundEstates;
     }
 
-    @PostMapping(value = "/addUnavailablePeriod", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/addUnavailablePeriod", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
     public ResponseEntity<String> addUnavailablePeriod(@RequestBody UnavailablePeriodDTO dto, Principal user) {
         User currentUser = this.userService.findByEmail(user.getName());
@@ -195,6 +202,23 @@ public class EstateManagmentController {
             result.add(service);
         }
         return result;
+    }
+
+    @GetMapping(value = "/getAllUnavailablePeriods", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    public ResponseEntity<List<UnavailablePeriod>> getAll(int id, Principal user) {
+        BookingService bookingService = serviceRepository.getById(id);
+        User currentUser = userService.findByEmail(user.getName());
+
+        if(!currentUser.getId().equals(bookingService.getOwner().getId())){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            return new ResponseEntity<>(unavailablePeriodRepository.findAllByServiceId(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

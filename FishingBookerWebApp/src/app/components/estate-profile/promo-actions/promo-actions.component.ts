@@ -48,13 +48,14 @@ export class PromoActionsComponent implements OnInit {
     var today = new Date();
     var Time = this.selectedDate.getTime() - today.getTime();
     var days = Time / (1000 * 3600 * 24);
+    var text = "nesto"
 
     let action: PromoAction = {
       pricePerDay: this.newAction.pricePerDay,
       durationInDays: Math.trunc(days),
       capacity: this.newAction.capacity,
       isTaken: false,
-      additional: this.newAction.additional,
+      additional: text,
       startDate: this.newAction.startDate,
       endDate: this.newAction.endDate,
       bookingServiceId: this.estate.id,

@@ -1,0 +1,24 @@
+<button class="close" mat-icon-button (click)="onDismiss()">
+  <mat-icon>close</mat-icon>
+</button>
+<h1 mat-dialog-title class="row d-flex justify-content-center">Add unavailable period</h1>
+
+<div mat-dialog-content>
+  <div class="row d-flex justify-content-center">
+    <mat-form-field>
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate name="start" [(ngModel)]="newPeriod.start">
+        <input matEndDate name="end" [(ngModel)]="newPeriod.end">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+</div>
+
+<div mat-dialog-actions class="justify-content-center">
+  <div class="d-flex">
+    <button class="btn editAdditional ms-2" (click)="onAdd()">Add</button>
+  </div>
+</div>
