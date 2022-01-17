@@ -52,7 +52,7 @@ public class AdditionalEquipmentController {
         User currentUser = userService.findByEmail(user.getName());
 
         if (!existing.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>(this.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         additionalService.updateAddedServices(dto, existing);
@@ -66,7 +66,7 @@ public class AdditionalEquipmentController {
         User currentUser = userService.findByEmail(user.getName());
 
         if (!existing.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>(this.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         additionalService.deleteAddedServices(dto, existing);
@@ -80,7 +80,7 @@ public class AdditionalEquipmentController {
         User currentUser = userService.findByEmail(user.getName());
 
         if (!existing.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>(this.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         additionalService.addAdditionalServices(dto, existing);

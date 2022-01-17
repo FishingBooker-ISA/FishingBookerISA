@@ -71,18 +71,12 @@ export class PromoActionsComponent implements OnInit {
   }
 
   addToList(added: AdditionalService) {
-    let a: AdditionalServiceDTO = {
-      id: added.id,
-      name: added.name,
-      price: added.price,
-      bookingServiceId: this.estate.id
-    }
-    const index = this.additionalForPromo.indexOf(a);
+    const index = this.additionalForPromo.indexOf(added);
 
     if (index > -1)
       this.additionalForPromo.splice(index, 1);
     else {
-      this.additionalForPromo.push(a);
+      this.additionalForPromo.push(added);
     }
   }
 

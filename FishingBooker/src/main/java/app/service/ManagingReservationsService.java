@@ -64,7 +64,7 @@ public class ManagingReservationsService {
 
         Reservation newReservation = getReservation(reservationDTO);
         reservationRepository.save(newReservation);
-        sendConfirmationMail(newReservation);
+        //sendConfirmationMail(newReservation);
         return newReservation;
     }
 
@@ -162,6 +162,21 @@ public class ManagingReservationsService {
             }
         }
         return true;
+    }
+
+    public User getClientForReservation(int serviceId) {
+        List<Reservation> allReservations = this.reservationRepository.getByBookingServiceId(serviceId);
+        for (Reservation reservation: allReservations
+             ) {
+                if(checkIfReservationIsLasting(reservation.getReservationStart(), reservation.getReservationEnd()))
+                {
+                    return reservation.getUser();
+                }
+        }
+        return null;
+    }
+    public  List<Reservation> getReservationsForService(int serviceId) {
+      return this.reservationRepository.getByBookingServiceId(serviceId);
     }
 }
 

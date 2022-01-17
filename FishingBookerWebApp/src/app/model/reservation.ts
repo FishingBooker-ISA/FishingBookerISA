@@ -19,3 +19,16 @@ export class Reservation {
     user!: User
     bookingService!: BookingService
 }
+
+export class ReservationDTO{
+    reservedDate!: Date
+    reservationStart!: Date
+    reservationEnd!: Date
+    isPromo!: boolean
+    isCanceled!: boolean
+    additionalEquipment!: string
+    price!: number
+    shipOwnerRole!: ShipOwnerRole
+    userId!: number
+    serviceId!: number
+}

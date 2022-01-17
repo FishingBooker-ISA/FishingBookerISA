@@ -23,10 +23,10 @@ INSERT INTO users (type, id, first_name, last_name, email, phone_number, passwor
 --adventures
 INSERT INTO adventure (
     id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (1, 5, 'Fun fishing experience for beginners', false, 'Beginners Class', 0, 20, 'Rules', 2, 1, 5, 'Something about instructor');
+VALUES (1, 5, 'Fun fishing experience for beginners', false, 'Beginners Class', 0, 20, 'Rules', 2, 1, 6, 'Something about instructor');
 INSERT INTO adventure (
     id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (2, 2, 'Improve your fishing skills guided by the best', false, 'Professional Class', 0, 40, 'Many rules', 2, 2, 5, 'Something about instructor');
+VALUES (2, 2, 'Improve your fishing skills guided by the best', false, 'Professional Class', 0, 40, 'Many rules', 2, 2, 6, 'Something about instructor');
 INSERT INTO adventure (
     id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
 VALUES (3, 10, 'Fun fishing experience for larger groups', false, 'Group Class', 0, 10, 'MANY rules', 2, 3, 5, 'Something about instructor');
@@ -70,9 +70,13 @@ VALUES (10.0, 30.0, 20.0, 100.0, 300.0, 200.0);
 
 --reservations
 INSERT INTO reservation (
-     id, additional_equipment, is_canceled, is_promo, price, reservation_end, reservation_start, reserved_date, ship_owner_role, service_id, user_id)
-VALUES (1, 'bla bla', false, false, 200.0, DATE '2021-12-17', DATE '2021-12-17', DATE '2021-12-17', 0, 1, 2);
+     additional_equipment, is_canceled, is_promo, price, reservation_end, reservation_start, reserved_date, ship_owner_role, service_id, user_id)
+VALUES ('bla bla', false, false, 200.0, DATE '2022-01-30', DATE '2022-01-15', DATE '2021-12-17', 0, 6, 2);
 
 INSERT INTO report (
     id, client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)
 VALUES (1, false, DATE '2021-12-17', false, true, 'Left a huge mess.', 1);
+
+INSERT INTO additional_service (
+    id, name, price, service_id)
+VALUES (1, 'WiFi', 0, 6), (2, 'Iron', 10, 6), (3, 'WiFi', 0, 6), (4, 'Iron', 10, 6), (5, 'WiFi', 0, 6), (6, 'Iron', 10, 6);

@@ -1,28 +1,50 @@
 <app-estate-owner-navbar></app-estate-owner-navbar>
-<app-edit-estate *ngIf="editingMode" [editingMode]="editingMode" [estate]="estate"></app-edit-estate>
+<app-edit-estate
+  *ngIf="editingMode"
+  [editingMode]="editingMode"
+  [estate]="estate"
+></app-edit-estate>
 
 <div class="bg-light" *ngIf="!editingMode">
   <!-- Carousel -->
-  <div id="carouselHome" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div
+    id="carouselHome"
+    class="carousel slide carousel-fade"
+    data-bs-ride="carousel"
+  >
     <div class="carousel-inner" *ngIf="images.length !== 0">
-      <div class="carousel-item" *ngFor="let img of images" [ngClass]="isFirst(img) ? 'active' : 'notActive'">
+      <div
+        class="carousel-item"
+        *ngFor="let img of images"
+        [ngClass]="isFirst(img) ? 'active' : 'notActive'"
+      >
         <div>
-          <img class="overlay-image" [src]=img>
+          <img class="overlay-image" [src]="img" />
         </div>
       </div>
     </div>
     <div class="carousel-inner" *ngIf="images.length === 0">
       <div class="carousel-item active">
         <div>
-          <img class="overlay-image" src="../../../assets/img/estate3.jpg">
+          <img class="overlay-image" src="../../../assets/img/estate3.jpg" />
         </div>
       </div>
     </div>
-    <button class=" carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev">
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselHome"
+      data-bs-slide="prev"
+    >
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next">
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselHome"
+      data-bs-slide="next"
+    >
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -35,38 +57,64 @@
       <div class="row propertyInformation">
         <div class="col-md-4 left">
           <div class="title-wrapper">
-            <a class="propertyTitle h3" href="{{'/estate/' + estate.id}}" style="color: black;">{{ estate.name }}</a>
+            <a
+              class="propertyTitle h3"
+              href="{{ '/estate/' + estate.id }}"
+              style="color: black"
+              >{{ estate.name }}</a
+            >
           </div>
           <div class="propertyLocation">
-            <a href="#">{{ estate.address.street }} {{ estate.address.number }}, <br />
+            <a href="#"
+              >{{ estate.address.street }} {{ estate.address.number }}, <br />
               {{ estate.address.city }}
               {{ estate.address.postcode }}, <br />{{
                 estate.address.country
-              }}</a>
+              }}</a
+            >
           </div>
         </div>
-        <div class="col-md-3"></div>
-        <div class="col-md-5 mt-2 right">
+        <div class="col-md-2"></div>
+        <div class="col-md-6 mt-2 right">
           <div class="row">
             <div class="col-md propertyPrice mt-1 text-end">
               <span class="suffix">€</span>
               <span class="price-text">{{ estate.pricePerDay }}</span>
             </div>
             <div class="col-md buttons d-flex">
-              <button class="btn me-1" (click)="editEstate()" title="Update information">
+              <button
+                class="btn me-1"
+                (click)="editEstate()"
+                title="Update information"
+              >
                 <i class="bi bi-pencil"></i>
               </button>
-              <button class="btn me-1" (click)="deleteEstate()" title="Delete property">
+              <button
+                class="btn me-1"
+                (click)="deleteEstate()"
+                title="Delete property"
+              >
                 <i class="bi bi-trash"></i>
               </button>
-              <button class="btn me-1" (click)="viewImages()" title="All property photos">
-                <i class=" bi bi-card-image"></i>
+              <button
+                class="btn me-1"
+                (click)="viewImages()"
+                title="All property photos"
+              >
+                <i class="bi bi-card-image"></i>
               </button>
-              <button class="btn me-1" (click)="createAction()" title="Create new promo action">
+              <button
+                class="btn me-1"
+                (click)="createAction()"
+                title="Create new promo action"
+              >
                 <i class="bi bi-percent"></i>
               </button>
-              <button class="btn">
+              <button class="btn me-1">
                 <i class="bi bi-calendar-week"></i>
+              </button>
+              <button class="btn me-1" (click)="createNewReservation()">
+                <i class="bi bi-plus"></i>
               </button>
             </div>
           </div>
@@ -74,7 +122,10 @@
       </div>
     </div>
 
-    <div class="additionalInfo mt-5 bg-light" *ngIf="!promoActions">
+    <div
+      class="additionalInfo mt-5 bg-light"
+      *ngIf="!promoActions && !createReservation"
+    >
       <div class="row">
         <div class="col-md-4">
           <div class="row description d-flex">
@@ -82,10 +133,14 @@
               <p>{{ estate.description }}</p>
               <div class="row" style="padding: 15px">
                 <div class="numbers mb-2">
-                  <span style="color: rgb(216, 93, 93)">Number of rooms: {{ estate.numOfRooms }}</span>
+                  <span style="color: rgb(216, 93, 93)"
+                    >Number of rooms: {{ estate.numOfRooms }}</span
+                  >
                 </div>
                 <div class="numbers">
-                  <span style="color: rgb(216, 93, 93)">Number of beds: {{ estate.numOfBeds }}</span>
+                  <span style="color: rgb(216, 93, 93)"
+                    >Number of beds: {{ estate.numOfBeds }}</span
+                  >
                 </div>
               </div>
             </div>
@@ -99,14 +154,22 @@
 
           <div class="d-flex">
             <h4 class="mt-3"><b>Additional services:</b></h4>
-            <button class="btn editAdditional ms-2 mt-3" (click)="editAdditional()"><i
-                class="bi bi-pencil mb-2"></i></button>
+            <button
+              class="btn editAdditional ms-2 mt-3"
+              (click)="editAdditional()"
+            >
+              <i class="bi bi-pencil mb-2"></i>
+            </button>
           </div>
 
-          <div style="border-bottom: 1px solid #c7c7c7; padding-bottom: 30px" class="mt-2">
+          <div
+            style="border-bottom: 1px solid #c7c7c7; padding-bottom: 30px"
+            class="mt-2"
+          >
             <ul>
               <li *ngFor="let item of additional" class="additional mb-1 me-1">
-                <b>{{item.name}}</b> <span class="mx-2">:</span> {{item.price}}e
+                <b>{{ item.name }}</b> <span class="mx-2">:</span>
+                {{ item.price }}e
               </li>
             </ul>
           </div>
@@ -132,6 +195,18 @@
   </div>
   <!-- END OF GENERAL INFO -->
 
-  <app-promo-actions class="bg-light" *ngIf="promoActions" [estate]="estate" [promoActions]="promoActions">
+  <app-promo-actions
+    class="bg-light"
+    *ngIf="promoActions"
+    [estate]="estate"
+    [promoActions]="promoActions"
+  >
   </app-promo-actions>
+  <app-create-reservation
+    class="bg-light"
+    *ngIf="createReservation"
+    [estate]="estate"
+    [createReservation]="createReservation"
+    (cancelEvent)="createReservation = $event"
+  ></app-create-reservation>
 </div>

@@ -67,6 +67,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EditAdditionalServicesComponent } from './components/edit-additional-services/edit-additional-services.component';
 import { AddEquipmentComponent } from './components/create-estate/add-equipment/add-equipment.component';
 import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
+import { CreateReservationComponent } from './components/estate-profile/create-reservation/create-reservation.component';
+import { CreateReservationInstructorComponent } from './components/instructor-components/adventure-profile/create-reservation-instructor/create-reservation-instructor.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +118,8 @@ import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
     PromoActionsComponent,
     EditAdditionalServicesComponent,
     AddEquipmentComponent,
+    CreateReservationComponent,
+    CreateReservationInstructorComponent,
   ],
   imports: [
     BrowserModule,
