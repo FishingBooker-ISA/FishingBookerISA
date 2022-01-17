@@ -68,6 +68,7 @@ import { EditAdditionalServicesComponent } from './components/edit-additional-se
 import { AddEquipmentComponent } from './components/create-estate/add-equipment/add-equipment.component';
 import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
 import { CreateReservationComponent } from './components/estate-profile/create-reservation/create-reservation.component';
+import { CreateReservationInstructorComponent } from './components/instructor-components/adventure-profile/create-reservation-instructor/create-reservation-instructor.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { CreateReservationComponent } from './components/estate-profile/create-r
     EditAdditionalServicesComponent,
     AddEquipmentComponent,
     CreateReservationComponent,
+    CreateReservationInstructorComponent,
   ],
   imports: [
     BrowserModule,

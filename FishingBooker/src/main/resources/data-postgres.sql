@@ -23,10 +23,10 @@ INSERT INTO users (type, id, first_name, last_name, email, phone_number, passwor
 --adventures
 INSERT INTO adventure (
     id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (1, 5, 'Fun fishing experience for beginners', false, 'Beginners Class', 0, 20, 'Rules', 2, 1, 5, 'Something about instructor');
+VALUES (1, 5, 'Fun fishing experience for beginners', false, 'Beginners Class', 0, 20, 'Rules', 2, 1, 6, 'Something about instructor');
 INSERT INTO adventure (
     id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
-VALUES (2, 2, 'Improve your fishing skills guided by the best', false, 'Professional Class', 0, 40, 'Many rules', 2, 2, 5, 'Something about instructor');
+VALUES (2, 2, 'Improve your fishing skills guided by the best', false, 'Professional Class', 0, 40, 'Many rules', 2, 2, 6, 'Something about instructor');
 INSERT INTO adventure (
     id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, instructor_bio)
 VALUES (3, 10, 'Fun fishing experience for larger groups', false, 'Group Class', 0, 10, 'MANY rules', 2, 3, 5, 'Something about instructor');

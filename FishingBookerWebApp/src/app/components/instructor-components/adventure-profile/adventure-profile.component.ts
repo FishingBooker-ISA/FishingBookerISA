@@ -15,6 +15,7 @@ export class AdventureProfileComponent implements OnInit {
   adventureId! : number;
   adventure! : Adventure;
   editingMode!: boolean;
+  createReservation!: boolean
 
   constructor(private route: ActivatedRoute, public service: ManagingAdventuresService, private router: Router,
     public dialog: MatDialog) {
@@ -24,12 +25,17 @@ export class AdventureProfileComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.createReservation = false;
     this.editingMode = false;
     this.service.getAdventureById(this.adventureId).subscribe((data) => this.adventure = data);
   }
 
   editAdventure() {
     this.editingMode = true;
+  }
+
+  createNewReservation(){
+    this.createReservation = true;
   }
 
   deleteAdventure() {
