@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
 import { AccountRequestsComponent } from './components/admin-profile/account-requests/account-requests.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 import { AllComplaintsComponent } from './components/admin-profile/all-complaints/all-complaints.component';
@@ -30,10 +31,7 @@ import { SignupOwnersComponent } from './components/signup-owners/signup-owners.
 import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
-  {
-    path: 'home',
-    component: HomepageComponent,
-  },
+  { path: 'home', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin/ratings', component: RatingsReviewComponent },
   { path: 'admin/accountRequests', component: AccountRequestsComponent },
@@ -50,14 +48,15 @@ const routes: Routes = [
   { path: 'verifyClient/:code', component: ClientVerificationComponent },
   { path: 'signup/owners', component: SignupOwnersComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'estateOwner/home', component: EstateOwnerHomepageComponent },
-  { path: 'estate/:id', component: EstateProfileComponent },
-  { path: 'estates', component: EstatesComponent },
+  { path: 'estateOwner/home', component: EstateOwnerHomepageComponent, canActivate: [EstateOwnerAuthGuard] },
+  { path: 'estate/:id', component: EstateProfileComponent, canActivate: [EstateOwnerAuthGuard] },
+  { path: 'estates', component: EstatesComponent, canActivate: [EstateOwnerAuthGuard] },
   { path: 'boats', component: BoatsComponent },
   { path: 'fishing-instructors', component: FishingInstructorsComponent },
   { path: 'edit', component: EditEstateComponent },
- // { path: 'instructor/home', component: InstructorAdventuresComponent },
+  // { path: 'instructor/home', component: InstructorAdventuresComponent },
   { path: 'instructor/home', component: NewReportComponent },
+  { path: 'edit', component: EditEstateComponent, canActivate: [EstateOwnerAuthGuard] },
   { path: 'adventure/:id', component: AdventureProfileComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'profile', component: OwnerProfileComponent }

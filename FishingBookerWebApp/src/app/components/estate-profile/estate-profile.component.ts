@@ -120,6 +120,9 @@ export class EstateProfileComponent implements OnInit {
       data: dialogData,
       panelClass: 'my-dialog'
     });
+
+    dialogRef.afterClosed().subscribe((data) => this.imageFromDatabase())
+    dialogRef.backdropClick().subscribe((data) => this.imageFromDatabase())
   }
 
   editAdditional() {

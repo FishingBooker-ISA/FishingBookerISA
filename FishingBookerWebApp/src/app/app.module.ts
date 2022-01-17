@@ -66,6 +66,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EditAdditionalServicesComponent } from './components/edit-additional-services/edit-additional-services.component';
 import { AddEquipmentComponent } from './components/create-estate/add-equipment/add-equipment.component';
+import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
 
 @NgModule({
   declarations: [
@@ -143,8 +144,7 @@ import { AddEquipmentComponent } from './components/create-estate/add-equipment/
       useClass: TokenInterceptor,
       multi: true
     },
-    SignupOwnersService,
-    AdminRequestsService,
+    EstateOwnerAuthGuard,
   ],
   bootstrap: [AppComponent],
 })
