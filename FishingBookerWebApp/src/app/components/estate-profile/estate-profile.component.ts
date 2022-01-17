@@ -23,6 +23,7 @@ export class EstateProfileComponent implements OnInit {
   estateId!: number;
   editingMode!: boolean;
   promoActions!: boolean;
+  createReservation!: boolean
   images = [] as SafeResourceUrl[]
   estate!: Estate;
   imgSrc!: any
@@ -39,6 +40,7 @@ export class EstateProfileComponent implements OnInit {
   ngOnInit(): void {
     this.editingMode = false
     this.promoActions = false
+    this.createReservation = false;
     this.managingEstateService.getEstateById(this.estateId).subscribe((data) => this.estate = data);
     this.actionsService.getAllAdditionalServices(this.estateId).subscribe((data) => this.additional = data);
     this.imageFromDatabase();
@@ -50,6 +52,12 @@ export class EstateProfileComponent implements OnInit {
 
   createAction() {
     this.promoActions = true;
+    this.createReservation = false;
+  }
+
+  createNewReservation(){
+    this.createReservation = true;
+    this.promoActions = false;
   }
 
   deleteEstate() {

@@ -40,7 +40,7 @@ public class ReservationsController {
     private ReportService reportService;
 
     @PostMapping(value = "/createReservation", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> createReservation(@Valid @RequestBody ReservationDTO reservationDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         User client = userRepository.getById(reservationDTO.getUserId());
@@ -111,6 +111,17 @@ public class ReservationsController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(reservation.getUser(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getClientForReservation", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
+    public ResponseEntity<User> getClientForReservation(int serviceId, Principal user) {
+        User currentUser = userService.findByEmail(user.getName());
+        BookingService bookingService = this.serviceRepository.getById(serviceId);
+
+        if (!bookingService.getOwner().getId().equals(currentUser.getId()))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(reservationsService.getClientForReservation(serviceId), HttpStatus.OK);
     }
 }
 

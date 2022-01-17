@@ -70,9 +70,13 @@ VALUES (10.0, 30.0, 20.0, 100.0, 300.0, 200.0);
 
 --reservations
 INSERT INTO reservation (
-     id, additional_equipment, is_canceled, is_promo, price, reservation_end, reservation_start, reserved_date, ship_owner_role, service_id, user_id)
-VALUES (1, 'bla bla', false, false, 200.0, DATE '2021-12-17', DATE '2021-12-17', DATE '2021-12-17', 0, 1, 2);
+     additional_equipment, is_canceled, is_promo, price, reservation_end, reservation_start, reserved_date, ship_owner_role, service_id, user_id)
+VALUES ('bla bla', false, false, 200.0, DATE '2022-01-30', DATE '2022-01-15', DATE '2021-12-17', 0, 6, 2);
 
 INSERT INTO report (
     id, client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)
 VALUES (1, false, DATE '2021-12-17', false, true, 'Left a huge mess.', 1);
+
+INSERT INTO additional_service (
+    id, name, price, service_id)
+VALUES (1, 'WiFi', 0, 6), (2, 'Iron', 10, 6), (3, 'WiFi', 0, 6), (4, 'Iron', 10, 6), (5, 'WiFi', 0, 6), (6, 'Iron', 10, 6);
