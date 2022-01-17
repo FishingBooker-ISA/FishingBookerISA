@@ -24,6 +24,7 @@ export class EstateProfileComponent implements OnInit {
   editingMode!: boolean;
   promoActions!: boolean;
   createReservation!: boolean
+  calendarView!: boolean;
   images = [] as SafeResourceUrl[]
   estate!: Estate;
   imgSrc!: any
@@ -41,6 +42,7 @@ export class EstateProfileComponent implements OnInit {
     this.editingMode = false
     this.promoActions = false
     this.createReservation = false;
+    this.calendarView = false
     this.managingEstateService.getEstateById(this.estateId).subscribe((data) => this.estate = data);
     this.actionsService.getAllAdditionalServices(this.estateId).subscribe((data) => this.additional = data);
     this.imageFromDatabase();
@@ -55,9 +57,17 @@ export class EstateProfileComponent implements OnInit {
     this.createReservation = false;
   }
 
-  createNewReservation(){
+  createNewReservation() {
     this.createReservation = true;
     this.promoActions = false;
+    this.editingMode = false;
+    this.calendarView = false;
+  }
+
+  viewCalendar() {
+    this.calendarView = true;
+    this.promoActions = false;
+    this.editingMode = false;
   }
 
   deleteEstate() {

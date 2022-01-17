@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ReservationDTO } from '../model/reservation';
 import { User } from '../model/user';
+import { Reservation } from '../model/reservation';
+import { UnavailablePeriod, UnavailablePeriodDTO } from '../model/unavailable-period';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,27 @@ export class ReservationsService {
     });
   }
 
-  public createReservation(dto : ReservationDTO){
+  public createReservation(dto: ReservationDTO) {
     return this.http.post(`${environment.baseUrl}` + 'api/reservations/createReservation', dto, { observe: 'response', responseType: 'text' });
+  }
+
+  getAllReservationsForService(id: number): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${environment.baseUrl}` + 'api/reservations/getReservationHistory', {
+      params: {
+        id: id
+      }
+    })
+  }
+
+  getAllUnavailablePeriods(id: number): Observable<UnavailablePeriod[]> {
+    return this.http.get<UnavailablePeriod[]>(`${environment.baseUrl}` + 'api/estates/getAllUnavailablePeriods', {
+      params: {
+        id: id
+      }
+    })
+  }
+
+  addUnavailablePeriod(dto: UnavailablePeriodDTO) {
+    return this.http.post(`${environment.baseUrl}` + 'api/estates/addUnavailablePeriod', dto, { observe: 'response', responseType: 'text' });
   }
 }

@@ -69,6 +69,18 @@ import { AddEquipmentComponent } from './components/create-estate/add-equipment/
 import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
 import { CreateReservationComponent } from './components/estate-profile/create-reservation/create-reservation.component';
 import { CreateReservationInstructorComponent } from './components/instructor-components/adventure-profile/create-reservation-instructor/create-reservation-instructor.component';
+import { ReservationCalendarComponent } from './components/reservation-calendar/reservation-calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { UnavailablePeriodDialogComponent } from './components/reservation-calendar/unavailable-period-dialog/unavailable-period-dialog.component';
+import { DetailsDialogComponent } from './components/reservation-calendar/details-dialog/details-dialog.component';
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
+
 
 @NgModule({
   declarations: [
@@ -120,6 +132,9 @@ import { CreateReservationInstructorComponent } from './components/instructor-co
     AddEquipmentComponent,
     CreateReservationComponent,
     CreateReservationInstructorComponent,
+    ReservationCalendarComponent,
+    UnavailablePeriodDialogComponent,
+    DetailsDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -140,7 +155,8 @@ import { CreateReservationInstructorComponent } from './components/instructor-co
     MatNativeDateModule,
     MatInputModule,
     MatFormFieldModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    FullCalendarModule
   ],
   providers: [
     {

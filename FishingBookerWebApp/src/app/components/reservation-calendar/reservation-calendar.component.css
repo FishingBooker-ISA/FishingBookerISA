@@ -1,0 +1,17 @@
+full-calendar {
+  width: 60%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn {
+  background: #006a70;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  color: white;
+}
