@@ -30,6 +30,8 @@ public class AdditionalEquipmentController {
     @Autowired
     UserService userService;
 
+    private static final String UNAUTHORIZED = "Unauthorized access!";
+
     @GetMapping(value = "/getAdditionalForService", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
     public ResponseEntity<List<AdditionalService>> getAllByService(int id, Principal user) {
@@ -50,7 +52,7 @@ public class AdditionalEquipmentController {
         User currentUser = userService.findByEmail(user.getName());
 
         if (!existing.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(this.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         additionalService.updateAddedServices(dto, existing);
@@ -64,7 +66,7 @@ public class AdditionalEquipmentController {
         User currentUser = userService.findByEmail(user.getName());
 
         if (!existing.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(this.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         additionalService.deleteAddedServices(dto, existing);
@@ -78,7 +80,7 @@ public class AdditionalEquipmentController {
         User currentUser = userService.findByEmail(user.getName());
 
         if (!existing.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>("Unauthorized access", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(this.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
         }
 
         additionalService.addAdditionalServices(dto, existing);
