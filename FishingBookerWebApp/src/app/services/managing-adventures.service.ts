@@ -54,7 +54,6 @@ export class ManagingAdventuresService {
       pricePerDay: adventure.pricePerDay,
       description: adventure.description,
       termsOfUse: adventure.termsOfUse,
-      additionalEquipment: adventure.additionalEquipment,
       capacity: adventure.capacity,
       percentageTakenFromCanceledReservations: adventure.percentageTakenFromCanceledReservations,
       percentageToTake: percentage,
@@ -66,15 +65,13 @@ export class ManagingAdventuresService {
 
     }
 
-    this.http.post(`${environment.baseUrl}` + 'api/adventures/updateAdventure', adventureDTO, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    }).subscribe();
+    return this.http.post(`${environment.baseUrl}` + 'api/adventures/updateAdventure', adventureDTO, { observe: 'response', responseType: 'text' });
+
   }
 
   deleteAdventure(id: number) {
-    this.http.delete(`${environment.baseUrl}` + 'api/adventures/deleteAdventure/' + id).subscribe();
+    return this.http.delete(`${environment.baseUrl}` + 'api/adventures/deleteAdventure/' + id, { observe: 'response', responseType: 'text' });
+
   }
 
   

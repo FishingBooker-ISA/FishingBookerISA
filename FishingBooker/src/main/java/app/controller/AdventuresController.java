@@ -122,13 +122,13 @@ public class AdventuresController {
             return new ResponseEntity<>("Unauthorized operation!", HttpStatus.UNAUTHORIZED);
         }
 
-        if(managingAdventuresService.hasAnyReservations(existingAdventure)) {
+        if(!managingAdventuresService.hasAnyReservations(existingAdventure)) {
             return new ResponseEntity<>("Adventure has reservations and can't be deleted!", HttpStatus.BAD_REQUEST);
         }
 
         try {
             managingAdventuresService.deleteEstate(existingAdventure);
-            return new ResponseEntity<>("Estate updated!", HttpStatus.OK);
+            return new ResponseEntity<>("Adventures updated!", HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

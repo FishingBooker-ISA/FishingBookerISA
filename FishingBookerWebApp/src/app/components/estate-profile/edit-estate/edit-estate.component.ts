@@ -63,7 +63,7 @@ export class EditEstateComponent implements OnInit {
 
   viewImages(): void {
     const dialogData = new ImagesDialogModel(
-      this.estate
+      this.estate.id
     );
 
     const dialogRef = this.dialog.open(ShowImagesComponent, {

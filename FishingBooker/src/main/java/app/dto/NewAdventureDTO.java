@@ -1,20 +1,38 @@
 package app.dto;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
 public class NewAdventureDTO {
     private int id;
+    @NotNull(message = "Adventure must have a name!")
     private String name;
+    @NotNull(message = "Adventure must have a defined price!")
+    @Min(value = 1, message = "Price must be larger than 0!")
     private double pricePerDay;
+    @NotNull(message = "Description is required!")
     private String description;
     private String termsOfUse;
-    private String additionalEquipment;
+    @NotNull(message = "Adventure must have a defined capacity!")
+    @Min(value = 1, message = "Price must be larger than 0!")
     private int capacity;
+    @NotNull(message = "Adventure must have a defined street!")
     private String street;
+    @NotNull(message = "Adventure must have a defined street number!")
     private int number;
+    @NotNull(message = "Adventure must have a defined city!")
     private String city;
+    @NotNull(message = "Adventure must have a defined country!")
     private String country;
+    @NotNull(message = "Adventure must have a defined postcode!")
     private int postcode;
     private boolean isPercentageTakenFromCanceledReservations;
+    @Range(min = 0, max = 100, message = "Percentage must range from 0 to 100!")
     private double percentageToTake;
+    private List<AdditionalEquipmentDTO> additionalServiceList;
     private String instructorBio;
 
     public String getName() {
@@ -47,14 +65,6 @@ public class NewAdventureDTO {
 
     public void setTermsOfUse(String termsOfUse) {
         this.termsOfUse = termsOfUse;
-    }
-
-    public String getAdditionalEquipment() {
-        return additionalEquipment;
-    }
-
-    public void setAdditionalEquipment(String additionalEquipment) {
-        this.additionalEquipment = additionalEquipment;
     }
 
     public int getCapacity() {
@@ -135,5 +145,13 @@ public class NewAdventureDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<AdditionalEquipmentDTO> getAdditionalServiceList() {
+        return additionalServiceList;
+    }
+
+    public void setAdditionalServiceList(List<AdditionalEquipmentDTO> additionalServiceList) {
+        this.additionalServiceList = additionalServiceList;
     }
 }

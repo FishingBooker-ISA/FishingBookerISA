@@ -15,7 +15,9 @@
         </a>
       </div>
       <div class="propertyLocation">
-        <button class="btn btn-primary">Add photos</button>
+        <button class="btn btn-primary" (click)="viewImages()">
+          Add photos
+        </button>
       </div>
     </div>
     <!-- END OF TITLE AND LOCATION -->
@@ -131,17 +133,6 @@
                 </textarea>
               </td>
             </tr>
-            <tr>
-              <td>Additional equipment</td>
-              <td>
-                <textarea
-                  class="text-start"
-                  name="additionalEquipment"
-                  [(ngModel)]="adventure.additionalEquipment"
-                >
-                </textarea>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -150,12 +141,7 @@
         <mat-error *ngIf="hasErrors()">Field can't be empty! </mat-error>
         <div>
           <div class="col mt-1 d-inline-flex justify-content-center">
-            <button
-              type="button"
-              class="btn me-4"
-              style="background: #ecbeb1"
-              (click)="saveChanges()"
-            >
+            <button type="button" class="btn me-4" (click)="saveChanges()">
               Save
             </button>
             <button

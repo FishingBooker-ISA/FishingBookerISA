@@ -2,6 +2,7 @@ package app.service;
 
 import app.domain.*;
 import app.dto.NewAdventureDTO;
+import app.repository.AdditionalServiceRepository;
 import app.repository.AddressRepository;
 import app.repository.AdventureRepository;
 import app.repository.ReservationRepository;
@@ -19,6 +20,8 @@ public class ManagingAdventuresService {
     AddressRepository addressRepository;
     AdventureRepository adventureRepository;
     ReservationRepository reservationRepository;
+    @Autowired
+    AdditionalServiceRepository additionalServiceRepository;
 
 
     @Autowired
@@ -54,6 +57,22 @@ public class ManagingAdventuresService {
         );
 
         adventureRepository.save(adventure);
+
+        for (var a : newAdventureDTO.getAdditionalServiceList()) {
+            AdditionalService added = new AdditionalService();
+            AdditionalService existingService = additionalServiceRepository
+                    .getByBookingServiceIdAndName(adventure.getId(), a.getName());
+
+            if (existingService == null) {
+                added.setPrice(a.getPrice());
+                added.setName(a.getName());
+                added.setBookingService(adventure);
+                additionalServiceRepository.save(added);
+            }
+            else {
+                return null;
+            }
+        }
         return adventure;
     }
 

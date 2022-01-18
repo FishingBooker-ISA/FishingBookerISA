@@ -129,7 +129,7 @@ export class EstateProfileComponent implements OnInit {
 
   viewImages(): void {
     const dialogData = new ImagesDialogModel(
-      this.estate
+      this.estate.id
     );
 
     const dialogRef = this.dialog.open(ShowImagesComponent, {
@@ -145,7 +145,7 @@ export class EstateProfileComponent implements OnInit {
 
   editAdditional() {
     const dialogData = new EditAdditionalDialogModel(
-      this.additional, this.estate
+      this.additional, this.estate.id
     );
 
     const dialogRef = this.dialog.open(EditAdditionalServicesComponent, {

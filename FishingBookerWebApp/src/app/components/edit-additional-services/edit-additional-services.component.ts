@@ -13,18 +13,18 @@ import { PromoActionsService } from 'src/app/services/promo-actions.service';
 export class EditAdditionalServicesComponent implements OnInit {
 
   additional!: AdditionalService[]
-  estate!: Estate
   selectedItem!: AdditionalService
   editClicked!: boolean
   newItem!: AdditionalServiceDTO
   addNewItem!: boolean
+  id!: number
 
   constructor(public dialogRef: MatDialogRef<EditAdditionalServicesComponent>, @Inject(MAT_DIALOG_DATA)
   public data: EditAdditionalDialogModel,
     public additionalServices: AdditionalServicesService, public actionServices: PromoActionsService) { }
 
   ngOnInit(): void {
-    this.additional = this.data.additional; this.editClicked = false; this.estate = this.data.estate;
+    this.additional = this.data.additional; this.editClicked = false; this.id = this.data.id;
     this.addNewItem = false; this.newItem = new AdditionalServiceDTO();
   }
 
@@ -39,7 +39,7 @@ export class EditAdditionalServicesComponent implements OnInit {
       id: this.selectedItem.id,
       name: this.selectedItem.name,
       price: this.selectedItem.price,
-      bookingServiceId: this.estate.id
+      bookingServiceId: this.id
     }
 
     if (!this.editClicked)
@@ -51,13 +51,13 @@ export class EditAdditionalServicesComponent implements OnInit {
       id: this.selectedItem.id,
       name: this.selectedItem.name,
       price: this.selectedItem.price,
-      bookingServiceId: this.estate.id
+      bookingServiceId: this.id
     }
 
     this.additionalServices.deleteAdditional(dto);
 
     setTimeout(() => {
-      this.actionServices.getAllAdditionalServices(this.estate.id).subscribe((data) => this.additional = data);
+      this.actionServices.getAllAdditionalServices(this.id).subscribe((data) => this.additional = data);
     }, 500);
   }
 
@@ -68,14 +68,14 @@ export class EditAdditionalServicesComponent implements OnInit {
       id: this.newItem.id,
       name: this.newItem.name,
       price: this.newItem.price,
-      bookingServiceId: this.estate.id
+      bookingServiceId: this.id
     }
 
     if (!this.addNewItem) {
       this.additionalServices.addAdditional(dto);
 
       setTimeout(() => {
-        this.actionServices.getAllAdditionalServices(this.estate.id).subscribe((data) => this.additional = data);
+        this.actionServices.getAllAdditionalServices(this.id).subscribe((data) => this.additional = data);
       }, 500);
     }
   }
@@ -97,7 +97,7 @@ export class EditAdditionalServicesComponent implements OnInit {
 export class EditAdditionalDialogModel {
   constructor(
     public additional: AdditionalService[],
-    public estate: Estate
+    public id: number
   ) { }
 }
 

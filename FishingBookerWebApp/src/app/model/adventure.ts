@@ -1,3 +1,4 @@
+import { AdditionalServiceDTO } from "./additional-service"
 import { Address, ServiceType } from "./estate"
 
 export class Adventure {
@@ -7,7 +8,6 @@ export class Adventure {
     pricePerDay!: number
     description!: string
     termsOfUse!: string
-    additionalEquipment!: string
     availableFrom!: Date
     availableTo!: Date
     capacity!: number
@@ -33,4 +33,5 @@ export class createAdventureDTO {
     city!: string
     country!: string
     postcode!: number
+    additionalServiceList = [] as AdditionalServiceDTO[]
 }

@@ -78,9 +78,8 @@ INSERT INTO report (
     id, client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)
 VALUES (1, false, DATE '2021-12-17', false, true, 'Left a huge mess.', 1);
 
-INSERT INTO additional_service (
-    id, name, price, service_id)
-VALUES (1, 'WiFi', 0, 6), (2, 'Iron', 10, 6), (3, 'Air Conditioning', 0, 6), (4, 'TV', 10, 6), (5, 'WiFi', 0, 6), (6, 'Parking', 10, 6);
+INSERT INTO additional_service ( name, price, service_id)
+VALUES ('WiFi', 0, 6), ('Iron', 10, 6), ('Air Conditioning', 0, 6), ('TV', 10, 6), ('WiFi', 0, 6), ('Parking', 10, 6);
 --unavailable periods
 INSERT INTO unavailable_period(end_date, start_date, service_id)
 VALUES (DATE '2022-02-01', '2022-01-29', 6);
