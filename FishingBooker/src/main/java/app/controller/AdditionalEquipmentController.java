@@ -33,7 +33,7 @@ public class AdditionalEquipmentController {
     private static final String UNAUTHORIZED = "Unauthorized access!";
 
     @GetMapping(value = "/getAdditionalForService", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<List<AdditionalService>> getAllByService(int id, Principal user) {
         BookingService existing = serviceRepository.getById(id);
         User currentUser = userService.findByEmail(user.getName());
@@ -46,7 +46,7 @@ public class AdditionalEquipmentController {
     }
 
     @PutMapping(value = "/updateAdditionalEquipment", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> update(@RequestBody AdditionalEquipmentDTO dto, Principal user) {
         BookingService existing = serviceRepository.getById(dto.getBookingServiceId());
         User currentUser = userService.findByEmail(user.getName());
@@ -74,7 +74,7 @@ public class AdditionalEquipmentController {
     }
 
     @PostMapping(value = "/addAdditionalEquipment", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> add(@RequestBody AdditionalEquipmentDTO dto, Principal user) {
         BookingService existing = serviceRepository.getById(dto.getBookingServiceId());
         User currentUser = userService.findByEmail(user.getName());

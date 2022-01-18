@@ -14,10 +14,22 @@ public class Ship extends BookingService {
     @Column(nullable = true)
     private double maxSpeed;
     @Column(nullable = true)
-    private ShipType type;
+    private ShipType shipType;
 
 
     public Ship() {
+    }
+
+    public Ship(ServiceType type, String name, double pricePerDay, String description, String termsOfUse, int capacity,
+                boolean isPercentageTakenFromCanceledReservations, double percentageToTake, User owner, Address address,
+                double length, int numOfEngines, double powerOfEngines, double maxSpeed, ShipType type1) {
+        super(type, name, pricePerDay, description, termsOfUse, capacity, isPercentageTakenFromCanceledReservations,
+                percentageToTake, owner, address);
+        this.length = length;
+        this.numOfEngines = numOfEngines;
+        this.powerOfEngines = powerOfEngines;
+        this.maxSpeed = maxSpeed;
+        this.shipType = type1;
     }
 
     public Ship(double length, int numOfEngines) {
@@ -57,7 +69,7 @@ public class Ship extends BookingService {
         this.maxSpeed = maxSpeed;
     }
 
-    public void setType(ShipType type) {
-        this.type = type;
+    public void setShipType(ShipType shipType) {
+        this.shipType = shipType;
     }
 }

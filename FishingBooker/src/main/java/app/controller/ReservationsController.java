@@ -55,7 +55,7 @@ public class ReservationsController {
             return new ResponseEntity<>("Client doesn't have any lasting reservations!", HttpStatus.BAD_REQUEST);
 
         if (!currentUser.getId().equals(service.getOwner().getId()))
-            return new ResponseEntity<>("Logged in user isn't the owner of estate!", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Logged in user isn't the owner of service!", HttpStatus.UNAUTHORIZED);
 
         if (!client.getRole().getName().equals("ROLE_CLIENT"))
             return new ResponseEntity<>("User must be a client!", HttpStatus.BAD_REQUEST);
@@ -104,7 +104,7 @@ public class ReservationsController {
     }
 
     @GetMapping(value = "/getUserInformation", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + "|| hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<User> getUserInformation(int reservationId, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         Reservation reservation = reservationRepository.getById(reservationId);
