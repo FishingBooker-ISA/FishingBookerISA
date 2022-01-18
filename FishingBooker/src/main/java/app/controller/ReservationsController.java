@@ -94,8 +94,10 @@ public class ReservationsController {
             return new ResponseEntity<>("Unauthorized access!", HttpStatus.UNAUTHORIZED);
 
         try {
-            reportService.createReport(reportDTO);
-            return new ResponseEntity<>("Report successfully submitted", HttpStatus.OK);
+            if (reportService.createReport(reportDTO) == null)
+                return new ResponseEntity<>("Report already exists!", HttpStatus.BAD_REQUEST);
+            else
+                return new ResponseEntity<>("Report successfully submitted", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

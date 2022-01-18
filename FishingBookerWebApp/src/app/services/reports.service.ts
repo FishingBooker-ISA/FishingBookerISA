@@ -30,16 +30,6 @@ export class ReportsService {
   }
 
   public createReport(review : ReportDTO){
-    return this.http
-      .post(
-        `${environment.baseUrl}` + 'api/reservations/createReport',
-       review
-      )
-      .subscribe((response) => {
-        console.log('response received');
-      },
-      (error) => {
-        console.error('error caught in component');
-      });
+    return this.http.post(`${environment.baseUrl}` + 'api/reservations/createReport', review, { observe: 'response', responseType: 'text' });
   }
 }
