@@ -29,7 +29,7 @@ public class PromoActionController {
     private ServiceRepository serviceRepository;
 
     @GetMapping(value = "/getAllActionsForService", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<List<PromoAction>> getActionsForService(int id, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         BookingService service = serviceRepository.getById(id);
@@ -42,7 +42,7 @@ public class PromoActionController {
     }
 
     @PostMapping(value = "/addPromoAction", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> createNewPromoAction(@Valid @RequestBody PromoActionDTO dto, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         BookingService service = serviceRepository.getById(dto.getBookingServiceId());
@@ -64,7 +64,7 @@ public class PromoActionController {
     }
 
     @PutMapping(value = "/updatePromoAction", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> updatePromoAction(@Valid @RequestBody PromoActionDTO dto, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         BookingService service = serviceRepository.getById(dto.getBookingServiceId());

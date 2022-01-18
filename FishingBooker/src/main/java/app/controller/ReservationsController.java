@@ -102,7 +102,7 @@ public class ReservationsController {
     }
 
     @GetMapping(value = "/getUserInformation", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<User> getUserInformation(int reservationId, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         Reservation reservation = reservationRepository.getById(reservationId);

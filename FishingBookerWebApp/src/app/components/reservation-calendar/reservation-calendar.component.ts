@@ -18,7 +18,7 @@ import { UnavailablePeriodDialogComponent, UnavailablePeriodDialogModel } from '
 })
 export class ReservationCalendarComponent implements OnInit {
   @Input()
-  estate!: Estate
+  id!: number
   @Input()
   calendarView!: boolean
 
@@ -90,7 +90,7 @@ export class ReservationCalendarComponent implements OnInit {
         let dto: UnavailablePeriodDTO = {
           start: dialogResult.start,
           end: dialogResult.end,
-          serviceId: this.estate.id
+          serviceId: this.id
         }
 
         this.reservationService.addUnavailablePeriod(dto).subscribe(
@@ -111,7 +111,7 @@ export class ReservationCalendarComponent implements OnInit {
   }
 
   getAllPromoActions() {
-    this.actionsService.getAllActionsForService(this.estate.id).subscribe((data) => {
+    this.actionsService.getAllActionsForService(this.id).subscribe((data) => {
       this.actions = data
 
       for (let a of this.actions) {
@@ -127,7 +127,7 @@ export class ReservationCalendarComponent implements OnInit {
   }
 
   getAllReservations() {
-    this.reservationService.getAllReservationsForService(this.estate.id).subscribe((data) => {
+    this.reservationService.getAllReservationsForService(this.id).subscribe((data) => {
       this.reservations = data
 
       for (let r of this.reservations) {
@@ -143,7 +143,7 @@ export class ReservationCalendarComponent implements OnInit {
   }
 
   getAllUnavailable() {
-    this.reservationService.getAllUnavailablePeriods(this.estate.id).subscribe((data) => {
+    this.reservationService.getAllUnavailablePeriods(this.id).subscribe((data) => {
       this.unavailable = data
 
       for (let r of this.unavailable) {

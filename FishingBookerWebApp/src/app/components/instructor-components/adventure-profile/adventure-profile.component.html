@@ -116,7 +116,10 @@
         </div>
       </div>
     </div>
-    <div class="additionalInfo mt-5" *ngIf="!createReservation">
+    <div
+      class="additionalInfo mt-5 bg-light"
+      *ngIf="!createReservation && !promoActions && !calendarView"
+    >
       <div class="row">
         <div class="col-md-4">
           <div class="row description d-flex">
@@ -201,12 +204,26 @@
     </div>
   </div>
   <!-- END OF GENERAL INFO -->
-</div>
 
-<app-create-reservation-instructor
-  class="bg-light"
-  *ngIf="createReservation"
-  [adventure]="adventure"
-  [createReservation]="createReservation"
-  (cancelEvent)="createReservation = $event"
-></app-create-reservation-instructor>
+  <app-create-reservation-instructor
+    class="bg-light"
+    *ngIf="createReservation"
+    [adventure]="adventure"
+    [createReservation]="createReservation"
+    (cancelEvent)="createReservation = $event"
+  ></app-create-reservation-instructor>
+  <app-promo-actions
+    class="bg-light"
+    *ngIf="promoActions"
+    [id]="adventure.id"
+    [promoActions]="promoActions"
+  >
+  </app-promo-actions>
+  <app-reservation-calendar
+    class="bg-light"
+    *ngIf="calendarView"
+    [id]="adventure.id"
+    [calendarView]="calendarView"
+  >
+  </app-reservation-calendar>
+</div>

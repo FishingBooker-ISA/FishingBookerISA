@@ -12,7 +12,7 @@ import { PromoActionsService } from 'src/app/services/promo-actions.service';
 export class PromoActionsComponent implements OnInit {
 
   @Input()
-  estate!: Estate
+  id!: number
   @Input()
   promoActions!: boolean
   createMode!: boolean
@@ -26,11 +26,11 @@ export class PromoActionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.createMode = false
-    this.actionsService.getAllActionsForService(this.estate.id).subscribe((data) =>
+    this.actionsService.getAllActionsForService(this.id).subscribe((data) =>
       this.actions = data
     );
 
-    this.actionsService.getAllAdditionalServices(this.estate.id).subscribe((data) => this.additional = data);
+    this.actionsService.getAllAdditionalServices(this.id).subscribe((data) => this.additional = data);
     this.newAction = new PromoAction();
 
 
@@ -58,7 +58,7 @@ export class PromoActionsComponent implements OnInit {
       additional: text,
       startDate: this.newAction.startDate,
       endDate: this.newAction.endDate,
-      bookingServiceId: this.estate.id,
+      bookingServiceId: this.id,
       additionalServices: this.additionalForPromo
     }
     console.log(action);
@@ -66,7 +66,7 @@ export class PromoActionsComponent implements OnInit {
 
     setTimeout(() => {
       this.createMode = false
-      this.actionsService.getAllActionsForService(this.estate.id).subscribe((data) =>
+      this.actionsService.getAllActionsForService(this.id).subscribe((data) =>
         this.actions = data)
     }, 500);
   }

@@ -51,24 +51,26 @@ export class AdventureProfileComponent implements OnInit {
   editAdventure() {
     this.editingMode = true;
     this.createReservation = false;
+    this.calendarView = false;
+    this.promoActions = false;
   }
 
   createAction() {
     this.promoActions = true;
     this.createReservation = false;
+    this.calendarView = false
   }
 
   createNewReservation(){
     this.createReservation = true;
     this.promoActions = false;
-    this.editingMode = false;
     this.calendarView = false;
   }
 
   viewCalendar() {
     this.calendarView = true;
     this.promoActions = false;
-    this.editingMode = false;
+    this.createReservation = false;
   }
 
   deleteAdventure() {
