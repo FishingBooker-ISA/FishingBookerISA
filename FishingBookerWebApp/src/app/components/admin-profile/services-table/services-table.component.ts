@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BookingService } from 'src/app/model/booking-service';
 import { ServiceType } from 'src/app/model/estate';
 import { AdminRequestsService } from 'src/app/services/admin-requests.service';
@@ -14,7 +15,7 @@ export class ServicesTableComponent implements OnInit {
   filteredServices! : BookingService[];
   selectedService!: BookingService;
 
-  constructor(public service: AdminRequestsService) { 
+  constructor(public service: AdminRequestsService, private _snackBar: MatSnackBar) { 
 
   }
 
@@ -47,8 +48,24 @@ export class ServicesTableComponent implements OnInit {
   }
 
   deleteService(){
-    this.service.deleteUser(this.selectedService.id);
-    window.location.reload();
+    this.service.deleteService(this.selectedService.id).subscribe(
+      (data) => {
+        this._snackBar.open('Service deleted.', 'Dissmiss', {
+          duration: 3000
+        });
+
+        setTimeout(() => {
+        }, 1000);
+        this.service.getAllServices().subscribe( res => {
+          this.allServices = res;
+        });
+      },
+      (error) => {
+        this._snackBar.open('Service has reservations and can not be deleted!', 'Dissmiss', {
+          duration: 3000
+        });
+      });;;
+      
   }
 
 }

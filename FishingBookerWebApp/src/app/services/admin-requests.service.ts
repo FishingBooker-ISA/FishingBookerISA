@@ -106,4 +106,8 @@ export class AdminRequestsService {
   public getAllServices() : Observable<BookingService[]> {
     return this.http.get<BookingService[]>(`${environment.baseUrl}` + 'api/services/getAllServices');
   }
+
+  public deleteService(serviceId: number){
+    return this.http.post(`${environment.baseUrl}` + 'api/services/deleteService',  serviceId, { observe: 'response', responseType: 'text' });
+  }
 }

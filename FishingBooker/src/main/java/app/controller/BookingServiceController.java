@@ -1,11 +1,19 @@
 package app.controller;
 
+import app.domain.Adventure;
 import app.domain.BookingService;
+import app.domain.User;
 import app.repository.ServiceRepository;
+import app.service.ManagingAdventuresService;
 import app.service.ManagingReservationsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +34,18 @@ public class BookingServiceController {
 
     @PostMapping(value = "/deleteService")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public void deleteService(@RequestBody int serviceId){
-        this.serviceRepository.deleteById(serviceId);
+    public ResponseEntity<String> deleteService(@RequestBody int serviceId){
+
+        if(managingReservationsService.hasAnyReservations(serviceId)) {
+            return new ResponseEntity<>("Service has reservations and can't be deleted!", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            this.serviceRepository.deleteById(serviceId);
+            return new ResponseEntity<>("Services updated!", HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
