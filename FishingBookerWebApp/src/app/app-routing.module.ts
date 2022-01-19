@@ -54,7 +54,7 @@ const routes: Routes = [
   { path: 'boats', component: BoatsComponent },
   { path: 'fishing-instructors', component: FishingInstructorsComponent },
   { path: 'edit', component: EditEstateComponent },
-   { path: 'instructor/home', component: InstructorAdventuresComponent },
+  { path: 'instructor/home', component: InstructorAdventuresComponent },
   { path: 'edit', component: EditEstateComponent, canActivate: [EstateOwnerAuthGuard] },
   { path: 'adventure/:id', component: AdventureProfileComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

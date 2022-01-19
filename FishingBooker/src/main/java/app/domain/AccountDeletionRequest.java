@@ -8,11 +8,11 @@ public class AccountDeletionRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date requestedDate;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String reason;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private boolean isReviewed;
     @Column(nullable = true)
     private boolean isDenied;
