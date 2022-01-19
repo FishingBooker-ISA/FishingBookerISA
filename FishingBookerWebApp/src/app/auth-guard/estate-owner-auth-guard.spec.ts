@@ -1,4 +1,4 @@
-import { EstateOwnerAuthGuard } from './estate-owner-auth-guard';
+import { EstateOwnerAuthGuard } from "./estate-owner-auth-guard";
 
 describe('EstateOwnerAuthGuard', () => {
   it('should create an instance', () => {

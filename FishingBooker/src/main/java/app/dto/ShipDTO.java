@@ -22,7 +22,7 @@ public class ShipDTO {
     private double maxSpeed;
     private boolean isPercentageTakenFromCanceledReservations;
     private double percentageToTake;
-    private ShipType type;
+    private ShipType shipType;
     private List<NavigationToolDTO> navigationTools;
     private List<AdditionalEquipmentDTO> additionalEquipmentList;
 
@@ -178,11 +178,11 @@ public class ShipDTO {
         this.percentageToTake = percentageToTake;
     }
 
-    public ShipType getType() {
-        return type;
+    public ShipType getShipType() {
+        return shipType;
     }
 
-    public void setType(ShipType type) {
-        this.type = type;
+    public void setShipType(ShipType shipType) {
+        this.shipType = shipType;
     }
 }

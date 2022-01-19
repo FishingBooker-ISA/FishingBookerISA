@@ -48,7 +48,7 @@ public class ManagingShipsService {
 
         Ship ship = new Ship(ServiceType.SHIP, dto.getName(), dto.getPricePerDay(), dto.getDescription(), dto.getTermsOfUse(),
                 dto.getCapacity(), dto.getIsPercentageTakenFromCanceledReservations(), dto.getPercentageToTake(),
-                user, newAddress, dto.getLength(), dto.getNumOfEngines(), dto.getPowerOfEngines(), dto.getMaxSpeed(), dto.getType());
+                user, newAddress, dto.getLength(), dto.getNumOfEngines(), dto.getPowerOfEngines(), dto.getMaxSpeed(), dto.getShipType());
 
         shipRepository.save(ship);
 
@@ -114,10 +114,11 @@ public class ManagingShipsService {
         ship.setPercentageToTake(dto.getPercentageToTake());
         ship.setOwner(owner);
         ship.setLength(dto.getLength());
-        ship.setShipType(dto.getType());
+        ship.setShipType(dto.getShipType());
         ship.setMaxSpeed(dto.getMaxSpeed());
         ship.setNumOfEngines(dto.getNumOfEngines());
         ship.setPowerOfEngines(dto.getPowerOfEngines());
+        ship.setShipType(dto.getShipType());
         return ship;
     }
 

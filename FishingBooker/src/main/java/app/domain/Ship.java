@@ -37,6 +37,10 @@ public class Ship extends BookingService {
         this.numOfEngines = numOfEngines;
     }
 
+    public ShipType getShipType() {
+        return shipType;
+    }
+
     public double getLength() {
         return length;
     }

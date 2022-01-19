@@ -35,7 +35,7 @@ export class ReservationsService {
   }
 
   getAllUnavailablePeriods(id: number): Observable<UnavailablePeriod[]> {
-    return this.http.get<UnavailablePeriod[]>(`${environment.baseUrl}` + 'api/estates/getAllUnavailablePeriods', {
+    return this.http.get<UnavailablePeriod[]>(`${environment.baseUrl}` + 'api/unavailable/getAllUnavailablePeriods', {
       params: {
         id: id
       }
@@ -43,6 +43,6 @@ export class ReservationsService {
   }
 
   addUnavailablePeriod(dto: UnavailablePeriodDTO) {
-    return this.http.post(`${environment.baseUrl}` + 'api/estates/addUnavailablePeriod', dto, { observe: 'response', responseType: 'text' });
+    return this.http.post(`${environment.baseUrl}` + 'api/unavailable/addUnavailablePeriod', dto, { observe: 'response', responseType: 'text' });
   }
 }
