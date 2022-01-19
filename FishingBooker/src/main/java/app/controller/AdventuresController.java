@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.domain.Adventure;
-import app.domain.BookingService;
 import app.domain.User;
 import app.dto.NewAdventureDTO;
 import app.dto.ServiceWithRatingDTO;
@@ -32,8 +31,6 @@ public class AdventuresController {
     private AdventureRepository adventuresRepository;
     @Autowired
     private RatingsService ratingService;
-    @Autowired
-    private ServiceRepository serviceRepository;
 
     @GetMapping(value = "/getAdventuresForInstructor", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_INSTRUCTOR')")

@@ -1,19 +1,13 @@
 package app.controller;
 
-import app.domain.Adventure;
 import app.domain.BookingService;
-import app.domain.User;
 import app.repository.ServiceRepository;
-import app.service.ManagingAdventuresService;
 import app.service.ManagingReservationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

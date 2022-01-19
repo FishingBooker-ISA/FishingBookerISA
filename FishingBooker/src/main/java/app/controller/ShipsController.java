@@ -1,7 +1,8 @@
 package app.controller;
 
-import app.domain.*;
-import app.dto.AdditionalEquipmentDTO;
+import app.domain.Ship;
+import app.domain.ShipNavigationTool;
+import app.domain.User;
 import app.dto.NavigationToolDTO;
 import app.dto.ShipDTO;
 import app.repository.ShipNavigationToolRepository;
