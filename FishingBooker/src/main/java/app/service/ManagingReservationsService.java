@@ -64,7 +64,7 @@ public class ManagingReservationsService {
 
         Reservation newReservation = getReservation(reservationDTO);
         reservationRepository.save(newReservation);
-        //sendConfirmationMail(newReservation);
+        sendConfirmationMail(newReservation);
         return newReservation;
     }
 

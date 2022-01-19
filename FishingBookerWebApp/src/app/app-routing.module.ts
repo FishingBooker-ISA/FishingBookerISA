@@ -28,6 +28,8 @@ import { NewReportComponent } from './components/instructor-components/new-repor
 import { LoginComponent } from './components/login/login.component';
 import { OwnerProfileComponent } from './components/owner-profile/owner-profile.component';
 import { RatingsReviewComponent } from './components/ratings-review/ratings-review.component';
+import { ShipOwnerHomepageComponent } from './components/ship-owner-homepage/ship-owner-homepage.component';
+import { ShipProfileComponent } from './components/ship-profile/ship-profile.component';
 import { SignupOwnersComponent } from './components/signup-owners/signup-owners.component';
 import { SignupComponent } from './components/signup/signup.component';
 
@@ -57,7 +59,9 @@ const routes: Routes = [
   { path: 'instructor/home', component: InstructorAdventuresComponent, canActivate: [InstructorGuard] },
   { path: 'adventure/:id', component: AdventureProfileComponent, canActivate: [InstructorGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'profile', component: OwnerProfileComponent }
+  { path: 'profile', component: OwnerProfileComponent },
+  { path: 'shipOwner/home', component: ShipOwnerHomepageComponent },
+  { path: 'ship/:id', component: ShipProfileComponent }
 ];
 
 @NgModule({

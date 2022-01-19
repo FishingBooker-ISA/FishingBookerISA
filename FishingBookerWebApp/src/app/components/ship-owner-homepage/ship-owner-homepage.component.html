@@ -1,4 +1,4 @@
-<app-estate-owner-navbar></app-estate-owner-navbar>
+<app-ship-owner-navbar></app-ship-owner-navbar>
 
 <div class="homepage">
   <div class="overlay">
@@ -19,39 +19,41 @@
       <div class="section-title mb-3 ms-3" style="display: inline-flex; width: 100%">
         <h2>Villas</h2>
         <div class="textField" style="margin-left: auto; margin-right: 3%">
-          <input type="search" placeholder="search..." [(ngModel)]="searchEstates" (input)="searchEstatesByName()" />
+          <input type="search" placeholder="search..." [(ngModel)]="searchShips" (input)="searchShipsByName()" />
         </div>
       </div>
 
       <div class="row mt-2 g-4">
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" *ngFor="let estate of ownersEstates">
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" *ngFor="let ship of ownersShips">
           <div class="box card">
             <div class="cover">
-              <img src="../../../assets/img/estate1.jpg" alt="Property photo" class="img-responsive cover" />
+              <img src="../../../assets/img/background1.jpg" alt="Property photo" class="img-responsive cover" />
             </div>
             <div class="propertyInfo">
               <h4 class="row">
                 <div class="col-md" style="text-align: start">
-                  <h4 id="propertyName">{{ estate.name }}</h4>
+                  <h4 id="propertyName">{{ ship.name }}</h4>
                 </div>
 
                 <div class="price col-md" style="text-align: end">
-                  <span> €{{ estate.pricePerDay }} </span>
+                  <span> €{{ ship.pricePerDay }} </span>
                 </div>
               </h4>
-              <span>{{ estate.description }}</span>
+              <span>{{ ship.description }}</span>
               <br />
               <div class="row mt-2">
                 <div class="col-md">
-                  <span><b>{{ estate.numOfRooms }} </b> rooms</span>
+                  <span><b>{{ ship.numOfEngines }} </b> engines</span>
                 </div>
                 <div class="col-md">
-                  <span><b>{{ estate.numOfBeds }} </b> beds</span>
+                  <span *ngIf="ship.shipType === shipType.BOAT"><b>BOAT</b></span>
+                  <span *ngIf="ship.shipType === shipType.YACHT"><b>YACHT </b> beds</span>
+                  <span *ngIf="ship.shipType === shipType.SMALL_SHIP"><b>SMALL SHIP </b> beds</span>
                 </div>
                 <div class="col-md"></div>
               </div>
             </div>
-            <a class="stretched-link" (click)="openEstate(estate.id)"></a>
+            <a class="stretched-link" (click)="openShip(ship.id)"></a>
           </div>
         </div>
       </div>

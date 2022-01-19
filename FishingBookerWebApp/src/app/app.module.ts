@@ -75,6 +75,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { UnavailablePeriodDialogComponent } from './components/reservation-calendar/unavailable-period-dialog/unavailable-period-dialog.component';
 import { DetailsDialogComponent } from './components/reservation-calendar/details-dialog/details-dialog.component';
+import { ShipOwnerHomepageComponent } from './components/ship-owner-homepage/ship-owner-homepage.component';
+import { ShipOwnerNavbarComponent } from './components/ship-owner-navbar/ship-owner-navbar.component';
+import { ShipProfileComponent } from './components/ship-profile/ship-profile.component';
+import { EditShipProfileComponent } from './components/ship-profile/edit-ship-profile/edit-ship-profile.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -135,6 +139,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ReservationCalendarComponent,
     UnavailablePeriodDialogComponent,
     DetailsDialogComponent,
+    ShipOwnerHomepageComponent,
+    ShipOwnerNavbarComponent,
+    ShipProfileComponent,
+    EditShipProfileComponent,
   ],
   imports: [
     BrowserModule,

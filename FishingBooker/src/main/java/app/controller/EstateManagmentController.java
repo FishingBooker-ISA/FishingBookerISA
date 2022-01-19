@@ -2,11 +2,9 @@ package app.controller;
 
 import app.domain.BookingService;
 import app.domain.Estate;
-import app.domain.UnavailablePeriod;
 import app.domain.User;
 import app.dto.NewEstateDTO;
 import app.dto.ServiceWithRatingDTO;
-import app.dto.UnavailablePeriodDTO;
 import app.repository.EstateRepository;
 import app.repository.ServiceRepository;
 import app.repository.UnavailablePeriodRepository;
@@ -149,27 +147,6 @@ public class EstateManagmentController {
         return foundEstates;
     }
 
-    @PostMapping(value = "/addUnavailablePeriod", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
-    public ResponseEntity<String> addUnavailablePeriod(@RequestBody UnavailablePeriodDTO dto, Principal user) {
-        User currentUser = this.userService.findByEmail(user.getName());
-        BookingService estate = serviceRepository.getById(dto.getServiceId());
-
-        if(!estate.getOwner().getId().equals(currentUser.getId())) {
-            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
-        }
-
-        try {
-            if (reservationsService.addUnavailablePeriod(dto) != null)
-                return new ResponseEntity<>("New unavailable period created!", HttpStatus.OK);
-            else
-                return new ResponseEntity<>("Entered dates overlap with existing reservation!", HttpStatus.BAD_REQUEST);
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ServiceWithRatingDTO> getAll(){
         List<Estate> allEstates = managingEstateService.getAll();
@@ -202,23 +179,6 @@ public class EstateManagmentController {
             result.add(service);
         }
         return result;
-    }
-
-    @GetMapping(value = "/getAllUnavailablePeriods", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
-    public ResponseEntity<List<UnavailablePeriod>> getAll(int id, Principal user) {
-        BookingService bookingService = serviceRepository.getById(id);
-        User currentUser = userService.findByEmail(user.getName());
-
-        if(!currentUser.getId().equals(bookingService.getOwner().getId())){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        try {
-            return new ResponseEntity<>(unavailablePeriodRepository.findAllByServiceId(id), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
 }
