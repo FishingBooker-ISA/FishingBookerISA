@@ -1,87 +1,64 @@
-<div class="row bg-light">
-  <div class="col-10 mx-auto">
-    <div class="card tableContainer shadow-sm my-3">
-      <div class="d-flex justify-content-center my-5">
-        <h3 style="font-weight: bold">Create New Reservation</h3>
-      </div>
-      <div class="row" style="height: 300px">
-        <div class="col-12 mx-auto">
-          <div style="height: 300px; overflow: none" id="table">
-            <div class="row justify-content-center">
-              <div class="col-md-5 justify-content-center">
-                <div class="d-inline-flex">
-                  <label for="start" class="mt-3 me-5">Period</label>
-                  <mat-form-field>
-                    <mat-label>Enter a date range</mat-label>
-                    <mat-date-range-input [rangePicker]="picker">
-                      <input
-                        matStartDate
-                        name="start"
-                        [(ngModel)]="startDate"
-                      />
-                      />
-                      <input matEndDate name="end" [(ngModel)]="endDate" /> />
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle
-                      matSuffix
-                      [for]="picker"
-                    ></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-                  </mat-form-field>
-                </div>
+<div class="container bg-light">
+  <div class="row bg-light">
+    <div class="col-10 mx-auto">
+      <div class="card tableContainer shadow-sm my-3">
+        <div class="d-flex justify-content-center my-5">
+          <h3 style="font-weight: bold">Create New Reservation</h3>
+        </div>
+        <div class="row" style="height: 300px">
+          <div class="col-12 mx-auto">
+            <div style="height: 300px; overflow: none" id="table">
+              <div class="row justify-content-center">
+                <div class="col-md-5 justify-content-center">
+                  <div class="d-inline-flex">
+                    <label for="start" class="mt-3 me-5">Period</label>
+                    <mat-form-field>
+                      <mat-label>Enter a date range</mat-label>
+                      <mat-date-range-input [rangePicker]="picker" [min]="todayDate">
+                        <input matStartDate name="start" [(ngModel)]="startDate" />
+                        />
+                        <input matEndDate name="end" [(ngModel)]="endDate" /> />
+                      </mat-date-range-input>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                  </div>
 
-                <div class="d-inline-flex">
-                  <label for="start" class="mt-3 me-5">Client</label>
-                  <mat-form-field>
-                    <input
-                      matInput
-                      type="text"
-                      [(ngModel)]="clientName"
-                      disabled="true"
-                    />
-                  </mat-form-field>
-                </div>
+                  <div class="d-inline-flex">
+                    <label for="start" class="mt-3 me-5">Client</label>
+                    <mat-form-field>
+                      <input matInput type="text" [(ngModel)]="clientName" disabled="true" />
+                    </mat-form-field>
+                  </div>
 
-                <div class="d-inline-flex">
-                  <label for="start" class="mt-3 me-5">Additional</label>
-                  <span class="example-list-section">
-                    <div
-                      class="checkbox-column"
-                      *ngFor="let item of additional"
-                    >
-                      <mat-checkbox (click)="addToList(item)">
-                        {{ item.name }} <span ms-2></span> {{ item.price }}e
-                      </mat-checkbox>
-                    </div>
-                  </span>
+                  <div class="d-inline-flex">
+                    <label for="start" class="mt-3 me-5">Additional</label>
+                    <span class="example-list-section">
+                      <div class="checkbox-column" *ngFor="let item of additional">
+                        <mat-checkbox (click)="addToList(item)">
+                          {{ item.name }} <span ms-2></span> {{ item.price }}e
+                        </mat-checkbox>
+                      </div>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="mt-5" style="margin: auto; width: 20%">
-              <div>
-                <div class="col mt-1 d-inline-flex justify-content-center">
-                  <button
-                    type="button"
-                    class="btn me-4"
-                    (click)="save()"
-                    [disabled]="
-                      startDate == undefined ||
-                      endDate == undefined ||
-                      clientName == undefined ||
-                      clientName == ''
-                    "
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    class="btn"
-                    style="background: #ecbeb1"
-                    (click)="cancel()"
-                  >
-                    Cancel
-                  </button>
+              <div class="mt-4" style="margin: auto; width: 10%">
+                <div>
+                  <div class="col mt-1 d-inline-flex justify-content-center">
+                    <button type="button" class="btn me-4" (click)="save()" [disabled]="
+                        startDate == undefined ||
+                        endDate == undefined ||
+                        clientName == undefined ||
+                        clientName == ''
+                      ">
+                      Save
+                    </button>
+                    <button type="button" class="btn" style="background: #ecbeb1" (click)="cancel()">
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,4 +67,5 @@
       </div>
     </div>
   </div>
+
 </div>

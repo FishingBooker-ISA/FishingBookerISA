@@ -5,13 +5,14 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdditionalService } from 'src/app/model/additional-service';
 import { Image } from 'src/app/model/image';
-import { Ship, ShipNavigationTool } from 'src/app/model/ship';
+import { Ship, NavigationToolDTO, ShipNavigationTool } from 'src/app/model/ship';
 import { ManagingImagesService } from 'src/app/services/managing-images.service';
 import { ManagingShipsService } from 'src/app/services/managing-ships-service.service';
 import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { EditAdditionalDialogModel, EditAdditionalServicesComponent } from '../edit-additional-services/edit-additional-services.component';
 import { ImagesDialogModel, ShowImagesComponent } from '../show-images/show-images.component';
+import { EditNavigationToolsComponent, EditNavigationToolsDialog } from './edit-navigation-tools/edit-navigation-tools.component';
 
 @Component({
   selector: 'app-ship-profile',
@@ -29,7 +30,7 @@ export class ShipProfileComponent implements OnInit {
   ship!: Ship
   imgSrc!: any
   additional!: AdditionalService[]
-  navigationTools!: ShipNavigationTool[]
+  navigationTools = [] as ShipNavigationTool[]
 
   constructor(private route: ActivatedRoute, public managingShipService: ManagingShipsService, private router: Router,
     public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
@@ -46,6 +47,7 @@ export class ShipProfileComponent implements OnInit {
     this.calendarView = false
     this.managingShipService.getShipById(this.shipId).subscribe((data) => this.ship = data);
     this.actionsService.getAllAdditionalServices(this.shipId).subscribe((data) => this.additional = data);
+    this.managingShipService.getAllNavigationTools(this.shipId).subscribe((data) => this.navigationTools = data);
     this.imageFromDatabase();
   }
 
@@ -56,6 +58,8 @@ export class ShipProfileComponent implements OnInit {
   createAction() {
     this.promoActions = true;
     this.createReservation = false;
+    this.editingMode = false;
+    this.calendarView = false;
   }
 
   createNewReservation() {
@@ -69,6 +73,7 @@ export class ShipProfileComponent implements OnInit {
     this.calendarView = true;
     this.promoActions = false;
     this.editingMode = false;
+    this.createReservation = false;
   }
 
   deleteShip() {
@@ -129,7 +134,7 @@ export class ShipProfileComponent implements OnInit {
   }
 
   viewImages(): void {
-    /*const dialogData = new ImagesDialogModel(
+    const dialogData = new ImagesDialogModel(
       this.ship.id
     );
 
@@ -141,12 +146,12 @@ export class ShipProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((data) => this.imageFromDatabase())
-    dialogRef.backdropClick().subscribe((data) => this.imageFromDatabase())*/
+    dialogRef.backdropClick().subscribe((data) => this.imageFromDatabase())
   }
 
   editAdditional() {
-    /*const dialogData = new EditAdditionalDialogModel(
-      this.additional, this.estate
+    const dialogData = new EditAdditionalDialogModel(
+      this.additional, this.ship.id
     );
 
     const dialogRef = this.dialog.open(EditAdditionalServicesComponent, {
@@ -157,7 +162,23 @@ export class ShipProfileComponent implements OnInit {
 
     dialogRef.backdropClick().subscribe((dialogResult) => {
       this.actionsService.getAllAdditionalServices(this.ship.id).subscribe((data) => this.additional = data);
-    });*/
+    });
+  }
+
+  editTools() {
+    const dialogData = new EditNavigationToolsDialog(
+      this.navigationTools, this.ship.id
+    );
+
+    const dialogRef = this.dialog.open(EditNavigationToolsComponent, {
+      maxWidth: '800px',
+      width: '430px',
+      data: dialogData,
+    });
+
+    dialogRef.backdropClick().subscribe((dialogResult) => {
+      this.managingShipService.getAllNavigationTools(this.ship.id).subscribe((data) => this.navigationTools = data);
+    });
   }
 
 }

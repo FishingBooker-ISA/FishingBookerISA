@@ -76,6 +76,7 @@ public class UserService implements UserDetailsService {
         user.setVerified(true);
         user.setRole(role);
         user.setPhoneNumber(userRequest.getPhoneNumber());
+        user.setShipOwnerRole(userRequest.getShipOwnerRole());
         User newUser = this.userRepository.save(user);
 
         request.setReviewed(false);

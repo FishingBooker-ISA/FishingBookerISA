@@ -16,4 +16,5 @@ export class RegistrationRequest {
   reason!: string;
   role!: string;
   phoneNumber!: string;
+  shipOwnerRole!: number;
 }

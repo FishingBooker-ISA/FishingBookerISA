@@ -60,7 +60,7 @@ public class AdditionalEquipmentController {
     }
 
     @PostMapping(value = "/deleteAdditionalEquipment", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')" + " || hasAuthority('ROLE_SHIP_OWNER')")
     public ResponseEntity<String> delete(@RequestBody AdditionalEquipmentDTO dto, Principal user) {
         BookingService existing = serviceRepository.getById(dto.getBookingServiceId());
         User currentUser = userService.findByEmail(user.getName());

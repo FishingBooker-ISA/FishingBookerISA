@@ -94,6 +94,22 @@
               </td>
             </tr>
             <tr>
+              <td>Role</td>
+              <td>
+                <mat-form-field>
+                  <mat-select required [(ngModel)]="currentUser.shipOwnerRole"
+                    [placeholder]="currentUser.shipOwnerRole.toString()">
+                    <mat-option [value]="0">
+                      Captain
+                    </mat-option>
+                    <mat-option [value]="1">
+                      First assistant
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
               <td class="faded">Email</td>
               <td>
                 <div class="textField">

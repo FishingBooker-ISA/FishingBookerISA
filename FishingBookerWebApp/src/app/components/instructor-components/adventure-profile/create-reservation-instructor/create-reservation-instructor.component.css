@@ -1,6 +1,6 @@
 .tableContainer {
   margin: auto;
-  width: 80%;
+  width: 90%;
   border-radius: 15px;
 }
 
@@ -30,9 +30,9 @@ mat-form-field {
 
 .checkbox-column {
   display: inline-block;
-  width: 25%;
+  width: 38%;
 }
 
 .example-list-section {
-  width: 500px;
+  width: 450px;
 }

@@ -40,6 +40,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   saveChanges() {
+    console.log(this.currentUser.shipOwnerRole);
+
     this.profileService.editUserProfile(this.currentUser);
     window.location.reload()
   }

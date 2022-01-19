@@ -1,6 +1,8 @@
 package app.service;
 
 import app.domain.*;
+import app.dto.AdditionalEquipmentDTO;
+import app.dto.NavigationToolDTO;
 import app.dto.ShipDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,7 @@ public class ManagingShipsService {
                 tool.setName(a.getName());
                 tool.setDescription(a.getDescription());
                 tool.setShip(ship);
+                toolRepository.save(tool);
             }
             else {
                 return null;
@@ -141,6 +144,34 @@ public class ManagingShipsService {
 
     public List<Ship> getAll(){
         return shipRepository.findAll();
+    }
+
+    public void addNavigationTools(NavigationToolDTO dto, Ship existing) {
+        ShipNavigationTool tool = toolRepository
+                .getByNameAndShipId(dto.getName(), existing.getId());
+
+        if (tool == null) {
+            ShipNavigationTool added = new ShipNavigationTool();
+            added.setName(dto.getName());
+            added.setDescription(dto.getDescription());
+            added.setShip(existing);
+            toolRepository.save(added);
+        }
+    }
+
+    public void updateTools(NavigationToolDTO dto, Ship existing) {
+        ShipNavigationTool tool = toolRepository
+                .getByNameAndShipId(dto.getName(), existing.getId());
+
+        tool.setDescription(dto.getDescription());
+        toolRepository.save(tool);
+    }
+
+    public void deleteTools(NavigationToolDTO dto, Ship existing) {
+        ShipNavigationTool tool = toolRepository
+                .getByNameAndShipId(dto.getName(), existing.getId());
+
+        toolRepository.deleteById(tool.getId());
     }
 
 

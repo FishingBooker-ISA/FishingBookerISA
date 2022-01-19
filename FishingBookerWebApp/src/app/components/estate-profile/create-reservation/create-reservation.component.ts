@@ -26,8 +26,9 @@ export class CreateReservationComponent implements OnInit {
   clientName!: string;
   additionalServices!: AdditionalService[];
   error!: string;
+  todayDate: Date = new Date()
 
-  constructor(public actionsService: PromoActionsService, public reservationService: ReservationsService,  private _snackBar: MatSnackBar) { }
+  constructor(public actionsService: PromoActionsService, public reservationService: ReservationsService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.actionsService.getAllAdditionalServices(this.estate.id).subscribe((data) => this.additional = data);
@@ -38,12 +39,12 @@ export class CreateReservationComponent implements OnInit {
     this.additionalServices = [];
   }
 
-  cancel(){
+  cancel() {
     this.cancelEvent.emit(false);
   }
 
-  save(){
-    var days = (this.endDate.getTime() - this.startDate.getTime())/ (1000 * 3600 * 24);
+  save() {
+    var days = (this.endDate.getTime() - this.startDate.getTime()) / (1000 * 3600 * 24);
     let price = days * this.estate.pricePerDay;
     this.additionalServices.forEach(element => {
       price += element.price;
@@ -53,7 +54,7 @@ export class CreateReservationComponent implements OnInit {
     this.additionalServices.forEach(element => {
       additionalSer += element.name + ", "
     });
-    let dto : ReservationDTO = {
+    let dto: ReservationDTO = {
       reservedDate: new Date,
       reservationStart: this.startDate,
       reservationEnd: this.endDate,
@@ -80,7 +81,7 @@ export class CreateReservationComponent implements OnInit {
   }
 
   addToList(added: AdditionalService) {
-    
+
     const index = this.additionalServices.indexOf(added);
 
     if (index > -1)

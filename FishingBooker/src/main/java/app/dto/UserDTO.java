@@ -1,5 +1,7 @@
 package app.dto;
 
+import app.domain.ShipOwnerRole;
+
 public class UserDTO {
     private String email;
     private String firstName;
@@ -10,6 +12,15 @@ public class UserDTO {
     private String country;
     private int postcode;
     private String phoneNumber;
+    private ShipOwnerRole shipOwnerRole;
+
+    public ShipOwnerRole getShipOwnerRole() {
+        return shipOwnerRole;
+    }
+
+    public void setShipOwnerRole(ShipOwnerRole shipOwnerRole) {
+        this.shipOwnerRole = shipOwnerRole;
+    }
 
     public String getEmail() {
         return email;

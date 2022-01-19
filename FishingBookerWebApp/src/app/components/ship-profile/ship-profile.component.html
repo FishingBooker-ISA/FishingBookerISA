@@ -123,19 +123,21 @@
           </div>
 
           <div class="propertyDetails">
-            <h5 class="mt-4"><b>Details</b></h5>
-            <table style="width: 100%">
-              <colgroup>
-                <col span="1" style="width: 25%" />
-              </colgroup>
+            <div class="d-flex">
+              <h4 class="mt-3"><b>Navigation tools:</b></h4>
+              <button class="btn editAdditional ms-2 mt-3" (click)="editTools()">
+                <i class="bi bi-pencil mb-2"></i>
+              </button>
+            </div>
 
-              <tbody>
-                <tr>
-                  <td>Capacity:</td>
-                  <td>{{ ship.capacity }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="padding-bottom: 30px" class="mt-2">
+              <ul>
+                <li *ngFor="let item of navigationTools" class="mb-1 me-1">
+                  <b>{{ item.name }}</b> <span class="mx-2">-</span>
+                  {{ item.description }}e
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -143,10 +145,10 @@
   </div>
   <!-- END OF GENERAL INFO -->
 
-  <!-- <app-promo-actions class="bg-light" *ngIf="promoActions" [estate]="estate" [promoActions]="promoActions">
+  <app-promo-actions class="bg-light" *ngIf="promoActions" [id]="ship.id" [promoActions]="promoActions">
   </app-promo-actions>
-  <app-create-reservation class="bg-light" *ngIf="createReservation" [estate]="estate"
-    [createReservation]="createReservation" (cancelEvent)="createReservation = $event"></app-create-reservation>
-  <app-reservation-calendar *ngIf="calendarView" [estate]="estate" [calendarView]="calendarView">
-  </app-reservation-calendar> -->
+  <app-create-reservation-ships class="bg-light" *ngIf="createReservation" [ship]="ship"
+    [createReservation]="createReservation" (cancelEvent)="createReservation = $event"></app-create-reservation-ships>
+  <app-reservation-calendar *ngIf="calendarView" [id]="ship.id" [calendarView]="calendarView">
+  </app-reservation-calendar>
 </div>

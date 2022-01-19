@@ -1,5 +1,7 @@
 package app.dto;
 
+import app.domain.ShipOwnerRole;
+
 public class AccountRequestForOwners {
     private String email;
     private String password;
@@ -13,6 +15,15 @@ public class AccountRequestForOwners {
     private String reason;
     private String role;
     private String phoneNumber;
+    private ShipOwnerRole shipOwnerRole;
+
+    public ShipOwnerRole getShipOwnerRole() {
+        return shipOwnerRole;
+    }
+
+    public void setShipOwnerRole(ShipOwnerRole shipOwnerRole) {
+        this.shipOwnerRole = shipOwnerRole;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;

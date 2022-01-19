@@ -1,0 +1,21 @@
+.addItemTable {
+  border: none;
+}
+
+tr,
+td,
+tbody,
+thead {
+  border: none;
+}
+
+.btn {
+  background: #006a70;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 40px;
+  color: white;
+}

@@ -56,6 +56,7 @@ public class OwnerProfileService {
         currentUser.setLastName(userDTO.getLastName());
         currentUser.setAddress(newAddress);
         currentUser.setPhoneNumber(userDTO.getPhoneNumber());
+        currentUser.setShipOwnerRole(userDTO.getShipOwnerRole());
 
         userRepository.save(currentUser);
     }

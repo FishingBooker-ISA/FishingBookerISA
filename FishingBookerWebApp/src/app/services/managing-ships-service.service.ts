@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Ship, ShipType } from '../model/ship';
+import { NavigationToolDTO, Ship, ShipDTO, ShipNavigationTool, ShipType } from '../model/ship';
 
 @Injectable({
   providedIn: 'root'
@@ -38,15 +38,6 @@ export class ManagingShipsService {
     else
       percentage = 0
 
-    let typeOfShip
-    if (ship.shipType === 0) {
-      typeOfShip = ShipType.BOAT
-    } else if (ship.shipType === 1) {
-      typeOfShip = ShipType.YACHT
-    } else {
-      typeOfShip = ShipType.SMALL_SHIP
-    }
-
     let shipDTO = {
       id: ship.id,
       name: ship.name,
@@ -71,11 +62,31 @@ export class ManagingShipsService {
     return this.http.post(`${environment.baseUrl}` + 'api/ships/updateShip', shipDTO, { observe: 'response', responseType: 'text' });
   }
 
-  createEstate(estate: Ship) {
-    return this.http.post(`${environment.baseUrl}` + 'api/ships/createShip', estate, { observe: 'response', responseType: 'text' });
+  createShip(ship: ShipDTO) {
+    return this.http.post(`${environment.baseUrl}` + 'api/ships/createShip', ship, { observe: 'response', responseType: 'text' });
   }
 
   deleteShip(id: number) {
     return this.http.delete(`${environment.baseUrl}` + 'api/ships/deleteShip/' + id, { observe: 'response', responseType: 'text' });
+  }
+
+  getAllNavigationTools(id: number): Observable<ShipNavigationTool[]> {
+    return this.http.get<ShipNavigationTool[]>(`${environment.baseUrl}` + 'api/ships/getNavigationTools', {
+      params: {
+        id: id
+      }
+    });
+  }
+
+  editTools(dto: NavigationToolDTO) {
+    this.http.put(`${environment.baseUrl}` + 'api/ships/updateNavigationTools', dto).subscribe();
+  }
+
+  deleteTool(dto: NavigationToolDTO) {
+    this.http.post(`${environment.baseUrl}` + 'api/ships/deleteTools', dto).subscribe();
+  }
+
+  addTool(dto: NavigationToolDTO) {
+    this.http.post(`${environment.baseUrl}` + 'api/ships/addTools', dto).subscribe();
   }
 }

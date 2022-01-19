@@ -55,6 +55,8 @@ export class EstateProfileComponent implements OnInit {
   createAction() {
     this.promoActions = true;
     this.createReservation = false;
+    this.editingMode = false;
+    this.calendarView = false;
   }
 
   createNewReservation() {
@@ -66,6 +68,7 @@ export class EstateProfileComponent implements OnInit {
 
   viewCalendar() {
     this.calendarView = true;
+    this.createReservation = false;
     this.promoActions = false;
     this.editingMode = false;
   }
