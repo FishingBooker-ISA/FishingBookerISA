@@ -1,8 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AdditionalServiceDTO } from 'src/app/model/additional-service';
 import { createAdventureDTO } from 'src/app/model/adventure';
 import { ManagingAdventuresService } from 'src/app/services/managing-adventures.service';
+import { AddEquipmentComponent, AddNewItemDialogModel } from '../../create-estate/add-equipment/add-equipment.component';
 
 @Component({
   selector: 'app-new-adventure',
@@ -11,13 +14,17 @@ import { ManagingAdventuresService } from 'src/app/services/managing-adventures.
 })
 export class NewAdventureComponent implements OnInit {
 
-  adventure! : createAdventureDTO
+  adventure! : createAdventureDTO;
+  additionalEquipment = "";
+  errorMessage = "";
+  found!: boolean;
+
 
   constructor( public dialogRef: MatDialogRef<NewAdventureComponent>, @Inject(MAT_DIALOG_DATA) public data: DetailsDialogModel,
-  public service: ManagingAdventuresService) { }
+  public service: ManagingAdventuresService,  private _snackBar: MatSnackBar, public dialog: MatDialog,) { }
 
   ngOnInit(): void {
-    this.adventure = this.data.adventure; console.log(this.adventure)
+    this.adventure = this.data.adventure; 
   }
 
   onConfirm(): void {
@@ -33,17 +40,48 @@ export class NewAdventureComponent implements OnInit {
   hasErrors() {
     if (this.adventure.name === "" || this.adventure.pricePerDay === null ||
       this.adventure.description === "" || this.adventure.termsOfUse === "" ||
-      this.adventure.additionalEquipment === "" || this.adventure.capacity === null
+      this.adventure.additionalServiceList.length === 0 || this.adventure.capacity === null
        || this.adventure.instructorBio === "")
       return true;
 
     if (this.adventure.name === undefined || this.adventure.pricePerDay === undefined ||
-      this.adventure.description === undefined || this.adventure.termsOfUse === undefined ||
-      this.adventure.additionalEquipment === undefined || this.adventure.capacity === undefined
+      this.adventure.description === undefined || this.adventure.termsOfUse === undefined 
+       || this.adventure.capacity === undefined
        || this.adventure.instructorBio === undefined)
       return true;
 
     return false
+  }
+
+  onAdd() {
+    const dialogData = new AddNewItemDialogModel(
+      new AdditionalServiceDTO()
+    );
+
+    const dialogRef = this.dialog.open(AddEquipmentComponent, {
+      maxWidth: '800px',
+      width: '430px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      this.found = false;
+
+      if (dialogResult != null) {
+        for (let item of this.adventure.additionalServiceList) {
+          if (item.name == dialogResult.name) {
+            this.found = true
+            this.errorMessage = "Can't add two additional services with the same name!"
+          }
+        }
+
+        if (!this.found) {
+          this.adventure.additionalServiceList.push(dialogResult);
+          this.additionalEquipment = this.additionalEquipment.concat(dialogResult.name + " " + dialogResult.price + "e, ")
+          this.errorMessage = ""
+        }
+      }
+    })
   }
 
 }

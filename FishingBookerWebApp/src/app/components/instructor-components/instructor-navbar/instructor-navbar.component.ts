@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { createAdventureDTO } from 'src/app/model/adventure';
 import { ManagingAdventuresService } from 'src/app/services/managing-adventures.service';
+import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 import { DetailsDialogModel, NewAdventureComponent } from '../new-adventure/new-adventure.component';
 
 @Component({
@@ -15,7 +16,7 @@ export class InstructorNavbarComponent implements OnInit {
   
   createModalResult!: boolean
 
-  constructor(public dialog: MatDialog, public service: ManagingAdventuresService, private router: Router) { }
+  constructor(public dialog: MatDialog, public service: ManagingAdventuresService, private router: Router, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
   }
@@ -40,6 +41,11 @@ export class InstructorNavbarComponent implements OnInit {
         }, 500);
       }
     });
+  }
+
+  logOut() {
+    this.signupService.logOut();
+    this.router.navigate(['/login']);
   }
 
 }

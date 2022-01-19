@@ -150,10 +150,10 @@ public class EstateManagmentController {
     }
 
     @PostMapping(value = "/addUnavailablePeriod", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> addUnavailablePeriod(@RequestBody UnavailablePeriodDTO dto, Principal user) {
         User currentUser = this.userService.findByEmail(user.getName());
-        Estate estate = estateRepository.getById(dto.getServiceId());
+        BookingService estate = serviceRepository.getById(dto.getServiceId());
 
         if(!estate.getOwner().getId().equals(currentUser.getId())) {
             return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
@@ -205,7 +205,7 @@ public class EstateManagmentController {
     }
 
     @GetMapping(value = "/getAllUnavailablePeriods", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<List<UnavailablePeriod>> getAll(int id, Principal user) {
         BookingService bookingService = serviceRepository.getById(id);
         User currentUser = userService.findByEmail(user.getName());

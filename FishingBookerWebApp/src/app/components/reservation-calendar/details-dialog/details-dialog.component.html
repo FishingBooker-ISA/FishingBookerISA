@@ -1,11 +1,27 @@
 <button class="close" mat-icon-button (click)="onDismiss()">
   <mat-icon>close</mat-icon>
 </button>
-<h1 mat-dialog-title class="row d-flex justify-content-center">Additional Information</h1>
+<h1
+  mat-dialog-title
+  class="row d-flex justify-content-center"
+  *ngIf="!writeReport"
+>
+  Additional Information
+</h1>
+<h1
+  mat-dialog-title
+  class="row d-flex justify-content-center"
+  *ngIf="writeReport"
+>
+  Write Report
+</h1>
 
 <div mat-dialog-content style="height: calc(100% - 100px); max-height: unset">
   <div class="row d-flex justify-content-center">
-    <table class="table table-responsive table-borderless addItemTable" *ngIf="!isReservationEmpty()">
+    <table
+      class="table table-responsive table-borderless addItemTable"
+      *ngIf="!isReservationEmpty() && !writeReport"
+    >
       <colgroup>
         <col span="1" style="width: 70%" />
         <col span="1" style="width: 30%" />
@@ -15,12 +31,25 @@
           <td>
             <mat-form-field>
               <mat-label>Start</mat-label>
-              <input matInput type="name" disabled [(ngModel)]="reservationStart">
+              <input
+                matInput
+                type="name"
+                disabled
+                [(ngModel)]="reservationStart"
+              />
             </mat-form-field>
+          </td>
+
           <td>
             <mat-form-field>
               <mat-label>Clinet's name</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="reservation.user.firstName">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="reservation.user.firstName"
+              />
             </mat-form-field>
           </td>
         </tr>
@@ -28,13 +57,25 @@
           <td>
             <mat-form-field>
               <mat-label>End</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="reservationEnd">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="reservationEnd"
+              />
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
               <mat-label>Client's last name</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="reservation.user.lastName">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="reservation.user.lastName"
+              />
             </mat-form-field>
           </td>
         </tr>
@@ -42,13 +83,25 @@
           <td>
             <mat-form-field>
               <mat-label>Date created</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="reservationCreated">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="reservationCreated"
+              />
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
               <mat-label>Email</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="reservation.user.email">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="reservation.user.email"
+              />
             </mat-form-field>
           </td>
         </tr>
@@ -56,13 +109,25 @@
           <td>
             <mat-form-field>
               <mat-label>Cancelled</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="canceled">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="canceled"
+              />
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
               <mat-label>Phone number</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="reservation.user.phoneNumber">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="reservation.user.phoneNumber"
+              />
             </mat-form-field>
           </td>
         </tr>
@@ -70,20 +135,35 @@
           <td>
             <mat-form-field>
               <mat-label>Price</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="reservation.price">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="reservation.price"
+              />
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
               <mat-label>City</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="reservation.user.address.city">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="reservation.user.address.city"
+              />
             </mat-form-field>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <table class="table table-responsive table-borderless addItemTable" *ngIf="!isActionEmpty()">
+    <table
+      class="table table-responsive table-borderless addItemTable"
+      *ngIf="!isActionEmpty() && !writeReport"
+    >
       <colgroup>
         <col span="1" style="width: 70%" />
         <col span="1" style="width: 30%" />
@@ -93,12 +173,20 @@
           <td>
             <mat-form-field>
               <mat-label>Start</mat-label>
-              <input matInput type="name" disabled [(ngModel)]="actionStart">
+              <input matInput type="name" disabled [(ngModel)]="actionStart" />
             </mat-form-field>
+          </td>
+
           <td>
             <mat-form-field>
               <mat-label>End</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="actionEnd">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="actionEnd"
+              />
             </mat-form-field>
           </td>
         </tr>
@@ -106,13 +194,25 @@
           <td>
             <mat-form-field>
               <mat-label>Price per day</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="action.pricePerDay">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="action.pricePerDay"
+              />
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
               <mat-label>Promo action lasts for</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="duration">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="duration"
+              />
             </mat-form-field>
           </td>
         </tr>
@@ -120,21 +220,100 @@
           <td>
             <mat-form-field>
               <mat-label>Is Taken</mat-label>
-              <input matInput type="text" readonly disabled [(ngModel)]="taken">
+              <input
+                matInput
+                type="text"
+                readonly
+                disabled
+                [(ngModel)]="taken"
+              />
             </mat-form-field>
           </td>
           <td>
-            <textarea class="text-start" name="additionalEquipment" disabled>{{additionalEquipment}}
+            <textarea class="text-start" name="additionalEquipment" disabled
+              >{{ additionalEquipment }}
             </textarea>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <div class="container" *ngIf="writeReport" style="width: 400px">
+      <div class="row my-2">
+        <div class="col-11 mx-auto">
+          <h6>Leave a comment:</h6>
+        </div>
+      </div>
+      <div class="row my-3">
+        <div class="col-11 mx-auto">
+          <textarea
+            class="form-control bg-light"
+            id="exampleFormControlTextarea1"
+            rows="5"
+            [(ngModel)]="text"
+          ></textarea>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-11 mx-auto">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [(ngModel)]="sanctionClient"
+            />
+            <label class="form-check-label" for="defaultCheck1">
+              Suggest a penalty for client
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-11 mx-auto">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [(ngModel)]="clientDidntShowUp"
+            />
+            <label class="form-check-label" for="defaultCheck1">
+              Client did not show up
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div mat-dialog-actions class="justify-content-center">
+<div mat-dialog-actions class="justify-content-center" *ngIf="!writeReport">
   <button class="btn editAdditional ms-2 mt-3" (click)="onDismiss()">
     <i class="bi bi-check mb-2"></i>
+  </button>
+  <button
+    class="btn editAdditional ms-2 mt-3"
+    (click)="writeReport = true"
+    title="Write Report"
+    *ngIf="isActionEmpty()"
+    [disabled]="!canWriteReport()"
+  >
+    <i class="bi bi-pencil mb-2"></i>
+  </button>
+</div>
+
+<div mat-dialog-actions class="justify-content-center" *ngIf="writeReport">
+  <button
+    class="btn editAdditional ms-2 mt-3"
+    (click)="cancelReport()"
+    style="background-color: gray"
+  >
+    Cancel
+  </button>
+  <button
+    class="btn editAdditional ms-2 mt-3"
+    (click)="submitReport()"
+    [disabled]="isSubmitDisabled()"
+  >
+    Submit
   </button>
 </div>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { DeletionRequestDTO } from '../model/account-request';
 import { PasswordChangeDto } from '../model/password-change-dto';
 import { User } from '../model/user';
 
@@ -29,5 +30,9 @@ export class ProfileService {
 
   changePassword(dto: PasswordChangeDto) {
     this.http.put(`${environment.baseUrl}` + 'api/owners/changePassword', dto).subscribe();
+  }
+
+  deleteAccount(dto: DeletionRequestDTO) {
+    return this.http.post(`${environment.baseUrl}` + 'api/owners/sendDeletionRequest',  dto, { observe: 'response', responseType: 'text' });
   }
 }

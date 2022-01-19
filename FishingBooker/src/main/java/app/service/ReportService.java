@@ -40,9 +40,11 @@ public class ReportService {
         if (this.reportRepository.getByReservationId(reservation.getId()) != null)
             return null;
 
-        newReport.setCreatedOn(reportDTO.getCreatedOn());
+        newReport.setCreatedOn(new Date());
         newReport.setReservation(reservation);
         newReport.setText(reportDTO.getReportText());
+        newReport.setClientDidntShowUp(reportDTO.getClientDidntShowUp());
+        newReport.setSanctionClient(reportDTO.getSanctionClient());
 
         if (reportDTO.getClientDidntShowUp()) {
             int currNumOfPenalties = client.getNumOfPenalties();
@@ -50,13 +52,11 @@ public class ReportService {
             clientRepository.save(client);
         }
 
+        newReport.setIsReviewed(true);
         if (reportDTO.getSanctionClient()) {
             newReport.setIsReviewed(false);
         }
 
-        newReport.setIsReviewed(true);
-        newReport.setCreatedOn(new Date());
-        newReport.setClientDidntShowUp(reportDTO.getClientDidntShowUp());
         reportRepository.save(newReport);
         return newReport;
     }

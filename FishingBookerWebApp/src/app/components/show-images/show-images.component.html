@@ -1,14 +1,28 @@
 <button class="close" mat-icon-button (click)="onDismiss()">
   <mat-icon>close</mat-icon>
 </button>
-<h1 mat-dialog-title>Estate images</h1>
+<h1 mat-dialog-title>Service images</h1>
 
-<div mat-dialog-content style="height: calc(100% - 120px); max-height: unset" id="dialogContent">
+<div
+  mat-dialog-content
+  style="height: calc(100% - 120px); max-height: unset"
+  id="dialogContent"
+>
   <div class="row mt-1 g-4">
-    <div class="col-lg-6 col-md-6 d-flex align-items-stretch" *ngFor="let img of images">
-      <div class="box card" [ngClass]="checkIfImageIsClicked(img.id) ? 'selected' : 'notSelected'">
+    <div
+      class="col-lg-6 col-md-6 d-flex align-items-stretch"
+      *ngFor="let img of images"
+    >
+      <div
+        class="box card"
+        [ngClass]="checkIfImageIsClicked(img.id) ? 'selected' : 'notSelected'"
+      >
         <div class="cover">
-          <img [src]=img.bytes alt="Property photo" class="img-responsive cover p-2" />
+          <img
+            [src]="img.bytes"
+            alt="Property photo"
+            class="img-responsive cover p-2"
+          />
         </div>
         <a class="stretched-link" (click)="selectImage(img.id)"></a>
       </div>
@@ -16,14 +30,36 @@
   </div>
 </div>
 
-<div mat-dialog-actions class="justify-content-center" style="margin: auto; width: 100%; display: inline-flex;
-height: calc(100% - 700px); max-height: unset">
-  <input type="file" multiple class="form-control me-2 mt-3" (change)="getImage($event)">
-  <button class="btn me-2 mt-3" (click)="addImage()" [disabled]="uploadedImgs.length === 0">
+<div
+  mat-dialog-actions
+  class="justify-content-center"
+  style="
+    margin: auto;
+    width: 100%;
+    display: inline-flex;
+    height: calc(100% - 700px);
+    max-height: unset;
+  "
+>
+  <input
+    type="file"
+    multiple
+    class="form-control me-2 mt-3"
+    (change)="getImage($event)"
+  />
+  <button
+    class="btn me-2 mt-3"
+    (click)="addImage()"
+    [disabled]="uploadedImgs.length === 0"
+  >
     Add Images
   </button>
-  <button class="btn mt-3" (click)="deleteImages()" [disabled]="this.imagesToDelete.length === 0"
-    style="background: #f59494">
+  <button
+    class="btn mt-3"
+    (click)="deleteImages()"
+    [disabled]="this.imagesToDelete.length === 0"
+    style="background: #f59494"
+  >
     Delete
   </button>
 </div>

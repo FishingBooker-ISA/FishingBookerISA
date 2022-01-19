@@ -13,7 +13,7 @@ import { ManagingImagesService } from 'src/app/services/managing-images.service'
 })
 export class ShowImagesComponent implements OnInit {
 
-  estate!: Estate
+  id! : number
   images = [] as any
   imagesToDelete = [] as any
   uploadedImgs = [] as any
@@ -24,13 +24,13 @@ export class ShowImagesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.estate = this.data.estate; console.log(this.estate);
+    this.id = this.data.id;
     this.imageFromDatabase();
   }
 
   imageFromDatabase() {
     this.images = []
-    this.managingImages.getImages(this.estate.id).toPromise().then(
+    this.managingImages.getImages(this.id).toPromise().then(
       (result) => {
 
         for (let r of result) {
@@ -61,7 +61,7 @@ export class ShowImagesComponent implements OnInit {
   async addImage() {
     for (let img of this.uploadedImgs) {
       var code = await this.getBase64(img);
-      this.managingImages.addImage(this.estate.id, code);
+      this.managingImages.addImage(this.id, code);
     }
 
     setTimeout(() => {
@@ -106,6 +106,6 @@ export class ShowImagesComponent implements OnInit {
 
 export class ImagesDialogModel {
   constructor(
-    public estate: Estate
+    public id: number
   ) { }
 }

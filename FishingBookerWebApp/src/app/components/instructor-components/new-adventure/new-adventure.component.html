@@ -163,15 +163,23 @@
             </textarea>
           </td>
         </tr>
+
         <tr>
-          <td class="label">Additional equipment</td>
-          <td>
-            <textarea
-              class="text-start"
-              name="additionalEquipment"
-              [(ngModel)]="adventure.additionalEquipment"
+          <td class="label">
+            Additional equipment
+            <button
+              class="btn ms-4"
+              style="height: 30px; width: 40px; border-radius: 5px; padding: 0"
+              (click)="onAdd()"
             >
-            </textarea>
+              <i class="bi bi-plus mb-1"></i>
+            </button>
+          </td>
+          <td>
+            <textarea class="text-start" name="additionalEquipment" readonly>
+                {{ additionalEquipment }}
+              </textarea
+            >
           </td>
         </tr>
         <tr>

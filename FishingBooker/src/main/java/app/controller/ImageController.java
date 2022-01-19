@@ -32,7 +32,7 @@ public class ImageController {
     private ImageRepository imageRepository;
 
     @PostMapping(value = "/addImages", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> addImagesToService(@Valid  @RequestBody ImageDTO imageDto, Principal user) {
         User currentUser = this.userService.findByEmail(user.getName());
         BookingService existingService = serviceRepository.getById(imageDto.getServiceId());
@@ -51,13 +51,13 @@ public class ImageController {
     }
 
     @GetMapping(value = "/getImages", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public List<Image> getImagesForService(int serviceId) {
         return imagesService.getImagesByService(serviceId);
     }
 
     @PostMapping(value = "/deleteImages", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
+    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public void deleteSelectedImages(@RequestBody List<Integer> ids) {
         List<Image> images = imageRepository.findAllById(ids);
         imageRepository.deleteAll(images);
