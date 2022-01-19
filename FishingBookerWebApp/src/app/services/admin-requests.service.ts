@@ -7,6 +7,7 @@ import { RequestReview } from '../model/request-review';
 import { DeleteAccountRequest } from '../model/delete-account-request';
 import { SignupOwnersService } from './signup-owners.service';
 import { NewAdminDTO, User } from '../model/user';
+import { BookingService } from '../model/booking-service';
 
 
 @Injectable({
@@ -100,5 +101,9 @@ export class AdminRequestsService {
           console.error('error caught in component');
         }
       );
+  }
+
+  public getAllServices() : Observable<BookingService[]> {
+    return this.http.get<BookingService[]>(`${environment.baseUrl}` + 'api/services/getAllServices');
   }
 }

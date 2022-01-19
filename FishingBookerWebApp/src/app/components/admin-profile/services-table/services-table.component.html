@@ -1,0 +1,79 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="container" style="margin-top: 2rem">
+  <div class="row mx-auto">
+    <div class="col-12 mx-auto">
+      <div class="card shadow-sm" style="height: 600px">
+        <div class="row my-5">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <h4 class="card-title" style="font-weight: bold">
+                Table of Services
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="row my-2 ms-5" *ngIf="false">
+          <div class="col-sm-6 col-lg-3 col-md-4">
+            <select
+              class="form-select"
+              [(ngModel)]="serviceType"
+              (change)="filterServices()"
+            >
+              <option value="estates">Estates</option>
+              <option value="adventures">Adventures</option>
+              <option value="boats">Boats</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="height: 300px">
+          <div class="col-11 mx-auto">
+            <div style="height: 250px; overflow: auto">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Capacity</th>
+                    <th scope="col">Owner</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let service of allServices"
+                    [ngClass]="
+                      selectedService == service ? 'selected' : 'notSelected'
+                    "
+                    (click)="selectService(service)"
+                  >
+                    <td>{{ service.type }}</td>
+                    <td>{{ service.name }}</td>
+                    <td>{{ service.pricePerDay }}</td>
+                    <td>{{ service.capacity }}</td>
+                    <td>
+                      {{ service.owner.firstName }} {{ service.owner.lastName }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <button
+                type="button"
+                class="btn"
+                [disabled]="selectedService == undefined"
+                (click)="deleteService()"
+              >
+                Delete Service
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

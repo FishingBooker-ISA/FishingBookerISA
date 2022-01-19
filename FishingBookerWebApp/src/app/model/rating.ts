@@ -1,3 +1,4 @@
+import { BookingService } from "./booking-service"
 import { User } from "./user"
 
 export class Rating {
@@ -7,6 +8,7 @@ export class Rating {
     isReviewed! : boolean
     isApproved! : boolean
     user! : User
+    bookingService! : BookingService
 }
 
 export class RatingReviewDTO{

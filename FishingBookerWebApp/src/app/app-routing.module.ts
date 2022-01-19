@@ -10,6 +10,7 @@ import { AllReportsComponent } from './components/admin-profile/all-reports/all-
 import { DeleteRequestsComponent } from './components/admin-profile/delete-requests/delete-requests.component';
 import { NewAdminFormComponent } from './components/admin-profile/new-admin-form/new-admin-form.component';
 import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
+import { ServicesTableComponent } from './components/admin-profile/services-table/services-table.component';
 import { UsersTableComponent } from './components/admin-profile/users-table/users-table.component';
 import { BoatsComponent } from './components/boats/boats.component';
 import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'admin/accountRequests', component: AccountRequestsComponent, canActivate: [AdminGuard] },
   { path: 'admin/deleteRequests', component: DeleteRequestsComponent, canActivate: [AdminGuard] },
   { path: 'admin/allUsers', component: UsersTableComponent, canActivate: [AdminGuard] },
+  { path: 'admin/allServices', component: ServicesTableComponent, canActivate: [AdminGuard] },
   { path: 'admin/addNewAdmin', component: NewAdminFormComponent, canActivate: [AdminGuard] },
   { path: 'admin/allComplaints', component: AllComplaintsComponent, canActivate: [AdminGuard] },
   { path: 'admin/allReports', component: AllReportsComponent, canActivate: [AdminGuard] },
