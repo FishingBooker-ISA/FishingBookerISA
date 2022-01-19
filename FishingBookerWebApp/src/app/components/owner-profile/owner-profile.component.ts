@@ -20,7 +20,8 @@ export class OwnerProfileComponent implements OnInit {
   currentUser!: User
   editingMode!: boolean
   deleteReason!: string
-
+  firstAssistant = "FirstAssistant"
+  captain = "Captain"
 
   constructor(public profileService: ProfileService, public dialog: MatDialog, public router: Router,
     public auth: SignupOwnersService, private _snackBar: MatSnackBar) { }
@@ -65,28 +66,28 @@ export class OwnerProfileComponent implements OnInit {
     });
   }
 
-  sendDeleteRequest(){
+  sendDeleteRequest() {
     let dto: DeletionRequestDTO = {
-      requestedDate : new Date,
-      reason : this.deleteReason,
-      userId : this.currentUser.id
+      requestedDate: new Date,
+      reason: this.deleteReason,
+      userId: this.currentUser.id
     }
     this.profileService.deleteAccount(dto)
-    .subscribe(
-      (data) => {
-        this._snackBar.open('Request successfully submitted', 'Dissmiss', {
-          duration: 3000
-        });
+      .subscribe(
+        (data) => {
+          this._snackBar.open('Request successfully submitted', 'Dissmiss', {
+            duration: 3000
+          });
 
-        setTimeout(() => {
-        }, 1000);
-      },
-      (error) => {
-        this._snackBar.open('You have already sent a request!', 'Dissmiss', {
-          duration: 3000
-        });
-      });;;
-      this.deleteReason = "";
+          setTimeout(() => {
+          }, 1000);
+        },
+        (error) => {
+          this._snackBar.open('You have already sent a request!', 'Dissmiss', {
+            duration: 3000
+          });
+        });;;
+    this.deleteReason = "";
   }
 
 }

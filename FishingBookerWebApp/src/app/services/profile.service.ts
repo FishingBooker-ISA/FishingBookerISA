@@ -22,17 +22,18 @@ export class ProfileService {
       city: user.address.city,
       country: user.address.country,
       postcode: user.address.postcode,
-      phoneNumber: user.phoneNumber
+      phoneNumber: user.phoneNumber,
+      shipOwnerRole: user.shipOwnerRole
     }
 
-    this.http.put(`${environment.baseUrl}` + 'api/owners/updateProfile', dto).subscribe();
+    this.http.put(`${environment.baseUrl}` + 'api/owners/updateProfile', dto, { observe: 'response', responseType: 'text' }).subscribe();
   }
 
   changePassword(dto: PasswordChangeDto) {
-    this.http.put(`${environment.baseUrl}` + 'api/owners/changePassword', dto).subscribe();
+    this.http.put(`${environment.baseUrl}` + 'api/owners/changePassword', dto, { observe: 'response', responseType: 'text' }).subscribe();
   }
 
   deleteAccount(dto: DeletionRequestDTO) {
-    return this.http.post(`${environment.baseUrl}` + 'api/owners/sendDeletionRequest',  dto, { observe: 'response', responseType: 'text' });
+    return this.http.post(`${environment.baseUrl}` + 'api/owners/sendDeletionRequest', dto, { observe: 'response', responseType: 'text' });
   }
 }
