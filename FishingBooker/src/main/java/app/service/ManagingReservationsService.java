@@ -178,6 +178,17 @@ public class ManagingReservationsService {
     public  List<Reservation> getReservationsForService(int serviceId) {
       return this.reservationRepository.getByBookingServiceId(serviceId);
     }
+
+    public boolean hasAnyReservations(int bookingServiceId) {
+        List<Reservation> reservations = getReservationsForService(bookingServiceId);
+
+        for (Reservation reservation:
+                reservations) {
+            if((reservation.getReservationEnd().compareTo(new Date())) >= 0)
+                return true;
+        }
+        return false;
+    }
 }
 
 

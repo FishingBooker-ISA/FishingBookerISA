@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoyaltyProgram } from 'src/app/model/loyalty-program';
 import { LoyaltyProgramService } from 'src/app/services/loyalty-program.service';
+import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
 @Component({
   selector: 'app-admin-navbar',
@@ -11,8 +13,10 @@ export class AdminNavbarComponent implements OnInit {
   loyaltyProgram! : LoyaltyProgram;
   originalProgram! : LoyaltyProgram;
   error! : string;
+  collapsed = false;
 
-  constructor(public service: LoyaltyProgramService) { }
+  constructor(public service: LoyaltyProgramService, private router: Router,
+    public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.service.getLoyaltyProgram().subscribe( res => {this.loyaltyProgram = res; this.originalProgram = this.loyaltyProgram});
@@ -33,6 +37,11 @@ export class AdminNavbarComponent implements OnInit {
 
   close(){
     this.service.getLoyaltyProgram().subscribe( res => {this.loyaltyProgram = res;});
+  }
+
+  logOut() {
+    this.signupService.logOut();
+    this.router.navigate(['/login']);
   }
 
 }

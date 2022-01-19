@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { AdminRequestsService } from 'src/app/services/admin-requests.service';
+import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
 @Component({
   selector: 'app-users-table',
@@ -12,8 +13,9 @@ export class UsersTableComponent implements OnInit {
   allUsers!: User[];
   filteredUseres! : User[];
   selectedUser!: User;
+  admin!: User;
 
-  constructor(public service: AdminRequestsService) { 
+  constructor(public service: AdminRequestsService, public auth: SignupOwnersService) { 
 
   }
 
@@ -27,6 +29,7 @@ export class UsersTableComponent implements OnInit {
           this.filteredUseres.push(user);
       }
     });
+    this.auth.getUser().subscribe((data) => this.admin = data);
   }
 
   selectUser(user: User){

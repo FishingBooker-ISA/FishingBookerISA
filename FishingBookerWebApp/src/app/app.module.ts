@@ -83,6 +83,7 @@ import { CreateReservationShipsComponent } from './components/ship-profile/creat
 import { CreateShipComponent } from './components/ship-profile/create-ship/create-ship.component';
 import { AddNavigationToolsComponent } from './components/ship-profile/create-ship/add-navigation-tools/add-navigation-tools.component';
 import { EditNavigationToolsComponent } from './components/ship-profile/edit-navigation-tools/edit-navigation-tools.component';
+import { ServicesTableComponent } from './components/admin-profile/services-table/services-table.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -150,7 +151,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CreateReservationShipsComponent,
     CreateShipComponent,
     AddNavigationToolsComponent,
-    EditNavigationToolsComponent
+    EditNavigationToolsComponent,
+    ServicesTableComponent
   ],
   imports: [
     BrowserModule,

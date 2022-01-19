@@ -7,23 +7,21 @@
           <div class="col-12">
             <div class="d-flex justify-content-center">
               <h4 class="card-title" style="font-weight: bold">
-                Table of Users
+                Table of Services
               </h4>
             </div>
           </div>
         </div>
-        <div class="row my-2 ms-5">
+        <div class="row my-2 ms-5" *ngIf="false">
           <div class="col-sm-6 col-lg-3 col-md-4">
             <select
               class="form-select"
-              [(ngModel)]="userType"
-              (change)="filterUsers()"
+              [(ngModel)]="serviceType"
+              (change)="filterServices()"
             >
-              <option value="users">Clients</option>
-              <option value="admins">Admins</option>
-              <option value="instructors">Instructors</option>
-              <option value="estate">Estate Owners</option>
-              <option value="ship">Ship Owners</option>
+              <option value="estates">Estates</option>
+              <option value="adventures">Adventures</option>
+              <option value="boats">Boats</option>
             </select>
           </div>
         </div>
@@ -33,24 +31,28 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone Number</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Capacity</th>
+                    <th scope="col">Owner</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr
-                    *ngFor="let user of filteredUseres"
+                    *ngFor="let service of allServices"
                     [ngClass]="
-                      selectedUser == user ? 'selected' : 'notSelected'
+                      selectedService == service ? 'selected' : 'notSelected'
                     "
-                    (click)="selectUser(user)"
+                    (click)="selectService(service)"
                   >
-                    <td>{{ user.firstName }}</td>
-                    <td>{{ user.lastName }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.phoneNumber }}</td>
+                    <td>{{ service.type }}</td>
+                    <td>{{ service.name }}</td>
+                    <td>{{ service.pricePerDay }}</td>
+                    <td>{{ service.capacity }}</td>
+                    <td>
+                      {{ service.owner.firstName }} {{ service.owner.lastName }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -63,12 +65,10 @@
               <button
                 type="button"
                 class="btn"
-                [disabled]="
-                  selectedUser == undefined || selectedUser.id === admin.id
-                "
-                (click)="deleteUser()"
+                [disabled]="selectedService == undefined"
+                (click)="deleteService()"
               >
-                Delete User
+                Delete Service
               </button>
             </div>
           </div>

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -129,7 +130,7 @@ public class ManagingShipsService {
         List<Reservation> reservations = new ArrayList<>();
 
         for ( Reservation r : reservationRepository.findAll()){
-            if (r.getBookingService().getId().equals(service.getId()))
+            if (r.getBookingService().getId().equals(service.getId()) && (r.getReservationEnd().compareTo(new Date())) >= 0)
                 reservations.add(r);
         }
 

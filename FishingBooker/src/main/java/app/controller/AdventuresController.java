@@ -5,6 +5,7 @@ import app.domain.User;
 import app.dto.NewAdventureDTO;
 import app.dto.ServiceWithRatingDTO;
 import app.repository.AdventureRepository;
+import app.repository.ServiceRepository;
 import app.service.ManagingAdventuresService;
 import app.service.RatingsService;
 import app.service.UserService;

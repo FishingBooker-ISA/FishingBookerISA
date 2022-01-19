@@ -1,4 +1,5 @@
-<div class="row mt-5">
+<app-admin-navbar></app-admin-navbar>
+<div class="row" style="margin-top: 2rem">
   <div class="col-10 mx-auto">
     <div class="card shadow-sm">
       <h1 class="my-3" style="text-align: center">Ratings</h1>
@@ -20,6 +21,20 @@
             <h6>{{ rating.description }}</h6>
           </div>
         </div>
+        <div class="row mx-5 my-3">
+          <div class="col-8">
+            <div class="d-inline-flex">
+              <h6 class="me-2" style="color: #f59494">
+                {{ rating.bookingService.type }}:
+              </h6>
+              <h6 class="me-2">{{ rating.bookingService.name }}</h6>
+              <h6 style="color: gray">
+                (owner: {{ rating.bookingService.owner.firstName }}
+                {{ rating.bookingService.owner.lastName }})
+              </h6>
+            </div>
+          </div>
+        </div>
         <div
           class="d-flex justify-content-end my-3 me-5"
           *ngIf="rating.isReviewed === false"
@@ -29,13 +44,13 @@
             style="border-radius: 100%; border: none; background: #6eb1dd"
             (click)="approveRating(rating.id)"
           >
-            <span class="material-icons mt-1">done</span>
+            <span class="material-icons mt-1" style="color: white">done</span>
           </button>
           <button
             style="border-radius: 100%; border: none; background: #f59494"
             (click)="rejectRating(rating.id)"
           >
-            <span class="material-icons mt-1">close</span>
+            <span class="material-icons mt-1" style="color: white">close</span>
           </button>
         </div>
       </div>
