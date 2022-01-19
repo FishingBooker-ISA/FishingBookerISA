@@ -1,8 +1,10 @@
 package app.controller;
 
-import app.domain.Ship;
-import app.domain.User;
+import app.domain.*;
+import app.dto.AdditionalEquipmentDTO;
+import app.dto.NavigationToolDTO;
 import app.dto.ShipDTO;
+import app.repository.ShipNavigationToolRepository;
 import app.repository.ShipRepository;
 import app.service.ManagingShipsService;
 import app.service.UserService;
@@ -27,6 +29,8 @@ public class ShipsController {
     private ManagingShipsService shipsService;
     @Autowired
     private ShipRepository shipRepository;
+    @Autowired
+    private ShipNavigationToolRepository toolRepository;
 
     private static final String UNAUTHORIZED = "Unauthorized access!";
 
@@ -124,6 +128,61 @@ public class ShipsController {
         }
 
         return foundShips;
+    }
+
+    @GetMapping(value = "/getNavigationTools", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_SHIP_OWNER')")
+    public ResponseEntity<List<ShipNavigationTool>> getAllByService(int id, Principal user) {
+        Ship ship = shipRepository.getById(id);
+        User currentUser = userService.findByEmail(user.getName());
+
+        if (!ship.getOwner().getId().equals(currentUser.getId())){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(toolRepository.getAllByShipId(id), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/updateNavigationTools", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_SHIP_OWNER')")
+    public ResponseEntity<String> update(@RequestBody NavigationToolDTO dto, Principal user) {
+        Ship existing = shipRepository.getById(dto.getShipId());
+        User currentUser = userService.findByEmail(user.getName());
+
+        if (!existing.getOwner().getId().equals(currentUser.getId())){
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+        }
+
+        shipsService.updateTools(dto, existing);
+        return new ResponseEntity<>("Updated additional services!", HttpStatus.UNAUTHORIZED);
+    }
+
+    @PostMapping(value = "/deleteTools", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_SHIP_OWNER')")
+    public ResponseEntity<String> delete(@RequestBody NavigationToolDTO dto, Principal user) {
+        Ship existing = shipRepository.getById(dto.getShipId());
+        User currentUser = userService.findByEmail(user.getName());
+
+        if (!existing.getOwner().getId().equals(currentUser.getId())){
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+        }
+
+        shipsService.deleteTools(dto, existing);
+        return new ResponseEntity<>("Updated navigation tool!", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addTools", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_SHIP_OWNER')")
+    public ResponseEntity<String> add(@RequestBody NavigationToolDTO dto, Principal user) {
+        Ship existing = shipRepository.getById(dto.getShipId());
+        User currentUser = userService.findByEmail(user.getName());
+
+        if (!existing.getOwner().getId().equals(currentUser.getId())){
+            return new ResponseEntity<>(UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+        }
+
+        shipsService.addNavigationTools(dto, existing);
+        return new ResponseEntity<>("Added new navigation tool!", HttpStatus.OK);
     }
 
 }

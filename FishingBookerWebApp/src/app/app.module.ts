@@ -80,6 +80,9 @@ import { ShipOwnerNavbarComponent } from './components/ship-owner-navbar/ship-ow
 import { ShipProfileComponent } from './components/ship-profile/ship-profile.component';
 import { EditShipProfileComponent } from './components/ship-profile/edit-ship-profile/edit-ship-profile.component';
 import { CreateReservationShipsComponent } from './components/ship-profile/create-reservation-ships/create-reservation-ships.component';
+import { CreateShipComponent } from './components/ship-profile/create-ship/create-ship.component';
+import { AddNavigationToolsComponent } from './components/ship-profile/create-ship/add-navigation-tools/add-navigation-tools.component';
+import { EditNavigationToolsComponent } from './components/ship-profile/edit-navigation-tools/edit-navigation-tools.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -145,6 +148,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ShipProfileComponent,
     EditShipProfileComponent,
     CreateReservationShipsComponent,
+    CreateShipComponent,
+    AddNavigationToolsComponent,
+    EditNavigationToolsComponent
   ],
   imports: [
     BrowserModule,
