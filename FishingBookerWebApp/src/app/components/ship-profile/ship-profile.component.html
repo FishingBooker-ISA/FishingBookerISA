@@ -143,10 +143,10 @@
   </div>
   <!-- END OF GENERAL INFO -->
 
-  <!-- <app-promo-actions class="bg-light" *ngIf="promoActions" [estate]="estate" [promoActions]="promoActions">
+  <app-promo-actions class="bg-light" *ngIf="promoActions" [id]="ship.id" [promoActions]="promoActions">
   </app-promo-actions>
-  <app-create-reservation class="bg-light" *ngIf="createReservation" [estate]="estate"
-    [createReservation]="createReservation" (cancelEvent)="createReservation = $event"></app-create-reservation>
-  <app-reservation-calendar *ngIf="calendarView" [estate]="estate" [calendarView]="calendarView">
-  </app-reservation-calendar> -->
+  <app-create-reservation-ships class="bg-light" *ngIf="createReservation" [ship]="ship"
+    [createReservation]="createReservation" (cancelEvent)="createReservation = $event"></app-create-reservation-ships>
+  <app-reservation-calendar *ngIf="calendarView" [id]="ship.id" [calendarView]="calendarView">
+  </app-reservation-calendar>
 </div>

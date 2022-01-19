@@ -56,6 +56,8 @@ export class ShipProfileComponent implements OnInit {
   createAction() {
     this.promoActions = true;
     this.createReservation = false;
+    this.editingMode = false;
+    this.calendarView = false;
   }
 
   createNewReservation() {
@@ -69,6 +71,7 @@ export class ShipProfileComponent implements OnInit {
     this.calendarView = true;
     this.promoActions = false;
     this.editingMode = false;
+    this.createReservation = false;
   }
 
   deleteShip() {
@@ -129,7 +132,7 @@ export class ShipProfileComponent implements OnInit {
   }
 
   viewImages(): void {
-    /*const dialogData = new ImagesDialogModel(
+    const dialogData = new ImagesDialogModel(
       this.ship.id
     );
 
@@ -141,12 +144,12 @@ export class ShipProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((data) => this.imageFromDatabase())
-    dialogRef.backdropClick().subscribe((data) => this.imageFromDatabase())*/
+    dialogRef.backdropClick().subscribe((data) => this.imageFromDatabase())
   }
 
   editAdditional() {
-    /*const dialogData = new EditAdditionalDialogModel(
-      this.additional, this.estate
+    const dialogData = new EditAdditionalDialogModel(
+      this.additional, this.ship.id
     );
 
     const dialogRef = this.dialog.open(EditAdditionalServicesComponent, {
@@ -157,7 +160,7 @@ export class ShipProfileComponent implements OnInit {
 
     dialogRef.backdropClick().subscribe((dialogResult) => {
       this.actionsService.getAllAdditionalServices(this.ship.id).subscribe((data) => this.additional = data);
-    });*/
+    });
   }
 
 }

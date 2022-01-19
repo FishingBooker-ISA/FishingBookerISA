@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { RegistrationRequest } from 'src/app/model/registration-request';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
@@ -26,13 +28,14 @@ export class SignupOwnersComponent implements OnInit {
   selectedRole!: string;
   phoneNumber!: string;
   role!: string;
+  shipOwnerRole!: number;
 
   checkEmail = new FormControl('', [Validators.required, Validators.email]);
   checkPassword = new FormControl('', [Validators.required]);
   fieldRequired = new FormControl('', [Validators.required]);
   errorMessage = '';
 
-  constructor(public signupOwnerService: SignupOwnersService) { }
+  constructor(public signupOwnerService: SignupOwnersService, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void { }
 
@@ -57,10 +60,22 @@ export class SignupOwnersComponent implements OnInit {
       reason: this.reason,
       role: this.role,
       phoneNumber: this.phoneNumber,
+      shipOwnerRole: this.shipOwnerRole
     };
 
-    this.signupOwnerService.sendSignupRequest(registrationRequest);
-    //this.errorMessage = this.getErrorMessage();
+    this.signupOwnerService.sendSignupRequest(registrationRequest).subscribe(
+      (response) => {
+        this.snackBar.open("Signup request sent!", 'Dissmiss', {
+          duration: 3000
+        });
+        this.router.navigate(['/login'])
+      },
+      (error) => {
+        this.snackBar.open("Account with this email already exists!", 'Dissmiss', {
+          duration: 3000
+        });
+      }
+    );
   }
 
   getErrorMessage() {

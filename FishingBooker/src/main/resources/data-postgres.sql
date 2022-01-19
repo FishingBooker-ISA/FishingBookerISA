@@ -49,6 +49,7 @@ VALUES (9, 5, 'Spacious villa on the edge of the woods.', false, 'Green palace',
 INSERT INTO estate (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, num_of_beds, num_of_rooms)
 VALUES (10, 2, 'Lovely cottage for two.', false, 'Coast house', 0, 20, 'Terms of use.', 0, 6, 4, 1, 1);
 
+--ships
 
 --rating
 INSERT INTO rating (

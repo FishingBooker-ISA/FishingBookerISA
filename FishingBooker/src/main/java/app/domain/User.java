@@ -45,6 +45,8 @@ public class User implements UserDetails{
     private UserType userType;
     @Column(nullable = true)
     private boolean firstTime;
+    @Column(nullable = true)
+    private ShipOwnerRole shipOwnerRole;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
@@ -60,6 +62,14 @@ public class User implements UserDetails{
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public ShipOwnerRole getShipOwnerRole() {
+        return shipOwnerRole;
+    }
+
+    public void setShipOwnerRole(ShipOwnerRole shipOwnerRole) {
+        this.shipOwnerRole = shipOwnerRole;
     }
 
     public Integer getId() {

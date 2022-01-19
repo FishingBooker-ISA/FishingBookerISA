@@ -21,7 +21,7 @@ export class PromoActionsService {
   }
 
   addPromoAction(action: PromoAction) {
-    this.http.post(`${environment.baseUrl}` + 'api/promoActions/addPromoAction', action).subscribe();
+    return this.http.post(`${environment.baseUrl}` + 'api/promoActions/addPromoAction', action, { observe: 'response', responseType: 'text' });
   }
 
   getAllAdditionalServices(id: number): Observable<AdditionalService[]> {

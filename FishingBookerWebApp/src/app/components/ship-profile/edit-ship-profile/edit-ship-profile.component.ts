@@ -51,7 +51,7 @@ export class EditShipProfileComponent implements OnInit {
         this._snackBar.open("Successfully updated!", 'Dissmiss', {
           duration: 3000
         });
-        //window.location.reload();
+        window.location.reload();
       },
       (error) => {
         this._snackBar.open("Ship has reservations and can't be edited!", 'Dissmiss', {

@@ -1,5 +1,6 @@
 import { AdditionalServiceDTO } from "./additional-service"
 import { Address, ServiceType } from "./estate"
+import { User } from "./user"
 
 export enum ShipType {
     BOAT,
@@ -25,6 +26,7 @@ export class Ship {
     shipType!: ShipType;
     navigationTools!: ShipNavigationTool[]
     additionalEquipmentList!: AdditionalServiceDTO[]
+    owner!: User
 }
 
 export interface ShipNavigationTool {

@@ -1,20 +1,22 @@
+import { getQueryPredicate } from '@angular/compiler/src/render3/view/util';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdditionalService } from 'src/app/model/additional-service';
-import { Adventure } from 'src/app/model/adventure';
 import { ReservationDTO } from 'src/app/model/reservation';
+import { Ship } from 'src/app/model/ship';
 import { User } from 'src/app/model/user';
 import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { ReservationsService } from 'src/app/services/reservations.service';
 
 @Component({
-  selector: 'app-create-reservation-instructor',
-  templateUrl: './create-reservation-instructor.component.html',
-  styleUrls: ['./create-reservation-instructor.component.css']
+  selector: 'app-create-reservation-ships',
+  templateUrl: './create-reservation-ships.component.html',
+  styleUrls: ['./create-reservation-ships.component.css']
 })
-export class CreateReservationInstructorComponent implements OnInit {
+export class CreateReservationShipsComponent implements OnInit {
+
   @Input()
-  adventure!: Adventure
+  ship!: Ship
   @Input()
   createReservation!: boolean
   @Output()
@@ -25,13 +27,16 @@ export class CreateReservationInstructorComponent implements OnInit {
   client!: User;
   clientName!: string;
   additionalServices!: AdditionalService[];
-  todayDate: Date = new Date()
+  error!: string;
+  todayDate: Date = new Date();
 
-  constructor(public actionsService: PromoActionsService, public reservationService: ReservationsService, private _snackBar: MatSnackBar) { }
+
+  constructor(public actionsService: PromoActionsService, public reservationService: ReservationsService,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.actionsService.getAllAdditionalServices(this.adventure.id).subscribe((data) => this.additional = data);
-    this.reservationService.getClientForReservation(this.adventure.id).subscribe((data) => {
+    this.actionsService.getAllAdditionalServices(this.ship.id).subscribe((data) => this.additional = data);
+    this.reservationService.getClientForReservation(this.ship.id).subscribe((data) => {
       this.client = data;
       this.clientName = this.client.firstName + " " + this.client.lastName;
     })
@@ -44,7 +49,7 @@ export class CreateReservationInstructorComponent implements OnInit {
 
   save() {
     var days = (this.endDate.getTime() - this.startDate.getTime()) / (1000 * 3600 * 24);
-    let price = days * this.adventure.pricePerDay;
+    let price = days * this.ship.pricePerDay;
     this.additionalServices.forEach(element => {
       price += element.price;
     });
@@ -61,9 +66,9 @@ export class CreateReservationInstructorComponent implements OnInit {
       isCanceled: false,
       additionalEquipment: additionalSer,
       price: price,
-      shipOwnerRole: 0,
+      shipOwnerRole: this.ship.owner.shipOwnerRole,
       userId: this.client.id,
-      serviceId: this.adventure.id
+      serviceId: this.ship.id
     }
     this.reservationService.createReservation(dto).subscribe(
       (data) => {

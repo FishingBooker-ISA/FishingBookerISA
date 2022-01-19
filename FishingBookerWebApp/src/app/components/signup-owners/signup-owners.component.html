@@ -15,36 +15,21 @@
       <div class="row">
         <div class="col-md-4 py-0">
           <div class="textField">
-            <input
-              type="text"
-              required
-              [(ngModel)]="firstName"
-              [formControl]="fieldRequired"
-            />
+            <input type="text" required [(ngModel)]="firstName" [formControl]="fieldRequired" />
             <span></span>
             <label>First Name</label>
           </div>
         </div>
         <div class="col-md-4">
           <div class="textField">
-            <input
-              type="text"
-              required
-              [(ngModel)]="lastName"
-              [formControl]="fieldRequired"
-            />
+            <input type="text" required [(ngModel)]="lastName" [formControl]="fieldRequired" />
             <span></span>
             <label>Last Name</label>
           </div>
         </div>
         <div class="col-md-4">
           <div class="textField">
-            <input
-              type="text"
-              required
-              [(ngModel)]="phoneNumber"
-              [formControl]="fieldRequired"
-            />
+            <input type="text" required [(ngModel)]="phoneNumber" [formControl]="fieldRequired" />
             <span></span>
             <label>Phone number</label>
           </div>
@@ -54,47 +39,27 @@
       <div class="row">
         <div class="col-md-3 pe-1">
           <div class="textField">
-            <input
-              type="text"
-              required
-              [(ngModel)]="street"
-              [formControl]="fieldRequired"
-            />
+            <input type="text" required [(ngModel)]="street" [formControl]="fieldRequired" />
             <span></span>
             <label>Street and number</label>
           </div>
         </div>
         <div class="col-md-1 ps-0" style="padding-right: 12px">
           <div class="textField">
-            <input
-              type="number"
-              required
-              [(ngModel)]="number"
-              [formControl]="fieldRequired"
-            />
+            <input type="number" required [(ngModel)]="number" [formControl]="fieldRequired" />
             <span></span>
             <label></label>
           </div>
         </div>
         <div class="col-md-4">
           <div class="textField">
-            <input
-              type="text"
-              required
-              [(ngModel)]="city"
-              [formControl]="fieldRequired"
-            />
+            <input type="text" required [(ngModel)]="city" [formControl]="fieldRequired" />
             <label>City</label>
           </div>
         </div>
         <div class="col-md-4">
           <div class="textField">
-            <input
-              type="text"
-              required
-              [(ngModel)]="country"
-              [formControl]="fieldRequired"
-            />
+            <input type="text" required [(ngModel)]="country" [formControl]="fieldRequired" />
             <span></span>
             <label>Country</label>
           </div>
@@ -104,36 +69,21 @@
       <div class="row">
         <div class="col-md-4">
           <div class="textField">
-            <input
-              type="text"
-              required
-              [(ngModel)]="email"
-              [formControl]="checkEmail"
-            />
+            <input type="text" required [(ngModel)]="email" [formControl]="checkEmail" />
             <span></span>
             <label>Email</label>
           </div>
         </div>
         <div class="col-md-4">
           <div class="textField">
-            <input
-              type="password"
-              [(ngModel)]="password"
-              required
-              [formControl]="checkPassword"
-            />
+            <input type="password" [(ngModel)]="password" required [formControl]="checkPassword" />
             <span></span>
             <label>Password</label>
           </div>
         </div>
         <div class="col-md-4">
           <div class="textField">
-            <input
-              type="password"
-              required
-              [(ngModel)]="repeatPassword"
-              [formControl]="checkPassword"
-            />
+            <input type="password" required [(ngModel)]="repeatPassword" [formControl]="checkPassword" />
             <span></span>
             <label>Repeat Password</label>
           </div>
@@ -141,43 +91,47 @@
       </div>
 
       <div class="row">
-        <div class="col-md-2"></div>
         <div class="col-md-4">
-          <div class="textField">
-            <mat-select
-              required
-              [(ngModel)]="selectedRole"
-              [formControl]="fieldRequired"
-            >
+          <mat-form-field>
+            <mat-label>Ship owners role</mat-label>
+            <mat-select required [(ngModel)]="selectedRole" [formControl]="fieldRequired">
               <mat-option *ngFor="let r of roles" [value]="r">
                 {{ r }}
               </mat-option>
             </mat-select>
-          </div>
+          </mat-form-field>
         </div>
+
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>Ship owners role</mat-label>
+            <mat-select name=role required [(ngModel)]="shipOwnerRole" [disabled]="selectedRole !== 'Ship owner'"
+              [formControl]="fieldRequired">
+              <mat-option [value]="0">
+                Captain
+              </mat-option>
+              <mat-option [value]="1">
+                First assistant
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="col-md-4">
           <div class="textField">
-            <input
-              type="text"
-              required
-              [(ngModel)]="reason"
-              [formControl]="fieldRequired"
-            />
+            <input type="text" required [(ngModel)]="reason" [formControl]="fieldRequired" />
             <span></span>
             <label>Registration reason</label>
           </div>
         </div>
-        <div class="col-md-2"></div>
       </div>
+
       <div class="row justify-content-center">
-        <mat-error
-          style="text-align: center"
-          *ngIf="
+        <mat-error style="text-align: center" *ngIf="
             (checkIfFieldsWereTouched() && checkIfFieldsAreInvalid()) ||
             (checkEmail.invalid && (checkEmail.dirty || checkEmail.touched)) ||
             !checkIfPasswordsMatch()
-          "
-        >
+          ">
           {{ getErrorMessage() }} {{ getEmailErrorMessage() }}
           {{ getPasswordErrorMessage() }}
         </mat-error>
@@ -190,11 +144,7 @@
       <div class="row mt-3">
         <div class="col-md-4"></div>
         <div class="col-md-4 mt-2">
-          <button
-            class="login"
-            (click)="signUp()"
-            [disabled]="isButtonDisabled()"
-          >
+          <button class="login" (click)="signUp()" [disabled]="isButtonDisabled()">
             Sign Up
           </button>
         </div>

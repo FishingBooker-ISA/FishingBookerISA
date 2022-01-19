@@ -38,15 +38,6 @@ export class ManagingShipsService {
     else
       percentage = 0
 
-    let typeOfShip
-    if (ship.shipType === 0) {
-      typeOfShip = ShipType.BOAT
-    } else if (ship.shipType === 1) {
-      typeOfShip = ShipType.YACHT
-    } else {
-      typeOfShip = ShipType.SMALL_SHIP
-    }
-
     let shipDTO = {
       id: ship.id,
       name: ship.name,

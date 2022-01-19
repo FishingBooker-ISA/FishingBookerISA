@@ -1,7 +1,7 @@
 <div class="container bg-light">
   <div class="row mx-auto mt-5 pb-5">
     <div class="col-12 mx-auto">
-      <div class="card shadow-sm tableContainer" style="height: 500px">
+      <div class="card shadow-sm tableContainer" style="height: 550px">
         <div class="row mt-3 mb-4">
           <div class="col-12">
             <div class="d-flex justify-content-center">
@@ -28,6 +28,7 @@
                     <th scope="col">Duration</th>
                     <th scope="col">Price per day</th>
                     <th scope="col">Capacity</th>
+                    <th scope="col" *ngIf="currentUser.role.name === 'ROLE_SHIP_OWNER'">Ship owners role</th>
                     <th scope="col">Additional</th>
                   </tr>
                 </thead>
@@ -38,6 +39,7 @@
                     <td> {{action.durationInDays}} days </td>
                     <td> {{action.pricePerDay}} </td>
                     <td> {{action.capacity}} </td>
+                    <td *ngIf="currentUser.role.name === 'ROLE_SHIP_OWNER'"> {{currentUser.shipOwnerRole}} </td>
                     <td>
                       <ul>
                         <li *ngFor="let added of action.additionalServices">
@@ -63,7 +65,7 @@
                     <label for="start" class="mt-3 me-5">Dates</label>
                     <mat-form-field>
                       <mat-label>Enter a date range</mat-label>
-                      <mat-date-range-input [rangePicker]="picker">
+                      <mat-date-range-input [rangePicker]="picker" [min]="todayDate">
                         <input matStartDate name="start" [(ngModel)]="newAction.startDate">
                         <input matEndDate name="end" [(ngModel)]="newAction.endDate">
                       </mat-date-range-input>
@@ -103,9 +105,17 @@
                     <label for="start" class="mt-3 me-5">Action lasts until</label>
                     <mat-form-field>
                       <mat-label>Choose a date</mat-label>
-                      <input matInput [matDatepicker]="durationPicker" [(ngModel)]="selectedDate">
+                      <input matInput [matDatepicker]="durationPicker" [(ngModel)]="selectedDate" [min]="todayDate"
+                        [max]="newAction.startDate">
                       <mat-datepicker-toggle matSuffix [for]="durationPicker"></mat-datepicker-toggle>
                       <mat-datepicker #durationPicker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="d-inline-flex" *ngIf="currentUser.role.name === 'ROLE_SHIP_OWNER'">
+                    <label for="start" class="mt-3 me-5">Ship owners role</label>
+                    <mat-form-field>
+                      <input matInput type="text" disabled [(ngModel)]="currentUser.shipOwnerRole">
                     </mat-form-field>
                   </div>
 

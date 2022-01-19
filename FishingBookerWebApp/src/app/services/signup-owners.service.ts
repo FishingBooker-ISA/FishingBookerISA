@@ -53,17 +53,8 @@ export class SignupOwnersService {
   }
 
   public sendSignupRequest(request: RegistrationRequest) {
-    this.http
+    return this.http
       .post(`${environment.baseUrl}` + 'auth/signupForOwners', request)
-      .subscribe(
-        (response) => {
-          console.log('response received');
-        },
-        (error) => {
-          this.errorMessage = 'Account with this email already exists!';
-          console.error('error caught in component');
-        }
-      );
   }
 
   public sendSignupClient(client: ClientRegistrationDTO) {
