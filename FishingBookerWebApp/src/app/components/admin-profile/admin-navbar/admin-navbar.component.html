@@ -1,69 +1,63 @@
-<header id="header" class="fixed-top">
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div
-        class="col-xl-9 d-flex align-items-center justify-content-lg-between"
-      >
-        <nav id="navbar" class="navbar navbar-expand-lg order-last order-lg-0">
-          <button
-            class="navbar-toggler"
-            data-bs-toggle="collapse"
-            data-bs-target="#navmenu"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            id="toggle"
+<nav
+  class="navbar navbar-expand-lg order-last order-lg-0 navbar-light bg-light shadow-sm"
+>
+  <div class="container">
+    <p class="logo navbar-brand">FishingBooker</p>
+    <button
+      class="navbar-toggler"
+      data-bs-toggle="collapse"
+      data-bs-target="#navmenu"
+      aria-label="Toggle navigation"
+      id="toggle"
+      click="collapsed = !collapsed"
+      [attr.aria-expanded]="collapsed"
+    >
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </button>
+    <div
+      class="collapse navbar-collapse menu"
+      id="navmenu"
+      [ngClass]="{ show: collapsed }"
+    >
+      <ul class="navbar-nav ms-auto">
+        <li class="dropdown me-2">
+          <a><span>Users</span> <i class="bi bi-chevron-down ms-1"></i></a>
+          <ul>
+            <li><a href="/admin/allUsers">All</a></li>
+            <li><a href="/admin/addNewAdmin">New Admin</a></li>
+            <li><a href="/admin/accountRequests">Account Requests</a></li>
+            <li><a href="/admin/deleteRequests">Delete Requests</a></li>
+          </ul>
+        </li>
+        <li class="dropdown me-2">
+          <a><span>Reviews</span> <i class="bi bi-chevron-down ms-1"></i></a>
+          <ul>
+            <li><a href="/admin/allComplaints">Complaints</a></li>
+            <li><a href="/admin/allReports">Reports</a></li>
+          </ul>
+        </li>
+        <li>
+          <a
+            class="nav-link me-2"
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#loyaltyModal"
+            >Loyalty</a
           >
-            <i class="bi bi-list mobile-nav-toggle"></i>
-          </button>
-          <h1 class="logo me-auto me-lg-5">
-            <a href="/home">FishingBooker</a>
-          </h1>
-          <div
-            class="collapse navbar-collapse menu ms-lg-5 me-lg-5"
-            id="navmenu"
-          >
-            <ul class="navbar-nav ms-auto">
-              <li><a class="nav-link active" href="/home">Home</a></li>
-              <li class="dropdown">
-                <a
-                  ><span>Reviews</span> <i class="bi bi-chevron-down ms-1"></i
-                ></a>
-                <ul>
-                  <li><a href="/admin/allComplaints">Complaints</a></li>
-                  <li><a href="/admin/allReports">Reports</a></li>
-                </ul>
-              </li>
-              <li>
-                <a
-                  class="nav-link"
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#loyaltyModal"
-                  >Loyalty</a
-                >
-              </li>
-              <li class="dropdown">
-                <a
-                  ><span>Users</span> <i class="bi bi-chevron-down ms-1"></i
-                ></a>
-                <ul>
-                  <li><a href="/admin/allUsers">All</a></li>
-                  <li><a href="/admin/addNewAdmin">New Admin</a></li>
-                  <li><a href="/admin/accountRequests">Account Requests</a></li>
-                  <li><a href="/admin/deleteRequests">Delete Requests</a></li>
-                </ul>
-              </li>
-              <li><a class="nav-link me-lg-5" href="/profile">Profile</a></li>
-              <li>
-                <button href="#" class="login-btn ms-lg-5">Log out</button>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
+        </li>
+        <li class="nav-item me-2">
+          <a href="#" exact class="nav-link"> Report </a>
+        </li>
+        <li class="nav-item me-2">
+          <a href="/profile" exact class="nav-link"> Profile </a>
+        </li>
+        <li>
+          <button class="login-btn ms-lg-5" (click)="logOut()">Log out</button>
+        </li>
+      </ul>
     </div>
   </div>
-</header>
+</nav>
 
 <div class="modal fade" tabindex="-1" id="loyaltyModal">
   <div class="modal-dialog">

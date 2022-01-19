@@ -1,10 +1,26 @@
-<app-estate-owner-navbar *ngIf="currentUser.role.name === 'ROLE_ESTATE_OWNER'"></app-estate-owner-navbar>
-<app-instructor-navbar *ngIf="currentUser.role.name === 'ROLE_INSTRUCTOR'"></app-instructor-navbar>
-<app-ship-owner-navbar *ngIf="currentUser.role.name === 'ROLE_SHIP_OWNER'"></app-ship-owner-navbar>
+<app-estate-owner-navbar
+  *ngIf="currentUser.role.name === 'ROLE_ESTATE_OWNER'"
+></app-estate-owner-navbar>
+<app-instructor-navbar
+  *ngIf="currentUser.role.name === 'ROLE_INSTRUCTOR'"
+></app-instructor-navbar>
+<app-ship-owner-navbar
+  *ngIf="currentUser.role.name === 'ROLE_SHIP_OWNER'"
+></app-ship-owner-navbar>
+<app-admin-navbar
+  *ngIf="currentUser.role.name === 'ROLE_ADMIN'"
+></app-admin-navbar>
 
-<app-edit-profile *ngIf="editingMode" [editingMode]="editingMode" [currentUser]="currentUser"></app-edit-profile>
+<app-edit-profile
+  *ngIf="editingMode"
+  [editingMode]="editingMode"
+  [currentUser]="currentUser"
+></app-edit-profile>
 
-<div class="bg-light d-flex justify-content-center mainContainer" *ngIf="!editingMode">
+<div
+  class="bg-light d-flex justify-content-center mainContainer"
+  *ngIf="!editingMode"
+>
   <div class="container row">
     <!-- TITLE AND LOCATION -->
     <div class="col-md-3" style="margin: auto; height: 30%">
@@ -28,7 +44,12 @@
         <i class="bi bi-pencil me-3"></i>Edit
       </button>
       <div class="d-flex justify-content-start">
-        <button class="btn mt-3" style="width: 150px" data-bs-toggle="modal" data-bs-target="#deleteModal">
+        <button
+          class="btn mt-3"
+          style="width: 150px"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteModal"
+        >
           <i class="bi bi-trash me-3"></i>Delete
         </button>
       </div>
@@ -39,9 +60,18 @@
 
     <!-- PROPERTY INFO EDIT FORM -->
     <div class="col-md-7">
-      <div class="title-wrapper justify-content-center mt-4" style="display: inline-flex">
-        <img style="width: 120px; height: 120px" src="../../../assets/img/userIcon2.png" />
-        <h1 class="propertyTitle" style="margin-left: 15%; margin-top: 30%; font-weight: bold">
+      <div
+        class="title-wrapper justify-content-center mt-4"
+        style="display: inline-flex"
+      >
+        <img
+          style="width: 120px; height: 120px"
+          src="../../../assets/img/userIcon2.png"
+        />
+        <h1
+          class="propertyTitle"
+          style="margin-left: 15%; margin-top: 30%; font-weight: bold"
+        >
           Profile
         </h1>
       </div>
@@ -56,7 +86,13 @@
               <td>First Name</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.firstName" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.firstName"
+                  />
                 </div>
               </td>
             </tr>
@@ -64,7 +100,13 @@
               <td>Last Name</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.lastName" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.lastName"
+                  />
                 </div>
               </td>
             </tr>
@@ -72,7 +114,13 @@
               <td>Street</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.street" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.address.street"
+                  />
                 </div>
               </td>
             </tr>
@@ -80,7 +128,13 @@
               <td>Number</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.number" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.address.number"
+                  />
                 </div>
               </td>
             </tr>
@@ -88,7 +142,13 @@
               <td>City</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.address.city" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.address.city"
+                  />
                 </div>
               </td>
             </tr>
@@ -96,8 +156,13 @@
               <td>Country</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name"
-                    [(ngModel)]="currentUser.address.country" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.address.country"
+                  />
                 </div>
               </td>
             </tr>
@@ -105,7 +170,13 @@
               <td>Phone Number</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.phoneNumber" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.phoneNumber"
+                  />
                 </div>
               </td>
             </tr>
@@ -113,7 +184,13 @@
               <td>Role</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.shipOwnerRole" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.shipOwnerRole"
+                  />
                 </div>
               </td>
             </tr>
@@ -121,7 +198,13 @@
               <td>Email</td>
               <td>
                 <div class="textField">
-                  <input readonly class="text-start" type="text" name="name" [(ngModel)]="currentUser.email" />
+                  <input
+                    readonly
+                    class="text-start"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="currentUser.email"
+                  />
                 </div>
               </td>
             </tr>
@@ -146,18 +229,37 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Why do you want to delete account?</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
-        <textarea class="form-control bg-light" [(ngModel)]="deleteReason" required
-          style="width: 100%; height: 10rem"></textarea>
+        <textarea
+          class="form-control bg-light"
+          [(ngModel)]="deleteReason"
+          required
+          style="width: 100%; height: 10rem"
+        ></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
           Close
         </button>
-        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" (click)="sendDeleteRequest()"
-          [disabled]="deleteReason == undefined || deleteReason == ''" style="background: #f59494">
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-bs-dismiss="modal"
+          (click)="sendDeleteRequest()"
+          [disabled]="deleteReason == undefined || deleteReason == ''"
+          style="background: #f59494"
+        >
           Submit
         </button>
       </div>

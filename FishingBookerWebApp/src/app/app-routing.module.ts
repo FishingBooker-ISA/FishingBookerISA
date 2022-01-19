@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './auth-guard/admin.guard';
 import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
 import { InstructorGuard } from './auth-guard/instructor.guard';
 import { AccountRequestsComponent } from './components/admin-profile/account-requests/account-requests.component';
@@ -36,14 +37,14 @@ import { SignupComponent } from './components/signup/signup.component';
 const routes: Routes = [
   { path: 'home', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'admin/ratings', component: RatingsReviewComponent },
-  { path: 'admin/accountRequests', component: AccountRequestsComponent },
-  { path: 'admin/deleteRequests', component: DeleteRequestsComponent },
-  { path: 'admin/allUsers', component: UsersTableComponent },
-  { path: 'admin/addNewAdmin', component: NewAdminFormComponent },
-  { path: 'admin/allComplaints', component: AllComplaintsComponent },
-  { path: 'admin/allReports', component: AllReportsComponent },
-  { path: 'admin/changePassword', component: NewAdminLoginComponent },
+  { path: 'admin/ratings', component: RatingsReviewComponent, canActivate: [AdminGuard]},
+  { path: 'admin/accountRequests', component: AccountRequestsComponent, canActivate: [AdminGuard] },
+  { path: 'admin/deleteRequests', component: DeleteRequestsComponent, canActivate: [AdminGuard] },
+  { path: 'admin/allUsers', component: UsersTableComponent, canActivate: [AdminGuard] },
+  { path: 'admin/addNewAdmin', component: NewAdminFormComponent, canActivate: [AdminGuard] },
+  { path: 'admin/allComplaints', component: AllComplaintsComponent, canActivate: [AdminGuard] },
+  { path: 'admin/allReports', component: AllReportsComponent, canActivate: [AdminGuard] },
+  { path: 'admin/changePassword', component: NewAdminLoginComponent, canActivate: [AdminGuard] },
   { path: 'client/reservationHistory/estate', component: EstateReservationHistoryComponent },
   { path: 'client/upcomingReservations', component: UpcomingReservationsComponent },
   { path: 'client/subscriptions', component: SubscriptionsComponent },
