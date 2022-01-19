@@ -1,6 +1,5 @@
 package app.controller;
 
-import app.domain.BookingService;
 import app.domain.Ship;
 import app.domain.User;
 import app.dto.ShipDTO;
