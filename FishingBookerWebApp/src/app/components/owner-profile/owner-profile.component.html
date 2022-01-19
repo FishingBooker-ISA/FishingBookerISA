@@ -1,4 +1,10 @@
-<app-estate-owner-navbar></app-estate-owner-navbar>
+<app-estate-owner-navbar
+  *ngIf="currentUser.role.name === 'ROLE_ESTATE_OWNER'"
+></app-estate-owner-navbar>
+<app-instructor-navbar
+  *ngIf="currentUser.role.name === 'ROLE_INSTRUCTOR'"
+></app-instructor-navbar>
+
 <app-edit-profile
   *ngIf="editingMode"
   [editingMode]="editingMode"
