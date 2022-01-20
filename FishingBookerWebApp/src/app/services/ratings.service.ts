@@ -13,7 +13,18 @@ export class RatingsService {
   constructor(private http: HttpClient) { }
   
   sendNewRating(review: NewRatingDTO) {
-    throw new Error('Method not implemented.');
+    return this.http
+      .post(
+        `${environment.baseUrl}` + 'api/ratings/new',
+       review
+      )
+      .subscribe((response) => {
+        console.log('response received');
+      },
+      (error) => {
+        console.error('error caught in component');
+      });
+  
   }
 
   getRatingsForService(id: number): Observable<Rating[]> {
