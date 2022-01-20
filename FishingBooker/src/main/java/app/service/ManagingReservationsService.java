@@ -35,6 +35,8 @@ public class ManagingReservationsService {
     EstateRepository estateRepository;
     @Autowired
     UnavailablePeriodRepository unavailablePeriodRepository;
+    @Autowired
+    MoneyService moneyService;
 
     public List<Reservation> getReservationHistory(int serviceId) {
         BookingService bookingService = serviceRepository.getById(serviceId);
@@ -83,8 +85,11 @@ public class ManagingReservationsService {
         }
 
         Reservation newReservation = getReservation(reservationDTO);
+        newReservation.setPrice(this.moneyService.applyDiscount(client.getId(), newReservation.getPrice()));
         reservationRepository.save(newReservation);
         sendConfirmationMail(newReservation);
+        this.moneyService.manageMoneyForNewReservation(newReservation);
+        this.moneyService.managePointsForNewReservation(newReservation);
         return newReservation;
     }
 

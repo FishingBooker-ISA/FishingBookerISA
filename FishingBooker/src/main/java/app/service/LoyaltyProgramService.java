@@ -28,4 +28,8 @@ public class LoyaltyProgramService {
         existingLoyaltyProgram.setPercentageForApp(program.getPercentageForApp());
         this.loyaltyProgramRepository.save(existingLoyaltyProgram);
     }
+
+    public LoyaltyProgram getLoyaltyProgram(){
+        return this.loyaltyProgramRepository.findAll().get(0);
+    }
 }

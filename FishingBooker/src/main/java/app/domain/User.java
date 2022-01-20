@@ -40,7 +40,7 @@ public class User implements UserDetails{
     @Column(name = "last_password_reset_date", nullable = true)
     private Timestamp lastPasswordResetDate;
     @Column(nullable = true)
-    private int points;
+    private double points;
     @Column(nullable = true)
     private UserType userType;
     @Column(nullable = true)
@@ -194,11 +194,11 @@ public class User implements UserDetails{
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
-    public int getPoints() {
+    public double getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(double points) {
         this.points = points;
     }
 
