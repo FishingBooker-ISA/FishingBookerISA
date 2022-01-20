@@ -25,7 +25,7 @@ public class OwnerProfileController {
 
     @PutMapping(value = "/updateProfile", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')"
-            + " || hasAuthority('ROLE_SHIP_OWNER')")
+            + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<String> updateOwnersProfile(@RequestBody UserDTO userDto, Principal user) {
         try {
             ownerProfileService.updateUserProfile(userDto, user);
@@ -37,7 +37,7 @@ public class OwnerProfileController {
 
     @PutMapping(value = "/changePassword", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')"
-            + " || hasAuthority('ROLE_SHIP_OWNER')")
+            + " || hasAuthority('ROLE_SHIP_OWNER')"+ " || hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<String> changePassword(@RequestBody PasswordChangeDTO changeDTO, Principal user) {
         User currentUser = userService.findByEmail(user.getName());
         if (!ownerProfileService.checkIfValidOldPassword(currentUser, changeDTO.getOldPassword())) {
