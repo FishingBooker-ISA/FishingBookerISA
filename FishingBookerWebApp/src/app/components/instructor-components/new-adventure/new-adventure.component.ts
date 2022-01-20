@@ -6,6 +6,7 @@ import { AdditionalServiceDTO } from 'src/app/model/additional-service';
 import { createAdventureDTO } from 'src/app/model/adventure';
 import { ManagingAdventuresService } from 'src/app/services/managing-adventures.service';
 import { AddEquipmentComponent, AddNewItemDialogModel } from '../../create-estate/add-equipment/add-equipment.component';
+import { MapModalComponent } from '../../map-modal/map-modal.component';
 
 @Component({
   selector: 'app-new-adventure',
@@ -14,17 +15,17 @@ import { AddEquipmentComponent, AddNewItemDialogModel } from '../../create-estat
 })
 export class NewAdventureComponent implements OnInit {
 
-  adventure! : createAdventureDTO;
+  adventure!: createAdventureDTO;
   additionalEquipment = "";
   errorMessage = "";
   found!: boolean;
 
 
-  constructor( public dialogRef: MatDialogRef<NewAdventureComponent>, @Inject(MAT_DIALOG_DATA) public data: DetailsDialogModel,
-  public service: ManagingAdventuresService,  private _snackBar: MatSnackBar, public dialog: MatDialog,) { }
+  constructor(public dialogRef: MatDialogRef<NewAdventureComponent>, @Inject(MAT_DIALOG_DATA) public data: DetailsDialogModel,
+    public service: ManagingAdventuresService, private _snackBar: MatSnackBar, public dialog: MatDialog,) { }
 
   ngOnInit(): void {
-    this.adventure = this.data.adventure; 
+    this.adventure = this.data.adventure;
   }
 
   onConfirm(): void {
@@ -41,13 +42,13 @@ export class NewAdventureComponent implements OnInit {
     if (this.adventure.name === "" || this.adventure.pricePerDay === null ||
       this.adventure.description === "" || this.adventure.termsOfUse === "" ||
       this.adventure.additionalServiceList.length === 0 || this.adventure.capacity === null
-       || this.adventure.instructorBio === "")
+      || this.adventure.instructorBio === "")
       return true;
 
     if (this.adventure.name === undefined || this.adventure.pricePerDay === undefined ||
-      this.adventure.description === undefined || this.adventure.termsOfUse === undefined 
-       || this.adventure.capacity === undefined
-       || this.adventure.instructorBio === undefined)
+      this.adventure.description === undefined || this.adventure.termsOfUse === undefined
+      || this.adventure.capacity === undefined
+      || this.adventure.instructorBio === undefined)
       return true;
 
     return false
@@ -81,6 +82,24 @@ export class NewAdventureComponent implements OnInit {
           this.errorMessage = ""
         }
       }
+    })
+  }
+
+  openMap() {
+    const dialogRef = this.dialog.open(MapModalComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe((address) => {
+      this.adventure.street = address.street;
+      this.adventure.city = address.city;
+      this.adventure.country = address.country;
+      this.adventure.number = address.number;
+      this.adventure.postcode = address.postcode;
+      this.adventure.longitude = address.longitude;
+      this.adventure.latitude = address.latitude;
     })
   }
 

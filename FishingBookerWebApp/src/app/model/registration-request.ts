@@ -1,3 +1,5 @@
+import { NumberValueAccessor } from "@angular/forms";
+
 export interface Role {
   id: number,
   name: string
@@ -13,6 +15,8 @@ export class RegistrationRequest {
   city!: string;
   country!: string;
   postcode!: number;
+  longitude!: number;
+  latitude!: number;
   reason!: string;
   role!: string;
   phoneNumber!: string;

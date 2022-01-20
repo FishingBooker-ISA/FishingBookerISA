@@ -44,6 +44,8 @@ export class ShipDTO {
     city!: string
     country!: string
     postcode!: number
+    longitude!: number
+    latitude!: number
     numOfEngines!: number
     powerOfEngines!: number
     length!: number

@@ -93,7 +93,9 @@ export class ManagingEstateService {
       number: 51,
       city: "Novi Sad",
       country: "Serbia",
-      postcode: 21203
+      postcode: 21203,
+      longitude: 19,
+      latitude: 45
     }
     return [{
       id: 0,

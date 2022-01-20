@@ -41,7 +41,7 @@ textarea {
 }
 
 textarea {
-  height: 80px;
+  height: 89px;
   white-space: normal;
 }
 
@@ -75,4 +75,14 @@ tr > td {
 
 .faded {
   color: rgb(172, 171, 171);
+}
+
+a {
+  text-decoration: none;
+  color: #009961;
+  font-style: italic;
+}
+
+a:hover {
+  cursor: pointer;
 }

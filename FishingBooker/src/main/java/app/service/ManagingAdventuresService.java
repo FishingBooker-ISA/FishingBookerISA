@@ -39,7 +39,7 @@ public class ManagingAdventuresService {
         Address address = new Address(
                 newAdventureDTO.getStreet(), newAdventureDTO.getNumber(),
                 newAdventureDTO.getCity(), newAdventureDTO.getCountry(),
-                newAdventureDTO.getPostcode(), 0, 0
+                newAdventureDTO.getPostcode(), newAdventureDTO.getLongitude(), newAdventureDTO.getLatitude()
         );
 
         Address newAddress;
@@ -91,7 +91,7 @@ public class ManagingAdventuresService {
     public void updateExistingAdventure(NewAdventureDTO adventure, Adventure existingAdventure) {
         Address address = new Address(
                 adventure.getStreet(), adventure.getNumber(), adventure.getCity(), adventure.getCountry(),
-                adventure.getPostcode(), 0, 0
+                adventure.getPostcode(), adventure.getLongitude(), adventure.getLatitude()
         );
 
         if (addressAlreadyExists(address) == null) {

@@ -14,7 +14,7 @@ export class Adventure {
     percentageTakenFromCanceledReservations!: boolean
     percentageToTake!: number
     address!: Address
-    instructorBio! : string
+    instructorBio!: string
 }
 
 export class createAdventureDTO {
@@ -27,11 +27,13 @@ export class createAdventureDTO {
     capacity!: number
     percentageTakenFromCanceledReservations!: boolean
     percentageToTake!: number
-    instructorBio! : string
+    instructorBio!: string
     street!: string
     number!: number
     city!: string
     country!: string
     postcode!: number
+    longitude!: number
+    latitude!: number
     additionalServiceList = [] as AdditionalServiceDTO[]
 }

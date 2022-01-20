@@ -30,14 +30,11 @@
           <span class="ms-2">{{ currentUser.lastName }}</span>
         </h3>
       </div>
-      <div class="propertyLocation">
-        <a href="#">
-          {{ currentUser.address.street }} {{ currentUser.address.number }} ,
-          <br />
+      <div class="propertyLocation d-inline-flex">
+        <img style="width: 25px; height: 25px;" class="mt-4 me-2" src="../../../assets/img/pin.png">
+        <a class="mt-1" (click)="openMap()">{{ currentUser.address.street }} {{ currentUser.address.number }},
           {{ currentUser.address.city }}
-          {{ currentUser.address.postcode }} , <br />
-          {{ currentUser.address.country }}
-        </a>
+          {{ currentUser.address.postcode }}, {{currentUser.address.country }}</a>
       </div>
 
       <button class="btn mt-3" (click)="editUser()" style="width: 150px">

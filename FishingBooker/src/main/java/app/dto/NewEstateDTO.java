@@ -29,6 +29,8 @@ public class NewEstateDTO {
     private String country;
     @NotNull(message = "Estate must have a defined postcode!")
     private int postcode;
+    private double longitude;
+    private double latitude;
     @NotNull(message = "Estate must have a defined number of rooms!")
     @Min(value = 1, message = "Number of rooms must be larger than 0!")
     private int numOfRooms;
@@ -46,6 +48,22 @@ public class NewEstateDTO {
 
     public void setAdditionalServiceList(List<AdditionalEquipmentDTO> additionalServiceList) {
         this.additionalServiceList = additionalServiceList;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public int getId() {

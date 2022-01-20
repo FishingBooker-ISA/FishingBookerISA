@@ -14,6 +14,8 @@ export class Address {
     city!: string
     country!: string
     postcode!: number
+    longitude!: number
+    latitude!: number
 }
 
 export class Estate {
@@ -51,6 +53,8 @@ export class createEstateDTO {
     city!: string
     country!: string
     postcode!: number
+    longitude!: number
+    latitude!: number
     additionalServiceList = [] as AdditionalServiceDTO[]
 
 }

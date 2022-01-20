@@ -37,12 +37,11 @@
           <div class="title-wrapper">
             <a class="propertyTitle h3" href="{{ '/ship/' + ship.id }}" style="color: #009961">{{ ship.name }}</a>
           </div>
-          <div class="propertyLocation">
-            <a href="#">{{ ship.address.street }} {{ ship.address.number }}, <br />
+          <div class="propertyLocation d-inline-flex">
+            <img style="width: 25px; height: 25px;" class="mt-4 me-2" src="../../../assets/img/pin.png">
+            <a class="mt-1" (click)="openMap()">{{ ship.address.street }} {{ ship.address.number }},
               {{ ship.address.city }}
-              {{ ship.address.postcode }}, <br />{{
-                ship.address.country
-              }}</a>
+              {{ ship.address.postcode }}, {{ship.address.country }}</a>
           </div>
         </div>
         <div class="col-md-2"></div>

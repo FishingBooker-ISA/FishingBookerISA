@@ -5,6 +5,7 @@ import { AdditionalServiceDTO } from 'src/app/model/additional-service';
 import { Ship, ShipDTO, NavigationToolDTO } from 'src/app/model/ship';
 import { ManagingShipsService } from 'src/app/services/managing-ships-service.service';
 import { AddEquipmentComponent, AddNewItemDialogModel } from '../../create-estate/add-equipment/add-equipment.component';
+import { MapModalComponent } from '../../map-modal/map-modal.component';
 import { AddNavigationToolsComponent, NewNavigationToolDialog } from './add-navigation-tools/add-navigation-tools.component';
 
 @Component({
@@ -128,6 +129,24 @@ export class CreateShipComponent implements OnInit {
           this.errorMessage = ""
         }
       }
+    })
+  }
+
+  openMap() {
+    const dialogRef = this.dialog.open(MapModalComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe((address) => {
+      this.ship.street = address.street;
+      this.ship.city = address.city;
+      this.ship.country = address.country;
+      this.ship.number = address.number;
+      this.ship.postcode = address.postcode;
+      this.ship.longitude = address.longitude;
+      this.ship.latitude = address.latitude;
     })
   }
 }

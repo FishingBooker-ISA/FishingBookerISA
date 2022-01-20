@@ -12,6 +12,7 @@ import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { EditAdditionalDialogModel, EditAdditionalServicesComponent } from '../edit-additional-services/edit-additional-services.component';
 import { ImagesDialogModel, ShowImagesComponent } from '../show-images/show-images.component';
+import { LocationCoords, ShowLocationOnMapComponent } from '../show-location-on-map/show-location-on-map.component';
 import { EditNavigationToolsComponent, EditNavigationToolsDialog } from './edit-navigation-tools/edit-navigation-tools.component';
 
 @Component({
@@ -178,6 +179,19 @@ export class ShipProfileComponent implements OnInit {
 
     dialogRef.backdropClick().subscribe((dialogResult) => {
       this.managingShipService.getAllNavigationTools(this.ship.id).subscribe((data) => this.navigationTools = data);
+    });
+  }
+
+  openMap() {
+    const dialogData = new LocationCoords(
+      this.ship.address.longitude, this.ship.address.latitude
+    );
+
+    const dialogRef = this.dialog.open(ShowLocationOnMapComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px',
+      data: dialogData,
     });
   }
 

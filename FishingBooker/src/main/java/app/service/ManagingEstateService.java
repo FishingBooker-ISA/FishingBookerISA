@@ -33,7 +33,7 @@ public class ManagingEstateService {
         Address address = new Address(
                 newEstate.getStreet(), newEstate.getNumber(),
                 newEstate.getCity(), newEstate.getCountry(),
-                newEstate.getPostcode(), 0, 0
+                newEstate.getPostcode(), newEstate.getLongitude(), newEstate.getLatitude()
         );
 
         Address newAddress;
@@ -79,7 +79,7 @@ public class ManagingEstateService {
     private Estate create(Estate estate, NewEstateDTO dto, User owner) {
         Address address = new Address(
                 dto.getStreet(), dto.getNumber(), dto.getCity(), dto.getCountry(),
-                dto.getPostcode(), 0, 0
+                dto.getPostcode(), dto.getLongitude(), dto.getLatitude()
         );
 
         if (addressAlreadyExists(address) == null) {
