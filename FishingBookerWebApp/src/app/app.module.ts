@@ -158,7 +158,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CreateShipComponent,
     AddNavigationToolsComponent,
     EditNavigationToolsComponent,
-    ServicesTableComponent
+    ServicesTableComponent,
     MapModalComponent,
     ShowLocationOnMapComponent
   ],

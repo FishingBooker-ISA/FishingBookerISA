@@ -57,7 +57,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'estateOwner/home', component: EstateOwnerHomepageComponent, canActivate: [EstateOwnerAuthGuard] },
   { path: 'estate/:id', component: EstateProfileComponent, canActivate: [EstateOwnerAuthGuard] },
-  { path: 'estates', component: EstatesComponent, canActivate: [EstateOwnerAuthGuard] },
+  { path: 'estates', component: EstatesComponent },
   { path: 'boats', component: BoatsComponent },
   { path: 'fishing-instructors', component: FishingInstructorsComponent },
   { path: 'instructor/home', component: InstructorAdventuresComponent, canActivate: [InstructorGuard] },
