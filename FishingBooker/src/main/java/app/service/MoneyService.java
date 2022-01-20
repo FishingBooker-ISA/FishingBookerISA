@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class MoneyService {
@@ -109,5 +110,30 @@ public class MoneyService {
             return UserType.GOLD;
         else
             return UserType.REGULAR;
+    }
+
+    public double getMoneyForPeriod(int userId, Date startDate, Date endDate){
+        User owner = this.userRepository.getById(userId);
+        List<OwnerMoney> money = this.ownerMoneyRepository.getOwnerMoneyByOwner(owner);
+        double moneyForPeriod = 0;
+        for (OwnerMoney ownerMoney:
+                money) {
+            if((ownerMoney.getDate().compareTo(startDate) >= 0)
+                    && (ownerMoney.getDate().compareTo(endDate) <= 0))
+                moneyForPeriod += ownerMoney.getMoney();
+        }
+        return moneyForPeriod;
+    }
+
+    public double getMoneyForApp(Date startDate, Date endDate){
+        List<AppMoney> money = this.appMoneyRepository.findAll();
+        double appMoneyForPeriod = 0;
+        for (AppMoney appMoney: money
+             ) {
+            if((appMoney.getDate().compareTo(startDate) >= 0)
+                    && (appMoney.getDate().compareTo(endDate) <= 0))
+                appMoneyForPeriod += appMoney.getMoney();
+        }
+        return appMoneyForPeriod;
     }
 }
