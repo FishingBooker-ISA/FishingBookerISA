@@ -64,6 +64,8 @@ public class UserService implements UserDetailsService {
         address.setCity(userRequest.getCity());
         address.setCountry(userRequest.getCountry());
         address.setPostcode(userRequest.getPostcode());
+        address.setLongitude(userRequest.getLongitude());
+        address.setLatitude(userRequest.getLatitude());
 
         Address addedAddress = this.addressRepository.save(address);
         Role role = roleRepository.findByName(userRequest.getRole());
@@ -73,7 +75,7 @@ public class UserService implements UserDetailsService {
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
         user.setAddress(addedAddress);
-        user.setVerified(true);
+        user.setVerified(false);
         user.setRole(role);
         user.setPhoneNumber(userRequest.getPhoneNumber());
         user.setShipOwnerRole(userRequest.getShipOwnerRole());

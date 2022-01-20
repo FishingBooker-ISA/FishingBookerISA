@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdditionalServiceDTO } from 'src/app/model/additional-service';
 import { createEstateDTO, Estate } from 'src/app/model/estate';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
+import { MapModalComponent } from '../map-modal/map-modal.component';
 import { AddEquipmentComponent, AddNewItemDialogModel } from './add-equipment/add-equipment.component';
 
 @Component({
@@ -92,6 +93,24 @@ export class CreateEstateComponent implements OnInit {
           this.errorMessage = ""
         }
       }
+    })
+  }
+
+  openMap() {
+    const dialogRef = this.dialog.open(MapModalComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe((address) => {
+      this.estate.street = address.street;
+      this.estate.city = address.city;
+      this.estate.country = address.country;
+      this.estate.number = address.number;
+      this.estate.postcode = address.postcode;
+      this.estate.longitude = address.longitude;
+      this.estate.latitude = address.latitude;
     })
   }
 }

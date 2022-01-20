@@ -27,7 +27,7 @@ export class ShipOwnerNavbarComponent implements OnInit {
 
     const dialogRef = this.dialog.open(CreateShipComponent, {
       width: '1300px',
-      height: '650px',
+      height: '700px',
       data: dialogData
     });
   }

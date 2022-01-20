@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RegistrationRequest } from 'src/app/model/registration-request';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { MapModalComponent } from '../map-modal/map-modal.component';
 
 @Component({
   selector: 'app-signup-owners',
@@ -23,7 +25,9 @@ export class SignupOwnersComponent implements OnInit {
   number!: number;
   city!: string;
   country!: string;
-  postcode = 0;
+  postcode!: number;
+  longitude!: number;
+  latitude!: number;
   reason!: string;
   selectedRole!: string;
   phoneNumber!: string;
@@ -35,7 +39,8 @@ export class SignupOwnersComponent implements OnInit {
   fieldRequired = new FormControl('', [Validators.required]);
   errorMessage = '';
 
-  constructor(public signupOwnerService: SignupOwnersService, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(public signupOwnerService: SignupOwnersService, public dialog: MatDialog,
+    private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void { }
 
@@ -57,6 +62,8 @@ export class SignupOwnersComponent implements OnInit {
       city: this.city,
       country: this.country,
       postcode: this.postcode,
+      longitude: this.longitude,
+      latitude: this.latitude,
       reason: this.reason,
       role: this.role,
       phoneNumber: this.phoneNumber,
@@ -144,5 +151,23 @@ export class SignupOwnersComponent implements OnInit {
     if (this.password === this.repeatPassword) return true;
 
     return false;
+  }
+
+  openMap() {
+    const dialogRef = this.dialog.open(MapModalComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe((address) => {
+      this.street = address.street;
+      this.city = address.city;
+      this.country = address.country;
+      this.number = address.number;
+      this.postcode = address.postcode;
+      this.longitude = address.longitude;
+      this.latitude = address.latitude;
+    })
   }
 }

@@ -1,6 +1,7 @@
 <h1 mat-dialog-title class="mt-3">Add new ship</h1>
 
-<div mat-dialog-content class="row d-flex justify-content-center g-4">
+<div mat-dialog-content class="row d-flex justify-content-center g-4"
+  style="height: calc(100% - 150px); max-height: unset">
   <div class="col-md justify-content-center">
     <table class="table-responsive mt-4 addItemTable">
       <colgroup>
@@ -21,33 +22,41 @@
           </td>
         </tr>
         <tr>
-          <td class="label">Street</td>
+          <td class="label faded">Street</td>
           <td>
-            <input class="text-start" type="text" name="street" [(ngModel)]="ship.street" />
+            <input class="text-start" type="text" name="street" [(ngModel)]="ship.street" disabled />
           </td>
         </tr>
         <tr>
-          <td class="label">Street number</td>
+          <td class="label faded">Street number</td>
           <td>
-            <input class="text-start" type="number" name="number" [(ngModel)]="ship.number" />
+            <input class="text-start" type="number" name="number" [(ngModel)]="ship.number" disabled />
           </td>
         </tr>
         <tr>
-          <td class="label">City</td>
+          <td class="label faded">City</td>
           <td>
-            <input class="text-start" type="text" name="city" [(ngModel)]="ship.city" />
+            <input class="text-start" type="text" name="city" [(ngModel)]="ship.city" disabled />
           </td>
         </tr>
         <tr>
-          <td class="label">Postcode</td>
+          <td class="label faded">Postcode</td>
           <td>
-            <input class="text-start" type="text" name="postcode" [(ngModel)]="ship.postcode" />
+            <input class="text-start" type="text" name="postcode" [(ngModel)]="ship.postcode" disabled />
           </td>
         </tr>
         <tr>
-          <td class="label">Country</td>
+          <td class="label faded">Country</td>
           <td>
-            <input class="text-start" type="text" name="country" [(ngModel)]="ship.country" />
+            <input class="text-start" type="text" name="country" [(ngModel)]="ship.country" disabled />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="d-inline-flex">
+              <img style="width: 15px;" src="../../../assets/img/pin.png">
+              <a class="ms-1" (click)="openMap()">Choose location on map</a>
+            </div>
           </td>
         </tr>
         <tr>
@@ -108,6 +117,12 @@
             <input class="text-start" type="number" name="length" [(ngModel)]="ship.length" />
           </td>
         </tr>
+        <tr>
+          <td class="label">Max speed</td>
+          <td>
+            <input class="text-start" type="number" name="maxSpeed" [(ngModel)]="ship.maxSpeed" />
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -119,12 +134,6 @@
         <col span="1" style="width: 45%" />
       </colgroup>
       <tbody>
-        <tr>
-          <td class="label">Max speed</td>
-          <td>
-            <input class="text-start" type="number" name="maxSpeed" [(ngModel)]="ship.maxSpeed" />
-          </td>
-        </tr>
         <tr>
           <td class="label">Number of engines</td>
           <td>

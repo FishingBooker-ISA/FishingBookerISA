@@ -1,0 +1,14 @@
+.map {
+  height: 100%;
+}
+
+.btn {
+  background: #006a70;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  color: white;
+}

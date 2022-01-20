@@ -28,6 +28,7 @@ import { AdventureProfileComponent } from './components/instructor-components/ad
 import { InstructorAdventuresComponent } from './components/instructor-components/instructor-adventures/instructor-adventures.component';
 import { NewReportComponent } from './components/instructor-components/new-report/new-report.component';
 import { LoginComponent } from './components/login/login.component';
+import { MapModalComponent } from './components/map-modal/map-modal.component';
 import { OwnerProfileComponent } from './components/owner-profile/owner-profile.component';
 import { RatingsReviewComponent } from './components/ratings-review/ratings-review.component';
 import { ShipOwnerHomepageComponent } from './components/ship-owner-homepage/ship-owner-homepage.component';
@@ -64,7 +65,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'profile', component: OwnerProfileComponent },
   { path: 'shipOwner/home', component: ShipOwnerHomepageComponent },
-  { path: 'ship/:id', component: ShipProfileComponent }
+  { path: 'ship/:id', component: ShipProfileComponent },
+  { path: 'map', component: MapModalComponent }
 ];
 
 @NgModule({

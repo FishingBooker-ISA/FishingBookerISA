@@ -39,7 +39,7 @@ public class ManagingShipsService {
         Address address = new Address(
                 dto.getStreet(), dto.getNumber(),
                 dto.getCity(), dto.getCountry(),
-                dto.getPostcode(), 0, 0
+                dto.getPostcode(), dto.getLongitude(), dto.getLatitude()
         );
 
         Address newAddress;
@@ -98,7 +98,7 @@ public class ManagingShipsService {
     private Ship create(Ship ship, ShipDTO dto, User owner) {
         Address address = new Address(
                 dto.getStreet(), dto.getNumber(), dto.getCity(), dto.getCountry(),
-                dto.getPostcode(), 0, 0
+                dto.getPostcode(), dto.getLongitude(), dto.getLatitude()
         );
 
         if (estateService.addressAlreadyExists(address) == null) {

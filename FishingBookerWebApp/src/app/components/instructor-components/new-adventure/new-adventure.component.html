@@ -11,89 +11,57 @@
         <tr>
           <td class="label">Name</td>
           <td>
-            <input
-              class="text-start"
-              type="text"
-              name="name"
-              [(ngModel)]="adventure.name"
-            />
+            <input class="text-start" type="text" name="name" [(ngModel)]="adventure.name" />
           </td>
         </tr>
         <tr>
           <td class="label">Price</td>
           <td>
-            <input
-              class="text-start"
-              type="number"
-              name="price"
-              [(ngModel)]="adventure.pricePerDay"
-            />
+            <input class="text-start" type="number" name="price" [(ngModel)]="adventure.pricePerDay" />
           </td>
         </tr>
         <tr>
-          <td class="label">Street</td>
+          <td class="label faded">Street</td>
           <td>
-            <input
-              class="text-start"
-              type="text"
-              name="street"
-              [(ngModel)]="adventure.street"
-            />
+            <input class="text-start" type="text" name="street" [(ngModel)]="adventure.street" disabled />
           </td>
         </tr>
         <tr>
-          <td class="label">Street number</td>
+          <td class="label faded">Street number</td>
           <td>
-            <input
-              class="text-start"
-              type="number"
-              name="number"
-              [(ngModel)]="adventure.number"
-            />
+            <input class="text-start" type="number" name="number" [(ngModel)]="adventure.number" disabled />
           </td>
         </tr>
         <tr>
-          <td class="label">City</td>
+          <td class="label faded">City</td>
           <td>
-            <input
-              class="text-start"
-              type="text"
-              name="city"
-              [(ngModel)]="adventure.city"
-            />
+            <input class="text-start" type="text" name="city" [(ngModel)]="adventure.city" disabled />
           </td>
         </tr>
         <tr>
-          <td class="label">Postcode</td>
+          <td class="label faded">Postcode</td>
           <td>
-            <input
-              class="text-start"
-              type="number"
-              name="postcode"
-              [(ngModel)]="adventure.postcode"
-            />
+            <input class="text-start" type="number" name="postcode" [(ngModel)]="adventure.postcode" disabled />
           </td>
         </tr>
         <tr>
-          <td class="label">Country</td>
+          <td class="label faded">Country</td>
           <td>
-            <input
-              class="text-start"
-              type="text"
-              name="country"
-              [(ngModel)]="adventure.country"
-            />
+            <input class="text-start" type="text" name="country" [(ngModel)]="adventure.country" disabled />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="d-inline-flex">
+              <img style="width: 15px;" src="../../../assets/img/pin.png">
+              <a class="ms-1" (click)="openMap()">Choose location on map</a>
+            </div>
           </td>
         </tr>
         <tr>
           <td class="label">Capacity</td>
           <td>
-            <input
-              class="text-start"
-              type="number"
-              name="capacity"
-              [(ngModel)]="adventure.capacity"
-            />
+            <input class="text-start" type="number" name="capacity" [(ngModel)]="adventure.capacity" />
           </td>
         </tr>
       </tbody>
@@ -109,57 +77,37 @@
       <tbody>
         <tr>
           <td>
-            <input
-              id="checkid"
-              type="checkbox"
-              value="test"
-              [(ngModel)]="adventure.percentageTakenFromCanceledReservations"
-            />
+            <input id="checkid" type="checkbox" value="test"
+              [(ngModel)]="adventure.percentageTakenFromCanceledReservations" />
           </td>
           <td>
-            <label for="checkid" style="word-wrap: break-word"
-              >Charge cancelled reservations?
+            <label for="checkid" style="word-wrap: break-word">Charge cancelled reservations?
             </label>
           </td>
         </tr>
         <tr>
-          <td
-            class="label"
-            [ngClass]="{
+          <td class="label" [ngClass]="{
               faded: !adventure.percentageTakenFromCanceledReservations
-            }"
-          >
+            }">
             Take percentage
           </td>
           <td>
-            <input
-              class="text-start"
-              type="number"
-              name="percent"
+            <input class="text-start" type="number" name="percent"
               [disabled]="!adventure.percentageTakenFromCanceledReservations"
-              [(ngModel)]="adventure.percentageToTake"
-            />
+              [(ngModel)]="adventure.percentageToTake" />
           </td>
         </tr>
         <tr>
           <td class="label">Description</td>
           <td>
-            <textarea
-              class="text-start"
-              name="description"
-              [(ngModel)]="adventure.description"
-            >
+            <textarea class="text-start" name="description" [(ngModel)]="adventure.description">
             </textarea>
           </td>
         </tr>
         <tr>
           <td class="label">Terms of use</td>
           <td>
-            <textarea
-              class="text-start"
-              name="termsOfUse"
-              [(ngModel)]="adventure.termsOfUse"
-            >
+            <textarea class="text-start" name="termsOfUse" [(ngModel)]="adventure.termsOfUse">
             </textarea>
           </td>
         </tr>
@@ -167,29 +115,21 @@
         <tr>
           <td class="label">
             Additional equipment
-            <button
-              class="btn ms-4"
-              style="height: 30px; width: 40px; border-radius: 5px; padding: 0"
-              (click)="onAdd()"
-            >
+            <button class="btn ms-4" style="height: 30px; width: 40px; border-radius: 5px; padding: 0"
+              (click)="onAdd()">
               <i class="bi bi-plus mb-1"></i>
             </button>
           </td>
           <td>
             <textarea class="text-start" name="additionalEquipment" readonly>
                 {{ additionalEquipment }}
-              </textarea
-            >
+              </textarea>
           </td>
         </tr>
         <tr>
           <td class="label">My biography:</td>
           <td>
-            <textarea
-              class="text-start"
-              name="additionalEquipment"
-              [(ngModel)]="adventure.instructorBio"
-            >
+            <textarea class="text-start" name="additionalEquipment" [(ngModel)]="adventure.instructorBio">
             </textarea>
           </td>
         </tr>

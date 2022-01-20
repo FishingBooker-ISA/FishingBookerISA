@@ -84,6 +84,8 @@ import { CreateShipComponent } from './components/ship-profile/create-ship/creat
 import { AddNavigationToolsComponent } from './components/ship-profile/create-ship/add-navigation-tools/add-navigation-tools.component';
 import { EditNavigationToolsComponent } from './components/ship-profile/edit-navigation-tools/edit-navigation-tools.component';
 import { ServicesTableComponent } from './components/admin-profile/services-table/services-table.component';
+import { MapModalComponent } from './components/map-modal/map-modal.component';
+import { ShowLocationOnMapComponent } from './components/show-location-on-map/show-location-on-map.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -153,6 +155,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AddNavigationToolsComponent,
     EditNavigationToolsComponent,
     ServicesTableComponent
+    MapModalComponent,
+    ShowLocationOnMapComponent
   ],
   imports: [
     BrowserModule,
