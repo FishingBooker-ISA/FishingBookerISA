@@ -14,20 +14,20 @@ import java.util.Date;
 @Service
 public class ComplaintsService {
     private ComplaintRepository complaintRepository;
-    private ClientRepository clientRepository;
     private EmailService emailService;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
     private ShipRepository shipRepository;
+    @Autowired
     private EstateRepository estateRepository;
+    @Autowired
     private AdventureRepository adventureRepository;
 
     @Autowired
-    public ComplaintsService(ComplaintRepository complaintRepository, ClientRepository clientRepository, ShipRepository shipRepository, EstateRepository estateRepository, AdventureRepository adventureRepository, EmailService emailService){
+    public ComplaintsService(ComplaintRepository complaintRepository, EmailService emailService){
         this.complaintRepository = complaintRepository;
         this.emailService = emailService;
-        this.clientRepository = clientRepository;
-        this.shipRepository = shipRepository;
-        this.estateRepository = estateRepository;
-        this.adventureRepository = adventureRepository;
     }
 
     public void reviewComplaint(ComplaintReviewDTO review) {
