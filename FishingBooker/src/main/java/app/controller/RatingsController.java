@@ -31,9 +31,10 @@ public class RatingsController {
 
     @PostMapping("/new")
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public void createRating(@RequestBody NewRatingDTO ratingDTO){
+    public void createRating(@RequestBody NewRatingDTO ratingDTO) {
         this.ratingsService.createRating(ratingDTO);
-        
+    }
+    
     @GetMapping(value = "/getAvgRating", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + "|| hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public double getAvgRating(int serviceId){
