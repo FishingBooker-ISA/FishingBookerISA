@@ -5,6 +5,7 @@ import app.domain.Reservation;
 import app.domain.User;
 import app.dto.ReportDTO;
 import app.dto.ReservationDTO;
+import app.dto.ReservationDisplayDTO;
 import app.repository.ReservationRepository;
 import app.repository.ServiceRepository;
 import app.repository.UnavailablePeriodRepository;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -127,9 +129,29 @@ public class ReservationsController {
         if (!bookingService.getOwner().getId().equals(currentUser.getId()))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(reservationsService.getClientForReservation(serviceId), HttpStatus.OK);
+      }
+
+    @GetMapping(value = "/reservationHistory/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<ReservationDisplayDTO> getClientReservationHistory(@PathVariable int id) {
+        List<ReservationDisplayDTO> result = new ArrayList<>();
+        List<Reservation> reservations = reservationsService.getClientReservationHistory(id);
+        for (Reservation res : reservations){
+            ReservationDisplayDTO dr = new ReservationDisplayDTO(res);
+            result.add(dr);
+        }
+        return result;
+    }
+
+    @GetMapping(value = "/upcomingReservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<ReservationDisplayDTO> getClientUpcomingReservation(@PathVariable int id) {
+        List<ReservationDisplayDTO> result = new ArrayList<>();
+        List<Reservation> reservations = reservationsService.getClientUpcomingReservations(id);
+        for (Reservation res : reservations){
+            ReservationDisplayDTO dr = new ReservationDisplayDTO(res);
+            result.add(dr);
+        }
+        return result;
     }
 }
-
-
-
-

@@ -58,6 +58,8 @@ import { ShowImagesComponent } from './components/show-images/show-images.compon
 import { EditProfileComponent } from './components/owner-profile/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
+import { CreateComplaintComponent } from './components/client-profile/create-complaint/create-complaint.component';
+import { CreateReviewComponent } from './components/client-profile/create-review/create-review.component';
 import { AllReportsComponent } from './components/admin-profile/all-reports/all-reports.component';
 import { NewReportComponent } from './components/instructor-components/new-report/new-report.component';
 import { PromoActionsComponent } from './components/estate-profile/promo-actions/promo-actions.component';
@@ -136,6 +138,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     EditProfileComponent,
     ChangePasswordComponent,
     NewAdminLoginComponent,
+    CreateComplaintComponent,
+    CreateReviewComponent,
     AllReportsComponent,
     NewReportComponent,
     PromoActionsComponent,
@@ -154,7 +158,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CreateShipComponent,
     AddNavigationToolsComponent,
     EditNavigationToolsComponent,
-    ServicesTableComponent
+    ServicesTableComponent,
     MapModalComponent,
     ShowLocationOnMapComponent
   ],

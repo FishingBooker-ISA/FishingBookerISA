@@ -2,6 +2,7 @@ package app.controller;
 
 import app.domain.Complaint;
 import app.dto.ComplaintReviewDTO;
+import app.dto.NewComplaintDTO;
 import app.repository.ComplaintRepository;
 import app.service.ComplaintsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,11 @@ public class ComplaintsController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public void reviewComplaint(@RequestBody ComplaintReviewDTO review) {
         this.complaintsService.reviewComplaint(review);
+    }
+
+    @PostMapping("/new")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public void createComplaint(@RequestBody NewComplaintDTO complaintDTO){
+        this.complaintsService.createComplaint(complaintDTO);
     }
 }

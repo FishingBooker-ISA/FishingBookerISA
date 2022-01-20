@@ -15,3 +15,10 @@ export class RatingReviewDTO{
     ratingId! : number
     isApproved! : boolean
 }
+
+export class NewRatingDTO {
+    givenMark! : number
+    description! : string
+    clientId! : number
+    serviceId! : number
+}

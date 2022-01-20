@@ -1,8 +1,11 @@
 package app.service;
 
+import app.domain.BookingService;
 import app.domain.Rating;
+import app.domain.User;
+import app.dto.NewRatingDTO;
 import app.dto.RatingReviewDTO;
-import app.repository.RatingRepository;
+import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,15 @@ import java.util.List;
 public class RatingsService {
     private RatingRepository ratingRepository;
     private EmailService emailService;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private ShipRepository shipRepository;
+    @Autowired
+    private EstateRepository estateRepository;
+    @Autowired
+    private AdventureRepository adventureRepository;
+
 
     @Autowired
     public RatingsService(RatingRepository ratingRepository, EmailService emailService){
@@ -69,5 +81,29 @@ public class RatingsService {
         String mailContent = "Hello,\nNew rating for your service has been submitted." +
                                 "\nRating: \""+ rating.getDescription() + "\"(" + rating.getGivenMark() +")\nFishing Booker";
         this.emailService.sendMail(rating.getBookingService().getOwner(), mailSubject, mailContent);
+    }
+
+    public void createRating(NewRatingDTO ratingDTO) {
+        Rating rating = new Rating();
+        rating.setGivenMark(ratingDTO.getGivenMark());
+        rating.setDescription(ratingDTO.getDescription());
+        rating.setIsReviewed(false);
+        rating.setIsApproved(false);
+
+        BookingService service = null;
+        int serviceId = ratingDTO.getServiceId();
+        if(shipRepository.existsById(serviceId)){
+            service = shipRepository.getById((serviceId));
+        }
+        else if (adventureRepository.existsById(serviceId)){
+            service = adventureRepository.getById(serviceId);
+        }
+        else if (estateRepository.existsById(serviceId)){
+            service = estateRepository.getById(serviceId);
+        }
+        User client = clientRepository.getById(ratingDTO.getClientId());
+        rating.setBookingService(service);
+        rating.setUser(client);
+        ratingRepository.save(rating);
     }
 }

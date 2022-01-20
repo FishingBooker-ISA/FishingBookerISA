@@ -1,0 +1,24 @@
+<div>
+    <h1 mat-dialog-title>Review</h1>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Rating</mat-label>
+            <mat-select [(value)]="rating">
+                <mat-option value="5">5 - Excellent</mat-option>
+                <mat-option value="4">4 - Good</mat-option>
+                <mat-option value="3">3 - Okay</mat-option>
+                <mat-option value="2">2 - Bad</mat-option>
+                <mat-option value="1">1 - Terrible</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p>Write your review:</p>
+        <mat-form-field style="width:400px; height: 120px" class="example-full-width" appearance="fill" floatLabel="never">
+            <mat-label>Leave a comment</mat-label>
+            <textarea matInput placeholder="..." [(ngModel)]="reviewText"></textarea>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-button [disabled]="reviewText==''" (click)="onSend()" >Send</button>
+    </div>
+</div>

@@ -17,3 +17,11 @@ export class ComplaintReviewDTO {
     responseForClient! : string
     responseForOwner! : string
 }
+
+export class NewComplaintDTO {
+    reason! : string
+    complaintOnOwner! : boolean
+    clientId! : number
+    serviceId! : number
+}
+

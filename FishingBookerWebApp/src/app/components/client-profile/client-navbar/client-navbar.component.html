@@ -16,12 +16,7 @@
                     <a [matMenuTriggerFor]="reservations" exact class="nav-link me-3"> Reservations </a>
                     <mat-menu #reservations="matMenu">
                         <button mat-menu-item [routerLink]="['/client/upcomingReservations']">Upcoming reservations</button>
-                        <button mat-menu-item [matMenuTriggerFor]="history">Reservation history</button>
-                    </mat-menu>
-                    <mat-menu #history="matMenu">
-                        <button mat-menu-item [routerLink]="['/client/reservationHistory/estate']">Estates</button>
-                        <button mat-menu-item [routerLink]="['/']">Boats</button>
-                        <button mat-menu-item [routerLink]="['/']">Instructions</button>
+                        <button mat-menu-item [routerLink]="['/client/reservationHistory/estate']">Reservation history</button>
                     </mat-menu>
                 </li>
                 <li class="nav-item">

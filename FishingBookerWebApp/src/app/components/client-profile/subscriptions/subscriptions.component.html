@@ -23,8 +23,9 @@
             <div class="row">
                 <div *ngFor="let subscription of subscriptions" class=" d-flex align-items-stretch mt-4 box">
                     <div class="" style=" margin-right: 30px;">
-                        <img style="width: 400px;"
-                            src="https://www.kucastil.rs/uploads/ck_editor/images/clanci/KU%C4%86A/Moderna%20rusti%C4%8Dna%20vikendica%20na%20jezeru/Moderna%20rusti%C4%8Dna%20vikendica%20na%20jezeru%20(11).jpg">
+                        <img style="width: 400px;" src="../../../assets/img/estate-small.jpg" *ngIf="subscription.type == 'ESTATE'">
+                        <img style="width: 400px;" src="../../../assets/img/boat-small.jpg" *ngIf="subscription.type == 'SHIP'">
+                        <img style="width: 400px;" src="../../../assets/img/instructor-small.jpg" *ngIf="subscription.type == 'ADVENTURE'">
                     </div>
                     <div style="width: 50%">
                         <h4 style="margin-bottom: 0.5%;"><a>{{subscription.name}}</a></h4>
@@ -35,7 +36,7 @@
                                 {{subscription.address.city}}, {{subscription.address.country}}</p>
                         </div>
                         <p style="margin-top: 1%;">{{subscription.description}}</p>
-                        <p style="margin-top: 1%;">{{subscription.pricePerDay}} din / per day</p>
+                        <p style="margin-top: 1%;">{{subscription.pricePerDay}} EUR / per day</p>
                         <button mat-button style="margin-top: 5%; " (click)="unsubscribe(subscription.id, subscription.serviceId)">
                             Unsubscribe
                         </button>

@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.domain.Rating;
+import app.dto.NewRatingDTO;
 import app.dto.RatingReviewDTO;
 import app.service.RatingsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class RatingsController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public void reviewRating(@RequestBody RatingReviewDTO request) {
         this.ratingsService.reviewRating(request);
+    }
+
+    @PostMapping("/new")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public void createRating(@RequestBody NewRatingDTO ratingDTO){
+        this.ratingsService.createRating(ratingDTO);
     }
 
 }
