@@ -6,9 +6,6 @@ public class NewRatingDTO {
     private int clientId;
     private int serviceId;
 
-    public NewRatingDTO() {
-    }
-
     public double getGivenMark() {
         return givenMark;
     }

@@ -1,12 +1,5 @@
 package app.dto;
 
-import app.domain.User;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.util.Date;
 
 public class NewComplaintDTO {
 
@@ -26,9 +19,9 @@ public class NewComplaintDTO {
         ComplaintOnOwner = complaintOnOwner;
     }
 
-    public NewComplaintDTO(String reason, boolean ComplaintOnOwner, int clientId, int serviceId) {
+    public NewComplaintDTO(String reason, boolean complaintOnOwner, int clientId, int serviceId) {
         this.reason = reason;
-        this.ComplaintOnOwner = ComplaintOnOwner;
+        this.ComplaintOnOwner = complaintOnOwner;
         this.clientId = clientId;
         this.serviceId = serviceId;
     }
