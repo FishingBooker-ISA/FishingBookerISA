@@ -76,8 +76,8 @@ INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason,
     VALUES (DATE '2021-12-17', true, false, 'He was never on time.', 3, 5);
 
 --loyality program
-INSERT INTO loyalty_program ( percent_for_bronze, percent_for_gold, percent_for_silver, points_for_bronze, points_for_gold, points_for_silver)
-VALUES (10.0, 30.0, 20.0, 100.0, 300.0, 200.0);
+INSERT INTO loyalty_program ( percent_for_bronze, percent_for_gold, percent_for_silver, points_for_bronze, points_for_gold, points_for_silver, points_for_user, points_for_owner, percentage_for_app)
+VALUES (10.0, 30.0, 20.0, 100.0, 300.0, 200.0, 10.0, 10.0, 5.0);
 
 --reservations
 INSERT INTO reservation (

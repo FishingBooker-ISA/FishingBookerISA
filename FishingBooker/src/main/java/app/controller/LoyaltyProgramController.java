@@ -33,7 +33,9 @@ public class LoyaltyProgramController {
             program.getPercentForSilver() < 0 || program.getPercentForSilver() > 100 ||
                 program.getPercentForGold() < 0 || program.getPercentForGold() > 100 ||
                     program.getPointsForBronze() < 0 || program.getPointsForSilver() < 0 ||
-                        program.getPointsForGold() < 0) {
+                        program.getPointsForGold() < 0 || program.getPercentageForApp() < 0 ||
+                            program.getPercentageForApp() > 100 || program.getPointsForOwner() < 0 ||
+                                program.getPointsForUser() < 0) {
             return new ResponseEntity<>("Loyalty program could not be updated!", HttpStatus.BAD_REQUEST);
         }
         this.loyaltyProgramService.updateLoyaltyProgram(program);

@@ -6,4 +6,7 @@ export class LoyaltyProgram {
     percentForSilver! : number
     pointsForGold! : number
     percentForGold! : number
+    pointsForUser! : number
+    pointsForOwner! : number
+    percentageForApp! : number
 }

@@ -23,6 +23,13 @@ public class LoyaltyProgramService {
         existingLoyaltyProgram.setPercentForSilver(program.getPercentForSilver());
         existingLoyaltyProgram.setPointsForGold(program.getPointsForGold());
         existingLoyaltyProgram.setPercentForGold(program.getPercentForGold());
+        existingLoyaltyProgram.setPointsForOwner(program.getPointsForOwner());
+        existingLoyaltyProgram.setPointsForUser(program.getPointsForUser());
+        existingLoyaltyProgram.setPercentageForApp(program.getPercentageForApp());
         this.loyaltyProgramRepository.save(existingLoyaltyProgram);
+    }
+
+    public LoyaltyProgram getLoyaltyProgram(){
+        return this.loyaltyProgramRepository.findAll().get(0);
     }
 }
