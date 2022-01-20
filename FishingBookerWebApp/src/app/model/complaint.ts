@@ -20,7 +20,7 @@ export class ComplaintReviewDTO {
 
 export class NewComplaintDTO {
     reason! : string
-    isComplaintOnOwner! : boolean
+    complaintOnOwner! : boolean
     clientId! : number
     serviceId! : number
 }

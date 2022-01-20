@@ -33,7 +33,10 @@ export class CreateComplaintComponent implements OnInit {
   onSend(){
     this.complaint.clientId = this.data.clientId;
     this.complaint.serviceId = this.data.serviceId;
-    this.complaint.isComplaintOnOwner = true;
+    this.complaint.complaintOnOwner = true;
+    if(this.selected === "service"){
+      this.complaint.complaintOnOwner = false;
+    }
     this.complaint.reason = this.complaintText;
     this.complaintService.sendNewComplaint(this.complaint);
     this.dialogRef.close(true);
