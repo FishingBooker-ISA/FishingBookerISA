@@ -93,7 +93,7 @@
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr *ngIf="currentUser.role.name === 'ROLE_SHIP_OWNER'">
               <td>Role</td>
               <td>
                 <mat-form-field>

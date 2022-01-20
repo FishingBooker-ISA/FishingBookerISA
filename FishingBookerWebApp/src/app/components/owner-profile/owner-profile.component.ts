@@ -9,6 +9,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { ChangePasswordComponent, PasswordDialogModel } from '../change-password/change-password.component';
 import { DeletionRequestDTO } from 'src/app/model/account-request';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LocationCoords, ShowLocationOnMapComponent } from '../show-location-on-map/show-location-on-map.component';
 
 @Component({
   selector: 'app-owner-profile',
@@ -88,6 +89,19 @@ export class OwnerProfileComponent implements OnInit {
           });
         });;;
     this.deleteReason = "";
+  }
+
+  openMap() {
+    const dialogData = new LocationCoords(
+      this.currentUser.address.longitude, this.currentUser.address.latitude
+    );
+
+    const dialogRef = this.dialog.open(ShowLocationOnMapComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px',
+      data: dialogData,
+    });
   }
 
 }

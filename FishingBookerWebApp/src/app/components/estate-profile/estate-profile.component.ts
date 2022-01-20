@@ -12,6 +12,7 @@ import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { EditAdditionalDialogModel, EditAdditionalServicesComponent } from '../edit-additional-services/edit-additional-services.component';
 import { ImagesDialogModel, ShowImagesComponent } from '../show-images/show-images.component';
+import { LocationCoords, ShowLocationOnMapComponent } from '../show-location-on-map/show-location-on-map.component';
 
 @Component({
   selector: 'app-estate-profile',
@@ -159,6 +160,19 @@ export class EstateProfileComponent implements OnInit {
 
     dialogRef.backdropClick().subscribe((dialogResult) => {
       this.actionsService.getAllAdditionalServices(this.estate.id).subscribe((data) => this.additional = data);
+    });
+  }
+
+  openMap() {
+    const dialogData = new LocationCoords(
+      this.estate.address.longitude, this.estate.address.latitude
+    );
+
+    const dialogRef = this.dialog.open(ShowLocationOnMapComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px',
+      data: dialogData,
     });
   }
 }

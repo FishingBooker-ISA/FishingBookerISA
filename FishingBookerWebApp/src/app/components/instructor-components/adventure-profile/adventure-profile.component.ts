@@ -12,6 +12,7 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../../confirm-dialog
 import { EditAdditionalDialogModel, EditAdditionalServicesComponent } from '../../edit-additional-services/edit-additional-services.component';
 import { ImagesDialogModel, ShowImagesComponent } from '../../show-images/show-images.component';
 import { Image } from 'src/app/model/image';
+import { LocationCoords, ShowLocationOnMapComponent } from '../../show-location-on-map/show-location-on-map.component';
 
 @Component({
   selector: 'app-adventure-profile',
@@ -20,8 +21,8 @@ import { Image } from 'src/app/model/image';
 })
 export class AdventureProfileComponent implements OnInit {
 
-  adventureId! : number;
-  adventure! : Adventure;
+  adventureId!: number;
+  adventure!: Adventure;
   editingMode!: boolean;
   createReservation!: boolean
   additional!: AdditionalService[]
@@ -31,12 +32,12 @@ export class AdventureProfileComponent implements OnInit {
   imgSrc!: any
 
   constructor(private route: ActivatedRoute, public service: ManagingAdventuresService, private router: Router,
-    public dialog: MatDialog,  public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
+    public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
     public actionsService: PromoActionsService, private _snackBar: MatSnackBar) {
     this.route.params.subscribe((params) => {
       this.adventureId = +params['id'];
     });
-   }
+  }
 
   ngOnInit(): void {
     this.createReservation = false;
@@ -61,7 +62,7 @@ export class AdventureProfileComponent implements OnInit {
     this.calendarView = false
   }
 
-  createNewReservation(){
+  createNewReservation() {
     this.createReservation = true;
     this.promoActions = false;
     this.calendarView = false;
@@ -158,6 +159,19 @@ export class AdventureProfileComponent implements OnInit {
 
     dialogRef.backdropClick().subscribe((dialogResult) => {
       this.actionsService.getAllAdditionalServices(this.adventureId).subscribe((data) => this.additional = data);
+    });
+  }
+
+  openMap() {
+    const dialogData = new LocationCoords(
+      this.adventure.address.longitude, this.adventure.address.latitude
+    );
+
+    const dialogRef = this.dialog.open(ShowLocationOnMapComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px',
+      data: dialogData,
     });
   }
 

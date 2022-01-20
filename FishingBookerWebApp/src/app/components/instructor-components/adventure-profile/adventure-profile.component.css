@@ -1,5 +1,8 @@
 a {
   text-decoration: none;
+  color: #009961;
+  cursor: pointer;
+  font-style: italic;
 }
 
 .carousel-item {
