@@ -8,6 +8,9 @@ public class LoyaltyProgramDTO {
     private double percentForSilver;
     private double pointsForGold;
     private double percentForGold;
+    private double pointsForUser;
+    private double pointsForOwner;
+    private double percentageForApp;
 
     public int getId() {
         return id;
@@ -63,5 +66,29 @@ public class LoyaltyProgramDTO {
 
     public void setPercentForGold(double percentForGold) {
         this.percentForGold = percentForGold;
+    }
+
+    public double getPointsForUser() {
+        return pointsForUser;
+    }
+
+    public void setPointsForUser(double pointsForUser) {
+        this.pointsForUser = pointsForUser;
+    }
+
+    public double getPointsForOwner() {
+        return pointsForOwner;
+    }
+
+    public void setPointsForOwner(double pointsForOwner) {
+        this.pointsForOwner = pointsForOwner;
+    }
+
+    public double getPercentageForApp() {
+        return percentageForApp;
+    }
+
+    public void setPercentageForApp(double percentageForApp) {
+        this.percentageForApp = percentageForApp;
     }
 }

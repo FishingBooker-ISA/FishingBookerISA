@@ -11,14 +11,20 @@ public class LoyaltyProgram {
     private double pointsForBronze;
     @Column(nullable = false)
     private double percentForBronze;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private double pointsForSilver;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private double percentForSilver;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private double pointsForGold;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private double percentForGold;
+    @Column(nullable = false)
+    private double pointsForUser;
+    @Column(nullable = false)
+    private double pointsForOwner;
+    @Column(nullable = false)
+    private double percentageForApp;
 
     public LoyaltyProgram(){}
 
@@ -85,5 +91,29 @@ public class LoyaltyProgram {
 
     public void setPercentForGold(double percentForGold) {
         this.percentForGold = percentForGold;
+    }
+
+    public double getPointsForUser() {
+        return pointsForUser;
+    }
+
+    public void setPointsForUser(double pointsForUser) {
+        this.pointsForUser = pointsForUser;
+    }
+
+    public double getPointsForOwner() {
+        return pointsForOwner;
+    }
+
+    public void setPointsForOwner(double pointsForOwner) {
+        this.pointsForOwner = pointsForOwner;
+    }
+
+    public double getPercentageForApp() {
+        return percentageForApp;
+    }
+
+    public void setPercentageForApp(double percentageForApp) {
+        this.percentageForApp = percentageForApp;
     }
 }
