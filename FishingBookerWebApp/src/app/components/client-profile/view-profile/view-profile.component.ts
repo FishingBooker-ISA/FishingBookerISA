@@ -55,8 +55,10 @@ export class ViewProfileComponent implements OnInit {
   }
 
   editProfile() {
-    if (this.currentUser.firstName != "" && this.currentUser.lastName != "" && this.currentUser.address.street != "" && this.currentUser.address.number < 1 && this.currentUser.address.city != "" && this.currentUser.address.country != "" && this.currentUser.phoneNumber != "") {
+    if (this.currentUser.firstName != "" && this.currentUser.lastName != "" && this.currentUser.address.street != "" && this.currentUser.address.number > 1 && this.currentUser.address.city != "" && this.currentUser.address.country != "" && this.currentUser.phoneNumber != "") {
 
+      //poziv beka
+      this.profileService.editUserProfile(this.currentUser);
       this.isEditing = false;
       this.backupUser.firstName = this.currentUser.firstName;
       this.backupUser.lastName = this.currentUser.lastName;
@@ -65,9 +67,9 @@ export class ViewProfileComponent implements OnInit {
       this.backupUser.address.city = this.currentUser.address.city;
       this.backupUser.address.country = this.currentUser.address.country;
       this.backupUser.phoneNumber = this.currentUser.phoneNumber;
-      //poziv beka
     }
-    this.errorMessage = "Please fill out all fields."
+    else
+      this.errorMessage = "Please fill out all fields."
   }
 
   restore() {
@@ -99,14 +101,18 @@ export class ViewProfileComponent implements OnInit {
     }
     this.profileService.changePassword(dto);
     this.isChangingPassword = false;
-    /*let login: LoginUser = {
+    let login: LoginUser = {
       username: this.currentUser.email, 
       password: this.newPassword1
     }
 
     setTimeout(() => {
       this.signupService.logIn(login).subscribe()
-    }, 1000)*/
+    }, 1000)
+
+    this.oldPassword = "";
+    this.newPassword1 = "";
+    this.newPassword2 = "";
   }
 
   openDeleteDialog(): void{
