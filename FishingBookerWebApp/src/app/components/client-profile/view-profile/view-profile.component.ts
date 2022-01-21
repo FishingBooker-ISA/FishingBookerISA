@@ -29,6 +29,9 @@ export class ViewProfileComponent implements OnInit {
   isDeletionRequestSent = false;
   request!: DeletionRequestDTO;
   reason: string = "";
+  rank = 1;
+  numberOfPoints = 160;
+  numberOfPenalties = 1;
 
   constructor(public profileService: ProfileService , public signupService: SignupOwnersService, private clientProfileService: ClientProfileService, public dialog: MatDialog) { }
 
