@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
 import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
 import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { ClientReservationDialogComponent } from '../client-reservation-dialog/client-reservation-dialog.component';
 
 @Component({
   selector: 'app-estates',
@@ -26,8 +28,8 @@ export class EstatesComponent implements OnInit {
   public sortCriteria = "";
 
   todayDate: Date = new Date();
-  startDate!: Date;
-  endDate!: Date;
+  startDate: Date = new Date();
+  endDate: Date = new Date();
   capacity: number = 2;
   currentUser!: User
   isClient: boolean = false;
@@ -35,10 +37,11 @@ export class EstatesComponent implements OnInit {
   isClientBlocked = false;
   isClientAvailable = true;
   warningMessage = "";
+  isFilled = false;
 
 
 
-  constructor(private clientProfileService: ClientProfileService, private _estateService: ManagingEstateService, public signupService: SignupOwnersService) { }
+  constructor(public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private _estateService: ManagingEstateService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -57,6 +60,17 @@ export class EstatesComponent implements OnInit {
     this.currentUser = this.signupService.currentUser;
     this._estateService.getAllEstates().subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
 
+  }
+
+  openReservationDialog(name:string, sid:number, price:number){
+    const dialogRef = this.reservationDialog.open(ClientReservationDialogComponent, {
+      width: '450px',
+      data: { serviceName: name, serviceId: sid, servicePrice: price, startDate: this.startDate, endDate: this.endDate, clientId: this.currentUser.id},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   findAvailable() {

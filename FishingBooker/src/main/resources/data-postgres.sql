@@ -110,7 +110,7 @@ INSERT INTO promo_action(
 VALUES ('nesto', 5, 10, DATE '2022-02-20', false, 20, DATE '2022-02-15', 6);
 INSERT INTO promo_action(
     additional, capacity, duration_in_days, end_date, is_taken, price_per_day, start_date, service_id)
-VALUES ('nesto', 5, 10, DATE '2022-03-09', false, 20, DATE '2022-03-0', 6);
+VALUES ('nesto', 5, 10, DATE '2022-03-09', false, 20, DATE '2022-03-03', 6);
 --reports
 INSERT INTO report (
     client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)

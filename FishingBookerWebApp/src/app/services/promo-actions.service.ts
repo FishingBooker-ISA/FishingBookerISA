@@ -31,4 +31,7 @@ export class PromoActionsService {
       }
     })
   }
+  getAdditionalServices(id: number): Observable<AdditionalService[]> {
+    return this.http.get<AdditionalService[]>(`${environment.baseUrl}` + 'api/additional/additional/'+id)
+  }
 }

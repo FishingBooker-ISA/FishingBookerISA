@@ -3,6 +3,7 @@ package app.controller;
 import app.domain.BookingService;
 import app.domain.Reservation;
 import app.domain.User;
+import app.dto.ClientReservationDTO;
 import app.dto.ReportDTO;
 import app.dto.ReservationDTO;
 import app.dto.ReservationDisplayDTO;
@@ -70,6 +71,11 @@ public class ReservationsController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @PostMapping(value = "/createClientReservation", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')" )
+    public ResponseEntity<String> createClientReservation(@Valid @RequestBody ClientReservationDTO reservationDTO, Principal user) {
+        return new ResponseEntity<>("New reservation created!", HttpStatus.OK);
     }
 
     @GetMapping(value = "/getReservationHistory", produces = MediaType.APPLICATION_JSON_VALUE)
