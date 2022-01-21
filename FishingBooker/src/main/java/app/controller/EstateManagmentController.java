@@ -22,9 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,8 +192,6 @@ public class EstateManagmentController {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
             result.add(service);
         }
-        System.out.println(parameters.getCapacity());
-        System.out.println(parameters.getStartDate());
         return result;
     }
 
