@@ -93,15 +93,17 @@ public class ClientService {
         Client client = clientRepository.getById(id);
 
         Date now = new Date();
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-        String strDate = dateFormat.format(client.getLastPenaltyDate());
-        String strNow = dateFormat.format(now);
-        if (!strDate.equals(strNow)){
-            client.setNumOfPenalties(0);
+        if (client.getLastPenaltyDate() != null){
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+            String strDate = dateFormat.format(client.getLastPenaltyDate());
+            String strNow = dateFormat.format(now);
+            if (!strDate.equals(strNow)){
+                client.setNumOfPenalties(0);
+            }
         }
         client.setLastPenaltyDate(now);
         client.setNumOfPenalties(client.getNumOfPenalties()+1);
+        clientRepository.save(client);
     }
 
 

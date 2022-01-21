@@ -29,13 +29,14 @@ public class ReportService {
     ClientRepository clientRepository;
     @Autowired
     EmailService emailService;
+    @Autowired
+    ClientService clientService;
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Report createReport(ReportDTO reportDTO) {
         Report newReport = new Report();
         Reservation reservation = reservationRepository.getById(reportDTO.getReservationId());
-        Client client = clientRepository.getById(reservation.getUser().getId());
 
         if (this.reportRepository.getByReservationId(reservation.getId()) != null)
             return null;
@@ -47,9 +48,7 @@ public class ReportService {
         newReport.setSanctionClient(reportDTO.getSanctionClient());
 
         if (reportDTO.getClientDidntShowUp()) {
-            int currNumOfPenalties = client.getNumOfPenalties();
-            client.setNumOfPenalties(currNumOfPenalties + 1);
-            clientRepository.save(client);
+            clientService.addPenalty(reservation.getUser().getId());
         }
 
         newReport.setIsReviewed(true);
@@ -77,10 +76,7 @@ public class ReportService {
         Report foundReport = this.reportRepository.getById(review.getId());
         foundReport.setIsReviewed(true);
         if (review.getIsSanctioned()) {
-            Client client = this.clientRepository.getById(foundReport.getReservation().getUser().getId());
-            int penalties = client.getNumOfPenalties() + 1;
-            client.setNumOfPenalties(penalties);
-            this.clientRepository.save(client);
+            clientService.addPenalty(foundReport.getReservation().getUser().getId());
             notifyClient(foundReport);
             notifyOwner(foundReport);
         }

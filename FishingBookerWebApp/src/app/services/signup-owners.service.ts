@@ -43,6 +43,7 @@ export class SignupOwnersService {
           this.access_token = res.accessToken;
           localStorage.setItem('jwt', res.accessToken);
           localStorage.setItem('currentUser', JSON.stringify(res));
+          console.log(this.access_token);
         })
       );
   }
