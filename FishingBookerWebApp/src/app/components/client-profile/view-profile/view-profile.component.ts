@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Address } from 'src/app/model/address';
 import { DeletionRequestDTO } from 'src/app/model/delete-account-request';
 import { LoginUser } from 'src/app/model/login-user';
 import { PasswordChangeDto } from 'src/app/model/password-change-dto';
@@ -9,6 +8,8 @@ import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 import { DeletionRequestComponent } from '../../deletion-request/deletion-request.component';
+import { LoyaltyProgram } from 'src/app/model/loyalty-program';
+import { LoyaltyProgramService } from 'src/app/services/loyalty-program.service';
 
 @Component({
   selector: 'app-view-profile',
@@ -28,12 +29,13 @@ export class ViewProfileComponent implements OnInit {
   errorMessage: string = "";
   isDeletionRequestSent = false;
   request!: DeletionRequestDTO;
+  loyalty!: LoyaltyProgram;
   reason: string = "";
-  rank = 1;
-  numberOfPoints = 160;
+  rank = 4;
+  numberOfPoints = 0;
   numberOfPenalties = 1;
 
-  constructor(public profileService: ProfileService , public signupService: SignupOwnersService, private clientProfileService: ClientProfileService, public dialog: MatDialog) { }
+  constructor(public loyaltyService: LoyaltyProgramService, public profileService: ProfileService, public signupService: SignupOwnersService, private clientProfileService: ClientProfileService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -49,18 +51,27 @@ export class ViewProfileComponent implements OnInit {
       if (this.currentUser.role.name == "ROLE_CLIENT") {
         this.isClient = true;
       }
-      this.clientProfileService.deletionRequestExists(this.currentUser.id).subscribe((res) => { 
+      this.clientProfileService.deletionRequestExists(this.currentUser.id).subscribe((res) => {
         this.isDeletionRequestSent = res;
-      })
+      });
+      this.clientProfileService.getClientPoints(this.currentUser.id).subscribe((res1) => {
+        this.numberOfPoints = res1;
 
+        this.loyaltyService.getLoyaltyProgram().subscribe((res3) => {
+          this.loyalty = res3;
+          this.determineRank();
+        });
+      });
+      this.clientProfileService.getClientPenalties(this.currentUser.id).subscribe((res2) => {
+        this.numberOfPenalties = res2;
+      });
     });
     //this.currentUser = this.signupService.currentUser;
   }
-
+  
   editProfile() {
     if (this.currentUser.firstName != "" && this.currentUser.lastName != "" && this.currentUser.address.street != "" && this.currentUser.address.number > 1 && this.currentUser.address.city != "" && this.currentUser.address.country != "" && this.currentUser.phoneNumber != "") {
 
-      //poziv beka
       this.profileService.editUserProfile(this.currentUser);
       this.isEditing = false;
       this.backupUser.firstName = this.currentUser.firstName;
@@ -105,7 +116,7 @@ export class ViewProfileComponent implements OnInit {
     this.profileService.changePassword(dto);
     this.isChangingPassword = false;
     let login: LoginUser = {
-      username: this.currentUser.email, 
+      username: this.currentUser.email,
       password: this.newPassword1
     }
 
@@ -118,25 +129,44 @@ export class ViewProfileComponent implements OnInit {
     this.newPassword2 = "";
   }
 
-  openDeleteDialog(): void{
+  openDeleteDialog(): void {
     const dialogRef = this.dialog.open(DeletionRequestComponent, {
       width: '450px',
-      data: { reason: this.reason},
+      data: { reason: this.reason },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.reason = result;
-      if (this.reason){
+      if (this.reason) {
         this.sendDeletionRequest();
       }
     });
   }
 
-  sendDeletionRequest(){
+  sendDeletionRequest() {
     this.isDeletionRequestSent = true;
-    this.request = {reason: this.reason, userId: this.currentUser.id};
+    this.request = { reason: this.reason, userId: this.currentUser.id };
     this.clientProfileService.sendDeletionRequest(this.request);
   }
+
+  
+  determineRank() {
+    if(this.numberOfPoints < this.loyalty.pointsForBronze){
+      this.rank = 4;
+      return;
+    }
+    if(this.numberOfPoints < this.loyalty.pointsForSilver){
+      this.rank = 3;
+      return;
+    }
+    if(this.numberOfPoints < this.loyalty.pointsForGold){
+      this.rank = 2;
+      return;
+    }
+    this.rank = 1;
+    return;
+  }
+
 
 }

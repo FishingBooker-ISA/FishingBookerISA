@@ -40,6 +40,17 @@ public class ClientController {
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
     public boolean checkDeletionRequest(@PathVariable int id) {
         return clientService.checkIfRequestExists(id);
+    }
 
+    @GetMapping(value = "/points/{id}")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public double getPointsNumber(@PathVariable int id) {
+        return clientService.getPointsNumber(id);
+    }
+
+    @GetMapping(value = "/penalties/{id}")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public int getPenaltiesNumber(@PathVariable int id) {
+        return clientService.getPenaltiesNumber(id);
     }
 }

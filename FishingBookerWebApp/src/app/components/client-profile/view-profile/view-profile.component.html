@@ -187,20 +187,20 @@
                 </div>
             </div>
             <div style="margin-top: 20px;" *ngIf="rank==1">
-                Gold clients get 30% discount on all reservations. <br><br>
-                All clients get 10 points per reservation. <br>
+                Gold clients get {{loyalty.percentForGold}}% discount on all reservations. <br><br>
+                All clients get {{loyalty.pointsForUser}} points per reservation. <br>
             </div>
             <div style="margin-top: 20px;" *ngIf="rank==2">
-                Silver clients get 20% discount on all reservations. <br><br>
-                All clients get 10 points per reservation. Collect 300 points to get the Gold Badge.<br>
+                Silver clients get {{loyalty.percentForSilver}}% discount on all reservations. <br><br>
+                All clients get {{loyalty.pointsForUser}} points per reservation. Collect {{loyalty.pointsForGold}} points to get the Gold Badge.<br>
             </div>
             <div style="margin-top: 20px;" *ngIf="rank==3">
-                Bronze clients get 10% discount on all reservations. <br><br>
-                All clients get 10 points per reservation. Collect 200 points to get the Silver Badge.<br>
+                Bronze clients get  {{loyalty.percentForBronze}}% discount on all reservations. <br><br>
+                All clients get {{loyalty.pointsForUser}} points per reservation. Collect {{loyalty.pointsForSilver}} points to get the Silver Badge.<br>
             </div>
             <div style="margin-top: 20px;" *ngIf="rank==4">
                 
-                All clients get 10 points per reservation. Collect 100 points to get the Bronze Badge.<br>
+                All clients get {{loyalty.pointsForUser}} points per reservation. Collect {{loyalty.pointsForBronze}} points to get the Bronze Badge.<br>
             </div>
             <div style="margin-top: 60px;">
                 <h5>Penalties in this month: {{numberOfPenalties}}</h5>

@@ -61,6 +61,17 @@ public class ClientService {
         return (existingRequest != null);
     }
 
+    public double getPointsNumber(int id) {
+        Client client = clientRepository.getById(id);
+        return client.getPoints();
+    }
+
+    public int getPenaltiesNumber(int id) {
+        Client client = clientRepository.getById(id);
+        int penalties = client.getNumOfPenalties();
+        return penalties;
+    }
+
 
 
 

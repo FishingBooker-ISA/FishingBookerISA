@@ -15,6 +15,13 @@ export class ClientProfileService {
     return this.http.get<boolean>(`${environment.baseUrl}` + 'api/client/deletionRequestExists/' + id);
   }
 
+  getClientPoints(id: number): Observable<number> {
+    return this.http.get<number>(`${environment.baseUrl}` + 'api/client/points/' + id);
+  }
+  getClientPenalties(id: number): Observable<number> {
+    return this.http.get<number>(`${environment.baseUrl}` + 'api/client/penalties/' + id);
+  }
+
   sendDeletionRequest(request: DeletionRequestDTO) {
     this.http.post(`${environment.baseUrl}` + 'api/client/sendDeletionRequest', request)
     .subscribe(
