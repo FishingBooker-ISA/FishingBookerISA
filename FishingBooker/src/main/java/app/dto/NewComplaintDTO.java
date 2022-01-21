@@ -4,7 +4,7 @@ package app.dto;
 public class NewComplaintDTO {
 
     private String reason;
-    private boolean ComplaintOnOwner;
+    private boolean complaintOnOwner;
     private int clientId;
     private int serviceId;
 
@@ -12,16 +12,16 @@ public class NewComplaintDTO {
     }
 
     public boolean isComplaintOnOwner() {
-        return ComplaintOnOwner;
+        return complaintOnOwner;
     }
 
     public void setComplaintOnOwner(boolean complaintOnOwner) {
-        ComplaintOnOwner = complaintOnOwner;
+        complaintOnOwner = complaintOnOwner;
     }
 
     public NewComplaintDTO(String reason, boolean complaintOnOwner, int clientId, int serviceId) {
         this.reason = reason;
-        this.ComplaintOnOwner = complaintOnOwner;
+        this.complaintOnOwner = complaintOnOwner;
         this.clientId = clientId;
         this.serviceId = serviceId;
     }

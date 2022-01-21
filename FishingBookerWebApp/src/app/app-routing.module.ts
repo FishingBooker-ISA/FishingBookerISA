@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './auth-guard/admin.guard';
 import { EstateOwnerAuthGuard } from './auth-guard/estate-owner-auth-guard';
 import { InstructorGuard } from './auth-guard/instructor.guard';
+import { ShipOwnerAuthGuardGuard } from './auth-guard/ship-owner-auth-guard.guard';
 import { AccountRequestsComponent } from './components/admin-profile/account-requests/account-requests.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 import { AllComplaintsComponent } from './components/admin-profile/all-complaints/all-complaints.component';
@@ -13,6 +14,7 @@ import { NewAdminLoginComponent } from './components/admin-profile/new-admin-log
 import { ServicesTableComponent } from './components/admin-profile/services-table/services-table.component';
 import { UsersTableComponent } from './components/admin-profile/users-table/users-table.component';
 import { BoatsComponent } from './components/boats/boats.component';
+import { BussinessReportComponent } from './components/bussiness-report/bussiness-report.component';
 import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
 import { EstateReservationHistoryComponent } from './components/client-profile/estate-reservation-history/estate-reservation-history.component';
 import { SubscriptionsComponent } from './components/client-profile/subscriptions/subscriptions.component';
@@ -39,7 +41,7 @@ import { SignupComponent } from './components/signup/signup.component';
 const routes: Routes = [
   { path: 'home', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'admin/ratings', component: RatingsReviewComponent, canActivate: [AdminGuard]},
+  { path: 'admin/ratings', component: RatingsReviewComponent, canActivate: [AdminGuard] },
   { path: 'admin/accountRequests', component: AccountRequestsComponent, canActivate: [AdminGuard] },
   { path: 'admin/deleteRequests', component: DeleteRequestsComponent, canActivate: [AdminGuard] },
   { path: 'admin/allUsers', component: UsersTableComponent, canActivate: [AdminGuard] },
@@ -64,9 +66,10 @@ const routes: Routes = [
   { path: 'adventure/:id', component: AdventureProfileComponent, canActivate: [InstructorGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'profile', component: OwnerProfileComponent },
-  { path: 'shipOwner/home', component: ShipOwnerHomepageComponent },
-  { path: 'ship/:id', component: ShipProfileComponent },
-  { path: 'map', component: MapModalComponent }
+  { path: 'shipOwner/home', component: ShipOwnerHomepageComponent, canActivate: [ShipOwnerAuthGuardGuard] },
+  { path: 'ship/:id', component: ShipProfileComponent, canActivate: [ShipOwnerAuthGuardGuard] },
+  { path: 'map', component: MapModalComponent },
+  { path: 'report', component: BussinessReportComponent }
 ];
 
 @NgModule({

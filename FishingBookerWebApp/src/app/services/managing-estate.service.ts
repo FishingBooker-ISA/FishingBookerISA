@@ -132,5 +132,13 @@ export class ManagingEstateService {
   deleteEstate(id: number) {
     return this.http.delete(`${environment.baseUrl}` + 'api/estates/deleteEstate/' + id, { observe: 'response', responseType: 'text' });
   }
+
+  getAverageRating(id: number) {
+    return this.http.get(`${environment.baseUrl}` + 'api/ratings/getAvgRating', {
+      params: {
+        serviceId: id
+      }
+    })
+  }
 }
 
