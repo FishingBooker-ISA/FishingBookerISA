@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DisplayServiceShortDTO } from '../model/display-service-short';
 import { NavigationToolDTO, Ship, ShipDTO, ShipNavigationTool, ShipType } from '../model/ship';
 
 @Injectable({
@@ -10,6 +11,18 @@ import { NavigationToolDTO, Ship, ShipDTO, ShipNavigationTool, ShipType } from '
 export class ManagingShipsService {
 
   constructor(private http: HttpClient) { }
+
+  getAllShips(): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/ships/all')
+  }
+
+  getShipsByName(input: string): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/ships/search/name/' + input);
+  }
+
+  getShipsByCity(input: string): Observable<DisplayServiceShortDTO[]> {
+    return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/ships/search/city/' + input);
+  }
 
   getAllEstatesForOwner(): Observable<Ship[]> {
     return this.http.get<Ship[]>(`${environment.baseUrl}` + 'api/ships/getShipsForOwner')

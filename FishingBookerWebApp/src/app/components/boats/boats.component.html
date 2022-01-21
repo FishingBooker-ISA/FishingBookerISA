@@ -33,10 +33,10 @@
                     <mat-form-field style="width: 14%; margin-right: 5%;">
                         <mat-select required [(ngModel)]="searchCriteria">
                             <mat-option value="name">By Name</mat-option>
-                            <mat-option value="search">By Location</mat-option>
+                            <mat-option value="location">By City</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;">Search</button>
+                    <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;" (click)="search()">Search</button>
                 </div>
 
                 <div class=" d-flex flex-row">
@@ -46,9 +46,9 @@
                     <mat-form-field style="width: 12%; margin-right: 1%;">
                         <mat-select [(ngModel)]="sortCriteria">
                             <mat-option value="name">Name</mat-option>
-                            <mat-option value="search">Location</mat-option>
-                            <mat-option value="search">Rating</mat-option>
-                            <mat-option value="search">Price</mat-option>
+                            <mat-option value="city">City</mat-option>
+                            <mat-option value="rating">Rating</mat-option>
+                            <mat-option value="price">Price</mat-option>
                         </mat-select>
                     </mat-form-field>
 
@@ -71,8 +71,17 @@
                     </div>
                     <mat-form-field style="width: 12%; margin-right: 2%;">
                         <mat-select [(ngModel)]="location">
-                            <mat-option value="location">
-                                Name
+                            <mat-option value="any">
+                                Any
+                            </mat-option>
+                            <mat-option value="novi sad">
+                                Novi Sad
+                            </mat-option>
+                            <mat-option value="veternik">
+                                Veternik
+                            </mat-option>
+                            <mat-option value="beograd">
+                                Beograd
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -84,19 +93,19 @@
                     <mat-form-field class="example-form-field" style="width: 7%; margin-right: 1%;">
                         <mat-label>from</mat-label>
                         <input matInput type="number" [(ngModel)]="ratingFrom">
-                        <button *ngIf="ratingFrom" matSuffix mat-icon-button aria-label="Clear" (click)="ratingFrom=''">
+                        <button *ngIf="ratingFrom" matSuffix mat-icon-button aria-label="Clear" (click)="ratingFrom=0">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
                     <mat-form-field class="example-form-field" style="width: 7%; margin-right: 5%;">
                         <mat-label>to</mat-label>
                         <input matInput type="number" [(ngModel)]="ratingTo">
-                        <button *ngIf="ratingTo" matSuffix mat-icon-button aria-label="Clear" (click)="ratingTo=''">
+                        <button *ngIf="ratingTo" matSuffix mat-icon-button aria-label="Clear" (click)="ratingTo=5">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
 
-                    <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;">Apply</button>
+                    <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;" (click)="applyFilterAndSort()">Apply</button>
 
                 </div>
             </div>
@@ -104,20 +113,20 @@
             
             <!-- ENTITETI -->
             <div class="row">
-                <div *ngFor="let boat of boats" class=" d-flex align-items-stretch mt-4 box">
+                <div *ngFor="let ship of ships" class=" d-flex align-items-stretch mt-4 box">
                     <div class="" style=" margin-right: 30px;">
                         <img style="width: 400px;" src="../../assets/img/boat-small.jpg">
                     </div>
                     <div>
-                        <h4 style="margin-bottom: 0.5%;"><a>{{boat.name}}</a></h4>
-                        <h5 style="margin-bottom: 3.5%;"><a>{{boat.rating}} &starf;</a></h5>
+                        <h4 style="margin-bottom: 0.5%;"><a>{{ship.name}}</a></h4>
+                        <h5 style="margin-bottom: 3.5%;"><a>{{ship.rating | number:'1.2-2'}} &starf;  ({{ship.reviewsNumber}})</a></h5>
                         <div class="d-flex">
                             <img style="width: 15px;" src="../../../assets/img/pin.png">
-                            <p style="padding-left: 1%;"> {{boat.address.street}} {{boat.address.number}},
-                                {{boat.address.city}}, {{boat.address.country}}</p>
+                            <p style="padding-left: 1%;"> {{ship.address.street}} {{ship.address.number}},
+                                {{ship.address.city}}, {{ship.address.country}}</p>
                         </div>
-                        <p style="margin-top: 1%;">{{boat.description}}</p>
-                        <p style="margin-top: 1%;">{{boat.pricePerDay}} din / per day</p>
+                        <p style="margin-top: 1%;">{{ship.description}}</p>
+                        <p style="margin-top: 1%;">{{ship.pricePerDay}} EUR / per day</p>
                         <button mat-button style="margin-top: 5%; ">
                             More details
                         </button>

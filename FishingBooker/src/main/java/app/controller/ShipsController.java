@@ -1,13 +1,16 @@
 package app.controller;
 
+import app.domain.Adventure;
 import app.domain.Ship;
 import app.domain.ShipNavigationTool;
 import app.domain.User;
 import app.dto.NavigationToolDTO;
+import app.dto.ServiceWithRatingDTO;
 import app.dto.ShipDTO;
 import app.repository.ShipNavigationToolRepository;
 import app.repository.ShipRepository;
 import app.service.ManagingShipsService;
+import app.service.RatingsService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,8 @@ public class ShipsController {
     private UserService userService;
     @Autowired
     private ManagingShipsService shipsService;
+    @Autowired
+    private RatingsService ratingService;
     @Autowired
     private ShipRepository shipRepository;
     @Autowired
@@ -184,6 +189,39 @@ public class ShipsController {
 
         shipsService.addNavigationTools(dto, existing);
         return new ResponseEntity<>("Added new navigation tool!", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ServiceWithRatingDTO> getAll(){
+        List<Ship> allShips = shipsService.getAll();
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Ship ship : allShips) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(ship, ratingService.getAvgRatingForBookingService(ship.getId()), ratingService.getNumberOfRatingsForBookingService(ship.getId()));
+            result.add(service);
+        }
+        return result;
+    }
+
+    @GetMapping(value = "/search/name/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ServiceWithRatingDTO> searchAdventureByName(@PathVariable String input) {
+        List<Ship> foundShips = this.shipsService.searchByName(input);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Ship ship : foundShips) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(ship, ratingService.getAvgRatingForBookingService(ship.getId()), ratingService.getNumberOfRatingsForBookingService(ship.getId()));
+            result.add(service);
+        }
+        return result;
+    }
+
+    @GetMapping(value = "/search/city/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ServiceWithRatingDTO> searchAdventureByCity(@PathVariable String input) {
+        List<Ship> foundShips = this.shipsService.searchByCity(input);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Ship ship : foundShips) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(ship, ratingService.getAvgRatingForBookingService(ship.getId()), ratingService.getNumberOfRatingsForBookingService(ship.getId()));
+            result.add(service);
+        }
+        return result;
     }
 
 }
