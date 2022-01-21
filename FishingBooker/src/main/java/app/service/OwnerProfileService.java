@@ -64,9 +64,6 @@ public class OwnerProfileService {
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
             propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public void changePassword(PasswordChangeDTO passwordChangeDTO, Principal user) {
-        System.out.println("******************************************************************************");
-        System.out.println(passwordChangeDTO.getOldPassword()+" "+passwordChangeDTO.getNewPassword());
-        System.out.println("******************************************************************************");
         User currentUser = userService.findByEmail(user.getName());
         currentUser.setPassword(passwordEncoder.encode(passwordChangeDTO.getNewPassword()));
         userRepository.save(currentUser);
