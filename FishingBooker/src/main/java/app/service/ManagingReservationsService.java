@@ -1,6 +1,7 @@
 package app.service;
 
 import app.domain.*;
+import app.dto.ClientReservationDTO;
 import app.dto.ReservationDTO;
 import app.dto.UnavailablePeriodDTO;
 import app.repository.*;
@@ -21,6 +22,8 @@ public class ManagingReservationsService {
     ReservationRepository reservationRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    ClientService clientService;
     @Autowired
     ServiceRepository serviceRepository;
     @Autowired
@@ -85,12 +88,44 @@ public class ManagingReservationsService {
         }
 
         Reservation newReservation = getReservation(reservationDTO);
-        newReservation.setPrice(this.moneyService.applyDiscount(client.getId(), newReservation.getPrice()));
+        newReservation.setPrice(this.moneyService.applyClientDiscount(client.getId(), newReservation.getPrice()));
         reservationRepository.save(newReservation);
         sendConfirmationMail(newReservation);
         this.moneyService.manageMoneyForNewReservation(newReservation);
         this.moneyService.managePointsForNewReservation(newReservation);
         return newReservation;
+    }
+
+    public Reservation createReservationForClient(ClientReservationDTO reservationDTO) {
+        User client = userRepository.getById(reservationDTO.getClientId());
+        BookingService bookingService = serviceRepository.getById(reservationDTO.getServiceId());
+        if (!checkIfServiceIsAvailable(reservationDTO.getStartDate(), reservationDTO.getEndDate(), reservationDTO.getServiceId()))
+            return null;
+        if (!checkIfClientCanMakeReservation(reservationDTO.getStartDate(), reservationDTO.getEndDate(), reservationDTO.getServiceId(), reservationDTO.getClientId()))
+            return null;
+
+        Reservation newReservation = new Reservation(reservationDTO);
+        newReservation.setUser(client);
+        newReservation.setBookingService(bookingService);
+        newReservation.setPrice(this.moneyService.applyClientDiscount(reservationDTO.getClientId(), newReservation.getPrice()));
+        this.moneyService.manageMoneyForNewReservation(newReservation);
+        this.moneyService.managePointsForNewReservation(newReservation);
+
+        reservationRepository.save(newReservation);
+        sendConfirmationMail(newReservation);
+        return newReservation;
+    }
+
+    private boolean checkIfClientCanMakeReservation(Date startDate, Date endDate, int serviceId, int clientId) {
+        int p = clientService.getPenaltiesNumber(clientId);
+        if (p >= 3)
+            return false;
+        List<Reservation> reservationsOfInterest = new ArrayList<>();
+        for (Reservation res : reservationRepository.getByUserId(clientId)) {
+            if(!res.isCanceled() || (res.isCanceled() && serviceId == res.getBookingService().getId()))
+                reservationsOfInterest.add(res);
+        }
+        return !checkIfReservationsOverlap(startDate, endDate, reservationsOfInterest);
     }
 
     private Reservation getReservation(ReservationDTO reservationDTO) {
@@ -218,6 +253,8 @@ public class ManagingReservationsService {
         }
         return false;
     }
+
+
 }
 
 

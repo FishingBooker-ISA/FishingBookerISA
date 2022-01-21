@@ -75,7 +75,14 @@ public class ReservationsController {
     @PostMapping(value = "/createClientReservation", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_CLIENT')" )
     public ResponseEntity<String> createClientReservation(@Valid @RequestBody ClientReservationDTO reservationDTO, Principal user) {
-        return new ResponseEntity<>("New reservation created!", HttpStatus.OK);
+        User client = userRepository.getById(reservationDTO.getClientId());
+        if (!client.getRole().getName().equals("ROLE_CLIENT"))
+            return new ResponseEntity<>("User must be a client!", HttpStatus.BAD_REQUEST);
+
+        if (reservationsService.createReservationForClient(reservationDTO) != null)
+            return new ResponseEntity<>("New reservation created!", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("Entered dates overlap with existing reservation!", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(value = "/getReservationHistory", produces = MediaType.APPLICATION_JSON_VALUE)

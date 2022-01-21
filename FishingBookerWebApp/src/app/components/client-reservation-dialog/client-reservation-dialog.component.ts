@@ -83,7 +83,6 @@ export class ClientReservationDialogComponent implements OnInit {
       ppd += a.price;
     }
     let duration = this.dateDiffInDays()
-    alert(duration);
     let price = (duration+1)*ppd;
     return price;
   }
