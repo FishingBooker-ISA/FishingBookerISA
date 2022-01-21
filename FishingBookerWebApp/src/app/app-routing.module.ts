@@ -13,6 +13,7 @@ import { NewAdminLoginComponent } from './components/admin-profile/new-admin-log
 import { ServicesTableComponent } from './components/admin-profile/services-table/services-table.component';
 import { UsersTableComponent } from './components/admin-profile/users-table/users-table.component';
 import { BoatsComponent } from './components/boats/boats.component';
+import { BussinessReportComponent } from './components/bussiness-report/bussiness-report.component';
 import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
 import { EstateReservationHistoryComponent } from './components/client-profile/estate-reservation-history/estate-reservation-history.component';
 import { SubscriptionsComponent } from './components/client-profile/subscriptions/subscriptions.component';
@@ -39,7 +40,7 @@ import { SignupComponent } from './components/signup/signup.component';
 const routes: Routes = [
   { path: 'home', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'admin/ratings', component: RatingsReviewComponent, canActivate: [AdminGuard]},
+  { path: 'admin/ratings', component: RatingsReviewComponent, canActivate: [AdminGuard] },
   { path: 'admin/accountRequests', component: AccountRequestsComponent, canActivate: [AdminGuard] },
   { path: 'admin/deleteRequests', component: DeleteRequestsComponent, canActivate: [AdminGuard] },
   { path: 'admin/allUsers', component: UsersTableComponent, canActivate: [AdminGuard] },
@@ -66,7 +67,8 @@ const routes: Routes = [
   { path: 'profile', component: OwnerProfileComponent },
   { path: 'shipOwner/home', component: ShipOwnerHomepageComponent },
   { path: 'ship/:id', component: ShipProfileComponent },
-  { path: 'map', component: MapModalComponent }
+  { path: 'map', component: MapModalComponent },
+  { path: 'report', component: BussinessReportComponent }
 ];
 
 @NgModule({

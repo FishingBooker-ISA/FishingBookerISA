@@ -1,0 +1,26 @@
+<div class="row d-flex justify-content-center">
+  <div class="row g-0" style="width: 68%">
+    <div class="col-md-3" style="text-align: start">
+      <mat-form-field class="mt-0" style="font-size: 1rem">
+        <mat-label>Period</mat-label>
+        <mat-select (selectionChange)="change($event.value)">
+          <mat-option value="weekly">
+            Weekly
+          </mat-option>
+          <mat-option value="monthly">
+            Monthly
+          </mat-option>
+          <mat-option value="yearly">
+            Yearly
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-9"></div>
+  </div>
+  <div class="chart-wrapper" style="height: 70%; width: 70%">
+    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+      [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+    </canvas>
+  </div>
+</div>

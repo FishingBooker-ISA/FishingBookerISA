@@ -40,4 +40,16 @@ export class ProfileService {
   deleteAccount(dto: DeletionRequestDTO) {
     return this.http.post(`${environment.baseUrl}` + 'api/owners/sendDeletionRequest', dto, { observe: 'response', responseType: 'text' });
   }
+
+  getMonthlyReport() {
+    return this.http.get(`${environment.baseUrl}` + 'api/bussiness/getMonthlyReport')
+  }
+
+  getYearlyReport() {
+    return this.http.get(`${environment.baseUrl}` + 'api/bussiness/getYearlyReport')
+  }
+
+  getWeeklyReport() {
+    return this.http.get(`${environment.baseUrl}` + 'api/bussiness/getWeeklyReport')
+  }
 }

@@ -63,13 +63,13 @@ VALUES (15, 6, 'Aliquam purus sit amet luctus venenatis lectus magna fringilla u
 
 --resevations
 INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)
-    VALUES ('service1, service2, service3', false, false, 100, DATE '2021-12-17', DATE '2021-12-27', DATE '2021-11-13', 3, 2);
+    VALUES ('service1, service2, service3', false, false, 100, DATE '2021-12-17', DATE '2021-12-27', DATE '2021-11-13', 6, 2);
 INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)
-    VALUES ('service1', true, false, 80, DATE '2021-11-22', DATE '2021-11-25', DATE '2021-11-10', 14, 2);
+    VALUES ('service1', true, false, 80, DATE '2021-11-22', DATE '2021-11-25', DATE '2021-11-10', 6, 2);
 INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)
-    VALUES ('service1, service2, service3', false, false, 125, DATE '2022-03-07', DATE '2022-03-08', DATE '2022-01-14', 1, 2);
+    VALUES ('service1, service2, service3', false, false, 125, DATE '2022-03-07', DATE '2022-03-08', DATE '2022-01-14', 6, 2);
 INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)
-    VALUES ('service1, service2, service3, service 4', false, false, 125, DATE '2021-06-04', DATE '2021-06-12', DATE '2021-05-23', 10, 2);
+    VALUES ('service1, service2, service3, service 4', false, false, 125, DATE '2021-06-04', DATE '2021-06-12', DATE '2021-05-23', 6, 2);
 
 --rating
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)

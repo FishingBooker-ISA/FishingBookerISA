@@ -88,6 +88,8 @@ import { EditNavigationToolsComponent } from './components/ship-profile/edit-nav
 import { ServicesTableComponent } from './components/admin-profile/services-table/services-table.component';
 import { MapModalComponent } from './components/map-modal/map-modal.component';
 import { ShowLocationOnMapComponent } from './components/show-location-on-map/show-location-on-map.component';
+import { BussinessReportComponent } from './components/bussiness-report/bussiness-report.component';
+import { ChartsModule } from 'ng2-charts';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -160,7 +162,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     EditNavigationToolsComponent,
     ServicesTableComponent,
     MapModalComponent,
-    ShowLocationOnMapComponent
+    ShowLocationOnMapComponent,
+    BussinessReportComponent
   ],
   imports: [
     BrowserModule,
@@ -182,7 +185,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatInputModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    FullCalendarModule
+    FullCalendarModule,
+    ChartsModule
   ],
   providers: [
     {
