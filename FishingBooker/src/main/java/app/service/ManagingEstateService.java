@@ -2,6 +2,7 @@ package app.service;
 
 import app.domain.*;
 import app.dto.NewEstateDTO;
+import app.dto.ServiceAvailabilitySearchParametersDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +19,8 @@ import java.util.List;
 @Service
 @Transactional
 public class ManagingEstateService {
+    @Autowired
+    ManagingReservationsService reservationsService;
     @Autowired
     AddressRepository addressRepository;
     @Autowired
@@ -163,5 +168,18 @@ public class ManagingEstateService {
                 foundEstates.add(estate);
         }
         return foundEstates;
+    }
+
+    public List<Estate> findAvailable(ServiceAvailabilitySearchParametersDTO parameters) throws ParseException {
+        List<Estate> foundEstates = new ArrayList<>();
+        List<Estate> allEstates =  estateRepository.findAll();
+        Date startDate = parameters.getStartDate();
+        Date endDate = parameters.getEndDate();
+
+        for (Estate estate : allEstates) {
+            if(reservationsService.checkIfServiceIsAvailable(startDate, endDate, estate.getId()) && estate.getCapacity() >= parameters.getCapacity())
+                foundEstates.add(estate);
+        }
+        return  foundEstates;
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
+import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
@@ -22,6 +23,11 @@ export class EstatesComponent implements OnInit {
   public location = "any";
   public sortOrder = "asc";
   public sortCriteria = "";
+  
+  todayDate: Date = new Date();
+  startDate!: Date;
+  endDate!: Date;
+  capacity: number = 2;
   currentUser!: User
   isClient:boolean = false;
   
@@ -37,11 +43,49 @@ export class EstatesComponent implements OnInit {
 
     });
     this.currentUser = this.signupService.currentUser;
-    this.getAllEstates();
+    this._estateService.getAllEstates().subscribe((data) => {this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data);})
+    
+  }
+
+  findAvailable(){
+    let parameters: ServiceAvailabilityParametersDTO = new ServiceAvailabilityParametersDTO();
+    parameters.startDate = this.startDate.toISOString().slice(0, 10);
+    parameters.endDate = this.endDate.toISOString().slice(0, 10);
+    alert(this.startDate)
+    alert(parameters.startDate)
+    parameters.capacity = this.capacity;
+
+    
+    this._estateService.findAvailableEstates(parameters).subscribe((data) => {this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data);})
+  }
+
+  clean(){
+    this.startDate = new Date();
+    this.endDate = new Date();
+    this.capacity = 2;
+    this._estateService.getAllEstates().subscribe((data) => {this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data);})
+    this.searchText = "";
+    this.searchCriteria = "name";
+    this.ratingFrom = 0;
+    this.ratingTo = 5;
+    this.location = "any";
+    this.sortOrder = "asc";
+    this.sortCriteria = "";
   }
 
   getAllEstates() {
-    this._estateService.getAllEstates().subscribe((data) => {this.estates = data; this.backupEstates = Array.from(data);})
+    this._estateService.getAllEstates().subscribe((data) => {
+      this.estates = data;
+      this.backupEstates = Array.from(data);
+      this.estates = [];
+      for (let ae of this.availableEstates){
+        for(let se of this.backupEstates) {
+          if(se.id == ae.id)
+            this.estates.push(se);
+        }
+      }
+      this.backupEstates = Array.from(this.estates)
+    })
   }
 
   search(){
@@ -51,7 +95,7 @@ export class EstatesComponent implements OnInit {
       this.searchByName(this.searchText);
     else if (this.searchCriteria == "location")
       this.searchByCity(this.searchText);
-    
+
     this.ratingFrom = 0;
     this.ratingTo = 5;
     this.location = "any";
@@ -118,10 +162,32 @@ export class EstatesComponent implements OnInit {
   }
 
   searchByName(input: string) {
-    this._estateService.getEstatesByName(input).subscribe((data) => {this.estates = data; this.backupEstates = Array.from(data);})
+    this._estateService.getEstatesByName(input).subscribe((data) => {
+      this.estates = data;
+      this.backupEstates = Array.from(data);
+      this.estates = [];
+      for (let ae of this.availableEstates){
+        for(let se of this.backupEstates) {
+          if(se.id == ae.id)
+            this.estates.push(se);
+        }
+      }
+      this.backupEstates = Array.from(this.estates)
+    })
   }
   searchByCity(input: string) {
-    this._estateService.getEstatesByCity(input).subscribe((data) => {this.estates = data; this.backupEstates = Array.from(data);})
+    this._estateService.getEstatesByCity(input).subscribe((data) => {
+      this.estates = data;
+      this.backupEstates = Array.from(data);
+      this.estates = [];
+      for (let ae of this.availableEstates){
+        for(let se of this.backupEstates) {
+          if(se.id == ae.id)
+            this.estates.push(se);
+        }
+      }
+      this.backupEstates = Array.from(this.estates)
+    })
   }
 
 }

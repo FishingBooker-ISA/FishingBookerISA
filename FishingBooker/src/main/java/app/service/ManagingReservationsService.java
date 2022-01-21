@@ -189,6 +189,10 @@ public class ManagingReservationsService {
         return true;
     }
 
+    public boolean checkIfServiceIsAvailable(Date start, Date end, int serviceId) {
+        return (checkIfPeriodIsAvailable(start, end, serviceId) && checkIfActionsOverlap(start, end, serviceId));
+    }
+
     public User getClientForReservation(int serviceId) {
         List<Reservation> allReservations = this.reservationRepository.getByBookingServiceId(serviceId);
         for (Reservation reservation: allReservations

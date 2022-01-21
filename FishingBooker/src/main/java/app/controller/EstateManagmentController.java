@@ -4,6 +4,7 @@ import app.domain.BookingService;
 import app.domain.Estate;
 import app.domain.User;
 import app.dto.NewEstateDTO;
+import app.dto.ServiceAvailabilitySearchParametersDTO;
 import app.dto.ServiceWithRatingDTO;
 import app.repository.EstateRepository;
 import app.repository.ServiceRepository;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,6 +182,20 @@ public class EstateManagmentController {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
             result.add(service);
         }
+        return result;
+    }
+
+    @PostMapping(value = "/available", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters) throws ParseException {
+        List<Estate> foundEstates = this.managingEstateService.findAvailable(parameters);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Estate estate : foundEstates) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
+            result.add(service);
+        }
+        System.out.println(parameters.getCapacity());
+        System.out.println(parameters.getStartDate());
         return result;
     }
 

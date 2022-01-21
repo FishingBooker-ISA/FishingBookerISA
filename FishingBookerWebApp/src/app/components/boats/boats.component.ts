@@ -26,6 +26,10 @@ export class BoatsComponent implements OnInit {
   public sortCriteria = "";
   currentUser!: User
   isClient:boolean = false;
+  todayDate: Date = new Date();
+  startDate!: Date;
+  endDate!: Date;
+  capacity: number = 2;
 
 
   constructor(private _estateService : ManagingShipsService, public signupService: SignupOwnersService) { }

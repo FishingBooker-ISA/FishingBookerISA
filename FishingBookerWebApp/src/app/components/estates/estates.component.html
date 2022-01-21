@@ -22,6 +22,24 @@
 
             <!-- SEARCH -->
             <div>
+                <div class=" d-flex flex-row" *ngIf="isClient">
+                    <mat-form-field style="margin-right: 1%;">
+                        <mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [rangePicker]="picker" [min]="todayDate">
+                            <input matStartDate name="start" [(ngModel)]="startDate">
+                            <input matEndDate name="end" [(ngModel)]="endDate">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                    <mat-form-field style="width: 12%; margin-right: 5%;">
+                        <mat-label>Capacity</mat-label>
+                        <input matInput type="number" [(ngModel)]="capacity">
+                    </mat-form-field>
+                    <button mat-raised-button (click)="findAvailable()" style="width:15%; height: 35px; margin-top: 1%;">Find
+                        available</button>
+                </div>
+
                 <div class=" d-flex flex-row">
                     <mat-form-field class="example-form-field" style="width: 40%; margin-right: 1%;">
                         <mat-label>Search</mat-label>
@@ -36,7 +54,8 @@
                             <mat-option value="location">By City</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;" (click)="search()">Search</button>
+                    <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;"
+                        (click)="search()">Search</button>
                 </div>
 
                 <div class=" d-flex flex-row">
@@ -51,7 +70,6 @@
                             <mat-option value="price">Price</mat-option>
                         </mat-select>
                     </mat-form-field>
-
                     <mat-form-field style="width: 12%; margin-right: 3%;">
                         <mat-select [(ngModel)]="sortOrder">
                             <mat-option value="asc">
@@ -86,7 +104,6 @@
                         </mat-select>
                     </mat-form-field>
 
-
                     <div style="margin-right: 1%; margin-top: 1.5%;">
                         Rating:
                     </div>
@@ -105,7 +122,8 @@
                         </button>
                     </mat-form-field>
 
-                    <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;" (click)="applyFilterAndSort()">Apply</button>
+                    <button mat-raised-button style="width:10%; height: 35px; margin-top: 1%;"
+                        (click)="applyFilterAndSort()">Apply</button>
 
                 </div>
             </div>
@@ -114,12 +132,12 @@
             <div class="row">
                 <div *ngFor="let estate of estates" class=" d-flex align-items-stretch mt-4 box">
                     <div class="" style=" margin-right: 30px;">
-                        <img style="width: 400px;"
-                            src="../../assets/img/estate-small.jpg">
+                        <img style="width: 400px;" src="../../assets/img/estate-small.jpg">
                     </div>
                     <div style="width: 50%">
                         <h4 style="margin-bottom: 0.5%;"><a>{{estate.name}}</a></h4>
-                        <h5 style="margin-bottom: 3.5%;"><a>{{estate.rating | number:'1.2-2'}}&starf; ({{estate.reviewsNumber}})</a></h5>
+                        <h5 style="margin-bottom: 3.5%;"><a>{{estate.rating | number:'1.2-2'}}&starf;
+                                ({{estate.reviewsNumber}})</a></h5>
                         <div class="d-flex">
                             <img style="width: 15px;" src="../../../assets/img/pin.png">
                             <p style="padding-left: 1%;"> {{estate.address.street}} {{estate.address.number}},
