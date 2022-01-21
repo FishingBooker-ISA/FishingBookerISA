@@ -1,6 +1,5 @@
 package app.controller;
 
-import app.domain.Adventure;
 import app.domain.Ship;
 import app.domain.ShipNavigationTool;
 import app.domain.User;

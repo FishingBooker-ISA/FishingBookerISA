@@ -1,9 +1,9 @@
 <app-client-navbar></app-client-navbar>
-<div class="bg-light d-flex justify-content-center mainContainer" style="background: ghostwhite;">
+<div class="bg-light d-flex justify-content-center mainContainer">
     <div class="container row">
 
-        <!-- PROPERTY INFO EDIT FORM -->
-        <div style="margin-inline: 15%;">
+        <!-- PROPERTY INFO EDIT FORM style="margin-inline: 15%;" -->
+        <div class="col-md-6">
             <div class="title-wrapper justify-content-center mt-4" style="display: inline-flex;">
                 <img style="width: 120px; height: 120px;" src="../../../assets/img/userIcon2.png">
                 <h1 class="propertyTitle" style="margin-left: 15%; margin-top: 30%; font-weight: bold;">
@@ -95,24 +95,23 @@
                             <td>Old password</td>
                             <td>
                                 <div class="textField">
-                                    <input class="text-start" type="password" name="name"
-                                        [(ngModel)]="oldPassword" />
+                                    <input class="text-start" type="password" name="name" [(ngModel)]="oldPassword" />
                                 </div>
                             </td>
-                        </tr> <tr *ngIf="isChangingPassword">
+                        </tr>
+                        <tr *ngIf="isChangingPassword">
                             <td>New password</td>
                             <td>
                                 <div class="textField">
-                                    <input class="text-start" type="password" name="name"
-                                        [(ngModel)]="newPassword1" />
+                                    <input class="text-start" type="password" name="name" [(ngModel)]="newPassword1" />
                                 </div>
                             </td>
-                        </tr> <tr *ngIf="isChangingPassword">
+                        </tr>
+                        <tr *ngIf="isChangingPassword">
                             <td>Repeat password</td>
                             <td>
                                 <div class="textField">
-                                    <input class="text-start" type="password" name="name"
-                                        [(ngModel)]="newPassword2"/>
+                                    <input class="text-start" type="password" name="name" [(ngModel)]="newPassword2" />
                                 </div>
                             </td>
                         </tr>
@@ -130,10 +129,11 @@
                     <button class="btn mt-5 mx-5" (click)="isEditing = true">
                         Edit profile
                     </button>
-                    <button class="btn-reverse mt-5" *ngIf="!isDeletionRequestSent" (click)="openDeleteDialog()"> <!--(click)="openDeleteDialog()"> -->
+                    <button class="btn-reverse mt-5" *ngIf="!isDeletionRequestSent" (click)="openDeleteDialog()">
+                        <!--(click)="openDeleteDialog()"> -->
                         Delete profile
                     </button>
-                    
+
                     <button disabled class="btn-reverse mt-5" *ngIf="isDeletionRequestSent">
                         Profile deletion requested
                     </button>
@@ -150,7 +150,8 @@
                     <button class="btn mt-5 mx-5" (click)="changePassword()">
                         Save changes
                     </button>
-                    <button class="btn mt-5" (click)="isChangingPassword = false; errorMessage = ''; oldPassword=''; newPassword1=''; newPassword2 = '';">
+                    <button class="btn mt-5"
+                        (click)="isChangingPassword = false; errorMessage = ''; oldPassword=''; newPassword1=''; newPassword2 = '';">
                         Cancel
                     </button>
                 </div>
@@ -158,6 +159,55 @@
         </div>
         <!-- END OF PROPERTY INFO EDIT FORM -->
 
+        <div class="col-md-1 emptyColumn"></div>
+
+        <!-- LOYALITY -->
+        <div class="col-md-4" style="margin: auto; height: 70%">
+            <div class="title-wrapper">
+
+            </div>
+            <div class="d-flex flex-row">
+                <img *ngIf="rank==1" style="width: 120px; height: 165px; margin: 5px; margin-right: 30px;" class="" src="../../../assets/img/gold.png">
+                <img *ngIf="rank==2" style="width: 120px; height: 165px; margin: 5px; margin-right: 30px;" class="" src="../../../assets/img/silver.png">
+                <img *ngIf="rank==3" style="width: 120px; height: 165px; margin: 5px; margin-right: 30px;" class="" src="../../../assets/img/bronze.png">
+                <img *ngIf="rank==4" style="width: 165px; height: 165px; margin: 5px; margin-right: 10px;" class="" src="../../../assets/img/no_medal.png">
+                <div style="margin-top: 5px;">
+                    <h1 >
+                        {{ currentUser.firstName }} <span class="ml-2">{{ currentUser.lastName }}</span>
+                    </h1>
+                    <div>
+                        <span class="ml-5">
+                            <h4 *ngIf="rank==1">Gold client</h4>
+                            <h4 *ngIf="rank==2">Silver client</h4>
+                            <h4 *ngIf="rank==3">Bronze client</h4>
+                            <h4 *ngIf="rank==4">No rank</h4>
+                        </span><br>
+                        <span class="ml-4" style="margin-block: 20px;"><h5>{{numberOfPoints}} points</h5></span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 20px;" *ngIf="rank==1">
+                Gold clients get {{loyalty.percentForGold}}% discount on all reservations. <br><br>
+                All clients get {{loyalty.pointsForUser}} points per reservation. <br>
+            </div>
+            <div style="margin-top: 20px;" *ngIf="rank==2">
+                Silver clients get {{loyalty.percentForSilver}}% discount on all reservations. <br><br>
+                All clients get {{loyalty.pointsForUser}} points per reservation. Collect {{loyalty.pointsForGold}} points to get the Gold Badge.<br>
+            </div>
+            <div style="margin-top: 20px;" *ngIf="rank==3">
+                Bronze clients get  {{loyalty.percentForBronze}}% discount on all reservations. <br><br>
+                All clients get {{loyalty.pointsForUser}} points per reservation. Collect {{loyalty.pointsForSilver}} points to get the Silver Badge.<br>
+            </div>
+            <div style="margin-top: 20px;" *ngIf="rank==4">
+                
+                All clients get {{loyalty.pointsForUser}} points per reservation. Collect {{loyalty.pointsForBronze}} points to get the Bronze Badge.<br>
+            </div>
+            <div style="margin-top: 60px;">
+                <h5>Penalties in this month: {{numberOfPenalties}}</h5>
+            </div>
+
+        </div>
+        <!-- END LOYALITY -->
 
     </div>
 </div>

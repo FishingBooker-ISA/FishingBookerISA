@@ -20,7 +20,7 @@ public class LoyaltyProgramController {
     private LoyaltyProgramService loyaltyProgramService;
 
     @GetMapping(value = "/getLoyaltyProgram", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')" + " || hasAuthority('ROLE_CLIENT')")
     public LoyaltyProgram getLoyaltyProgram(){
         return this.loyaltyProgramRepository.findAll().get(0);
     }
