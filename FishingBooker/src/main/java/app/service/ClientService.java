@@ -91,7 +91,6 @@ public class ClientService {
 
     public void addPenalty(int id) {
         Client client = clientRepository.getById(id);
-        int penalties = client.getNumOfPenalties();
 
         Date now = new Date();
 
