@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DeletionRequestDTO } from '../model/account-request';
 import { PasswordChangeDto } from '../model/password-change-dto';
@@ -51,5 +52,13 @@ export class ProfileService {
 
   getWeeklyReport() {
     return this.http.get(`${environment.baseUrl}` + 'api/bussiness/getWeeklyReport')
+  }
+
+  getIncomeForPeriod(startDate: Date, endDate: Date) {
+    return this.http.post(`${environment.baseUrl}` + 'api/money/getOwnerMoneyForPeriod', { startDate, endDate }, { observe: 'response', responseType: 'text' });
+  }
+
+  getAverageRatings() {
+    return this.http.get(`${environment.baseUrl}` + 'api/bussiness/getAverageMark');
   }
 }

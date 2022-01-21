@@ -1,26 +1,62 @@
-<div class="row d-flex justify-content-center">
-  <div class="row g-0" style="width: 68%">
-    <div class="col-md-3" style="text-align: start">
-      <mat-form-field class="mt-0" style="font-size: 1rem">
-        <mat-label>Period</mat-label>
-        <mat-select (selectionChange)="change($event.value)">
-          <mat-option value="weekly">
-            Weekly
-          </mat-option>
-          <mat-option value="monthly">
-            Monthly
-          </mat-option>
-          <mat-option value="yearly">
-            Yearly
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+<app-estate-owner-navbar *ngIf="currentUser.role.name === 'ROLE_ESTATE_OWNER'"></app-estate-owner-navbar>
+<app-ship-owner-navbar *ngIf="currentUser.role.name === 'ROLE_SHIP_OWNER'"></app-ship-owner-navbar>
+<app-instructor-navbar *ngIf="currentUser.role.name === 'ROLE_INSTRUCTOR'"></app-instructor-navbar>
+<div class="bg-light" style="width: 100%; height: 100%; overflow-x: hidden;">
+  <div class="row d-flex justify-content-center">
+    <div class="row mt-2" style="width: 71%">
+      <div class="d-inline-flex">
+        <label class="start">
+          <span class="pb-5">Average rating</span>
+          <i class="material-icons ms-2 pt-2" style="color: gold;">star</i>
+        </label>
+        <mat-form-field class="ms-5">
+          <input matInput type="number" disabled [(ngModel)]="rating">
+        </mat-form-field>
+      </div>
     </div>
-    <div class="col-md-9"></div>
+    <div class="row" style="width: 71%">
+      <div class="d-inline-flex">
+        <label class="start mt-3 me-5">Income</label>
+        <mat-form-field>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate name="start" [(ngModel)]="startDate">
+            <input matEndDate name="end" [(ngModel)]="endDate" (dateChange)="generateIncome()">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <mat-form-field class="ms-3">
+          <mat-label>Income</mat-label>
+          <input matInput type="number" disabled [(ngModel)]="income">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row g-0" style="width: 68%">
+      <div class="col-md-3" style="text-align: start">
+        <mat-form-field class="mt-0" style="font-size: 1rem">
+          <mat-label>Period</mat-label>
+          <mat-select (selectionChange)="change($event.value)">
+            <mat-option value="weekly">
+              Weekly
+            </mat-option>
+            <mat-option value="monthly">
+              Monthly
+            </mat-option>
+            <mat-option value="yearly">
+              Yearly
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-9"></div>
+    </div>
+    <div class="chart-wrapper" style="height: 70%; width: 70%">
+      <canvas baseChart [datasets]="barChartData" [labels]="labels" [options]="barChartOptions"
+        [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+      </canvas>
+    </div>
   </div>
-  <div class="chart-wrapper" style="height: 70%; width: 70%">
-    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-      [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
-    </canvas>
-  </div>
+
 </div>

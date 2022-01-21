@@ -1,15 +1,15 @@
 package app.service;
 
 import app.domain.BookingService;
+import app.domain.Rating;
 import app.domain.Reservation;
 import app.domain.User;
-import app.dto.TimePeriodDTO;
+import app.repository.RatingRepository;
 import app.repository.ReservationRepository;
 import app.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -29,6 +29,8 @@ public class BussinessReportService {
     ServiceRepository serviceRepository;
     @Autowired
     DateRangeService dateRangeService;
+    @Autowired
+    RatingRepository ratingRepository;
 
     public List<Integer> MonthlyReport(User owner) {
         User currentUser = userService.findByEmail(owner.getEmail());
@@ -114,4 +116,17 @@ public class BussinessReportService {
         return result;
     }
 
+    public double getAverageRating(User owner) {
+        User currentUser = userService.findByEmail(owner.getEmail());
+        List<BookingService> ownersServices = serviceRepository.findByOwnerId(currentUser.getId());
+        double sum = 0;
+
+        for (BookingService bs: ownersServices) {
+            for(Rating r : ratingRepository.getRatingsByBookingServiceId(bs.getId())) {
+                sum += r.getGivenMark();
+            }
+        }
+
+        return sum/ownersServices.size();
+    }
 }

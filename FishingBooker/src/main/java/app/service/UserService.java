@@ -123,6 +123,8 @@ public class UserService implements UserDetailsService {
         address.setCity(userRequest.getCity());
         address.setCountry(userRequest.getCountry());
         address.setPostcode(userRequest.getPostcode());
+        address.setLatitude(userRequest.getLatitude());
+        address.setLongitude(userRequest.getLongitude());
 
         Address addedAddress = this.addressRepository.save(address);
         Role role = roleRepository.findByName("ROLE_CLIENT");

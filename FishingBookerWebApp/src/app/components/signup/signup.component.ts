@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ClientRegistrationDTO } from 'src/app/model/client';
-import { SignupOwnersService } from 'src/app/services/signup-owners.service'; 
+import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { MapModalComponent } from '../map-modal/map-modal.component';
 //^^^^^^
 
 @Component({
@@ -21,20 +23,40 @@ export class SignupComponent implements OnInit {
   number!: number;
   city!: string;
   country!: string;
-  postcode = 0;
+  postcode!: number;
   selectedRole!: string;
   phoneNumber!: string;
+  longitude!: number;
+  latitude!: number;
 
   checkEmail = new FormControl('', [Validators.required, Validators.email]);
   checkPassword = new FormControl('', [Validators.required]);
   fieldRequired = new FormControl('', [Validators.required]);
   errorMessage = '';
 
-  constructor(public signupOwnerService: SignupOwnersService, private _toast: MatSnackBar,private _router: Router) { }
+  constructor(public signupOwnerService: SignupOwnersService, private _toast: MatSnackBar, private _router: Router,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  openMap() {
+    const dialogRef = this.dialog.open(MapModalComponent, {
+      maxWidth: '800px',
+      width: '600px',
+      height: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe((address) => {
+      this.street = address.street;
+      this.city = address.city;
+      this.country = address.country;
+      this.number = address.number;
+      this.postcode = address.postcode;
+      this.longitude = address.longitude;
+      this.latitude = address.latitude;
+    })
+  }
 
   public signUp() {
 
@@ -48,6 +70,8 @@ export class SignupComponent implements OnInit {
       city: this.city,
       country: this.country,
       postcode: this.postcode,
+      longitude: this.longitude,
+      latitude: this.latitude,
       phoneNumber: this.phoneNumber,
     };
 
@@ -55,7 +79,7 @@ export class SignupComponent implements OnInit {
     this._toast.openFromComponent(SignUpToast, {
       duration: 2000,
     });
-    
+
     this._router.navigate(['/login']);
   }
 
@@ -133,6 +157,6 @@ export class SignupComponent implements OnInit {
   selector: 'signup-toast',
   templateUrl: 'signup-toast.html',
 })
-export class SignUpToast {}
+export class SignUpToast { }
 
 

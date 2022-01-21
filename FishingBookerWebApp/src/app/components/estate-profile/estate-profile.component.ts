@@ -30,6 +30,7 @@ export class EstateProfileComponent implements OnInit {
   estate!: Estate;
   imgSrc!: any
   additional!: AdditionalService[]
+  averageMark!: any
 
   constructor(private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
     public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
@@ -45,6 +46,7 @@ export class EstateProfileComponent implements OnInit {
     this.createReservation = false;
     this.calendarView = false
     this.managingEstateService.getEstateById(this.estateId).subscribe((data) => this.estate = data);
+    this.managingEstateService.getAverageRating(this.estateId).subscribe((data) => this.averageMark = data);
     this.actionsService.getAllAdditionalServices(this.estateId).subscribe((data) => this.additional = data);
     this.imageFromDatabase();
   }

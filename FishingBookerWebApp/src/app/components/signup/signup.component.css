@@ -108,3 +108,18 @@
   background: #00b371;
   transition: 0.5s;
 }
+
+a {
+  text-decoration: none;
+  color: #009961;
+  font-style: italic;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.textField input:read-only ~ label {
+  top: -5px;
+  color: #009961;
+}

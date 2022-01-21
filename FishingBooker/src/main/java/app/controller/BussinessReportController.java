@@ -40,4 +40,10 @@ public class BussinessReportController {
         User currentUser = this.userService.findByEmail(user.getName());
         return reportService.WeeklyReport(currentUser);
     }
+
+    @GetMapping(value = "/getAverageMark", produces = MediaType.APPLICATION_JSON_VALUE)
+    public double getAverage(Principal user) {
+        User currentUser = this.userService.findByEmail(user.getName());
+        return reportService.getAverageRating(currentUser);
+    }
 }

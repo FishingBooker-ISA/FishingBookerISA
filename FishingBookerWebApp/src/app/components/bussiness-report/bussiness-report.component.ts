@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { User } from 'src/app/model/user';
 import { ProfileService } from 'src/app/services/profile.service';
+import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
 @Component({
   selector: 'app-bussiness-report',
@@ -16,10 +18,17 @@ export class BussinessReportComponent implements OnInit {
   today = new Date()
   chartdata = [] as any
   labels = [] as Label[]
+  startDate!: Date
+  endDate!: Date
+  income!: any
+  rating!: any
+  currentUser!: User
 
-  constructor(public service: ProfileService) { }
+  constructor(public service: ProfileService, public auth: SignupOwnersService) { }
 
   ngOnInit(): void {
+    this.service.getAverageRatings().subscribe((data) => this.rating = data);
+    this.auth.getUser().subscribe((data) => this.currentUser = data);
     this.setupData();
   }
 
@@ -66,6 +75,7 @@ export class BussinessReportComponent implements OnInit {
         today.setMonth(today.getMonth() - i);
         var label = today.toLocaleString('en-us', { month: 'long' });
         this.labels.push(label);
+
       }
     }
 
@@ -76,11 +86,18 @@ export class BussinessReportComponent implements OnInit {
     this.barChartData = [
       {
         data: this.values,
-        label: 'BussinessReport',
-        borderColor: "#8e5ea2",
+        label: 'Number of reservations',
+        borderColor: "#009961",
+        pointBackgroundColor: "#99000d",
         fill: false
       },
     ];
+  }
+
+  generateIncome() {
+    console.log("evo me");
+    this.service.getIncomeForPeriod(this.startDate, this.endDate).subscribe(data => this.income = data.body);
+    console.log(this.income);
   }
 
   barChartOptions: ChartOptions = {
@@ -96,7 +113,6 @@ export class BussinessReportComponent implements OnInit {
     },
   };
 
-  barChartLabels: Label[] = this.labels
   barChartType: ChartType = 'line';
   barChartLegend = true;
   barChartPlugins = [];

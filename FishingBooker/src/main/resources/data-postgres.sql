@@ -77,7 +77,7 @@ VALUES ('Great service. See you again soon. :)', 5, false, false, 1, 2);
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
 VALUES ('Great service. See you again soon. :)', 5, true, true, 2, 3);
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES ('Not impressed.', 3, false, true, 7, 3);
+VALUES ('Not impressed.', 3, true, true, 7, 3);
 
 ---complaints
 INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)

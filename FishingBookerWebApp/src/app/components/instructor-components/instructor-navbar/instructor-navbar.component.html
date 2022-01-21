@@ -1,37 +1,22 @@
 <nav class="navbar navbar-expand-lg order-last order-lg-0 navbar-light">
   <div class="container">
     <p class="logo navbar-brand">FishingBooker</p>
-    <button
-      class="navbar-toggler"
-      data-bs-toggle="collapse"
-      data-bs-target="#navmenu"
-      aria-label="Toggle navigation"
-      id="toggle"
-      click="collapsed = !collapsed"
-      [attr.aria-expanded]="collapsed"
-    >
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navmenu" aria-label="Toggle navigation"
+      id="toggle" click="collapsed = !collapsed" [attr.aria-expanded]="collapsed">
       <i class="bi bi-list mobile-nav-toggle"></i>
     </button>
-    <div
-      class="collapse navbar-collapse menu"
-      id="navmenu"
-      [ngClass]="{ show: collapsed }"
-    >
+    <div class="collapse navbar-collapse menu" id="navmenu" [ngClass]="{ show: collapsed }">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a href="/instructor/home" exact class="nav-link me-3"> Home </a>
         </li>
         <li class="nav-item">
-          <a
-            (click)="confirmTransferCancelDialog()"
-            exact
-            class="nav-link me-3"
-          >
+          <a (click)="confirmTransferCancelDialog()" exact class="nav-link me-3">
             Add Adventure
           </a>
         </li>
         <li class="nav-item">
-          <a exact class="nav-link me-3"> Business report </a>
+          <a href="/report" exact class="nav-link me-3"> Bussiness report </a>
         </li>
         <li class="nav-item">
           <a href="/profile" exact class="nav-link"> Profile </a>
