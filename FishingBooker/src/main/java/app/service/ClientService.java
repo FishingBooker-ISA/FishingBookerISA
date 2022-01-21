@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -69,7 +72,37 @@ public class ClientService {
     public int getPenaltiesNumber(int id) {
         Client client = clientRepository.getById(id);
         int penalties = client.getNumOfPenalties();
+
+        Date now = new Date();
+        if (client.getLastPenaltyDate() == null || penalties==0)
+            return penalties;
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        String strDate = dateFormat.format(client.getLastPenaltyDate());
+        String strNow = dateFormat.format(now);
+        if (!strDate.equals(strNow)){
+            client.setNumOfPenalties(0);
+            clientRepository.save(client);
+            return 0;
+        }
+
         return penalties;
+    }
+
+    public void addPenalty(int id) {
+        Client client = clientRepository.getById(id);
+        int penalties = client.getNumOfPenalties();
+
+        Date now = new Date();
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        String strDate = dateFormat.format(client.getLastPenaltyDate());
+        String strNow = dateFormat.format(now);
+        if (!strDate.equals(strNow)){
+            client.setNumOfPenalties(0);
+        }
+        client.setLastPenaltyDate(now);
+        client.setNumOfPenalties(client.getNumOfPenalties()+1);
     }
 
 
