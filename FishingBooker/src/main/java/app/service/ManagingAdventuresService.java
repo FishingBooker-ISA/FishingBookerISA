@@ -2,6 +2,7 @@ package app.service;
 
 import app.domain.*;
 import app.dto.NewAdventureDTO;
+import app.dto.ServiceAvailabilitySearchParametersDTO;
 import app.repository.AdditionalServiceRepository;
 import app.repository.AddressRepository;
 import app.repository.AdventureRepository;
@@ -23,6 +24,8 @@ public class ManagingAdventuresService {
     ReservationRepository reservationRepository;
     @Autowired
     AdditionalServiceRepository additionalServiceRepository;
+    @Autowired
+    ManagingReservationsService reservationsService;
 
 
     @Autowired
@@ -162,5 +165,19 @@ public class ManagingAdventuresService {
                 foundAdventures.add(adventure);
         }
         return foundAdventures;
+    }
+
+
+    public List<Adventure> findAvailable(ServiceAvailabilitySearchParametersDTO parameters) {
+        List<Adventure> foundAdventures = new ArrayList<>();
+        List<Adventure> allAdventures =  adventureRepository.findAll();
+        Date startDate = parameters.getStartDate();
+        Date endDate = parameters.getEndDate();
+
+        for (Adventure adventure : allAdventures) {
+            if(reservationsService.checkIfServiceIsAvailable(startDate, endDate, adventure.getId()) && adventure.getCapacity() >= parameters.getCapacity())
+                foundAdventures.add(adventure);
+        }
+        return  foundAdventures;
     }
 }

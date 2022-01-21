@@ -2,6 +2,7 @@ package app.service;
 
 import app.domain.*;
 import app.dto.NavigationToolDTO;
+import app.dto.ServiceAvailabilitySearchParametersDTO;
 import app.dto.ShipDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.List;
 @Service
 @Transactional
 public class ManagingShipsService {
+    @Autowired
+    ManagingReservationsService reservationsService;
     @Autowired
     AddressRepository addressRepository;
     @Autowired
@@ -202,6 +205,19 @@ public class ManagingShipsService {
                 foundShips.add(ship);
         }
         return foundShips;
+    }
+
+    public List<Ship> findAvailable(ServiceAvailabilitySearchParametersDTO parameters) {
+        List<Ship> foundShips = new ArrayList<>();
+        List<Ship> allShips =  shipRepository.findAll();
+        Date startDate = parameters.getStartDate();
+        Date endDate = parameters.getEndDate();
+
+        for (Ship ship : allShips) {
+            if(reservationsService.checkIfServiceIsAvailable(startDate, endDate, ship.getId()) && ship.getCapacity() >= parameters.getCapacity())
+                foundShips.add(ship);
+        }
+        return  foundShips;
     }
 
 

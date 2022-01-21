@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DisplayServiceShortDTO } from '../model/display-service-short';
+import { ServiceAvailabilityParametersDTO } from '../model/service-availability-parametersDTO';
 import { NavigationToolDTO, Ship, ShipDTO, ShipNavigationTool, ShipType } from '../model/ship';
 
 @Injectable({
@@ -14,6 +15,10 @@ export class ManagingShipsService {
 
   getAllShips(): Observable<DisplayServiceShortDTO[]> {
     return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/ships/all')
+  }
+
+  findAvailableShips(parameters: ServiceAvailabilityParametersDTO): Observable<DisplayServiceShortDTO[]> {
+    return this.http.post<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/ships/available', parameters);
   }
 
   getShipsByName(input: string): Observable<DisplayServiceShortDTO[]> {

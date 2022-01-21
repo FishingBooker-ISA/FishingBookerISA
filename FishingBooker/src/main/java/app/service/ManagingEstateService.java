@@ -169,7 +169,7 @@ public class ManagingEstateService {
         return foundEstates;
     }
 
-    public List<Estate> findAvailable(ServiceAvailabilitySearchParametersDTO parameters) throws ParseException {
+    public List<Estate> findAvailable(ServiceAvailabilitySearchParametersDTO parameters) {
         List<Estate> foundEstates = new ArrayList<>();
         List<Estate> allEstates =  estateRepository.findAll();
         Date startDate = parameters.getStartDate();
