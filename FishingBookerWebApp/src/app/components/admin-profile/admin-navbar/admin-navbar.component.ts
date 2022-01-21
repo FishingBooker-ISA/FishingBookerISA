@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoyaltyProgram } from 'src/app/model/loyalty-program';
+import { LoyaltyProgram, TimePeriodDTO } from 'src/app/model/loyalty-program';
 import { LoyaltyProgramService } from 'src/app/services/loyalty-program.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
@@ -14,6 +14,10 @@ export class AdminNavbarComponent implements OnInit {
   originalProgram! : LoyaltyProgram;
   error! : string;
   collapsed = false;
+  reportError! : string;
+  startDate! : Date;
+  endDate! : Date;
+  money! : any
 
   constructor(public service: LoyaltyProgramService, private router: Router,
     public signupService: SignupOwnersService) { }
@@ -43,6 +47,19 @@ export class AdminNavbarComponent implements OnInit {
   logOut() {
     this.signupService.logOut();
     this.router.navigate(['/login']);
+  }
+
+  generateReport(){
+    if(this.endDate < this.startDate)
+      this.reportError = 'End date must be larger than start date.';
+    else{
+      this.reportError = '';
+      let timePeriod = new TimePeriodDTO();
+      timePeriod.startDate = this.startDate;
+      timePeriod.endDate = this.endDate;
+      this.service.getMoney(timePeriod).subscribe(data => this.money = data.body);
+    }
+    
   }
 
 }

@@ -10,3 +10,8 @@ export class LoyaltyProgram {
     pointsForOwner! : number
     percentageForApp! : number
 }
+
+export class TimePeriodDTO {
+    startDate! : Date
+    endDate! : Date
+}

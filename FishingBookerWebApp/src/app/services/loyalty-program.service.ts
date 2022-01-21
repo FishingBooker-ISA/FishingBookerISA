@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LoyaltyProgram } from '../model/loyalty-program';
+import { LoyaltyProgram, TimePeriodDTO } from '../model/loyalty-program';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,10 @@ export class LoyaltyProgramService {
         'Content-Type': 'application/json',
       })
     }).subscribe();
+  }
+
+  getMoney(timePeriod: TimePeriodDTO) {
+      return this.http.post(`${environment.baseUrl}` + 'api/money/getAppMoneyForPeriod', timePeriod, { observe: 'response', responseType: 'text' });
+
   }
 }

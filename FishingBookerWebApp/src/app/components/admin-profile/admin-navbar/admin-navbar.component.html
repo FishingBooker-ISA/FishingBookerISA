@@ -48,7 +48,15 @@
           >
         </li>
         <li class="nav-item me-2">
-          <a href="#" exact class="nav-link"> Report </a>
+          <a
+            href="#"
+            exact
+            class="nav-link"
+            data-bs-toggle="modal"
+            data-bs-target="#reportModal"
+          >
+            Report
+          </a>
         </li>
         <li class="nav-item me-2">
           <a href="/profile" exact class="nav-link"> Profile </a>
@@ -237,6 +245,70 @@
         >
           Save
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="reportModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Report</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center my-3">
+          <label for="start" class="mt-2" style="width: 250px"
+            >Wanted Period:</label
+          >
+          <input
+            class="form-control me-2"
+            type="date"
+            style="width: 300px"
+            [(ngModel)]="startDate"
+            (input)="reportError = ''"
+          />
+          <input
+            class="form-control me-2"
+            type="date"
+            style="width: 300px"
+            [(ngModel)]="endDate"
+            (input)="reportError = ''"
+          />
+        </div>
+        <div class="d-flex justify-content-center my-5">
+          <button
+            class="btn"
+            (click)="generateReport()"
+            [disabled]="startDate == undefined || endDate == undefined"
+          >
+            Generate
+          </button>
+        </div>
+        <div class="d-flex justify-content-center my-2">
+          <h6 style="color: red">{{ reportError }}</h6>
+        </div>
+        <div class="d-flex justify-content-center my-5">
+          <h6 class="me-3" style="margin-top: 1.5rem">
+            App made for selected period:
+          </h6>
+          <mat-form-field>
+            <input
+              matInput
+              type="number"
+              disabled="true"
+              [(ngModel)]="money"
+              style="text-align: center"
+            />
+          </mat-form-field>
+          <h6 class="me-2 ms-1" style="margin-top: 1.5rem">din</h6>
+        </div>
       </div>
     </div>
   </div>
