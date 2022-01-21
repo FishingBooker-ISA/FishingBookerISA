@@ -45,8 +45,8 @@ export class EstatesComponent implements OnInit {
       this.currentUser = data;
       if (this.currentUser.role.name == "ROLE_CLIENT") {
         this.isClient = true;
-        this.clientProfileService.getClientPenalties(this.currentUser.id).subscribe((res2) => {
-          let numberOfPenalties = res2;
+        this.clientProfileService.getClientPenalties(this.currentUser.id).subscribe((res) => {
+          let numberOfPenalties = res;
           if (numberOfPenalties >= 3) {
             this.isClientBlocked = true;
             this.warningMessage = "Not allowed to make reservations (more than 3 penalties)."
@@ -62,8 +62,8 @@ export class EstatesComponent implements OnInit {
   findAvailable() {
     this.isAvailableFound = true;
     let parameters: ServiceAvailabilityParametersDTO = new ServiceAvailabilityParametersDTO();
-    parameters.startDate = this.startDate//.toISOString().slice(0, 10);
-    parameters.endDate = this.endDate//.toISOString().slice(0, 10);
+    parameters.startDate = this.startDate;
+    parameters.endDate = this.endDate;
     parameters.capacity = this.capacity;
 
 

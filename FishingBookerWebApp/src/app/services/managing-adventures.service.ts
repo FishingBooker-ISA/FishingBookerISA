@@ -80,15 +80,15 @@ export class ManagingAdventuresService {
   }
 
   
-  getAllEstates(): Observable<DisplayServiceShortDTO[]> {
+  getAllAdventures(): Observable<DisplayServiceShortDTO[]> {
     return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/all')
   }
 
-  getEstatesByName(input: string): Observable<DisplayServiceShortDTO[]> {
+  getAdventuresByName(input: string): Observable<DisplayServiceShortDTO[]> {
     return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/search/name/'+input);
   }
 
-  getEstatesByCity(input:string): Observable<DisplayServiceShortDTO[]> {
+  getAdventuresByCity(input:string): Observable<DisplayServiceShortDTO[]> {
     return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/search/city/'+input);
   }
   

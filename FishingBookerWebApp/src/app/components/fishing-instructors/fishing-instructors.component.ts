@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
-import { DisplayEstateShortDTO } from 'src/app/model/estate';
+import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
+import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { ManagingAdventuresService } from 'src/app/services/managing-adventures.service';
-import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
 @Component({
@@ -21,36 +21,85 @@ export class FishingInstructorsComponent implements OnInit {
   public searchCriteria: string = "name";
   public ratingFrom = 0;
   public ratingTo = 5;
-  public location: string = "any";
+  public location = "any";
   public sortOrder = "asc";
-  public sortCriteria = "";currentUser!: User
-  isClient:boolean = false;
+  public sortCriteria = "";
+
   todayDate: Date = new Date();
   startDate!: Date;
   endDate!: Date;
   capacity: number = 2;
+  currentUser!: User
+  isClient: boolean = false;
+  isAvailableFound = false;
+  isClientBlocked = false;
+  isClientAvailable = true;
+  warningMessage = "";
 
-  constructor(private _estateService : ManagingAdventuresService, public signupService: SignupOwnersService) { }
+  constructor(private clientProfileService: ClientProfileService, private adventureService : ManagingAdventuresService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
       this.currentUser = data;
       if(this.currentUser.role.name == "ROLE_CLIENT"){
         this.isClient = true;
+        this.clientProfileService.getClientPenalties(this.currentUser.id).subscribe((res) => {
+          let numberOfPenalties = res;
+          if (numberOfPenalties >= 3) {
+            this.isClientBlocked = true;
+            this.warningMessage = "Not allowed to make reservations (more than 3 penalties)."
+          }
+        });
       }
-
     });
     this.currentUser = this.signupService.currentUser;
-    this.getAllEstates();
+    this.adventureService.getAllAdventures().subscribe((data) => { this.availableAdventures = data; this.adventures = Array.from(data); this.backupAdventures = Array.from(data); })
+
+  }
+  findAvailable() {
+    this.isAvailableFound = true;
+    let parameters: ServiceAvailabilityParametersDTO = new ServiceAvailabilityParametersDTO();
+    parameters.startDate = this.startDate;
+    parameters.endDate = this.endDate;
+    parameters.capacity = this.capacity;
+
+
+    this.adventureService.findAvailableAdventures(parameters).subscribe((data) => { this.availableAdventures = data; this.adventures = Array.from(data); this.backupAdventures = Array.from(data); })
   }
 
-  getAllEstates() {
-    this._estateService.getAllEstates().subscribe((data) => {this.adventures = data; this.backupAdventures = Array.from(data);})
+  clear() {
+    this.isAvailableFound = false;
+    this.startDate = new Date();
+    this.endDate = new Date();
+    this.capacity = 2;
+    this.adventureService.getAllAdventures().subscribe((data) => { this.availableAdventures = data; this.adventures = Array.from(data); this.backupAdventures = Array.from(data); })
+    this.searchText = "";
+    this.searchCriteria = "name";
+    this.ratingFrom = 0;
+    this.ratingTo = 5;
+    this.location = "any";
+    this.sortOrder = "asc";
+    this.sortCriteria = "";
+  }
+
+  getAllAdventures() {
+    this.adventureService.getAllAdventures().subscribe((data) => {
+      this.adventures = data;
+      this.backupAdventures = Array.from(data);
+      this.adventures = [];
+      for (let ae of this.availableAdventures) {
+        for (let se of this.backupAdventures) {
+          if (se.id == ae.id)
+            this.adventures.push(se);
+        }
+      }
+      this.backupAdventures = Array.from(this.adventures)
+    })
   }
 
   search(){
     if (this.searchText === "")
-      this.getAllEstates();
+      this.getAllAdventures();
     else if (this.searchCriteria == "name")
       this.searchByName(this.searchText);
     else if (this.searchCriteria == "location")
@@ -122,10 +171,32 @@ export class FishingInstructorsComponent implements OnInit {
   }
 
   searchByName(input: string) {
-    this._estateService.getEstatesByName(input).subscribe((data) => {this.adventures = data; this.backupAdventures = Array.from(data);})
+    this.adventureService.getAdventuresByName(input).subscribe((data) => {
+      this.adventures = data;
+      this.backupAdventures = Array.from(data);
+      this.adventures = [];
+      for (let ae of this.availableAdventures) {
+        for (let se of this.backupAdventures) {
+          if (se.id == ae.id)
+            this.adventures.push(se);
+        }
+      }
+      this.backupAdventures = Array.from(this.adventures)
+    })
   }
   searchByCity(input: string) {
-    this._estateService.getEstatesByCity(input).subscribe((data) => {this.adventures = data; this.backupAdventures = Array.from(data);})
+    this.adventureService.getAdventuresByCity(input).subscribe((data) => {
+      this.adventures = data;
+      this.backupAdventures = Array.from(data);
+      this.adventures = [];
+      for (let ae of this.availableAdventures) {
+        for (let se of this.backupAdventures) {
+          if (se.id == ae.id)
+            this.adventures.push(se);
+        }
+      }
+      this.backupAdventures = Array.from(this.adventures)
+    })
   }
 
   

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
-import { DisplayEstateShortDTO } from 'src/app/model/estate';
+import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
-import { ManagingEstateService } from 'src/app/services/managing-estate.service';
+import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { ManagingShipsService } from 'src/app/services/managing-ships-service.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
@@ -24,35 +24,85 @@ export class BoatsComponent implements OnInit {
   public location = "any";
   public sortOrder = "asc";
   public sortCriteria = "";
-  currentUser!: User
-  isClient:boolean = false;
+
   todayDate: Date = new Date();
   startDate!: Date;
   endDate!: Date;
   capacity: number = 2;
+  currentUser!: User
+  isClient: boolean = false;
+  isAvailableFound = false;
+  isClientBlocked = false;
+  isClientAvailable = true;
+  warningMessage = "";
 
 
-  constructor(private _estateService : ManagingShipsService, public signupService: SignupOwnersService) { }
+  constructor(private clientProfileService: ClientProfileService, private shipService : ManagingShipsService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
       this.currentUser = data;
       if(this.currentUser.role.name == "ROLE_CLIENT"){
         this.isClient = true;
+        this.clientProfileService.getClientPenalties(this.currentUser.id).subscribe((res) => {
+          let numberOfPenalties = res;
+          if (numberOfPenalties >= 3) {
+            this.isClientBlocked = true;
+            this.warningMessage = "Not allowed to make reservations (more than 3 penalties)."
+          }
+        });
       }
-
     });
     this.currentUser = this.signupService.currentUser;
-    this.getAllEstates();
+    
+    this.shipService.getAllShips().subscribe((data) => { this.availableShips = data; this.ships = Array.from(data); this.backupShips = Array.from(data); })
+
   }
 
-  getAllEstates() {
-    this._estateService.getAllShips().subscribe((data) => {this.ships = data; this.backupShips = Array.from(data);})
+  findAvailable() {
+    this.isAvailableFound = true;
+    let parameters: ServiceAvailabilityParametersDTO = new ServiceAvailabilityParametersDTO();
+    parameters.startDate = this.startDate;
+    parameters.endDate = this.endDate;
+    parameters.capacity = this.capacity;
+
+
+    this.shipService.findAvailableShips(parameters).subscribe((data) => { this.availableShips = data; this.ships = Array.from(data); this.backupShips = Array.from(data); })
+  }
+
+  clear() {
+    this.isAvailableFound = false;
+    this.startDate = new Date();
+    this.endDate = new Date();
+    this.capacity = 2;
+    this.shipService.getAllShips().subscribe((data) => { this.availableShips = data; this.ships = Array.from(data); this.backupShips = Array.from(data); })
+    this.searchText = "";
+    this.searchCriteria = "name";
+    this.ratingFrom = 0;
+    this.ratingTo = 5;
+    this.location = "any";
+    this.sortOrder = "asc";
+    this.sortCriteria = "";
+  }
+
+  getAllShips() {
+    this.shipService.getAllShips().subscribe((data) => {
+      this.ships = data;
+      this.backupShips = Array.from(data);
+      this.ships = [];
+      for (let ae of this.availableShips) {
+        for (let se of this.backupShips) {
+          if (se.id == ae.id)
+            this.ships.push(se);
+        }
+      }
+      this.backupShips = Array.from(this.ships)
+    })
   }
 
   search(){
     if (this.searchText === "")
-      this.getAllEstates();
+      this.getAllShips();
     else if (this.searchCriteria == "name")
       this.searchByName(this.searchText);
     else if (this.searchCriteria == "location")
@@ -124,10 +174,32 @@ export class BoatsComponent implements OnInit {
   }
 
   searchByName(input: string) {
-    this._estateService.getShipsByName(input).subscribe((data) => {this.ships = data; this.backupShips = Array.from(data);})
+    this.shipService.getShipsByName(input).subscribe((data) => {
+      this.ships = data;
+      this.backupShips = Array.from(data);
+      this.ships = [];
+      for (let ae of this.availableShips) {
+        for (let se of this.backupShips) {
+          if (se.id == ae.id)
+            this.ships.push(se);
+        }
+      }
+      this.backupShips = Array.from(this.ships)
+    })
   }
   searchByCity(input: string) {
-    this._estateService.getShipsByCity(input).subscribe((data) => {this.ships = data; this.backupShips = Array.from(data);})
+    this.shipService.getShipsByCity(input).subscribe((data) => {
+      this.ships = data;
+      this.backupShips = Array.from(data);
+      this.ships = [];
+      for (let ae of this.availableShips) {
+        for (let se of this.backupShips) {
+          if (se.id == ae.id)
+            this.ships.push(se);
+        }
+      }
+      this.backupShips = Array.from(this.ships)
+    })
   }
 
 }
