@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
 import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
+import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
@@ -15,7 +16,7 @@ export class EstatesComponent implements OnInit {
   public backupEstates: DisplayServiceShortDTO[] = [];
   public estates: DisplayServiceShortDTO[] = [];
   public searched: DisplayServiceShortDTO[] = [];
-  
+
   public searchText: string = "";
   public searchCriteria: string = "name";
   public ratingFrom = 0;
@@ -23,47 +24,58 @@ export class EstatesComponent implements OnInit {
   public location = "any";
   public sortOrder = "asc";
   public sortCriteria = "";
-  
+
   todayDate: Date = new Date();
   startDate!: Date;
   endDate!: Date;
   capacity: number = 2;
   currentUser!: User
-  isClient:boolean = false;
-  
+  isClient: boolean = false;
+  isAvailableFound = false;
+  isClientBlocked = false;
+  isClientAvailable = true;
+  warningMessage = "";
 
-  constructor(private _estateService : ManagingEstateService, public signupService: SignupOwnersService) { }
+
+
+  constructor(private clientProfileService: ClientProfileService, private _estateService: ManagingEstateService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
       this.currentUser = data;
-      if(this.currentUser.role.name == "ROLE_CLIENT"){
+      if (this.currentUser.role.name == "ROLE_CLIENT") {
         this.isClient = true;
+        this.clientProfileService.getClientPenalties(this.currentUser.id).subscribe((res2) => {
+          let numberOfPenalties = res2;
+          if (numberOfPenalties >= 3) {
+            this.isClientBlocked = true;
+            this.warningMessage = "Not allowed to make reservations (more than 3 penalties)."
+          }
+        });
       }
-
     });
     this.currentUser = this.signupService.currentUser;
-    this._estateService.getAllEstates().subscribe((data) => {this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data);})
-    
+    this._estateService.getAllEstates().subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
+
   }
 
-  findAvailable(){
+  findAvailable() {
+    this.isAvailableFound = true;
     let parameters: ServiceAvailabilityParametersDTO = new ServiceAvailabilityParametersDTO();
-    parameters.startDate = this.startDate.toISOString().slice(0, 10);
-    parameters.endDate = this.endDate.toISOString().slice(0, 10);
-    alert(this.startDate)
-    alert(parameters.startDate)
+    parameters.startDate = this.startDate//.toISOString().slice(0, 10);
+    parameters.endDate = this.endDate//.toISOString().slice(0, 10);
     parameters.capacity = this.capacity;
 
-    
-    this._estateService.findAvailableEstates(parameters).subscribe((data) => {this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data);})
+
+    this._estateService.findAvailableEstates(parameters).subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
   }
 
-  clean(){
+  clear() {
+    this.isAvailableFound = false;
     this.startDate = new Date();
     this.endDate = new Date();
     this.capacity = 2;
-    this._estateService.getAllEstates().subscribe((data) => {this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data);})
+    this._estateService.getAllEstates().subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
     this.searchText = "";
     this.searchCriteria = "name";
     this.ratingFrom = 0;
@@ -78,9 +90,9 @@ export class EstatesComponent implements OnInit {
       this.estates = data;
       this.backupEstates = Array.from(data);
       this.estates = [];
-      for (let ae of this.availableEstates){
-        for(let se of this.backupEstates) {
-          if(se.id == ae.id)
+      for (let ae of this.availableEstates) {
+        for (let se of this.backupEstates) {
+          if (se.id == ae.id)
             this.estates.push(se);
         }
       }
@@ -88,7 +100,7 @@ export class EstatesComponent implements OnInit {
     })
   }
 
-  search(){
+  search() {
     if (this.searchText === "")
       this.getAllEstates();
     else if (this.searchCriteria == "name")
@@ -104,60 +116,60 @@ export class EstatesComponent implements OnInit {
     this.applyFilterAndSort();
   }
 
-  applyFilterAndSort(){
+  applyFilterAndSort() {
     this.applyFilter();
-    
+
     this.applySort();
   }
 
   applySort() {
-    switch(this.sortCriteria){
+    switch (this.sortCriteria) {
       case "name":
-      {
-        if(this.sortOrder == "asc")
-          this.estates = this.estates.sort((a, b) => (a.name > b.name ? 1 : -1));
-        else
-          this.estates = this.estates.sort((a, b) => (a.name > b.name ? -1 : 1));
-        break;
-      }
+        {
+          if (this.sortOrder == "asc")
+            this.estates = this.estates.sort((a, b) => (a.name > b.name ? 1 : -1));
+          else
+            this.estates = this.estates.sort((a, b) => (a.name > b.name ? -1 : 1));
+          break;
+        }
       case "city":
-      {
-        if(this.sortOrder == "asc")
-          this.estates = this.estates.sort((a, b) => (a.address.city > b.address.city ? 1 : -1));
-        else
-          this.estates = this.estates.sort((a, b) => (a.address.city > b.address.city ? -1 : 1));
-        break;
-      }
+        {
+          if (this.sortOrder == "asc")
+            this.estates = this.estates.sort((a, b) => (a.address.city > b.address.city ? 1 : -1));
+          else
+            this.estates = this.estates.sort((a, b) => (a.address.city > b.address.city ? -1 : 1));
+          break;
+        }
       case "rating":
-      {
-        if(this.sortOrder == "asc")
-          this.estates = this.estates.sort((a, b) => (a.rating > b.rating ? 1 : -1));
-        else
-          this.estates = this.estates.sort((a, b) => (a.rating > b.rating ? -1 : 1));
-        break;
-      }
+        {
+          if (this.sortOrder == "asc")
+            this.estates = this.estates.sort((a, b) => (a.rating > b.rating ? 1 : -1));
+          else
+            this.estates = this.estates.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+          break;
+        }
       case "price":
-      {
-        if(this.sortOrder == "asc")
-          this.estates = this.estates.sort((a, b) => (a.pricePerDay > b.pricePerDay ? 1 : -1));
-        else
-          this.estates = this.estates.sort((a, b) => (a.pricePerDay > b.pricePerDay ? -1 : 1));
-        break;
-      }
+        {
+          if (this.sortOrder == "asc")
+            this.estates = this.estates.sort((a, b) => (a.pricePerDay > b.pricePerDay ? 1 : -1));
+          else
+            this.estates = this.estates.sort((a, b) => (a.pricePerDay > b.pricePerDay ? -1 : 1));
+          break;
+        }
     }
   }
 
   applyFilter() {
     this.estates = Array.from(this.backupEstates);
-    switch(this.location){
+    switch (this.location) {
       case "any": this.estates = this.estates.filter((e) => true); break;
       default: this.estates = this.estates.filter((e) => e.address.city.toLowerCase() == this.location);
     }
-    if(this.ratingFrom > 0){
-      this.estates = this.estates.filter((e) => e.rating >= this.ratingFrom); 
+    if (this.ratingFrom > 0) {
+      this.estates = this.estates.filter((e) => e.rating >= this.ratingFrom);
     }
-    if(this.ratingTo < 5){
-      this.estates = this.estates.filter((e) => e.rating <= this.ratingTo); 
+    if (this.ratingTo < 5) {
+      this.estates = this.estates.filter((e) => e.rating <= this.ratingTo);
     }
   }
 
@@ -166,9 +178,9 @@ export class EstatesComponent implements OnInit {
       this.estates = data;
       this.backupEstates = Array.from(data);
       this.estates = [];
-      for (let ae of this.availableEstates){
-        for(let se of this.backupEstates) {
-          if(se.id == ae.id)
+      for (let ae of this.availableEstates) {
+        for (let se of this.backupEstates) {
+          if (se.id == ae.id)
             this.estates.push(se);
         }
       }
@@ -180,9 +192,9 @@ export class EstatesComponent implements OnInit {
       this.estates = data;
       this.backupEstates = Array.from(data);
       this.estates = [];
-      for (let ae of this.availableEstates){
-        for(let se of this.backupEstates) {
-          if(se.id == ae.id)
+      for (let ae of this.availableEstates) {
+        for (let se of this.backupEstates) {
+          if (se.id == ae.id)
             this.estates.push(se);
         }
       }

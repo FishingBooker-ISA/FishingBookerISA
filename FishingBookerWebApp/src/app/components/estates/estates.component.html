@@ -36,8 +36,9 @@
                         <mat-label>Capacity</mat-label>
                         <input matInput type="number" [(ngModel)]="capacity">
                     </mat-form-field>
-                    <button mat-raised-button (click)="findAvailable()" style="width:15%; height: 35px; margin-top: 1%;">Find
-                        available</button>
+                    <button mat-raised-button (click)="findAvailable()" style="width:13%; height: 35px; margin-top: 1%; margin-right: 3%;">Find available</button>
+                    <button mat-raised-button (click)="clear()" style="width:10%; height: 35px; margin-top: 1%;">Show all</button>
+                    <p style="margin-top: 1.5%; margin-left: 2%; color: crimson;">{{warningMessage}}</p>
                 </div>
 
                 <div class=" d-flex flex-row">
@@ -145,6 +146,9 @@
                         </div>
                         <p style="margin-top: 1%;">{{estate.description}}</p>
                         <p style="margin-top: 1%;">{{estate.pricePerDay}} EUR / per day</p>
+                        <button mat-raised-button style="margin-top: 5%; margin-right: 3%;" *ngIf="isAvailableFound && !isClientBlocked && isClientAvailable">
+                            Make a reservation
+                        </button>
                         <button mat-button style="margin-top: 5%; ">
                             More details
                         </button>

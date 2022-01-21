@@ -1,5 +1,5 @@
 export class ServiceAvailabilityParametersDTO{
-    startDate!: string
-    endDate!: string
+    startDate!: Date
+    endDate!: Date
     capacity!: number
 }
