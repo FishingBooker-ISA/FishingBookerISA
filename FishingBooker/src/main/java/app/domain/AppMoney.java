@@ -15,6 +15,12 @@ public class AppMoney {
 
     public AppMoney(){}
 
+    public AppMoney(Integer id, Date date, double money) {
+        this.id = id;
+        this.date = date;
+        this.money = money;
+    }
+
     public Integer getId() {
         return id;
     }

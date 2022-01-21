@@ -32,7 +32,7 @@ public class BussinessReportService {
     @Autowired
     RatingRepository ratingRepository;
 
-    public List<Integer> MonthlyReport(User owner) {
+    public List<Integer> monthlyReport(User owner) {
         User currentUser = userService.findByEmail(owner.getEmail());
         List<BookingService> ownersServices = serviceRepository.findByOwnerId(currentUser.getId());
         List<Integer> result = new ArrayList<>();
@@ -40,7 +40,7 @@ public class BussinessReportService {
         List<Reservation> reservationsForTimePeriod;
         for( int i = 0; i < 5; i++) {
             reservationsForTimePeriod = new ArrayList<>();
-            LocalDateTime start = LocalDateTime.now().minusMonths(i + 1);
+            LocalDateTime start = LocalDateTime.now().minusMonths(i + 1L);
             ZonedDateTime zdt = start.atZone(ZoneId.systemDefault());
             Date startDate = Date.from(zdt.toInstant());
             LocalDateTime end = LocalDateTime.now().minusMonths(i);
@@ -60,7 +60,7 @@ public class BussinessReportService {
         return result;
     }
 
-    public List<Integer> YearlyReport(User owner) {
+    public List<Integer> yearlyReport(User owner) {
         User currentUser = userService.findByEmail(owner.getEmail());
         List<BookingService> ownersServices = serviceRepository.findByOwnerId(currentUser.getId());
         List<Integer> result = new ArrayList<>();
@@ -68,7 +68,7 @@ public class BussinessReportService {
         List<Reservation> reservationsForTimePeriod;
         for( int i = 0; i < 5; i++) {
             reservationsForTimePeriod = new ArrayList<>();
-            LocalDateTime start = LocalDateTime.now().minusYears(i + 1);
+            LocalDateTime start = LocalDateTime.now().minusYears(i + 1L);
             ZonedDateTime zdt = start.atZone(ZoneId.systemDefault());
             Date startDate = Date.from(zdt.toInstant());
             LocalDateTime end = LocalDateTime.now().minusYears(i);
@@ -88,7 +88,7 @@ public class BussinessReportService {
         return result;
     }
 
-    public List<Integer> WeeklyReport(User owner) {
+    public List<Integer> weeklyReport(User owner) {
         User currentUser = userService.findByEmail(owner.getEmail());
         List<BookingService> ownersServices = serviceRepository.findByOwnerId(currentUser.getId());
         List<Integer> result = new ArrayList<>();
@@ -96,10 +96,10 @@ public class BussinessReportService {
         List<Reservation> reservationsForTimePeriod;
         for( int i = 0; i < 5; i++) {
             reservationsForTimePeriod = new ArrayList<>();
-            LocalDateTime start = LocalDateTime.now().minusDays((i + 1)*7);
+            LocalDateTime start = LocalDateTime.now().minusDays((i + 1L)*7);
             ZonedDateTime zdt = start.atZone(ZoneId.systemDefault());
             Date startDate = Date.from(zdt.toInstant());
-            LocalDateTime end = LocalDateTime.now().minusWeeks(i*7);
+            LocalDateTime end = LocalDateTime.now().minusWeeks(i*7L);
             ZonedDateTime zdt1 = end.atZone(ZoneId.systemDefault());
             Date endDate = Date.from(zdt1.toInstant());
 

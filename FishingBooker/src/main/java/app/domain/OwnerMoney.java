@@ -18,6 +18,13 @@ public class OwnerMoney {
 
     public OwnerMoney(){}
 
+    public OwnerMoney(Integer id, Date date, double money, User owner) {
+        this.id = id;
+        this.date = date;
+        this.money = money;
+        this.owner = owner;
+    }
+
     public Integer getId() {
         return id;
     }
