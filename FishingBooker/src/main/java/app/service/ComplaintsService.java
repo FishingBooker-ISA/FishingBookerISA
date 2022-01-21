@@ -79,9 +79,11 @@ public class ComplaintsService {
         else if (estateRepository.existsById(serviceId)){
             service = estateRepository.getById(serviceId);
         }
-        User owner = service.getOwner();
+        if (service != null){
+            User owner = service.getOwner();
+            complaint.setOwner(owner);
+        }
         User client = clientRepository.getById(c.getClientId());
-        complaint.setOwner(owner);
         complaint.setClient(client);
         complaintRepository.save(complaint);
     }

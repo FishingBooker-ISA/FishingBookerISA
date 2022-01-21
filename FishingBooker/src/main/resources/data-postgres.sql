@@ -50,6 +50,16 @@ INSERT INTO estate (id, capacity, description, is_percentage_taken_from_canceled
 VALUES (10, 2, 'Lovely cottage for two.', false, 'Coast house', 0, 20, 'Terms of use.', 0, 6, 4, 1, 1);
 
 --ships
+INSERT INTO ship (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, length, max_speed, num_of_engines, power_of_engines, ship_type)
+VALUES (11, 8, 'Mauris cursus mattis molestie a iaculis. Fringilla urna porttitor rhoncus dolor purus non enim praesent elementum. Ornare quam viverra orci sagittis eu volutpat odio facilisis.', false, 'Skye', 0, 40, 'Terms of use.', 1, 2, 5, 5, 50, 3, 100, 0);
+INSERT INTO ship (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, length, max_speed, num_of_engines, power_of_engines, ship_type)
+VALUES (12, 10, 'Et ligula ullamcorper malesuada proin libero nunc consequat interdum. Feugiat in fermentum posuere urna nec.', false, 'Poseidon', 0, 60, 'Terms of use.', 1, 3, 5, 3, 50, 3, 100, 1);
+INSERT INTO ship (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, length, max_speed, num_of_engines, power_of_engines, ship_type)
+VALUES (13, 4, 'Morbi tincidunt augue interdum velit. Erat velit scelerisque in dictum. Sodales neque sodales ut etiam sit amet. Tortor consequat id porta nibh venenatis.', false, 'Wavemaster', 0, 30, 'Terms of use.', 1, 4, 5, 3, 50, 3, 100, 1);
+INSERT INTO ship (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, length, max_speed, num_of_engines, power_of_engines, ship_type)
+VALUES (14, 15, 'Lacus sed viverra tellus in hac habitasse. Nunc congue nisi vitae suscipit tellus mauris.', false, 'Compass', 0, 60, 'Terms of use.', 1, 5, 5, 3, 50, 3, 100, 0);
+INSERT INTO ship (id, capacity, description, is_percentage_taken_from_canceled_reservations, name, percentage_to_take, price_per_day, terms_of_use, type, address_id, owner_id, length, max_speed, num_of_engines, power_of_engines, ship_type)
+VALUES (15, 6, 'Aliquam purus sit amet luctus venenatis lectus magna fringilla urna.', false, 'Cruiser', 0, 20, 'Terms of use.', 1, 6, 5, 3, 50, 3, 100, 1);
 
 --resevations
 INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, reservation_start, reservation_end, reserved_date, service_id, user_id)

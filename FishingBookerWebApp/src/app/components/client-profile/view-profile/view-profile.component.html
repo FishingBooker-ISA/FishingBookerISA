@@ -95,7 +95,7 @@
                             <td>Old password</td>
                             <td>
                                 <div class="textField">
-                                    <input class="text-start" type="text" name="name"
+                                    <input class="text-start" type="password" name="name"
                                         [(ngModel)]="oldPassword" />
                                 </div>
                             </td>
@@ -103,7 +103,7 @@
                             <td>New password</td>
                             <td>
                                 <div class="textField">
-                                    <input class="text-start" type="text" name="name"
+                                    <input class="text-start" type="password" name="name"
                                         [(ngModel)]="newPassword1" />
                                 </div>
                             </td>
@@ -111,9 +111,14 @@
                             <td>Repeat password</td>
                             <td>
                                 <div class="textField">
-                                    <input class="text-start" type="text" name="name"
+                                    <input class="text-start" type="password" name="name"
                                         [(ngModel)]="newPassword2"/>
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p style="color: red;">{{errorMessage}}</p>
                             </td>
                         </tr>
                     </tbody>
@@ -145,7 +150,7 @@
                     <button class="btn mt-5 mx-5" (click)="changePassword()">
                         Save changes
                     </button>
-                    <button class="btn mt-5" (click)="isChangingPassword = false; errorMessage = ''">
+                    <button class="btn mt-5" (click)="isChangingPassword = false; errorMessage = ''; oldPassword=''; newPassword1=''; newPassword2 = '';">
                         Cancel
                     </button>
                 </div>

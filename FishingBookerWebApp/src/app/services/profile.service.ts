@@ -33,6 +33,10 @@ export class ProfileService {
     this.http.put(`${environment.baseUrl}` + 'api/owners/changePassword', dto, { observe: 'response', responseType: 'text' }).subscribe();
   }
 
+  changeClientPassword(dto: PasswordChangeDto) {
+    this.http.put(`${environment.baseUrl}` + 'api/owners/changePassword', dto, { observe: 'response', responseType: 'text' });
+  }
+
   deleteAccount(dto: DeletionRequestDTO) {
     return this.http.post(`${environment.baseUrl}` + 'api/owners/sendDeletionRequest', dto, { observe: 'response', responseType: 'text' });
   }

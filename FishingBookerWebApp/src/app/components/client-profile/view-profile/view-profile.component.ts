@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Address } from 'src/app/model/address';
 import { DeletionRequestDTO } from 'src/app/model/delete-account-request';
+import { LoginUser } from 'src/app/model/login-user';
+import { PasswordChangeDto } from 'src/app/model/password-change-dto';
 import { User } from 'src/app/model/user';
 import { ClientProfileService } from 'src/app/services/client-profile.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 import { DeletionRequestComponent } from '../../deletion-request/deletion-request.component';
 
@@ -27,7 +30,7 @@ export class ViewProfileComponent implements OnInit {
   request!: DeletionRequestDTO;
   reason: string = "";
 
-  constructor(public signupService: SignupOwnersService, private _clientProfileService: ClientProfileService, public dialog: MatDialog) { }
+  constructor(public profileService: ProfileService , public signupService: SignupOwnersService, private clientProfileService: ClientProfileService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -43,7 +46,7 @@ export class ViewProfileComponent implements OnInit {
       if (this.currentUser.role.name == "ROLE_CLIENT") {
         this.isClient = true;
       }
-      this._clientProfileService.deletionRequestExists(this.currentUser.id).subscribe((res) => { 
+      this.clientProfileService.deletionRequestExists(this.currentUser.id).subscribe((res) => { 
         this.isDeletionRequestSent = res;
       })
 
@@ -52,8 +55,10 @@ export class ViewProfileComponent implements OnInit {
   }
 
   editProfile() {
-    if (this.currentUser.firstName != "" && this.currentUser.lastName != "" && this.currentUser.address.street != "" && this.currentUser.address.number < 1 && this.currentUser.address.city != "" && this.currentUser.address.country != "" && this.currentUser.phoneNumber != "") {
+    if (this.currentUser.firstName != "" && this.currentUser.lastName != "" && this.currentUser.address.street != "" && this.currentUser.address.number > 1 && this.currentUser.address.city != "" && this.currentUser.address.country != "" && this.currentUser.phoneNumber != "") {
 
+      //poziv beka
+      this.profileService.editUserProfile(this.currentUser);
       this.isEditing = false;
       this.backupUser.firstName = this.currentUser.firstName;
       this.backupUser.lastName = this.currentUser.lastName;
@@ -62,9 +67,9 @@ export class ViewProfileComponent implements OnInit {
       this.backupUser.address.city = this.currentUser.address.city;
       this.backupUser.address.country = this.currentUser.address.country;
       this.backupUser.phoneNumber = this.currentUser.phoneNumber;
-      //poziv beka
     }
-    this.errorMessage = "Please fill out all fields."
+    else
+      this.errorMessage = "Please fill out all fields."
   }
 
   restore() {
@@ -89,8 +94,25 @@ export class ViewProfileComponent implements OnInit {
       return;
     }
     // poziv beku, ako vrati gresku this.errorMessage = "Old password is incorrect.", ako sve prodje kako treba this.errorMessage = "";
-
+    this.errorMessage = "";
+    let dto: PasswordChangeDto = {
+      oldPassword: this.oldPassword,
+      newPassword: this.newPassword1
+    }
+    this.profileService.changePassword(dto);
     this.isChangingPassword = false;
+    let login: LoginUser = {
+      username: this.currentUser.email, 
+      password: this.newPassword1
+    }
+
+    setTimeout(() => {
+      this.signupService.logIn(login).subscribe()
+    }, 1000)
+
+    this.oldPassword = "";
+    this.newPassword1 = "";
+    this.newPassword2 = "";
   }
 
   openDeleteDialog(): void{
@@ -111,7 +133,7 @@ export class ViewProfileComponent implements OnInit {
   sendDeletionRequest(){
     this.isDeletionRequestSent = true;
     this.request = {reason: this.reason, userId: this.currentUser.id};
-    this._clientProfileService.sendDeletionRequest(this.request);
+    this.clientProfileService.sendDeletionRequest(this.request);
   }
 
 }

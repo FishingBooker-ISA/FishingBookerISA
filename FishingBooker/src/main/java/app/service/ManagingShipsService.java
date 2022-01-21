@@ -1,7 +1,6 @@
 package app.service;
 
 import app.domain.*;
-import app.dto.AdditionalEquipmentDTO;
 import app.dto.NavigationToolDTO;
 import app.dto.ShipDTO;
 import app.repository.*;
@@ -173,6 +172,36 @@ public class ManagingShipsService {
                 .getByNameAndShipId(dto.getName(), existing.getId());
 
         toolRepository.deleteById(tool.getId());
+    }
+
+    public List<Ship> searchByName(String input){
+        List<Ship> foundShips = new ArrayList<>();
+        List<Ship> allShips =  shipRepository.findAll();
+        for (Ship ship : allShips) {
+            if(ship.getName().toLowerCase().contains(input.toLowerCase()))
+                foundShips.add(ship);
+        }
+        return foundShips;
+    }
+
+    public List<Ship> searchByCity(String input){
+        List<Ship> foundShips = new ArrayList<>();
+        List<Ship> allShips =  shipRepository.findAll();
+        for (Ship ship : allShips) {
+            if(ship.getAddress().getCity().toLowerCase().contains(input.toLowerCase()))
+                foundShips.add(ship);
+        }
+        return foundShips;
+    }
+
+    public List<Ship> searchByCapacity(int requestedCapacity){
+        List<Ship> foundShips = new ArrayList<>();
+        List<Ship> allShips =  shipRepository.findAll();
+        for (Ship ship : allShips) {
+            if(ship.getCapacity() <= requestedCapacity)
+                foundShips.add(ship);
+        }
+        return foundShips;
     }
 
 
