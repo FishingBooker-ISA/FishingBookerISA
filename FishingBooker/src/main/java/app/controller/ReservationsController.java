@@ -85,6 +85,12 @@ public class ReservationsController {
             return new ResponseEntity<>("Entered dates overlap with existing reservation!", HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping(value = "/cancel/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public boolean cancelReservation(@PathVariable int id) {
+        return reservationsService.cancelReservation(id);
+    }
+
     @GetMapping(value = "/getReservationHistory", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
     public List<Reservation> getReservationHistory(int id, Principal user) {

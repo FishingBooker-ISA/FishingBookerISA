@@ -29,6 +29,9 @@ export class ReservationsService {
   createClientReservation(dto: ClientReservationDTO) {
     return this.http.post(`${environment.baseUrl}` + 'api/reservations/createClientReservation', dto, { observe: 'response', responseType: 'text' });
   }
+  cancelReservation(id:number) : Observable<boolean>{
+    return this.http.put<boolean>(`${environment.baseUrl}` + 'api/reservations/cancel/'+id, null);
+  }
 
   getAllReservationsForService(id: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${environment.baseUrl}` + 'api/reservations/getReservationHistory', {

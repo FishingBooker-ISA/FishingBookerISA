@@ -80,12 +80,10 @@
                             <h6 style="margin-bottom: 4%; margin-top: 4%;">People: {{reservation.capacity}}</h6>
                             <h6 style="margin-bottom: 2%;">Included services:</h6>
                             <p style="margin-top: 2%; margin-left: 3%;">&bull; {{reservation.additionalServices}}</p>
-                            <!--<p style="margin-top: 2%; margin-left: 3%;">&bull; service 2</p>
-                            <p style="margin-top: 2%; margin-left: 3%;">&bull; service 3</p>-->
                             <h5 style="margin-top: 8%;">Price: {{reservation.totalPrice}} EUR</h5>
                         </div>
                         <div style="margin-left: auto; margin-right: 2%;" *ngIf="!reservation.canceled">
-                            <button mat-button style="margin-top: 5%; ">
+                            <button mat-button style="margin-top: 5%; " (click)="cancelReservation(reservation.id)">
                                 Cancel
                             </button>
                         </div>

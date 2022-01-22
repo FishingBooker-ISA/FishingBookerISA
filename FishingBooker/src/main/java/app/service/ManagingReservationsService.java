@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -40,6 +41,22 @@ public class ManagingReservationsService {
     UnavailablePeriodRepository unavailablePeriodRepository;
     @Autowired
     MoneyService moneyService;
+
+    public boolean cancelReservation(int id){
+        Reservation r = reservationRepository.getById(id);
+        if (r == null)
+            return false;
+        Date now = new Date();
+        long diff = r.getReservationStart().getTime() - now.getTime();
+        TimeUnit time = TimeUnit.DAYS;
+        long days = time.convert(diff, TimeUnit.MILLISECONDS);
+        if(days<3){
+            return false;
+        }
+        r.setCanceled(true);
+        reservationRepository.save(r);
+        return true;
+    }
 
     public List<Reservation> getReservationHistory(int serviceId) {
         BookingService bookingService = serviceRepository.getById(serviceId);
