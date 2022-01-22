@@ -26,6 +26,7 @@ export class ReservationCalendarComponent implements OnInit {
   reservations = [] as Reservation[]
   unavailable = [] as UnavailablePeriod[]
   displayEvents = [] as EventInput[]
+  isOwner: boolean = false;
 
   calendarOptions!: CalendarOptions;
 
@@ -43,6 +44,8 @@ export class ReservationCalendarComponent implements OnInit {
   }
 
   handleDateClick(clickInfo: EventClickArg) {
+    if(!this.isOwner)
+      return;
     if (clickInfo.event.title !== "Unavailable period") {
       var akcija = new PromoAction()
       var rezervacija = new Reservation()

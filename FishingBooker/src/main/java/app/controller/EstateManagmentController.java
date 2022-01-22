@@ -55,11 +55,10 @@ public class EstateManagmentController {
     }
 
     @GetMapping(value = "/getEstateById", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
     public BookingService getEstatesById(Principal user, int id){
-        User currentUser = this.userService.findByEmail(user.getName());
+        //User currentUser = this.userService.findByEmail(user.getName());
 
-        for (Estate estate : estateRepository.findByOwnerId(currentUser.getId())) {
+        for (Estate estate : estateRepository.findAll()){//findByOwnerId(currentUser.getId())) {
             if(estate.getId() == id)
                 return estate;
         }

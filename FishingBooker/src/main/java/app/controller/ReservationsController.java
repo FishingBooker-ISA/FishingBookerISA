@@ -92,7 +92,6 @@ public class ReservationsController {
     }
 
     @GetMapping(value = "/getReservationHistory", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
     public List<Reservation> getReservationHistory(int id, Principal user) {
         return reservationsService.getReservationHistory(id);
     }

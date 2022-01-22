@@ -75,11 +75,11 @@ INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, res
 
 --rating
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES ('Great service. See you again soon. :)', 5, false, false, 1, 2);
+VALUES ('Great service. See you again soon. :)', 5, true, false, 1, 2);
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES ('Great service. See you again soon. :)', 5, true, true, 2, 3);
+VALUES ('Great service. See you again soon. :)', 5, true, true,6, 3);
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES ('Not impressed.', 3, true, true, 7, 3);
+VALUES ('Not impressed.', 3, true, true, 6, 3);
 
 ---complaints
 INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
@@ -99,7 +99,7 @@ VALUES ('bla bla', false, false, 200.0, DATE '2022-01-30', DATE '2022-01-15', DA
 
 
 INSERT INTO additional_service ( name, price, service_id)
-VALUES ('WiFi', 0, 6), ('Iron', 10, 6), ('Air Conditioning', 0, 6), ('TV', 10, 6), ('WiFi', 0, 6), ('Parking', 10, 6);
+VALUES ('WiFi', 0, 6), ('Iron', 10, 6), ('Air Condition', 0, 6), ('TV', 10, 6), ('Parking', 10, 6), ('WiFi', 0, 7);
 --unavailable periods
 INSERT INTO unavailable_period(end_date, start_date, service_id)
 VALUES (DATE '2022-03-01', '2022-02-27', 6);

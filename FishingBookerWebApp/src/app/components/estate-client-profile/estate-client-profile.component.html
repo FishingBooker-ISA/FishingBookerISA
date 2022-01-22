@@ -1,0 +1,132 @@
+<app-client-navbar *ngIf="isClient"></app-client-navbar>
+<app-unauthenticated-user-navbar *ngIf="!isClient"></app-unauthenticated-user-navbar>
+
+<div class="bg-light" *ngIf="!editingMode">
+  <!-- Carousel -->
+  <div id="carouselHome" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner" *ngIf="images.length !== 0">
+      <div class="carousel-item" *ngFor="let img of images" [ngClass]="isFirst(img) ? 'active' : 'notActive'">
+        <div>
+          <img class="overlay-image" [src]="img" />
+        </div>
+      </div>
+    </div>
+    <div class="carousel-inner" *ngIf="images.length === 0">
+      <div class="carousel-item active">
+        <div>
+          <img class="overlay-image" src="../../../assets/img/estate3.jpg" />
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <!-- End of carousel -->
+
+  <!-- GENERAL INFO  -->
+  <div class="container mt-3 bg-light">
+    <div class="propertyDetailHeader">
+      <div class="row propertyInformation">
+        <div class="col-md-6 left">
+          <div class="title-wrapper d-inline-flex">
+            <a class="propertyTitle h3" href="{{ '/client/estate/' + estate.id }}" style="color: black">{{ estate.name }}</a>
+          </div>
+          <div class="propertyLocation d-inline-flex">
+            <img style="width: 20px; height: 25px;" class=" me-2" src="../../../assets/img/pin.png">
+            <a class="mt-1" (click)="openMap()">{{ estate.address.street }} {{ estate.address.number }},
+              {{ estate.address.city }}
+              {{ estate.address.postcode }}, {{estate.address.country }}</a>
+          </div>
+        </div>
+        <div class="col-md-6 mt-2 right">
+          <div class="row">
+            <div class="col-md propertyPrice mt-1 text-end">
+              <span class="suffix">€</span>
+              <span class="price-text">{{ estate.pricePerDay }}</span>
+            </div>
+            <div class="col-md buttons d-flex">
+              <button *ngIf="isClient && !isSubscribed" class="btn" style="width: 300%; color: white; margin-right:10px" (click)="subscribe()">
+                Subscribe
+              </button>
+              <button class="btn me-1" (click)="viewCalendar()">
+                <i class="bi bi-calendar-week"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="additionalInfo mt-5 bg-light" *ngIf="!promoActions && !calendarView && !createReservation">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row description d-flex">
+            <div class="col-md align-items-center">
+              <p>{{ estate.description }}</p>
+              <div class="row" style="padding: 15px">
+                <div class="numbers mb-2 d-inline-flex">
+                  <i class="material-icons me-2" style="color: gold;">star</i>
+                  <span style="color: rgb(216, 93, 93)">Rating: {{averageMark}}
+                  </span>
+                </div>
+                <div class="numbers mb-2">
+                  <span style="color: rgb(216, 93, 93)">Number of rooms: {{ estate.numOfRooms }}</span>
+                </div>
+                <div class="numbers">
+                  <span style="color: rgb(216, 93, 93)">Number of beds: {{ estate.numOfBeds }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 termsAndServices">
+          <h4><b>Terms of use:</b></h4>
+          <h6>
+            {{ estate.termsOfUse }}
+          </h6>
+
+          <div class="d-flex">
+            <h4 class="mt-3"><b>Additional services:</b></h4>
+          </div>
+
+          <div style="border-bottom: 1px solid #c7c7c7; padding-bottom: 30px" class="mt-2">
+            <ul>
+              <li *ngFor="let item of additional" class="additional mb-1 me-1">
+                <b>{{ item.name }}</b> <span class="mx-2">:</span>
+                {{ item.price }}e
+              </li>
+            </ul>
+          </div>
+
+          <div class="propertyDetails">
+            <h5 class="mt-4"><b>Details</b></h5>
+            <table style="width: 100%">
+              <colgroup>
+                <col span="1" style="width: 25%" />
+              </colgroup>
+
+              <tbody>
+                <tr>
+                  <td>Capacity:</td>
+                  <td>{{ estate.capacity }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END OF GENERAL INFO -->
+
+  <app-promo-actions class="bg-light" *ngIf="promoActions" [id]="estate.id" [promoActions]="promoActions">
+  </app-promo-actions>
+  <app-reservation-calendar *ngIf="calendarView" [id]="estate.id" [calendarView]="calendarView">
+  </app-reservation-calendar>
+</div>

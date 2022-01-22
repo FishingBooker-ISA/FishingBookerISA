@@ -33,15 +33,7 @@ public class AdditionalEquipmentController {
     private static final String UNAUTHORIZED = "Unauthorized access!";
 
     @GetMapping(value = "/getAdditionalForService", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')" + " || hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<List<AdditionalService>> getAllByService(int id, Principal user) {
-        BookingService existing = serviceRepository.getById(id);
-        User currentUser = userService.findByEmail(user.getName());
-
-        if (!existing.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
         return new ResponseEntity<>(additionalServiceRepository.getAllByBookingServiceId(id), HttpStatus.OK);
     }
 

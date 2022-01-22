@@ -29,15 +29,7 @@ public class PromoActionController {
     private ServiceRepository serviceRepository;
 
     @GetMapping(value = "/getAllActionsForService", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<List<PromoAction>> getActionsForService(int id, Principal user) {
-        User currentUser = userService.findByEmail(user.getName());
-        BookingService service = serviceRepository.getById(id);
-
-        if(!service.getOwner().getId().equals(currentUser.getId())) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
         return new ResponseEntity<>(promoActionService.getAllActions(id), HttpStatus.OK);
     }
 

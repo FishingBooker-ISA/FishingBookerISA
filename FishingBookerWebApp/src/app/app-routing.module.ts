@@ -20,6 +20,7 @@ import { EstateReservationHistoryComponent } from './components/client-profile/e
 import { SubscriptionsComponent } from './components/client-profile/subscriptions/subscriptions.component';
 import { UpcomingReservationsComponent } from './components/client-profile/upcoming-reservations/upcoming-reservations.component';
 import { ViewProfileComponent } from './components/client-profile/view-profile/view-profile.component';
+import { EstateClientProfileComponent } from './components/estate-client-profile/estate-client-profile.component';
 import { EstateOwnerHomepageComponent } from './components/estate-owner-homepage/estate-owner-homepage.component';
 import { EditEstateComponent } from './components/estate-profile/edit-estate/edit-estate.component';
 import { EstateProfileComponent } from './components/estate-profile/estate-profile.component';
@@ -59,6 +60,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'estateOwner/home', component: EstateOwnerHomepageComponent, canActivate: [EstateOwnerAuthGuard] },
   { path: 'estate/:id', component: EstateProfileComponent, canActivate: [EstateOwnerAuthGuard] },
+  { path: 'client/estate/:id', component: EstateClientProfileComponent },
   { path: 'estates', component: EstatesComponent },
   { path: 'boats', component: BoatsComponent },
   { path: 'fishing-instructors', component: FishingInstructorsComponent },
