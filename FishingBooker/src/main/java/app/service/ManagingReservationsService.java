@@ -7,7 +7,6 @@ import app.dto.UnavailablePeriodDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,21 +89,19 @@ public class ManagingReservationsService {
         return reservations;
     }
 
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
-            propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public Reservation createReservationForUser(ReservationDTO reservationDTO) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    public Reservation createReservationForUser(ReservationDTO reservationDTO) throws Exception {
         User client = userRepository.getById(reservationDTO.getUserId());
         Reservation lastingReservation = getLastingReservationForUser(client, reservationDTO.getServiceId());
-
+        Reservation newReservation = getReservation(reservationDTO);
         if (lastingReservation == null)
             return null;
 
-        if (!checkIfPeriodIsAvailable(reservationDTO.getReservationStart(), reservationDTO.getReservationEnd(),
+        if (!checkIfServiceIsAvailable(reservationDTO.getReservationStart(), reservationDTO.getReservationEnd(),
                 reservationDTO.getServiceId())) {
             return null;
         }
 
-        Reservation newReservation = getReservation(reservationDTO);
         newReservation.setPrice(this.moneyService.applyClientDiscount(client.getId(), newReservation.getPrice()));
         reservationRepository.save(newReservation);
         sendConfirmationMail(newReservation);
@@ -113,7 +110,7 @@ public class ManagingReservationsService {
         return newReservation;
     }
 
-    @Transactional
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public Reservation createReservationForClient(ClientReservationDTO reservationDTO) {
         try{
             User client = userRepository.getById(reservationDTO.getClientId());
@@ -249,9 +246,8 @@ public class ManagingReservationsService {
         this.emailService.sendMail(reservation.getUser(), mailSubject, mailContent);
     }
 
-    // da li treba provjera za promo???
     public boolean checkIfPeriodIsAvailable(Date start, Date end, int serviceId) {
-        List<Reservation> existingReservations = reservationRepository.getByBookingServiceId(serviceId);
+        List<Reservation> existingReservations = reservationRepository.findLockedByBookingServiceId(serviceId);
         if (checkIfReservationsOverlap(start, end, existingReservations)) {
             return false;
         }

@@ -32,14 +32,7 @@ export class AdminRequestsService {
     return this.http
       .post(
         `${environment.baseUrl}` + 'api/accounts/reviewRequest',
-       review
-      )
-      .subscribe((response) => {
-        console.log('response received');
-      },
-      (error) => {
-        console.error('error caught in component');
-      });
+       review, { observe: 'response', responseType: 'text' });
   }
 
   public sendDeleteAccountReview(review : RequestReview){
@@ -48,13 +41,7 @@ export class AdminRequestsService {
       .post(
         `${environment.baseUrl}` + 'api/accounts/reviewDeleteRequest',
        review
-      )
-      .subscribe((response) => {
-        console.log('response received');
-      },
-      (error) => {
-        console.error('error caught in component');
-      });
+       , { observe: 'response', responseType: 'text' });
   }
 
   public getAllUsers() : Observable<User[]> {

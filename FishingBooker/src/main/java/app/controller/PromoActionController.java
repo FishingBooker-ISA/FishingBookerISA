@@ -51,7 +51,7 @@ public class PromoActionController {
                 return new ResponseEntity<>("Entered dates overlap with existing reservation!", HttpStatus.BAD_REQUEST);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("A reservation for this period has just been made!", HttpStatus.BAD_REQUEST);
         }
     }
 

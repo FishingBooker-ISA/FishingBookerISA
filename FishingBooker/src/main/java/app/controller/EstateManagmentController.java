@@ -105,7 +105,8 @@ public class EstateManagmentController {
             return new ResponseEntity<>("Estate updated!", HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("A reservation for this period has just been made! Update isn't possible!",
+                    HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -22,6 +22,9 @@ public class AccountDeletionRequest {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+    @Version
+   // @Column(nullable = false)
+    private Integer version;
 
     public AccountDeletionRequest() {}
 
@@ -89,5 +92,13 @@ public class AccountDeletionRequest {
 
     public void setDenialReason(String denialReason) {
         this.denialReason = denialReason;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

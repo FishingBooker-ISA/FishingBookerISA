@@ -77,7 +77,7 @@ export class CreateReservationComponent implements OnInit {
         this._snackBar.open("Entered dates overlap with existing reservation!", 'Dissmiss', {
           duration: 3000
         });
-      });;
+      });
   }
 
   addToList(added: AdditionalService) {

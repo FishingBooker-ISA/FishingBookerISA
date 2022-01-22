@@ -33,14 +33,7 @@ export class ComplaintsService {
     return this.http
       .post(
         `${environment.baseUrl}` + 'api/complaints/reviewComplaint',
-       review
-      )
-      .subscribe((response) => {
-        console.log('response received');
-      },
-      (error) => {
-        console.error('error caught in component');
-      });
+       review, { observe: 'response', responseType: 'text' });
   }
 
 }

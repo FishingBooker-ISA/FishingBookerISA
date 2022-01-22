@@ -8,6 +8,8 @@ import app.dto.NewComplaintDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -30,14 +32,23 @@ public class ComplaintsService {
         this.emailService = emailService;
     }
 
-    public void reviewComplaint(ComplaintReviewDTO review) {
+    @Transactional(readOnly = false)
+    public boolean reviewComplaint(ComplaintReviewDTO review) {
+        boolean ex = false;
         Complaint foundComplaint = this.complaintRepository.getById(review.getId());
         foundComplaint.setIsReviewed(true);
         foundComplaint.setResponseForClient(review.getResponseForClient());
         foundComplaint.setResponseForOwner(review.getResponseForOwner());
-        this.complaintRepository.save(foundComplaint);
-        notifyClient(foundComplaint);
-        notifyOwner(foundComplaint);
+        try{
+            this.complaintRepository.save(foundComplaint);
+        } catch (Exception exception){
+            ex = true;
+        }
+        if(!ex){
+            notifyClient(foundComplaint);
+             notifyOwner(foundComplaint);
+        }
+        return ex;
     }
 
     private void notifyOwner(Complaint complaint) {
@@ -67,6 +78,7 @@ public class ComplaintsService {
         complaint.setResponseForClient("");
         complaint.setResponseForOwner("");
         complaint.setIsComplaintOnOwner(c.isComplaintOnOwner());
+        complaint.setVersion(0);
 
         BookingService service = null;
         int serviceId = c.getServiceId();

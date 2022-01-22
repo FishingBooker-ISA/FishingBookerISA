@@ -50,6 +50,9 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = (User) authentication.getPrincipal();
+        if (user.isDeleted()) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         String jwt = tokenUtils.generateToken(user.getEmail());
         int expiresIn = tokenUtils.getExpiredIn();
 

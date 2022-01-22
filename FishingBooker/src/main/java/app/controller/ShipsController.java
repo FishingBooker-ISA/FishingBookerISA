@@ -88,7 +88,7 @@ public class ShipsController {
         }
 
         try {
-            shipsService.updateExistingEstate(dto, existingShip);
+            shipsService.updateExistingShip(dto, existingShip);
             return new ResponseEntity<>("Ship updated!", HttpStatus.OK);
         }
         catch (Exception e) {
@@ -111,7 +111,7 @@ public class ShipsController {
         }
 
         try {
-            shipsService.deleteEstate(existingShip);
+            shipsService.deleteShip(existingShip);
             return new ResponseEntity<>("Ship deleted!", HttpStatus.OK);
         }
         catch (Exception e) {

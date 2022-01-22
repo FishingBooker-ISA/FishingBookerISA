@@ -73,8 +73,7 @@ public class OwnerProfileService {
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
-            propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+
     public void sendAccountDeletionRequest(DeletionRequestDTO requestDTO, User currentUser) {
         AccountDeletionRequest request = new AccountDeletionRequest();
         request.setUser(currentUser);
@@ -82,6 +81,7 @@ public class OwnerProfileService {
         request.setReviewed(false);
         request.setDenied(false);
         request.setRequestedDate(new Date());
+        request.setVersion(0);
         deletionRequestRepository.save(request);
     }
 
