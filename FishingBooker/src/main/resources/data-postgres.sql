@@ -99,7 +99,7 @@ VALUES ('bla bla', false, false, 200.0, DATE '2022-01-30', DATE '2022-01-15', DA
 
 
 INSERT INTO additional_service ( name, price, service_id)
-VALUES ('WiFi', 0, 6), ('Iron', 10, 11), ('Air Condition', 0, 6), ('TV', 10, 6), ('Parking', 10, 6), ('WiFi', 0, 7);
+VALUES ('WiFi', 0, 2), ('Iron', 10, 11), ('Air Condition', 0, 6), ('TV', 10, 6), ('Parking', 10, 6), ('WiFi', 0, 7);
 --unavailable periods
 INSERT INTO unavailable_period(end_date, start_date, service_id)
 VALUES (DATE '2022-03-01', '2022-02-27', 6);
@@ -112,7 +112,7 @@ INSERT INTO promo_action(
 VALUES ('nesto', 5, 10, DATE '2022-02-20', false, 20, DATE '2022-02-15', 11);
 INSERT INTO promo_action(
     additional, capacity, duration_in_days, end_date, is_taken, price_per_day, start_date, service_id)
-VALUES ('nesto', 5, 10, DATE '2022-03-09', false, 20, DATE '2022-03-03', 6);
+VALUES ('nesto', 5, 10, DATE '2022-03-09', false, 20, DATE '2022-03-03', 1);
 --reports
 INSERT INTO report (
     client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)
