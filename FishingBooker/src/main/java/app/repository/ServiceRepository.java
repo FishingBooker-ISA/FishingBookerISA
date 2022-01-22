@@ -1,7 +1,6 @@
 package app.repository;
 
 import app.domain.BookingService;
-import app.domain.PromoAction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;

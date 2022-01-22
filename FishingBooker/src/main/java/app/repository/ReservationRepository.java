@@ -1,6 +1,5 @@
 package app.repository;
 
-import app.domain.BookingService;
 import app.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
