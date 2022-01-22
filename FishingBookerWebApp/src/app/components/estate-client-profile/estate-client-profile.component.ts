@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PromoAction } from 'src/app/model/action';
 import { AdditionalService } from 'src/app/model/additional-service';
 import { Estate } from 'src/app/model/estate';
 import { Image } from 'src/app/model/image';
@@ -11,6 +12,7 @@ import { ManagingEstateService } from 'src/app/services/managing-estate.service'
 import { ManagingImagesService } from 'src/app/services/managing-images.service';
 import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { SubscriptionService } from 'src/app/services/subscription.service';
 
 @Component({
   selector: 'app-estate-client-profile',
@@ -31,8 +33,9 @@ export class EstateClientProfileComponent implements OnInit {
   currentUser!: User
   isClient: boolean = false;
   isSubscribed: boolean = false;
+  actions = [] as PromoAction[]
 
-  constructor(public signupService: SignupOwnersService, private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
+  constructor(public subscriptionsService: SubscriptionService, public signupService: SignupOwnersService, private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
     public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
     public actionsService: PromoActionsService, private _snackBar: MatSnackBar) {
     this.route.params.subscribe((params) => {
@@ -48,11 +51,13 @@ export class EstateClientProfileComponent implements OnInit {
     this.managingEstateService.getEstateById(this.estateId).subscribe((data) => this.estate = data);
     this.managingEstateService.getAverageRating(this.estateId).subscribe((data) => this.averageMark = data);
     this.actionsService.getAllAdditionalServices(this.estateId).subscribe((data) => this.additional = data);
+    this.actionsService.getAllActionsForService(this.estateId).subscribe((data) => this.actions = data);
     this.imageFromDatabase();
     this.signupService.getUser().subscribe((data) => {
       this.currentUser = data;
       if (this.currentUser.role.name == "ROLE_CLIENT") {
         this.isClient = true;
+        this.subscriptionsService.checkIfSubscribed(this.currentUser.id, this.estateId).subscribe((res) => this.isSubscribed = res)
       }
     });
   }
@@ -98,7 +103,8 @@ export class EstateClientProfileComponent implements OnInit {
   }
 
   subscribe(){
-
+    this.subscriptionsService.subscribe(this.currentUser.id, this.estateId);
+    this.isSubscribed = true;
   }
   
 
