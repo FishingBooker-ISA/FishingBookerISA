@@ -61,7 +61,7 @@ public class AuthenticationController {
 
         User existUser = this.userService.findByEmail(userRequest.getEmail());
 
-        if (existUser != null) {
+        if (existUser != null || existUser.isDeleted()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
