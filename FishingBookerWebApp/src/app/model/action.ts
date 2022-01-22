@@ -12,3 +12,8 @@ export class PromoAction {
     bookingServiceId!: number
     additionalServices!: AdditionalService[]
 }
+
+export class ActionReservationDTO {
+    actionId!: number;
+    clientId!: number;
+}

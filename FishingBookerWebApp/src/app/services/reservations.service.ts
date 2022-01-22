@@ -33,6 +33,10 @@ export class ReservationsService {
     return this.http.put<boolean>(`${environment.baseUrl}` + 'api/reservations/cancel/'+id, null);
   }
 
+  makeActionReservation(id: number): Observable<boolean> {
+    return this.http.put<boolean>(`${environment.baseUrl}` + 'api/reservations/actionReservation/'+id,null)
+  }
+
   getAllReservationsForService(id: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${environment.baseUrl}` + 'api/reservations/getReservationHistory', {
       params: {

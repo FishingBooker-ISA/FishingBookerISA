@@ -11,6 +11,7 @@ import { User } from 'src/app/model/user';
 import { ManagingEstateService } from 'src/app/services/managing-estate.service';
 import { ManagingImagesService } from 'src/app/services/managing-images.service';
 import { PromoActionsService } from 'src/app/services/promo-actions.service';
+import { ReservationsService } from 'src/app/services/reservations.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 
@@ -35,7 +36,7 @@ export class EstateClientProfileComponent implements OnInit {
   isSubscribed: boolean = false;
   actions = [] as PromoAction[]
 
-  constructor(public subscriptionsService: SubscriptionService, public signupService: SignupOwnersService, private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
+  constructor(public reservationsService: ReservationsService, public subscriptionsService: SubscriptionService, public signupService: SignupOwnersService, private route: ActivatedRoute, public managingEstateService: ManagingEstateService, private router: Router,
     public dialog: MatDialog, public managingImages: ManagingImagesService, private sanitizer: DomSanitizer,
     public actionsService: PromoActionsService, private _snackBar: MatSnackBar) {
     this.route.params.subscribe((params) => {
@@ -102,14 +103,23 @@ export class EstateClientProfileComponent implements OnInit {
     });*/
   }
 
-  subscribe(){
+  subscribe() {
     this.subscriptionsService.subscribe(this.currentUser.id, this.estateId);
     this.isSubscribed = true;
   }
 
-  makeReservation(id:number){
-    
+  makeReservation(id: number) {
+    this.reservationsService.makeActionReservation(id).subscribe((res) => {
+      if (res){
+        this._snackBar.open("Successfully created!", 'Dissmiss', {
+          duration: 3000
+        });
+      }
+      else {
+        this._snackBar.open("Error occured! Overlapping reservations or unavailable action.", 'Dissmiss', {
+          duration: 3000
+        });
+      }
+    });
   }
-  
-
 }

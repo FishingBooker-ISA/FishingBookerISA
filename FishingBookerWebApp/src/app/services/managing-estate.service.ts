@@ -90,51 +90,6 @@ export class ManagingEstateService {
     return this.http.post(`${environment.baseUrl}` + 'api/estates/createEstate', estate, { observe: 'response', responseType: 'text' });
   }
 
-  getAllEstatesForClient(): DisplayEstateShortDTO[] {
-    let date = new Date();
-    let address: Address;
-    address = {
-      id: 0,
-      street: "Ulica Nekog Nekog",
-      number: 51,
-      city: "Novi Sad",
-      country: "Serbia",
-      postcode: 21203,
-      longitude: 19,
-      latitude: 45
-    }
-    return [{
-      id: 0,
-      name: "Name 1",
-      pricePerDay: 3550.00,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim ut labore et dolore magna aliqua.",
-      availableFrom: date,
-      availableTo: date,
-      address: address,
-      rating: 3.50,
-    },
-    {
-      id: 1,
-      name: "Name 2",
-      pricePerDay: 4700.00,
-      description: "Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      availableFrom: date,
-      availableTo: date,
-      address: address,
-      rating: 4.20,
-    },
-    {
-      id: 2,
-      name: "Name 3",
-      pricePerDay: 4300.00,
-      description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      availableFrom: date,
-      availableTo: date,
-      address: address,
-      rating: 4.37,
-    }];
-  }
-
   deleteEstate(id: number) {
     return this.http.delete(`${environment.baseUrl}` + 'api/estates/deleteEstate/' + id, { observe: 'response', responseType: 'text' });
   }

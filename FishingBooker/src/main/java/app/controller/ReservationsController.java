@@ -96,6 +96,13 @@ public class ReservationsController {
         return reservationsService.getReservationHistory(id);
     }
 
+    @PutMapping(value = "/actionReservation/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public boolean makeActionReservation(@PathVariable int id, Principal user) {
+        User currentUser = userService.findByEmail(user.getName());
+        return reservationsService.makeActionReservation(id, currentUser.getId());
+    }
+
     @PostMapping(value = "/createReport", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')"+ " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<String> submitReport(@Valid @RequestBody ReportDTO reportDTO, Principal user) {
