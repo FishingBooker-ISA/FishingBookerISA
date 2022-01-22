@@ -72,16 +72,10 @@ public class AuthenticationController {
 
     @PostMapping("/signupForClients")
     public ResponseEntity<User> addClient(@RequestBody ClientDTO newClient) {
-
-        User existUser = this.userService.findByEmail(newClient.getEmail());
-
-        if (existUser != null) {
+        boolean isSuccess = this.userService.addClient(newClient);
+        if (!isSuccess)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        User user = this.userService.addClient(newClient);
-
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/addAdmin", consumes = MediaType.APPLICATION_JSON_VALUE)
