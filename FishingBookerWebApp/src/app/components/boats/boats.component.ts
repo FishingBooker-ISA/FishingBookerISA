@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
 import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
 import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { ManagingShipsService } from 'src/app/services/managing-ships-service.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { ClientReservationDialogComponent } from '../client-reservation-dialog/client-reservation-dialog.component';
 
 @Component({
   selector: 'app-boats',
@@ -36,8 +38,7 @@ export class BoatsComponent implements OnInit {
   isClientAvailable = true;
   warningMessage = "";
 
-
-  constructor(private clientProfileService: ClientProfileService, private shipService : ManagingShipsService, public signupService: SignupOwnersService) { }
+  constructor(public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private shipService : ManagingShipsService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -57,6 +58,17 @@ export class BoatsComponent implements OnInit {
     
     this.shipService.getAllShips().subscribe((data) => { this.availableShips = data; this.ships = Array.from(data); this.backupShips = Array.from(data); })
 
+  }
+
+  openReservationDialog(name:string, sid:number, price:number){
+    const dialogRef = this.reservationDialog.open(ClientReservationDialogComponent , {
+      width: '450px',
+      data: { serviceName: name, serviceId: sid, servicePrice: price, startDate: this.startDate, endDate: this.endDate, clientId: this.currentUser.id},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   findAvailable() {

@@ -41,7 +41,7 @@ export class EstatesComponent implements OnInit {
 
 
 
-  constructor(public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private _estateService: ManagingEstateService, public signupService: SignupOwnersService) { }
+  constructor(public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private estateService: ManagingEstateService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -58,7 +58,7 @@ export class EstatesComponent implements OnInit {
       }
     });
     this.currentUser = this.signupService.currentUser;
-    this._estateService.getAllEstates().subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
+    this.estateService.getAllEstates().subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
 
   }
 
@@ -81,7 +81,7 @@ export class EstatesComponent implements OnInit {
     parameters.capacity = this.capacity;
 
 
-    this._estateService.findAvailableEstates(parameters).subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
+    this.estateService.findAvailableEstates(parameters).subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
   }
 
   clear() {
@@ -89,7 +89,7 @@ export class EstatesComponent implements OnInit {
     this.startDate = new Date();
     this.endDate = new Date();
     this.capacity = 2;
-    this._estateService.getAllEstates().subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
+    this.estateService.getAllEstates().subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
     this.searchText = "";
     this.searchCriteria = "name";
     this.ratingFrom = 0;
@@ -100,7 +100,7 @@ export class EstatesComponent implements OnInit {
   }
 
   getAllEstates() {
-    this._estateService.getAllEstates().subscribe((data) => {
+    this.estateService.getAllEstates().subscribe((data) => {
       this.estates = data;
       this.backupEstates = Array.from(data);
       this.estates = [];
@@ -188,7 +188,7 @@ export class EstatesComponent implements OnInit {
   }
 
   searchByName(input: string) {
-    this._estateService.getEstatesByName(input).subscribe((data) => {
+    this.estateService.getEstatesByName(input).subscribe((data) => {
       this.estates = data;
       this.backupEstates = Array.from(data);
       this.estates = [];
@@ -202,7 +202,7 @@ export class EstatesComponent implements OnInit {
     })
   }
   searchByCity(input: string) {
-    this._estateService.getEstatesByCity(input).subscribe((data) => {
+    this.estateService.getEstatesByCity(input).subscribe((data) => {
       this.estates = data;
       this.backupEstates = Array.from(data);
       this.estates = [];

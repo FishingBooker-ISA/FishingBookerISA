@@ -3,9 +3,7 @@ import {Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdditionalService, AdditionalServiceDTO } from 'src/app/model/additional-service';
-import { NewComplaintDTO } from 'src/app/model/complaint';
 import { ClientReservationDTO } from 'src/app/model/reservation';
-import { ComplaintsService } from 'src/app/services/complaints.service';
 import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { ReservationsService } from 'src/app/services/reservations.service';
 
@@ -65,6 +63,7 @@ export class ClientReservationDialogComponent implements OnInit {
         this._snackBar.open("Entered dates overlap with existing reservation!", 'Dissmiss', {
           duration: 3000
         });
+        this.dialogRef.close();
       });;
   }
 

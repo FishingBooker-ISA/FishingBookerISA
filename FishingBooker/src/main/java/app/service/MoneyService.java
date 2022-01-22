@@ -90,19 +90,20 @@ public class MoneyService {
         LoyaltyProgram ourLoyalty = this.loyaltyProgramService.getLoyaltyProgram();
 
         double reservationPrice;
-
-        if(points < ourLoyalty.getPointsForBronze())
+        if(points >= ourLoyalty.getPointsForGold())
         {
-            reservationPrice = price * (100 - ourLoyalty.getPercentForBronze()) / 100;
+            reservationPrice = price * (100 - ourLoyalty.getPercentForGold()) / 100;
         }
-        else if(points < ourLoyalty.getPointsForSilver())
+        else if(points >= ourLoyalty.getPointsForSilver())
         {
             reservationPrice = price * (100 - ourLoyalty.getPercentForSilver()) / 100;
         }
-        else if(points < ourLoyalty.getPointsForGold())
+        else if(points >= ourLoyalty.getPointsForBronze())
         {
-            reservationPrice = price * (100 - ourLoyalty.getPercentForGold()) / 100;
-        }else {
+            reservationPrice = price * (100 - ourLoyalty.getPercentForBronze()) / 100;
+        }
+        else
+        {
             reservationPrice = price;
         }
 

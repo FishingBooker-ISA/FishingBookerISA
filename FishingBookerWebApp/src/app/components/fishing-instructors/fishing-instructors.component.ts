@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
 import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
 import { ClientProfileService } from 'src/app/services/client-profile.service';
 import { ManagingAdventuresService } from 'src/app/services/managing-adventures.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
+import { ClientReservationDialogComponent } from '../client-reservation-dialog/client-reservation-dialog.component';
 
 @Component({
   selector: 'app-fishing-instructors',
@@ -36,7 +38,7 @@ export class FishingInstructorsComponent implements OnInit {
   isClientAvailable = true;
   warningMessage = "";
 
-  constructor(private clientProfileService: ClientProfileService, private adventureService : ManagingAdventuresService, public signupService: SignupOwnersService) { }
+  constructor(public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private adventureService : ManagingAdventuresService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -54,8 +56,19 @@ export class FishingInstructorsComponent implements OnInit {
     });
     this.currentUser = this.signupService.currentUser;
     this.adventureService.getAllAdventures().subscribe((data) => { this.availableAdventures = data; this.adventures = Array.from(data); this.backupAdventures = Array.from(data); })
-
   }
+
+  openReservationDialog(name:string, sid:number, price:number){
+    const dialogRef = this.reservationDialog.open(ClientReservationDialogComponent , {
+      width: '450px',
+      data: { serviceName: name, serviceId: sid, servicePrice: price, startDate: this.startDate, endDate: this.endDate, clientId: this.currentUser.id},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   findAvailable() {
     this.isAvailableFound = true;
     let parameters: ServiceAvailabilityParametersDTO = new ServiceAvailabilityParametersDTO();

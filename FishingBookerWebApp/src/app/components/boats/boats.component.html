@@ -146,7 +146,7 @@
                         </div>
                         <p style="margin-top: 1%;">{{ship.description}}</p>
                         <p style="margin-top: 1%;">{{ship.pricePerDay}} EUR / per day</p>
-                        <button mat-raised-button style="margin-top: 5%; margin-right: 3%;" *ngIf="isAvailableFound && !isClientBlocked && isClientAvailable">
+                        <button mat-raised-button style="margin-top: 5%; margin-right: 3%;" (click)="openReservationDialog(ship.name, ship.id, ship.pricePerDay)" style="margin-top: 5%; margin-right: 3%;" *ngIf="isAvailableFound && !isClientBlocked && isClientAvailable">
                             Make a reservation
                         </button>
                         <button mat-button style="margin-top: 5%; ">
