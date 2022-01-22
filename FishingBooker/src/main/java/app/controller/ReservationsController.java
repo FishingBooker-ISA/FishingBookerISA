@@ -69,7 +69,7 @@ public class ReservationsController {
             else
                 return new ResponseEntity<>("Entered dates overlap with existing reservation!", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("A reservation for the same time period has just been made!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PostMapping(value = "/createClientReservation", produces = MediaType.APPLICATION_JSON_VALUE)

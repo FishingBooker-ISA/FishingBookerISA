@@ -72,9 +72,10 @@ public class ManagingEstateService {
         return estate;
     }
 
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
-            propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public void updateExistingEstate(NewEstateDTO estateDTO, Estate existingEstate) {
+        if (!hasAnyReservations(existingEstate))
+            return;
         create(existingEstate, estateDTO, existingEstate.getOwner());
         estateRepository.save(existingEstate);
     }
@@ -120,8 +121,8 @@ public class ManagingEstateService {
     public boolean hasAnyReservations(Estate estate) {
         List<Reservation> reservations = new ArrayList<>();
 
-        for ( Reservation r : reservationRepository.findAll()){
-            if (r.getBookingService().getId().equals(estate.getId()) && (r.getReservationEnd().compareTo(new Date())) >= 0)
+        for ( Reservation r : reservationRepository.findLockedByBookingServiceId(estate.getId())){
+            if (r.getReservationEnd().compareTo(new Date()) >= 0)
                 reservations.add(r);
         }
 

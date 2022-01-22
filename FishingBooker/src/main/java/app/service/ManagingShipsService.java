@@ -35,8 +35,6 @@ public class ManagingShipsService {
     @Autowired
     ShipNavigationToolRepository toolRepository;
 
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
-            propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Ship createNewShip(ShipDTO dto, User user) {
         Address address = new Address(
                 dto.getStreet(), dto.getNumber(),
@@ -90,9 +88,7 @@ public class ManagingShipsService {
         return ship;
     }
 
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
-            propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void updateExistingEstate(ShipDTO dto, Ship existingShip) {
+    public void updateExistingShip(ShipDTO dto, Ship existingShip) {
         create(existingShip, dto, existingShip.getOwner());
         shipRepository.save(existingShip);
     }
@@ -139,9 +135,7 @@ public class ManagingShipsService {
         return reservations.isEmpty();
     }
 
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
-            propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public void deleteEstate(Ship ship) {
+    public void deleteShip(Ship ship) {
         shipRepository.deleteById(ship.getId());
     }
 
