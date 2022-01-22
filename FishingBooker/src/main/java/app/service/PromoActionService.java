@@ -5,6 +5,8 @@ import app.dto.PromoActionDTO;
 import app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +35,7 @@ public class PromoActionService {
         return promoActionRepository.getAllByBookingServiceId(serviceId);
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public PromoAction createNewPromoAction(PromoActionDTO actionDTO) {
         if (checkIfDatesOverlap(actionDTO.getStartDate(), actionDTO.getEndDate(), actionDTO.getBookingServiceId())) {
             return null;
@@ -111,7 +114,7 @@ public class PromoActionService {
     }
 
     public boolean checkIfDatesOverlap(Date start, Date end, int serviceId) {
-        List<Reservation> existingReservations = reservationRepository.getByBookingServiceId(serviceId);
+        List<Reservation> existingReservations = reservationRepository.findLockedByBookingServiceId(serviceId);
         List<PromoAction> existingActions = promoActionRepository.getAllByBookingServiceId(serviceId);
         List<UnavailablePeriod> unavailablePeriods = unavailablePeriodRepository.findAllByServiceId(serviceId);
 
