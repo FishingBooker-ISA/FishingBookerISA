@@ -6,7 +6,9 @@ import app.dto.NewComplaintDTO;
 import app.repository.ComplaintRepository;
 import app.service.ComplaintsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,11 @@ public class ComplaintsController {
 
     @PostMapping(value = "/reviewComplaint", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public void reviewComplaint(@RequestBody ComplaintReviewDTO review) {
-        this.complaintsService.reviewComplaint(review);
+    public ResponseEntity<String> reviewComplaint(@RequestBody ComplaintReviewDTO review) {
+        if(!this.complaintsService.reviewComplaint(review))
+            return new ResponseEntity<>("Review submitted", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("This complaint has already been reviewed.",HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/new")

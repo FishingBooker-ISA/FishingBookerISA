@@ -82,10 +82,10 @@ INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_i
 VALUES ('Not impressed.', 3, true, true, 6, 3);
 
 ---complaints
-INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
-    VALUES (DATE '2021-12-17', true, false, 'He was never on time.', 2, 5);
-INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
-    VALUES (DATE '2021-12-17', true, false, 'He was never on time.', 3, 5);
+INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id, version)
+    VALUES (DATE '2021-12-17', true, false, 'He was never on time.', 2, 5, 0);
+INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id, version)
+    VALUES (DATE '2021-12-17', true, false, 'He was never on time.', 3, 5, 0);
 
 --loyality program
 INSERT INTO loyalty_program ( percent_for_bronze, percent_for_gold, percent_for_silver, points_for_bronze, points_for_gold, points_for_silver, points_for_user, points_for_owner, percentage_for_app)

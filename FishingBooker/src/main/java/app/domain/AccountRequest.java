@@ -17,6 +17,9 @@ public class AccountRequest {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+    @Version
+   // @Column(nullable = false)
+    private Integer version;
 
     public AccountRequest() {
     }
@@ -77,5 +80,13 @@ public class AccountRequest {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

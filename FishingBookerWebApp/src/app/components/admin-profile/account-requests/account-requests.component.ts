@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountRequest } from 'src/app/model/account-request';
 import { RequestReview } from 'src/app/model/request-review';
 import { AdminRequestsService } from 'src/app/services/admin-requests.service';
@@ -14,7 +15,7 @@ export class AccountRequestsComponent implements OnInit {
   selectedRequest!: AccountRequest;
   denialReason!: string;
 
-  constructor(public requestsService: AdminRequestsService) { }
+  constructor(public requestsService: AdminRequestsService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.requestsService.getAllAccountRequests().subscribe( res => this.requests = res);
@@ -32,7 +33,22 @@ export class AccountRequestsComponent implements OnInit {
       isDenied: false,
       denialReason: ""
     }
-    this.requestsService.sendAccountReview(review);
+    this.requestsService.sendAccountReview(review).subscribe(
+      (data) => {
+        this.requestsService.getAllAccountRequests().subscribe( res => this.requests = res);
+        this._snackBar.open('Review submitted', 'Dissmiss', {
+          duration: 3000
+        });
+
+
+        setTimeout(() => {
+        }, 1000);
+      },
+      (error) => {
+        this._snackBar.open('This complaint has already been reviewed', 'Dissmiss', {
+          duration: 3000
+        });
+      });;;
     window.location.reload();
   }
 
@@ -43,7 +59,21 @@ export class AccountRequestsComponent implements OnInit {
       isDenied: true,
       denialReason: this.denialReason
     }
-    this.requestsService.sendAccountReview(review);
-    window.location.reload();
+    this.requestsService.sendAccountReview(review).subscribe(
+      (data) => {
+        this.requestsService.getAllAccountRequests().subscribe( res => this.requests = res);
+        this._snackBar.open('Review submitted', 'Dissmiss', {
+          duration: 3000
+        });
+
+
+        setTimeout(() => {
+        }, 1000);
+      },
+      (error) => {
+        this._snackBar.open('This request has already been reviewed', 'Dissmiss', {
+          duration: 3000
+        });
+      });;;
   }
 }
