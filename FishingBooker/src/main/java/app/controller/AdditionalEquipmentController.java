@@ -48,7 +48,6 @@ public class AdditionalEquipmentController {
     @GetMapping(value = "/additional/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize( "hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<List<AdditionalService>> get(@PathVariable int id) {
-        BookingService existing = serviceRepository.getById(id);
         return new ResponseEntity<>(additionalServiceRepository.getAllByBookingServiceId(id), HttpStatus.OK);
     }
 

@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.domain.Adventure;
-import app.domain.Ship;
 import app.domain.User;
 import app.dto.NewAdventureDTO;
 import app.dto.ServiceAvailabilitySearchParametersDTO;
@@ -173,7 +172,7 @@ public class AdventuresController {
 
     @PostMapping(value = "/available", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters) throws ParseException {
+    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters) {
         List<Adventure> foundAdventures = this.managingAdventuresService.findAvailable(parameters);
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Adventure ship : foundAdventures) {

@@ -44,8 +44,6 @@ public class ManagingReservationsService {
 
     public boolean cancelReservation(int id){
         Reservation r = reservationRepository.getById(id);
-        if (r == null)
-            return false;
         Date now = new Date();
         long diff = r.getReservationStart().getTime() - now.getTime();
         TimeUnit time = TimeUnit.DAYS;

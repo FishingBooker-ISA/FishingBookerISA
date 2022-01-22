@@ -1,6 +1,5 @@
 package app.controller;
 
-import app.domain.Estate;
 import app.domain.Ship;
 import app.domain.ShipNavigationTool;
 import app.domain.User;
@@ -228,7 +227,7 @@ public class ShipsController {
 
     @PostMapping(value = "/available", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters) throws ParseException {
+    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters){
         List<Ship> foundShips = this.shipsService.findAvailable(parameters);
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Ship ship : foundShips) {

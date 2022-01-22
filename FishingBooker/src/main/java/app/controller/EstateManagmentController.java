@@ -185,7 +185,7 @@ public class EstateManagmentController {
 
     @PostMapping(value = "/available", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters) throws ParseException {
+    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters) {
         List<Estate> foundEstates = this.managingEstateService.findAvailable(parameters);
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Estate estate : foundEstates) {

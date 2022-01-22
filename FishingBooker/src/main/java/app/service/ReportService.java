@@ -1,6 +1,5 @@
 package app.service;
 
-import app.domain.Client;
 import app.domain.Report;
 import app.domain.Reservation;
 import app.dto.ReportDTO;
