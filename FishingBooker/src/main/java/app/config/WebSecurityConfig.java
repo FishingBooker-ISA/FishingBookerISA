@@ -66,7 +66,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/adventures/search/**").permitAll()		// /adventures/search/**
                 .antMatchers("/api/adventures/all").permitAll()		// /adventures/all
                 .antMatchers("/api/ships/search/**").permitAll()		// /ships/search/**
-                .antMatchers("/api/ships/all").permitAll()		// /ships/all getAvgRating
+                .antMatchers("/api/ships/all").permitAll()		// /ships/all getNavigationTools
+                .antMatchers("/api/ships/getNavigationTools").permitAll()		// /ships/getNavigationTools
+                .antMatchers("/api/ships/getShipById").permitAll()		// /ships/getShipById
                 .antMatchers("/api/promoActions/getAllActionsForService").permitAll()		// /promoActions/getAllActionsForService
                 .antMatchers("/api/reservations/getReservationHistory").permitAll()		// /reservations/getReservationHistory
                 .antMatchers("/api/unavailable/getAllUnavailablePeriods").permitAll()		// /api/unavailable/getAllUnavailablePeriods

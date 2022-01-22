@@ -92,6 +92,7 @@ import { ClientReservationDialogComponent } from './components/client-reservatio
 import { BussinessReportComponent } from './components/bussiness-report/bussiness-report.component';
 import { ChartsModule } from 'ng2-charts';
 import { EstateClientProfileComponent } from './components/estate-client-profile/estate-client-profile.component';
+import { BoatClientProfileComponent } from './components/boat-client-profile/boat-client-profile.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -167,7 +168,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ShowLocationOnMapComponent,
     ClientReservationDialogComponent,
     BussinessReportComponent,
-    EstateClientProfileComponent
+    EstateClientProfileComponent,
+    BoatClientProfileComponent
   ],
   imports: [
     BrowserModule,

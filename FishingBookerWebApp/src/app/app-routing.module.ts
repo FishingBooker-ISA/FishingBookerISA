@@ -13,6 +13,7 @@ import { NewAdminFormComponent } from './components/admin-profile/new-admin-form
 import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
 import { ServicesTableComponent } from './components/admin-profile/services-table/services-table.component';
 import { UsersTableComponent } from './components/admin-profile/users-table/users-table.component';
+import { BoatClientProfileComponent } from './components/boat-client-profile/boat-client-profile.component';
 import { BoatsComponent } from './components/boats/boats.component';
 import { BussinessReportComponent } from './components/bussiness-report/bussiness-report.component';
 import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
@@ -61,6 +62,7 @@ const routes: Routes = [
   { path: 'estateOwner/home', component: EstateOwnerHomepageComponent, canActivate: [EstateOwnerAuthGuard] },
   { path: 'estate/:id', component: EstateProfileComponent, canActivate: [EstateOwnerAuthGuard] },
   { path: 'client/estate/:id', component: EstateClientProfileComponent },
+  { path: 'client/boat/:id', component: BoatClientProfileComponent },
   { path: 'estates', component: EstatesComponent },
   { path: 'boats', component: BoatsComponent },
   { path: 'fishing-instructors', component: FishingInstructorsComponent },
