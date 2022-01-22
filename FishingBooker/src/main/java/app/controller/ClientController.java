@@ -53,4 +53,6 @@ public class ClientController {
     public int getPenaltiesNumber(@PathVariable int id) {
         return clientService.getPenaltiesNumber(id);
     }
+
+
 }

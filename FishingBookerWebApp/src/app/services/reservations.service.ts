@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ReservationDTO } from '../model/reservation';
+import { ClientReservationDTO, ReservationDTO } from '../model/reservation';
 import { User } from '../model/user';
 import { Reservation } from '../model/reservation';
 import { UnavailablePeriod, UnavailablePeriodDTO } from '../model/unavailable-period';
@@ -11,6 +11,7 @@ import { UnavailablePeriod, UnavailablePeriodDTO } from '../model/unavailable-pe
   providedIn: 'root'
 })
 export class ReservationsService {
+  
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +25,12 @@ export class ReservationsService {
 
   public createReservation(dto: ReservationDTO) {
     return this.http.post(`${environment.baseUrl}` + 'api/reservations/createReservation', dto, { observe: 'response', responseType: 'text' });
+  }
+  createClientReservation(dto: ClientReservationDTO) {
+    return this.http.post(`${environment.baseUrl}` + 'api/reservations/createClientReservation', dto, { observe: 'response', responseType: 'text' });
+  }
+  cancelReservation(id:number) : Observable<boolean>{
+    return this.http.put<boolean>(`${environment.baseUrl}` + 'api/reservations/cancel/'+id, null);
   }
 
   getAllReservationsForService(id: number): Observable<Reservation[]> {

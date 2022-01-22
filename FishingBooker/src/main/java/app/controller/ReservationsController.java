@@ -3,6 +3,7 @@ package app.controller;
 import app.domain.BookingService;
 import app.domain.Reservation;
 import app.domain.User;
+import app.dto.ClientReservationDTO;
 import app.dto.ReportDTO;
 import app.dto.ReservationDTO;
 import app.dto.ReservationDisplayDTO;
@@ -70,6 +71,24 @@ public class ReservationsController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @PostMapping(value = "/createClientReservation", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')" )
+    public ResponseEntity<String> createClientReservation(@Valid @RequestBody ClientReservationDTO reservationDTO, Principal user) {
+        User client = userRepository.getById(reservationDTO.getClientId());
+        if (!client.getRole().getName().equals("ROLE_CLIENT"))
+            return new ResponseEntity<>("User must be a client!", HttpStatus.BAD_REQUEST);
+
+        if (reservationsService.createReservationForClient(reservationDTO) != null)
+            return new ResponseEntity<>("New reservation created!", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("Entered dates overlap with existing reservation!", HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping(value = "/cancel/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public boolean cancelReservation(@PathVariable int id) {
+        return reservationsService.cancelReservation(id);
     }
 
     @GetMapping(value = "/getReservationHistory", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -3,6 +3,7 @@ package app.controller;
 import app.domain.Adventure;
 import app.domain.User;
 import app.dto.NewAdventureDTO;
+import app.dto.ServiceAvailabilitySearchParametersDTO;
 import app.dto.ServiceWithRatingDTO;
 import app.repository.AdventureRepository;
 import app.service.ManagingAdventuresService;
@@ -16,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,6 +165,18 @@ public class AdventuresController {
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Adventure adventure : foundAdventures) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(adventure, ratingService.getAvgRatingForBookingService(adventure.getId()), ratingService.getNumberOfRatingsForBookingService(adventure.getId()));
+            result.add(service);
+        }
+        return result;
+    }
+
+    @PostMapping(value = "/available", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters) {
+        List<Adventure> foundAdventures = this.managingAdventuresService.findAvailable(parameters);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Adventure ship : foundAdventures) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(ship, ratingService.getAvgRatingForBookingService(ship.getId()), ratingService.getNumberOfRatingsForBookingService(ship.getId()));
             result.add(service);
         }
         return result;

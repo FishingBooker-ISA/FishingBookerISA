@@ -16,6 +16,8 @@ public class MoneyService {
     private OwnerMoneyRepository ownerMoneyRepository;
     private LoyaltyProgramService loyaltyProgramService;
     private UserRepository userRepository;
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     public MoneyService(AppMoneyRepository appMoneyRepository, OwnerMoneyRepository ownerMoneyRepository,
@@ -77,6 +79,31 @@ public class MoneyService {
         {
             reservationPrice = price * (100 - ourLoyalty.getPercentForGold()) / 100;
         }else {
+            reservationPrice = price;
+        }
+
+        return reservationPrice;
+    }
+
+    public double applyClientDiscount(int clientId, double price){
+        double points = clientService.getPointsNumber(clientId);
+        LoyaltyProgram ourLoyalty = this.loyaltyProgramService.getLoyaltyProgram();
+
+        double reservationPrice;
+        if(points >= ourLoyalty.getPointsForGold())
+        {
+            reservationPrice = price * (100 - ourLoyalty.getPercentForGold()) / 100;
+        }
+        else if(points >= ourLoyalty.getPointsForSilver())
+        {
+            reservationPrice = price * (100 - ourLoyalty.getPercentForSilver()) / 100;
+        }
+        else if(points >= ourLoyalty.getPointsForBronze())
+        {
+            reservationPrice = price * (100 - ourLoyalty.getPercentForBronze()) / 100;
+        }
+        else
+        {
             reservationPrice = price;
         }
 

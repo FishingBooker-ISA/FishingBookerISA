@@ -4,16 +4,22 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DisplayServiceShortDTO } from '../model/display-service-short';
 import { Address, createEstateDTO, DisplayEstateShortDTO, Estate } from '../model/estate';
+import { ServiceAvailabilityParametersDTO } from '../model/service-availability-parametersDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagingEstateService {
+  
 
   constructor(private http: HttpClient) { }
 
   getAllEstatesForOwner(): Observable<Estate[]> {
     return this.http.get<Estate[]>(`${environment.baseUrl}` + 'api/estates/getEstatesForOwner')
+  }
+  
+  findAvailableEstates(parameters: ServiceAvailabilityParametersDTO): Observable<DisplayServiceShortDTO[]> {
+    return this.http.post<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/estates/available', parameters);
   }
 
   getAllEstates(): Observable<DisplayServiceShortDTO[]> {

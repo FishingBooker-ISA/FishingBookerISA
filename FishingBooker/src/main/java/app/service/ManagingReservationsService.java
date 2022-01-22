@@ -1,6 +1,7 @@
 package app.service;
 
 import app.domain.*;
+import app.dto.ClientReservationDTO;
 import app.dto.ReservationDTO;
 import app.dto.UnavailablePeriodDTO;
 import app.repository.*;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -21,6 +23,8 @@ public class ManagingReservationsService {
     ReservationRepository reservationRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    ClientService clientService;
     @Autowired
     ServiceRepository serviceRepository;
     @Autowired
@@ -37,6 +41,20 @@ public class ManagingReservationsService {
     UnavailablePeriodRepository unavailablePeriodRepository;
     @Autowired
     MoneyService moneyService;
+
+    public boolean cancelReservation(int id){
+        Reservation r = reservationRepository.getById(id);
+        Date now = new Date();
+        long diff = r.getReservationStart().getTime() - now.getTime();
+        TimeUnit time = TimeUnit.DAYS;
+        long days = time.convert(diff, TimeUnit.MILLISECONDS);
+        if(days<3){
+            return false;
+        }
+        r.setCanceled(true);
+        reservationRepository.save(r);
+        return true;
+    }
 
     public List<Reservation> getReservationHistory(int serviceId) {
         BookingService bookingService = serviceRepository.getById(serviceId);
@@ -85,12 +103,44 @@ public class ManagingReservationsService {
         }
 
         Reservation newReservation = getReservation(reservationDTO);
-        newReservation.setPrice(this.moneyService.applyDiscount(client.getId(), newReservation.getPrice()));
+        newReservation.setPrice(this.moneyService.applyClientDiscount(client.getId(), newReservation.getPrice()));
         reservationRepository.save(newReservation);
         sendConfirmationMail(newReservation);
         this.moneyService.manageMoneyForNewReservation(newReservation);
         this.moneyService.managePointsForNewReservation(newReservation);
         return newReservation;
+    }
+
+    public Reservation createReservationForClient(ClientReservationDTO reservationDTO) {
+        User client = userRepository.getById(reservationDTO.getClientId());
+        BookingService bookingService = serviceRepository.getById(reservationDTO.getServiceId());
+        if (!checkIfServiceIsAvailable(reservationDTO.getStartDate(), reservationDTO.getEndDate(), reservationDTO.getServiceId()))
+            return null;
+        if (!checkIfClientCanMakeReservation(reservationDTO.getStartDate(), reservationDTO.getEndDate(), reservationDTO.getServiceId(), reservationDTO.getClientId()))
+            return null;
+
+        Reservation newReservation = new Reservation(reservationDTO);
+        newReservation.setUser(client);
+        newReservation.setBookingService(bookingService);
+        newReservation.setPrice(this.moneyService.applyClientDiscount(reservationDTO.getClientId(), newReservation.getPrice()));
+        this.moneyService.manageMoneyForNewReservation(newReservation);
+        this.moneyService.managePointsForNewReservation(newReservation);
+
+        reservationRepository.save(newReservation);
+        sendConfirmationMail(newReservation);
+        return newReservation;
+    }
+
+    private boolean checkIfClientCanMakeReservation(Date startDate, Date endDate, int serviceId, int clientId) {
+        int p = clientService.getPenaltiesNumber(clientId);
+        if (p >= 3)
+            return false;
+        List<Reservation> reservationsOfInterest = new ArrayList<>();
+        for (Reservation res : reservationRepository.getByUserId(clientId)) {
+            if(!res.isCanceled() || (res.isCanceled() && serviceId == res.getBookingService().getId()))
+                reservationsOfInterest.add(res);
+        }
+        return !checkIfReservationsOverlap(startDate, endDate, reservationsOfInterest);
     }
 
     private Reservation getReservation(ReservationDTO reservationDTO) {
@@ -189,6 +239,10 @@ public class ManagingReservationsService {
         return true;
     }
 
+    public boolean checkIfServiceIsAvailable(Date start, Date end, int serviceId) {
+        return (checkIfPeriodIsAvailable(start, end, serviceId) && checkIfActionsOverlap(start, end, serviceId));
+    }
+
     public User getClientForReservation(int serviceId) {
         List<Reservation> allReservations = this.reservationRepository.getByBookingServiceId(serviceId);
         for (Reservation reservation: allReservations
@@ -214,6 +268,8 @@ public class ManagingReservationsService {
         }
         return false;
     }
+
+
 }
 
 

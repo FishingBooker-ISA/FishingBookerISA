@@ -4,6 +4,7 @@ import app.domain.Ship;
 import app.domain.ShipNavigationTool;
 import app.domain.User;
 import app.dto.NavigationToolDTO;
+import app.dto.ServiceAvailabilitySearchParametersDTO;
 import app.dto.ServiceWithRatingDTO;
 import app.dto.ShipDTO;
 import app.repository.ShipNavigationToolRepository;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,6 +217,18 @@ public class ShipsController {
     @GetMapping(value = "/search/city/{input}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ServiceWithRatingDTO> searchAdventureByCity(@PathVariable String input) {
         List<Ship> foundShips = this.shipsService.searchByCity(input);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Ship ship : foundShips) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(ship, ratingService.getAvgRatingForBookingService(ship.getId()), ratingService.getNumberOfRatingsForBookingService(ship.getId()));
+            result.add(service);
+        }
+        return result;
+    }
+
+    @PostMapping(value = "/available", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters){
+        List<Ship> foundShips = this.shipsService.findAvailable(parameters);
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Ship ship : foundShips) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(ship, ratingService.getAvgRatingForBookingService(ship.getId()), ratingService.getNumberOfRatingsForBookingService(ship.getId()));

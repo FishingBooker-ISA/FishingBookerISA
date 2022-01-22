@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Adventure, createAdventureDTO } from '../model/adventure';
 import { DisplayServiceShortDTO } from '../model/display-service-short';
+import { ServiceAvailabilityParametersDTO } from '../model/service-availability-parametersDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class ManagingAdventuresService {
 
   getAllAdventuresForInstructor(): Observable<Adventure[]> {
     return this.http.get<Adventure[]>(`${environment.baseUrl}` + 'api/adventures/getAdventuresForInstructor')
+  }
+
+  findAvailableAdventures(parameters: ServiceAvailabilityParametersDTO): Observable<DisplayServiceShortDTO[]> {
+    return this.http.post<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/available', parameters);
   }
 
   getAdventureByName(name: string): Observable<Adventure[]> {
@@ -75,15 +80,15 @@ export class ManagingAdventuresService {
   }
 
   
-  getAllEstates(): Observable<DisplayServiceShortDTO[]> {
+  getAllAdventures(): Observable<DisplayServiceShortDTO[]> {
     return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/all')
   }
 
-  getEstatesByName(input: string): Observable<DisplayServiceShortDTO[]> {
+  getAdventuresByName(input: string): Observable<DisplayServiceShortDTO[]> {
     return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/search/name/'+input);
   }
 
-  getEstatesByCity(input:string): Observable<DisplayServiceShortDTO[]> {
+  getAdventuresByCity(input:string): Observable<DisplayServiceShortDTO[]> {
     return this.http.get<DisplayServiceShortDTO[]>(`${environment.baseUrl}` + 'api/adventures/search/city/'+input);
   }
   

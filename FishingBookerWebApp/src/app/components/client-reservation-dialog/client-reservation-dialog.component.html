@@ -1,0 +1,19 @@
+<div>
+    <h1 mat-dialog-title>{{data.serviceName}}</h1>
+    <div mat-dialog-content>
+        <p>Please select additional services:</p>
+        <span class="example-list-section">
+            <div class="checkbox-column" *ngFor="let item of additional">
+                <mat-checkbox (click)="addToList(item)">
+                    {{item.name}} <span ms-2></span> - {{item.price}}EUR
+                </mat-checkbox><br>
+            </div>
+        </span>
+    </div>
+    <!--button mat-button>Calculate</button>
+    <h3>Price: {{price}}</h3-->
+    <div mat-dialog-actions>
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-button (click)="onSend()">Send</button>
+    </div>
+</div>

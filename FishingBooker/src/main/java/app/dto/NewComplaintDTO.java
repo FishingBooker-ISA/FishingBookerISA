@@ -16,7 +16,7 @@ public class NewComplaintDTO {
     }
 
     public void setComplaintOnOwner(boolean complaintOnOwner) {
-        complaintOnOwner = complaintOnOwner;
+        this.complaintOnOwner = complaintOnOwner;
     }
 
     public NewComplaintDTO(String reason, boolean complaintOnOwner, int clientId, int serviceId) {

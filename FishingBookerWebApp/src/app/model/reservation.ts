@@ -32,3 +32,14 @@ export class ReservationDTO{
     userId!: number
     serviceId!: number
 }
+
+export class ClientReservationDTO{
+    startDate!: Date
+    endDate!: Date
+    additionalEquipment!: string
+    price!: number
+    clientId!: number
+    serviceId!: number
+}
+
+

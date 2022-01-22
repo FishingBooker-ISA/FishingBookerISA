@@ -1,5 +1,7 @@
 package app.domain;
 
+import app.dto.ClientReservationDTO;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -38,6 +40,16 @@ public class Reservation {
     public Reservation(Integer id, Date reservedDate) {
         this.id = id;
         this.reservedDate = reservedDate;
+    }
+
+    public Reservation(ClientReservationDTO dto) {
+        this.reservedDate = new Date();
+        this.reservationStart = dto.getStartDate();
+        this.reservationEnd = dto.getEndDate();
+        this.isPromo = false;
+        this.isCanceled = false;
+        this.additionalEquipment = dto.getAdditionalEquipment();
+        this.price = dto.getPrice();
     }
 
     public Date getReservationStart() {

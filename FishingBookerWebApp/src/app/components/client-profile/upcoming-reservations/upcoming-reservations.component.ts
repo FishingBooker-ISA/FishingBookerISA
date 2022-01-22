@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReservationDisplayDTO } from 'src/app/model/reservation-display';
 import { User } from 'src/app/model/user';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { ReservationsService } from 'src/app/services/reservations.service';
 import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 
 @Component({
@@ -20,13 +22,28 @@ export class UpcomingReservationsComponent implements OnInit {
   
   currentUser!: User
 
-  constructor(private reservationService : ReservationService, public signupService: SignupOwnersService) { }
+  constructor(private reservationsService : ReservationsService, private _snackBar: MatSnackBar, private reservationService : ReservationService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
       this.currentUser = data;
       this.getPastReservations();
     });
+  }
+
+  cancelReservation(id: number){
+    this.reservationsService.cancelReservation(id).subscribe((res) =>{
+      if(res) {
+        this._snackBar.open("Successfully canceled!", 'Dissmiss', {
+          duration: 3000
+        });
+      }
+      else {
+        this._snackBar.open("Cannot cancel reservation that is less than three days away.", 'Dissmiss', {
+          duration: 3000
+        });
+      }
+    })
   }
 
   getPastReservations() {

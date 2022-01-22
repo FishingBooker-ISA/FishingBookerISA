@@ -4,6 +4,7 @@ import app.domain.BookingService;
 import app.domain.Estate;
 import app.domain.User;
 import app.dto.NewEstateDTO;
+import app.dto.ServiceAvailabilitySearchParametersDTO;
 import app.dto.ServiceWithRatingDTO;
 import app.repository.EstateRepository;
 import app.repository.ServiceRepository;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,6 +175,18 @@ public class EstateManagmentController {
     //@PreAuthorize("hasAuthority('ROLE_CLIENT')")
     public List<ServiceWithRatingDTO> searchEstatesByCity(@PathVariable String input) {
         List<Estate> foundEstates = this.managingEstateService.searchByCity(input);
+        List<ServiceWithRatingDTO> result = new ArrayList<>();
+        for (Estate estate : foundEstates) {
+            ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
+            result.add(service);
+        }
+        return result;
+    }
+
+    @PostMapping(value = "/available", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public List<ServiceWithRatingDTO> findAvailableEstates(@RequestBody ServiceAvailabilitySearchParametersDTO parameters) {
+        List<Estate> foundEstates = this.managingEstateService.findAvailable(parameters);
         List<ServiceWithRatingDTO> result = new ArrayList<>();
         for (Estate estate : foundEstates) {
             ServiceWithRatingDTO service = new ServiceWithRatingDTO(estate, ratingService.getAvgRatingForBookingService(estate.getId()), ratingService.getNumberOfRatingsForBookingService(estate.getId()));
