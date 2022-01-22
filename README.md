@@ -1,9 +1,10 @@
 # FishingBooker
 
-**Authors:**  
-**Anđela Đurić** RA28/2018
-**Petra Jović** RA29/2018
-**Ana Grahovac** RA17/2018
+**Authors:**
+
+-   **Anđela Đurić** RA28/2018
+-   **Petra Jović** RA29/2018
+-   **Ana Grahovac** RA17/2018
 
 ## Starting the application
 
