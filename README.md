@@ -17,8 +17,8 @@ To start the Angular application the backend needs to be running. Then run the f
 
 ## Emails and passwords for users
 
-`Client: ` andjela.ra28@gmail.com, pass: 123
-`Estate owner: `jovic.petra99@gmail.com, pass: 123
-`Ship owner: `grahovac.ana99@gmail.com, pass: 123
-`Instructor: `pexandjana@gmail.com, pass: 123
-`Admin: `admin@gmail.com, pass: 123
+-   `Client: ` andjela.ra28@gmail.com, pass: 123
+-   `Estate owner: ` jovic.petra99@gmail.com, pass: 123
+-   `Ship owner: ` grahovac.ana99@gmail.com, pass: 123
+-   `Instructor: ` pexandjana@gmail.com, pass: 123
+-   `Admin: ` admin@gmail.com, pass: 123
