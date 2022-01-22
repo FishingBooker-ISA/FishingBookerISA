@@ -124,4 +124,6 @@ public class PromoAction {
     public void setBookingService(BookingService bookingService) {
         this.bookingService = bookingService;
     }
+
+
 }

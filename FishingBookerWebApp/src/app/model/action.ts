@@ -1,6 +1,7 @@
 import { AdditionalService } from "./additional-service"
 
 export class PromoAction {
+    id!: number;
     pricePerDay!: number
     durationInDays!: number
     capacity!: number

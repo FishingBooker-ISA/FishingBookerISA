@@ -106,6 +106,10 @@ export class EstateClientProfileComponent implements OnInit {
     this.subscriptionsService.subscribe(this.currentUser.id, this.estateId);
     this.isSubscribed = true;
   }
+
+  makeReservation(id:number){
+    
+  }
   
 
 }

@@ -56,6 +56,7 @@ export class PromoActionsComponent implements OnInit {
     var text = "nesto"
 
     let action: PromoAction = {
+      id: -1,
       pricePerDay: this.newAction.pricePerDay,
       durationInDays: Math.trunc(days),
       capacity: this.newAction.capacity,

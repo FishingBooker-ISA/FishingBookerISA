@@ -132,8 +132,39 @@
     </div>
     <!-- END OF GENERAL INFO -->
 
-    <app-promo-actions class="bg-light" *ngIf="promoActions" [id]="estate.id" [promoActions]="promoActions">
-    </app-promo-actions>
+
+    <!-- ACTIONS -->
+    <section class="cards my-5" *ngIf="!promoActions && !calendarView && !createReservation">
+        <div class="container" *ngIf="actions.length > 0">
+
+            <div class="section-title mb-3 ms-3">
+                <h2>Actions</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-5 d-flex align-items-stretch mt-4" *ngFor="let action of actions">
+                    <div class="box" style="width: 100%;" *ngIf="!action.isTaken">
+                        <div>
+                            <h4 style="margin-bottom: 1%;"><a>{{estate.name}}</a></h4>
+                            <h6>{{action.startDate | date : 'dd.MM.yyyy.'}} - {{action.endDate | date :'dd.MM.yyyy.'}}
+                            </h6>
+                            <h6>Additional services: {{action.additional}}</h6>
+                            <h6 style="margin-bottom: 4%; margin-top: 4%;">People: {{action.capacity}}</h6>
+                           <h6 style="margin-top: 8%;">Price: {{action.pricePerDay}} EUR / per day</h6>
+                        </div>
+                        <div style="margin-left: auto; margin-right: 2%;" *ngIf="!action.isTaken && isClient">
+                            <button mat-raised-button style="margin-top: 5%; " (click)= "makeReservation(action.id)">
+                                Make Reservation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br>
+    </section>
+
+    <!-- END ACTIONS -->
+
     <app-reservation-calendar *ngIf="calendarView" [id]="estate.id" [calendarView]="calendarView">
     </app-reservation-calendar>
 </div>
