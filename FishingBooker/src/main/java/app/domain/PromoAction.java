@@ -77,11 +77,11 @@ public class PromoAction {
         this.pricePerDay = pricePerDay;
     }
 
-    public boolean isTaken() {
+    public boolean getIsTaken() {
         return isTaken;
     }
 
-    public void setTaken(boolean taken) {
+    public void setIsTaken(boolean taken) {
         isTaken = taken;
     }
 

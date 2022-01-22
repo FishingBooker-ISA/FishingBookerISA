@@ -113,6 +113,12 @@ VALUES ('nesto', 5, 10, DATE '2022-02-20', false, 20, DATE '2022-02-15', 11);
 INSERT INTO promo_action(
     additional, capacity, duration_in_days, end_date, is_taken, price_per_day, start_date, service_id)
 VALUES ('nesto', 5, 10, DATE '2022-03-09', false, 20, DATE '2022-03-03', 1);
+INSERT INTO promo_action(
+    additional, capacity, duration_in_days, end_date, is_taken, price_per_day, start_date, service_id)
+VALUES ('nesto', 5, 10, DATE '2022-07-19', false, 20, DATE '2022-07-16', 6);
+INSERT INTO promo_action(
+    additional, capacity, duration_in_days, end_date, is_taken, price_per_day, start_date, service_id)
+VALUES ('nesto', 5, 10, DATE '2022-03-09', true, 20, DATE '2022-03-03', 6);
 --reports
 INSERT INTO report (
     client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)
