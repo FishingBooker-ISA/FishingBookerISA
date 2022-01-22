@@ -10,6 +10,8 @@ import app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,14 +40,21 @@ public class AccountRequestService {
         }
         return notReviewed;
     }
-
-    public void reviewRequest(AccountRequestReviewDTO review){
+    @Transactional(readOnly = false)
+    public boolean reviewRequest(AccountRequestReviewDTO review){
+        boolean ex = false;
         AccountRequest request = this.registrationReasonRepository.getById(review.getId());
         request.setDenied(review.getIsDenied());
         request.setDenialReason(review.getDenialReason());
         request.setReviewed(true);
-        this.registrationReasonRepository.save(request);
-        notifyUser(request.getUser().getId(), request);
+        try {
+            this.registrationReasonRepository.save(request);
+        }catch (Exception e){
+            ex = true;
+        }
+        if(!ex)
+            notifyUser(request.getUser().getId(), request);
+        return ex;
     }
 
     private void notifyUser(int userId,AccountRequest request) {
@@ -72,14 +81,21 @@ public class AccountRequestService {
         }
         return notReviewed;
     }
-
-    public void reviewDeleteRequest(AccountRequestReviewDTO review){
+    @Transactional(readOnly = false)
+    public boolean reviewDeleteRequest(AccountRequestReviewDTO review){
+        boolean ex = false;
         AccountDeletionRequest request = this.accountDeletionRequestRepository.getById(review.getId());
         request.setDenied(review.getIsDenied());
         request.setDenialReason(review.getDenialReason());
         request.setReviewed(true);
-        this.accountDeletionRequestRepository.save(request);
-        notifyUserWhenDeleting(request.getUser().getId(), request);
+        try {
+            this.accountDeletionRequestRepository.save(request);
+        }catch (Exception e){
+            ex = true;
+        }
+        if(!ex)
+            notifyUserWhenDeleting(request.getUser().getId(), request);
+        return ex;
     }
 
     private void notifyUserWhenDeleting(int userId, AccountDeletionRequest request) {

@@ -29,6 +29,10 @@ public class Complaint {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    @Version
+    //@Column(nullable = false)
+    private Integer version;
+
     public Complaint() {
     }
 
@@ -110,5 +114,13 @@ public class Complaint {
 
     public void setIsComplaintOnOwner(boolean complaintOnOwner) {
         isComplaintOnOwner = complaintOnOwner;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

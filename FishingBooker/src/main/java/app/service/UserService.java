@@ -84,6 +84,7 @@ public class UserService implements UserDetailsService {
         request.setReviewed(false);
         request.setReason(userRequest.getReason());
         request.setUser(newUser);
+        request.setVersion(0);
         this.registrationReasonRepository.save(request);
         return newUser;
     }
