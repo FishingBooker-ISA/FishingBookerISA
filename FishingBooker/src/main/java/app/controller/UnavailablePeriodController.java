@@ -54,7 +54,6 @@ public class UnavailablePeriodController {
 
     @GetMapping(value = "/getAllUnavailablePeriods", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UnavailablePeriod>> getAll(int id, Principal user) {
-        BookingService bookingService = serviceRepository.getById(id);
         try {
             return new ResponseEntity<>(unavailablePeriodRepository.findAllByServiceId(id), HttpStatus.OK);
         } catch (Exception e) {

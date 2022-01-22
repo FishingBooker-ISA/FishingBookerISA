@@ -137,10 +137,10 @@ public class ManagingReservationsService {
 
     public boolean makeActionReservation(int actionId, int clientId) {
         PromoAction action = actionRepository.getById(actionId);
-        if(action.isTaken()){
-             System.out.println("*************************************");return false;}
+        if(action.isTaken())
+            return false;
         if (!checkIfClientCanMakeReservation(action.getStartDate(), action.getEndDate(), action.getBookingService().getId(), clientId))
-        {System.out.println("---------------------------------------------"); return false;}
+            return false;
 
         Reservation newReservation = new Reservation(action);
 
