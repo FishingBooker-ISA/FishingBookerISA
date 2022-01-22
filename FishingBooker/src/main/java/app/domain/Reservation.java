@@ -4,6 +4,7 @@ import app.dto.ClientReservationDTO;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 public class Reservation {
@@ -50,6 +51,19 @@ public class Reservation {
         this.isCanceled = false;
         this.additionalEquipment = dto.getAdditionalEquipment();
         this.price = dto.getPrice();
+    }
+
+    public Reservation(PromoAction dto) {
+        this.reservedDate = new Date();
+        this.reservationStart = dto.getStartDate();
+        this.reservationEnd = dto.getEndDate();
+        this.isPromo = true;
+        this.isCanceled = false;
+        this.additionalEquipment = dto.getAdditional();
+        long diff = reservationEnd.getTime() - reservationStart.getTime();
+        TimeUnit time = TimeUnit.DAYS;
+        long durationInDays = time.convert(diff, TimeUnit.MILLISECONDS) + 1;
+        this.price = dto.getPricePerDay() * durationInDays;
     }
 
     public Date getReservationStart() {

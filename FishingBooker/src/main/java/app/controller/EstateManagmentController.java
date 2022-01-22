@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,11 +54,9 @@ public class EstateManagmentController {
     }
 
     @GetMapping(value = "/getEstateById", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')")
     public BookingService getEstatesById(Principal user, int id){
-        User currentUser = this.userService.findByEmail(user.getName());
 
-        for (Estate estate : estateRepository.findByOwnerId(currentUser.getId())) {
+        for (Estate estate : estateRepository.findAll()){
             if(estate.getId() == id)
                 return estate;
         }

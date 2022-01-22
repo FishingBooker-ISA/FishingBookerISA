@@ -75,11 +75,11 @@ INSERT INTO reservation (additional_equipment, is_canceled, is_promo, price, res
 
 --rating
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES ('Great service. See you again soon. :)', 5, false, false, 1, 2);
+VALUES ('Great service. See you again soon. :)', 5, true, false, 1, 2);
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES ('Great service. See you again soon. :)', 5, true, true, 2, 3);
+VALUES ('Great service. See you again soon. :)', 5, true, true,6, 3);
 INSERT INTO rating (description, given_mark, is_approved, is_reviewed, service_id, user_id)
-VALUES ('Not impressed.', 3, true, true, 7, 3);
+VALUES ('Not impressed.', 3, true, true, 6, 3);
 
 ---complaints
 INSERT INTO complaint (created_date, is_complaint_on_owner, is_reviewed, reason, client_id, owner_id)
@@ -94,12 +94,12 @@ VALUES (10.0, 30.0, 20.0, 100.0, 300.0, 200.0, 10.0, 10.0, 5.0);
 --reservations
 INSERT INTO reservation (
      additional_equipment, is_canceled, is_promo, price, reservation_end, reservation_start, reserved_date, ship_owner_role, service_id, user_id)
-VALUES ('bla bla', false, false, 200.0, DATE '2022-01-30', DATE '2022-01-15', DATE '2021-12-17', 0, 6, 2);
+VALUES ('bla bla', false, false, 200.0, DATE '2022-01-30', DATE '2022-01-15', DATE '2021-12-17', 0, 6, 3);
 
 
 
 INSERT INTO additional_service ( name, price, service_id)
-VALUES ('WiFi', 0, 6), ('Iron', 10, 6), ('Air Conditioning', 0, 6), ('TV', 10, 6), ('WiFi', 0, 6), ('Parking', 10, 6);
+VALUES ('WiFi', 0, 2), ('Iron', 10, 11), ('Air Condition', 0, 6), ('TV', 10, 6), ('Parking', 10, 6), ('WiFi', 0, 7);
 --unavailable periods
 INSERT INTO unavailable_period(end_date, start_date, service_id)
 VALUES (DATE '2022-03-01', '2022-02-27', 6);
@@ -109,10 +109,10 @@ VALUES (DATE '2022-02-06', '2022-02-02', 6);
 --promo actions
 INSERT INTO promo_action(
     additional, capacity, duration_in_days, end_date, is_taken, price_per_day, start_date, service_id)
-VALUES ('nesto', 5, 10, DATE '2022-02-20', false, 20, DATE '2022-02-15', 6);
+VALUES ('nesto', 5, 10, DATE '2022-02-20', false, 20, DATE '2022-02-15', 11);
 INSERT INTO promo_action(
     additional, capacity, duration_in_days, end_date, is_taken, price_per_day, start_date, service_id)
-VALUES ('nesto', 5, 10, DATE '2022-03-09', false, 20, DATE '2022-03-03', 6);
+VALUES ('nesto', 5, 10, DATE '2022-03-09', false, 20, DATE '2022-03-03', 1);
 --reports
 INSERT INTO report (
     client_didnt_show_up, created_on, is_reviewed, sanction_client, text, reservation_id)

@@ -51,7 +51,6 @@ public class ImageController {
     }
 
     @GetMapping(value = "/getImages", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" + " || hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<List<Image>> getImagesForService(int serviceId, Principal user) {
         User currentUser = this.userService.findByEmail(user.getName());
         BookingService existingService = serviceRepository.getById(serviceId);

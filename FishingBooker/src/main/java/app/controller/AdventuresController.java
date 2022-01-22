@@ -17,7 +17,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,11 +55,8 @@ public class AdventuresController {
     }
 
     @GetMapping(value = "/getAdventureById", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_INSTRUCTOR')")
     public Adventure getAdventureById(Principal user, int id){
-        User currentUser = this.userService.findByEmail(user.getName());
-
-        for (Adventure adventure : adventuresRepository.findByOwnerId(currentUser.getId())) {
+        for (Adventure adventure : adventuresRepository.findAll()) {
             if(adventure.getId() == id)
                 return adventure;
         }

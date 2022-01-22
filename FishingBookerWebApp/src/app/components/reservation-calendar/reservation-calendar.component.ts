@@ -6,8 +6,10 @@ import { PromoAction } from 'src/app/model/action';
 import { Estate } from 'src/app/model/estate';
 import { Reservation } from 'src/app/model/reservation';
 import { UnavailablePeriod, UnavailablePeriodDTO } from 'src/app/model/unavailable-period';
+import { User } from 'src/app/model/user';
 import { PromoActionsService } from 'src/app/services/promo-actions.service';
 import { ReservationsService } from 'src/app/services/reservations.service';
+import { SignupOwnersService } from 'src/app/services/signup-owners.service';
 import { DetailsDialogComponent, UserDetails } from './details-dialog/details-dialog.component';
 import { UnavailablePeriodDialogComponent, UnavailablePeriodDialogModel } from './unavailable-period-dialog/unavailable-period-dialog.component';
 
@@ -26,16 +28,24 @@ export class ReservationCalendarComponent implements OnInit {
   reservations = [] as Reservation[]
   unavailable = [] as UnavailablePeriod[]
   displayEvents = [] as EventInput[]
+  isOwner: boolean = false;
+  currentUser!: User;
 
   calendarOptions!: CalendarOptions;
 
-  constructor(public actionsService: PromoActionsService, public reservationService: ReservationsService,
+  constructor(public signupService: SignupOwnersService, public actionsService: PromoActionsService, public reservationService: ReservationsService,
     public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getAllPromoActions();
     this.getAllReservations();
     this.getAllUnavailable();
+    this.signupService.getUser().subscribe((data) => {
+      this.currentUser = data;
+      if (this.currentUser.role.name == "ROLE_ESTATE_OWNER" || this.currentUser.role.name == "ROLE_INSTRUCTOR" || this.currentUser.role.name == "ROLE_SHIP_OWNER") {
+        this.isOwner = true;
+      }
+    });
 
     setTimeout(() => {
       this.loadCalendar()
@@ -43,6 +53,8 @@ export class ReservationCalendarComponent implements OnInit {
   }
 
   handleDateClick(clickInfo: EventClickArg) {
+    if(!this.isOwner)
+      return;
     if (clickInfo.event.title !== "Unavailable period") {
       var akcija = new PromoAction()
       var rezervacija = new Reservation()

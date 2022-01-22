@@ -149,7 +149,7 @@
                         <button mat-raised-button style="margin-top: 5%; margin-right: 3%;" (click)="openReservationDialog(ship.name, ship.id, ship.pricePerDay)" style="margin-top: 5%; margin-right: 3%;" *ngIf="isAvailableFound && !isClientBlocked && isClientAvailable">
                             Make a reservation
                         </button>
-                        <button mat-button style="margin-top: 5%; ">
+                        <button mat-button style="margin-top: 5%; " (click)="openShip(ship.id)">
                             More details
                         </button>
 

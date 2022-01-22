@@ -61,11 +61,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/auth/**").permitAll()		// /auth/**
                 .antMatchers("/api/client/verify/**").permitAll()		// /verify/**
                 .antMatchers("/api/estates/search/**").permitAll()		// /estates/search/**
-                .antMatchers("/api/estates/all").permitAll()		// /estates/all
+                .antMatchers("/api/estates/all").permitAll()		// /estates/all getEstateById
+                .antMatchers("/api/estates/getEstateById").permitAll()		// /getEstateById
                 .antMatchers("/api/adventures/search/**").permitAll()		// /adventures/search/**
                 .antMatchers("/api/adventures/all").permitAll()		// /adventures/all
-                .antMatchers("/api/ships/search/**").permitAll()		// /adventures/search/**
-                .antMatchers("/api/ships/all").permitAll()		// /adventures/all
+                .antMatchers("/api/adventures/getAdventureById").permitAll()		// /adventures/getAdventureById
+                .antMatchers("/api/ships/search/**").permitAll()		// /ships/search/**
+                .antMatchers("/api/ships/all").permitAll()		// /ships/all getNavigationTools
+                .antMatchers("/api/ships/getNavigationTools").permitAll()		// /ships/getNavigationTools
+                .antMatchers("/api/ships/getShipById").permitAll()		// /ships/getShipById
+                .antMatchers("/api/promoActions/getAllActionsForService").permitAll()		// /promoActions/getAllActionsForService
+                .antMatchers("/api/reservations/getReservationHistory").permitAll()		// /reservations/getReservationHistory
+                .antMatchers("/api/unavailable/getAllUnavailablePeriods").permitAll()		// /api/unavailable/getAllUnavailablePeriods
+                .antMatchers("/api/ratings/getAvgRating").permitAll()		// /ratings/getAvgRating
+                .antMatchers("/api/additional/getAdditionalForService").permitAll()		// /additional/getAdditionalForService
+                .antMatchers("/api/images/getImages").permitAll()		// /images/getImages
                 .antMatchers("/h2-console/**").permitAll()	// /h2-console/** ako se koristi H2 baza)
                 .antMatchers("/api/foo").permitAll()		// /api/foo
                 .antMatchers("/api/users/**").permitAll()

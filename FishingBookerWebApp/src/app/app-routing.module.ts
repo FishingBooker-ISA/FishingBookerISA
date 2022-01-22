@@ -13,6 +13,8 @@ import { NewAdminFormComponent } from './components/admin-profile/new-admin-form
 import { NewAdminLoginComponent } from './components/admin-profile/new-admin-login/new-admin-login.component';
 import { ServicesTableComponent } from './components/admin-profile/services-table/services-table.component';
 import { UsersTableComponent } from './components/admin-profile/users-table/users-table.component';
+import { AdventureClientProfileComponent } from './components/adventure-client-profile/adventure-client-profile.component';
+import { BoatClientProfileComponent } from './components/boat-client-profile/boat-client-profile.component';
 import { BoatsComponent } from './components/boats/boats.component';
 import { BussinessReportComponent } from './components/bussiness-report/bussiness-report.component';
 import { ClientVerificationComponent } from './components/client-profile/client-verification/client-verification.component';
@@ -20,6 +22,7 @@ import { EstateReservationHistoryComponent } from './components/client-profile/e
 import { SubscriptionsComponent } from './components/client-profile/subscriptions/subscriptions.component';
 import { UpcomingReservationsComponent } from './components/client-profile/upcoming-reservations/upcoming-reservations.component';
 import { ViewProfileComponent } from './components/client-profile/view-profile/view-profile.component';
+import { EstateClientProfileComponent } from './components/estate-client-profile/estate-client-profile.component';
 import { EstateOwnerHomepageComponent } from './components/estate-owner-homepage/estate-owner-homepage.component';
 import { EditEstateComponent } from './components/estate-profile/edit-estate/edit-estate.component';
 import { EstateProfileComponent } from './components/estate-profile/estate-profile.component';
@@ -59,6 +62,9 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'estateOwner/home', component: EstateOwnerHomepageComponent, canActivate: [EstateOwnerAuthGuard] },
   { path: 'estate/:id', component: EstateProfileComponent, canActivate: [EstateOwnerAuthGuard] },
+  { path: 'client/estate/:id', component: EstateClientProfileComponent },
+  { path: 'client/adventure/:id', component: AdventureClientProfileComponent },
+  { path: 'client/boat/:id', component: BoatClientProfileComponent },
   { path: 'estates', component: EstatesComponent },
   { path: 'boats', component: BoatsComponent },
   { path: 'fishing-instructors', component: FishingInstructorsComponent },

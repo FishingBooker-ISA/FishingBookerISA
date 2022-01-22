@@ -91,6 +91,9 @@ import { ShowLocationOnMapComponent } from './components/show-location-on-map/sh
 import { ClientReservationDialogComponent } from './components/client-reservation-dialog/client-reservation-dialog.component';
 import { BussinessReportComponent } from './components/bussiness-report/bussiness-report.component';
 import { ChartsModule } from 'ng2-charts';
+import { EstateClientProfileComponent } from './components/estate-client-profile/estate-client-profile.component';
+import { BoatClientProfileComponent } from './components/boat-client-profile/boat-client-profile.component';
+import { AdventureClientProfileComponent } from './components/adventure-client-profile/adventure-client-profile.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -165,7 +168,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MapModalComponent,
     ShowLocationOnMapComponent,
     ClientReservationDialogComponent,
-    BussinessReportComponent
+    BussinessReportComponent,
+    EstateClientProfileComponent,
+    BoatClientProfileComponent,
+    AdventureClientProfileComponent
   ],
   imports: [
     BrowserModule,

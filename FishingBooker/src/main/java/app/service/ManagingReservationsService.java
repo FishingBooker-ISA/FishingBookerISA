@@ -36,6 +36,8 @@ public class ManagingReservationsService {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    PromoActionRepository actionRepository;
+    @Autowired
     EstateRepository estateRepository;
     @Autowired
     UnavailablePeriodRepository unavailablePeriodRepository;
@@ -122,6 +124,7 @@ public class ManagingReservationsService {
         Reservation newReservation = new Reservation(reservationDTO);
         newReservation.setUser(client);
         newReservation.setBookingService(bookingService);
+        newReservation.setShipOwnerRole(bookingService.getOwner().getShipOwnerRole());
         newReservation.setPrice(this.moneyService.applyClientDiscount(reservationDTO.getClientId(), newReservation.getPrice()));
         this.moneyService.manageMoneyForNewReservation(newReservation);
         this.moneyService.managePointsForNewReservation(newReservation);
@@ -129,6 +132,28 @@ public class ManagingReservationsService {
         reservationRepository.save(newReservation);
         sendConfirmationMail(newReservation);
         return newReservation;
+    }
+
+
+    public boolean makeActionReservation(int actionId, int clientId) {
+        PromoAction action = actionRepository.getById(actionId);
+        if(action.isTaken())
+            return false;
+        if (!checkIfClientCanMakeReservation(action.getStartDate(), action.getEndDate(), action.getBookingService().getId(), clientId))
+            return false;
+
+        Reservation newReservation = new Reservation(action);
+
+        newReservation.setUser(userRepository.getById(clientId));
+        newReservation.setBookingService(action.getBookingService());
+        newReservation.setShipOwnerRole(action.getBookingService().getOwner().getShipOwnerRole());
+        this.moneyService.manageMoneyForNewReservation(newReservation);
+        this.moneyService.managePointsForNewReservation(newReservation);
+
+        reservationRepository.save(newReservation);
+        sendConfirmationMail(newReservation);
+
+        return true;
     }
 
     private boolean checkIfClientCanMakeReservation(Date startDate, Date endDate, int serviceId, int clientId) {

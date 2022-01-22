@@ -53,16 +53,7 @@ public class UnavailablePeriodController {
     }
 
     @GetMapping(value = "/getAllUnavailablePeriods", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_ESTATE_OWNER')" + " || hasAuthority('ROLE_SHIP_OWNER')" +
-            "|| hasAuthority('ROLE_INSTRUCTOR')")
     public ResponseEntity<List<UnavailablePeriod>> getAll(int id, Principal user) {
-        BookingService bookingService = serviceRepository.getById(id);
-        User currentUser = userService.findByEmail(user.getName());
-
-        if(!currentUser.getId().equals(bookingService.getOwner().getId())){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
         try {
             return new ResponseEntity<>(unavailablePeriodRepository.findAllByServiceId(id), HttpStatus.OK);
         } catch (Exception e) {

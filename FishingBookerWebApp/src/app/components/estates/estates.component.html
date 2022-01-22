@@ -149,7 +149,7 @@
                         <button mat-raised-button (click)="openReservationDialog(estate.name, estate.id, estate.pricePerDay)" style="margin-top: 5%; margin-right: 3%;" *ngIf="isAvailableFound && !isClientBlocked && isClientAvailable">
                             Make a reservation
                         </button>
-                        <button mat-button style="margin-top: 5%; ">
+                        <button mat-button style="margin-top: 5%; " (click)="openEstate(estate.id)">
                             More details
                         </button>
 

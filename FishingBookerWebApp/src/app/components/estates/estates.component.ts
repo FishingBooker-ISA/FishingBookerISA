@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
 import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
@@ -41,7 +42,7 @@ export class EstatesComponent implements OnInit {
 
 
 
-  constructor(public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private estateService: ManagingEstateService, public signupService: SignupOwnersService) { }
+  constructor(private router: Router, public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private estateService: ManagingEstateService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -60,6 +61,10 @@ export class EstatesComponent implements OnInit {
     this.currentUser = this.signupService.currentUser;
     this.estateService.getAllEstates().subscribe((data) => { this.availableEstates = data; this.estates = Array.from(data); this.backupEstates = Array.from(data); })
 
+  }
+
+  openEstate(estateId: number) {
+    this.router.navigate(['/client/estate', estateId]);
   }
 
   openReservationDialog(name:string, sid:number, price:number){

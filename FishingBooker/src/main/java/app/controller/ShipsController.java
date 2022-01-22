@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +48,8 @@ public class ShipsController {
     }
 
     @GetMapping(value = "/getShipById", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_SHIP_OWNER')")
     public Ship getShipById(Principal user, int id){
-        User currentUser = this.userService.findByEmail(user.getName());
-
-        for (Ship ship : shipRepository.findByOwnerId(currentUser.getId())) {
+        for (Ship ship : shipRepository.findAll()) {
             if(ship.getId() == id)
                 return ship;
         }
@@ -138,15 +134,7 @@ public class ShipsController {
     }
 
     @GetMapping(value = "/getNavigationTools", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_SHIP_OWNER')")
     public ResponseEntity<List<ShipNavigationTool>> getAllByService(int id, Principal user) {
-        Ship ship = shipRepository.getById(id);
-        User currentUser = userService.findByEmail(user.getName());
-
-        if (!ship.getOwner().getId().equals(currentUser.getId())){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
         return new ResponseEntity<>(toolRepository.getAllByShipId(id), HttpStatus.OK);
     }
 

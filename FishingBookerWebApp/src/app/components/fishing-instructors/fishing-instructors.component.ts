@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { DisplayServiceShortDTO } from 'src/app/model/display-service-short';
 import { ServiceAvailabilityParametersDTO } from 'src/app/model/service-availability-parametersDTO';
 import { User } from 'src/app/model/user';
@@ -38,7 +39,7 @@ export class FishingInstructorsComponent implements OnInit {
   isClientAvailable = true;
   warningMessage = "";
 
-  constructor(public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private adventureService : ManagingAdventuresService, public signupService: SignupOwnersService) { }
+  constructor(private router: Router, public reservationDialog: MatDialog, private clientProfileService: ClientProfileService, private adventureService : ManagingAdventuresService, public signupService: SignupOwnersService) { }
 
   ngOnInit(): void {
     this.signupService.getUser().subscribe((data) => {
@@ -56,6 +57,10 @@ export class FishingInstructorsComponent implements OnInit {
     });
     this.currentUser = this.signupService.currentUser;
     this.adventureService.getAllAdventures().subscribe((data) => { this.availableAdventures = data; this.adventures = Array.from(data); this.backupAdventures = Array.from(data); })
+  }
+
+  openAdventure(adventureId: number) {
+    this.router.navigate(['/client/adventure', adventureId]);
   }
 
   openReservationDialog(name:string, sid:number, price:number){
