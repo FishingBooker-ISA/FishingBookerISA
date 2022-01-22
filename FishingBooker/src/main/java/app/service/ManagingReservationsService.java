@@ -112,46 +112,57 @@ public class ManagingReservationsService {
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public Reservation createReservationForClient(ClientReservationDTO reservationDTO) {
-        User client = userRepository.getById(reservationDTO.getClientId());
-        BookingService bookingService = serviceRepository.getById(reservationDTO.getServiceId());
-        if (!checkIfServiceIsAvailable(reservationDTO.getStartDate(), reservationDTO.getEndDate(), reservationDTO.getServiceId()))
-            return null;
-        if (!checkIfClientCanMakeReservation(reservationDTO.getStartDate(), reservationDTO.getEndDate(), reservationDTO.getServiceId(), reservationDTO.getClientId()))
-            return null;
+        try{
+            User client = userRepository.getById(reservationDTO.getClientId());
+            BookingService bookingService = serviceRepository.getById(reservationDTO.getServiceId());
+            if (!checkIfServiceIsAvailable(reservationDTO.getStartDate(), reservationDTO.getEndDate(), reservationDTO.getServiceId()))
+                return null;
+            if (!checkIfClientCanMakeReservation(reservationDTO.getStartDate(), reservationDTO.getEndDate(), reservationDTO.getServiceId(), reservationDTO.getClientId()))
+                return null;
 
-        Reservation newReservation = new Reservation(reservationDTO);
-        newReservation.setUser(client);
-        newReservation.setBookingService(bookingService);
-        newReservation.setShipOwnerRole(bookingService.getOwner().getShipOwnerRole());
-        newReservation.setPrice(this.moneyService.applyClientDiscount(reservationDTO.getClientId(), newReservation.getPrice()));
-        this.moneyService.manageMoneyForNewReservation(newReservation);
-        this.moneyService.managePointsForNewReservation(newReservation);
+            Reservation newReservation = new Reservation(reservationDTO);
+            newReservation.setUser(client);
+            newReservation.setBookingService(bookingService);
+            newReservation.setShipOwnerRole(bookingService.getOwner().getShipOwnerRole());
+            newReservation.setPrice(this.moneyService.applyClientDiscount(reservationDTO.getClientId(), newReservation.getPrice()));
+            this.moneyService.manageMoneyForNewReservation(newReservation);
+            this.moneyService.managePointsForNewReservation(newReservation);
 
-        reservationRepository.save(newReservation);
-        sendConfirmationMail(newReservation);
-        return newReservation;
+            reservationRepository.save(newReservation);
+            sendConfirmationMail(newReservation);
+            return newReservation;
+        } catch (Exception e){
+            System.out.println("Service unavailable: pessimistic lock");
+        }
+        return null;
     }
 
-
+    @Transactional
     public boolean makeActionReservation(int actionId, int clientId) {
-        PromoAction action = actionRepository.getById(actionId);
-        if(action.isTaken())
-            return false;
-        if (!checkIfClientCanMakeReservation(action.getStartDate(), action.getEndDate(), action.getBookingService().getId(), clientId))
-            return false;
+        try {
+            PromoAction action = actionRepository.getActionByIdLock(actionId);
+            if(action.getIsTaken())
+                return false;
+            if (!checkIfClientCanMakeReservation(action.getStartDate(), action.getEndDate(), action.getBookingService().getId(), clientId))
+                return false;
 
-        Reservation newReservation = new Reservation(action);
+            Reservation newReservation = new Reservation(action);
 
-        newReservation.setUser(userRepository.getById(clientId));
-        newReservation.setBookingService(action.getBookingService());
-        newReservation.setShipOwnerRole(action.getBookingService().getOwner().getShipOwnerRole());
-        this.moneyService.manageMoneyForNewReservation(newReservation);
-        this.moneyService.managePointsForNewReservation(newReservation);
+            newReservation.setUser(userRepository.getById(clientId));
+            newReservation.setBookingService(action.getBookingService());
+            newReservation.setShipOwnerRole(action.getBookingService().getOwner().getShipOwnerRole());
+            this.moneyService.manageMoneyForNewReservation(newReservation);
+            this.moneyService.managePointsForNewReservation(newReservation);
+            action.setIsTaken(true);
+            reservationRepository.save(newReservation);
+            this.actionRepository.save(action);
+            sendConfirmationMail(newReservation);
 
-        reservationRepository.save(newReservation);
-        sendConfirmationMail(newReservation);
-
-        return true;
+            return true;
+        } catch (Exception e) {
+            System.out.println("Action unavailable: pessimistic lock");
+        }
+        return false;
     }
 
     private boolean checkIfClientCanMakeReservation(Date startDate, Date endDate, int serviceId, int clientId) {

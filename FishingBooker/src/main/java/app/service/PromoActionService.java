@@ -95,7 +95,7 @@ public class PromoActionService {
         action.setAdditional(actionDTO.getAdditional());
         action.setStartDate(actionDTO.getStartDate());
         action.setEndDate(actionDTO.getEndDate());
-        action.setTaken(false);
+        action.setIsTaken(false);
 
         List<AdditionalService> existingServices = additionalServiceRepository
                 .getAllByBookingServiceId(actionDTO.getBookingServiceId());

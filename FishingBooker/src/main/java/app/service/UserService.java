@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 import java.util.ArrayList;
@@ -115,38 +116,48 @@ public class UserService implements UserDetailsService {
         return this.userRepository.save(user);
     }
 
-    public User addClient(ClientDTO userRequest) {
-        Client client = new Client();
-        Address address = new Address();
+    @Transactional
+    public boolean addClient(ClientDTO userRequest) {
+        try{
+            List<User> all = userRepository.getAllLock();
+            for(User u : all) {
+                if (u.getEmail().equals(userRequest.getEmail()))
+                    return false;
+            }
+            Client client = new Client();
+            Address address = new Address();
 
-        address.setStreet(userRequest.getStreet());
-        address.setNumber(userRequest.getNumber());
-        address.setCity(userRequest.getCity());
-        address.setCountry(userRequest.getCountry());
-        address.setPostcode(userRequest.getPostcode());
-        address.setLatitude(userRequest.getLatitude());
-        address.setLongitude(userRequest.getLongitude());
+            address.setStreet(userRequest.getStreet());
+            address.setNumber(userRequest.getNumber());
+            address.setCity(userRequest.getCity());
+            address.setCountry(userRequest.getCountry());
+            address.setPostcode(userRequest.getPostcode());
+            address.setLatitude(userRequest.getLatitude());
+            address.setLongitude(userRequest.getLongitude());
 
-        Address addedAddress = this.addressRepository.save(address);
-        Role role = roleRepository.findByName("ROLE_CLIENT");
+            Address addedAddress = this.addressRepository.save(address);
+            Role role = roleRepository.findByName("ROLE_CLIENT");
 
-        client.setEmail(userRequest.getEmail());
-        client.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        client.setFirstName(userRequest.getFirstName());
-        client.setLastName(userRequest.getLastName());
-        client.setAddress(addedAddress);
-        client.setVerified(false);
-        client.setRole(role);
-        client.setPhoneNumber(userRequest.getPhoneNumber());
-        client.setPoints(0);
-        client.setNumOfPenalties(0);
-        client.setVerificationCode(UUID.randomUUID().toString());
-        client.setDeleted(false);
-        Client addedClient = this.userRepository.save(client);
-        this.sendVerificationEmail(addedClient.getId());
-
-
-        return addedClient;
+            client.setEmail(userRequest.getEmail());
+            client.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+            client.setFirstName(userRequest.getFirstName());
+            client.setLastName(userRequest.getLastName());
+            client.setAddress(addedAddress);
+            client.setVerified(false);
+            client.setRole(role);
+            client.setPhoneNumber(userRequest.getPhoneNumber());
+            client.setPoints(0);
+            client.setNumOfPenalties(0);
+            client.setVerificationCode(UUID.randomUUID().toString());
+            client.setDeleted(false);
+            Client addedClient = this.userRepository.save(client);
+            this.sendVerificationEmail(addedClient.getId());
+            return true;
+        }
+        catch (Exception e){
+            System.out.println("Sign up unavailable: pessimistic lock");
+        }
+        return false;
     }
 
     private void sendVerificationEmail(int clientId) {
